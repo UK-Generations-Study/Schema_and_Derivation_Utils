@@ -1,0 +1,50 @@
+{
+  "$id": "DerivedVariables_JSON.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DerivedVariables",
+  "type": "object",
+  "properties": {
+    "baselineHeight": {
+      "questionID": "",
+      "type": "number",
+      "description": "",
+      "x-derivedFrom": [
+        "#/$defs/pd/properties/Q3_13_feet",
+        "#/$defs/pd/properties/Q3_13_inch",
+        "#/$defs/pd/properties/Q3_13_cm"
+      ],
+      "x-calculation": ""
+      },
+    "baselineWeight": {
+      "questionID": "",
+      "type": "number",
+      "description": "",
+      "x-derivedFrom": [
+        "#/$defs/pd/properties/Q3_8_stones",
+        "#/$defs/pd/properties/Q3_8_lbs",
+        "#/$defs/pd/properties/Q3_8_kgs"
+      ],
+      "x-calculation": ""
+    },
+    "baselineBMI": {
+      "questionID": "",
+      "type": "number",
+      "description": "Body Mass Index (kg / m²), computed from current height and weight",
+      "anyOf": [
+        {"minimum": 15, "maximum": 60},
+        {"enum": [77777, 88888, 99999]}
+      ],
+      "x-derivedFrom": [
+        "#/properties/baselineHeight",
+        "#/properties/baselineWeight"
+      ],
+      "x-calculation": "baselineWeight / ( (baselineHeight / 100) ^ 2 )"
+    }
+  },
+  "$defs": {
+    "pd": { 
+      "$ref": "PhysicalDevelopment_JSON.json" 
+    }
+  }
+}
+  
