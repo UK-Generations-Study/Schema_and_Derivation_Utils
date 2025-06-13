@@ -1,0 +1,502 @@
+{
+  "471150": {
+    "baselineHeight": 212,
+    "baselineWeight": 152.0,
+    "baselineBMI": 33.8
+  },
+  "889337": {
+    "baselineHeight": 259.1,
+    "baselineWeight": 294.4,
+    "baselineBMI": 43.9
+  },
+  "230048": {
+    "baselineHeight": 162.6,
+    "baselineWeight": 4.1,
+    "baselineBMI": 77777
+  },
+  "986490": {
+    "baselineHeight": 27.9,
+    "baselineWeight": 63.5,
+    "baselineBMI": 77777
+  },
+  "541013": {
+    "baselineHeight": 269.2,
+    "baselineWeight": 108.4,
+    "baselineBMI": 77777
+  },
+  "757187": {
+    "baselineHeight": 101.6,
+    "baselineWeight": 12.7,
+    "baselineBMI": 77777
+  },
+  "476185": {
+    "baselineHeight": 226.1,
+    "baselineWeight": 105.7,
+    "baselineBMI": 20.7
+  },
+  "694382": {
+    "baselineHeight": 129.5,
+    "baselineWeight": 30.4,
+    "baselineBMI": 18.1
+  },
+  "572515": {
+    "baselineHeight": 233.7,
+    "baselineWeight": 218.6,
+    "baselineBMI": 40.0
+  },
+  "827878": {
+    "baselineHeight": 165,
+    "baselineWeight": 250.4,
+    "baselineBMI": 77777
+  },
+  "348084": {
+    "baselineHeight": 175.3,
+    "baselineWeight": 217.3,
+    "baselineBMI": 77777
+  },
+  "188229": {
+    "baselineHeight": 218.4,
+    "baselineWeight": 176.9,
+    "baselineBMI": 37.1
+  },
+  "527418": {
+    "baselineHeight": 7.6,
+    "baselineWeight": 165.1,
+    "baselineBMI": 77777
+  },
+  "125547": {
+    "baselineHeight": 127.0,
+    "baselineWeight": 235.4,
+    "baselineBMI": 77777
+  },
+  "348401": {
+    "baselineHeight": 174,
+    "baselineWeight": 34.9,
+    "baselineBMI": 77777
+  },
+  "263877": {
+    "baselineHeight": 157,
+    "baselineWeight": 79.4,
+    "baselineBMI": 32.2
+  },
+  "534498": {
+    "baselineHeight": 114.3,
+    "baselineWeight": 228,
+    "baselineBMI": 77777
+  },
+  "836132": {
+    "baselineHeight": 40.6,
+    "baselineWeight": 237.2,
+    "baselineBMI": 77777
+  },
+  "687108": {
+    "baselineHeight": 35,
+    "baselineWeight": 219.1,
+    "baselineBMI": 77777
+  },
+  "481470": {
+    "baselineHeight": 172.7,
+    "baselineWeight": 208.7,
+    "baselineBMI": 77777
+  },
+  "231967": {
+    "baselineHeight": 91,
+    "baselineWeight": 31.8,
+    "baselineBMI": 38.4
+  },
+  "399106": {
+    "baselineHeight": 78.7,
+    "baselineWeight": 285.8,
+    "baselineBMI": 77777
+  },
+  "842984": {
+    "baselineHeight": 38.1,
+    "baselineWeight": 99999,
+    "baselineBMI": 99999
+  },
+  "396300": {
+    "baselineHeight": 99999,
+    "baselineWeight": 15.9,
+    "baselineBMI": 99999
+  },
+  "188623": {
+    "baselineHeight": 241.3,
+    "baselineWeight": 122.5,
+    "baselineBMI": 21.0
+  },
+  "225021": {
+    "baselineHeight": 99999,
+    "baselineWeight": 134.3,
+    "baselineBMI": 99999
+  },
+  "651456": {
+    "baselineHeight": 30.5,
+    "baselineWeight": 225.9,
+    "baselineBMI": 77777
+  },
+  "732939": {
+    "baselineHeight": 48.3,
+    "baselineWeight": 12.7,
+    "baselineBMI": 54.4
+  },
+  "947323": {
+    "baselineHeight": 142.2,
+    "baselineWeight": 228.6,
+    "baselineBMI": 77777
+  },
+  "870975": {
+    "baselineHeight": 165.1,
+    "baselineWeight": 97.1,
+    "baselineBMI": 35.6
+  },
+  "592990": {
+    "baselineHeight": 215,
+    "baselineWeight": 217.7,
+    "baselineBMI": 47.1
+  },
+  "893165": {
+    "baselineHeight": 61.0,
+    "baselineWeight": 241.3,
+    "baselineBMI": 77777
+  },
+  "275793": {
+    "baselineHeight": 94.0,
+    "baselineWeight": 221.8,
+    "baselineBMI": 77777
+  },
+  "520355": {
+    "baselineHeight": 243.8,
+    "baselineWeight": 286.7,
+    "baselineBMI": 48.2
+  },
+  "292649": {
+    "baselineHeight": 124.5,
+    "baselineWeight": 196.4,
+    "baselineBMI": 77777
+  },
+  "689061": {
+    "baselineHeight": 208.3,
+    "baselineWeight": 100.2,
+    "baselineBMI": 23.1
+  },
+  "355749": {
+    "baselineHeight": 205.7,
+    "baselineWeight": 16.3,
+    "baselineBMI": 77777
+  },
+  "764880": {
+    "baselineHeight": 119.4,
+    "baselineWeight": 42.2,
+    "baselineBMI": 29.6
+  },
+  "189104": {
+    "baselineHeight": 236.2,
+    "baselineWeight": 336,
+    "baselineBMI": 77777
+  },
+  "541838": {
+    "baselineHeight": 94.0,
+    "baselineWeight": 193.7,
+    "baselineBMI": 77777
+  },
+  "796488": {
+    "baselineHeight": 264.2,
+    "baselineWeight": 215.9,
+    "baselineBMI": 30.9
+  },
+  "639412": {
+    "baselineHeight": 248.9,
+    "baselineWeight": 258.1,
+    "baselineBMI": 41.7
+  },
+  "441923": {
+    "baselineHeight": 159,
+    "baselineWeight": 64.9,
+    "baselineBMI": 25.7
+  },
+  "289120": {
+    "baselineHeight": 104.1,
+    "baselineWeight": 168.7,
+    "baselineBMI": 77777
+  },
+  "491811": {
+    "baselineHeight": 38.1,
+    "baselineWeight": 118.8,
+    "baselineBMI": 77777
+  },
+  "639621": {
+    "baselineHeight": 116.8,
+    "baselineWeight": 298.9,
+    "baselineBMI": 77777
+  },
+  "241354": {
+    "baselineHeight": 92,
+    "baselineWeight": 270.3,
+    "baselineBMI": 77777
+  },
+  "703233": {
+    "baselineHeight": 17.8,
+    "baselineWeight": 180.5,
+    "baselineBMI": 77777
+  },
+  "269873": {
+    "baselineHeight": 154.9,
+    "baselineWeight": 82.6,
+    "baselineBMI": 34.4
+  },
+  "281302": {
+    "baselineHeight": 243.8,
+    "baselineWeight": 102.1,
+    "baselineBMI": 17.2
+  },
+  "564729": {
+    "baselineHeight": 99999,
+    "baselineWeight": 370,
+    "baselineBMI": 99999
+  },
+  "583404": {
+    "baselineHeight": 169,
+    "baselineWeight": 148.8,
+    "baselineBMI": 52.1
+  },
+  "230664": {
+    "baselineHeight": 12,
+    "baselineWeight": 145.6,
+    "baselineBMI": 77777
+  },
+  "475670": {
+    "baselineHeight": 91.4,
+    "baselineWeight": 205.9,
+    "baselineBMI": 77777
+  },
+  "792345": {
+    "baselineHeight": 76,
+    "baselineWeight": 96.2,
+    "baselineBMI": 77777
+  },
+  "673082": {
+    "baselineHeight": 169,
+    "baselineWeight": 250.8,
+    "baselineBMI": 77777
+  },
+  "854515": {
+    "baselineHeight": 99.1,
+    "baselineWeight": 203,
+    "baselineBMI": 77777
+  },
+  "893292": {
+    "baselineHeight": 99999,
+    "baselineWeight": 50.8,
+    "baselineBMI": 99999
+  },
+  "241896": {
+    "baselineHeight": 50.8,
+    "baselineWeight": 33.6,
+    "baselineBMI": 77777
+  },
+  "249641": {
+    "baselineHeight": 160,
+    "baselineWeight": 12.7,
+    "baselineBMI": 77777
+  },
+  "885774": {
+    "baselineHeight": 99999,
+    "baselineWeight": 0.0,
+    "baselineBMI": 99999
+  },
+  "241008": {
+    "baselineHeight": 189,
+    "baselineWeight": 212.3,
+    "baselineBMI": 59.4
+  },
+  "875335": {
+    "baselineHeight": 173,
+    "baselineWeight": 311.2,
+    "baselineBMI": 77777
+  },
+  "847814": {
+    "baselineHeight": 57,
+    "baselineWeight": 320.2,
+    "baselineBMI": 77777
+  },
+  "478959": {
+    "baselineHeight": 271.8,
+    "baselineWeight": 226.8,
+    "baselineBMI": 30.7
+  },
+  "784929": {
+    "baselineHeight": 162,
+    "baselineWeight": 19.1,
+    "baselineBMI": 77777
+  },
+  "877175": {
+    "baselineHeight": 132.1,
+    "baselineWeight": 273.1,
+    "baselineBMI": 77777
+  },
+  "886705": {
+    "baselineHeight": 137.2,
+    "baselineWeight": 318,
+    "baselineBMI": 77777
+  },
+  "377297": {
+    "baselineHeight": 49,
+    "baselineWeight": 62.6,
+    "baselineBMI": 77777
+  },
+  "185432": {
+    "baselineHeight": 139.7,
+    "baselineWeight": 127.0,
+    "baselineBMI": 77777
+  },
+  "186633": {
+    "baselineHeight": 3,
+    "baselineWeight": 244.9,
+    "baselineBMI": 77777
+  },
+  "302641": {
+    "baselineHeight": 241.3,
+    "baselineWeight": 297.6,
+    "baselineBMI": 51.1
+  },
+  "220492": {
+    "baselineHeight": 179,
+    "baselineWeight": 289.8,
+    "baselineBMI": 77777
+  },
+  "680389": {
+    "baselineHeight": 157.5,
+    "baselineWeight": 88.9,
+    "baselineBMI": 35.8
+  },
+  "551966": {
+    "baselineHeight": 64,
+    "baselineWeight": 137.0,
+    "baselineBMI": 77777
+  },
+  "857913": {
+    "baselineHeight": 43.2,
+    "baselineWeight": 245.4,
+    "baselineBMI": 77777
+  },
+  "200145": {
+    "baselineHeight": 181,
+    "baselineWeight": 130.2,
+    "baselineBMI": 39.7
+  },
+  "919133": {
+    "baselineHeight": 148,
+    "baselineWeight": 214.5,
+    "baselineBMI": 77777
+  },
+  "759074": {
+    "baselineHeight": 271.8,
+    "baselineWeight": 247.2,
+    "baselineBMI": 33.5
+  },
+  "869862": {
+    "baselineHeight": 178,
+    "baselineWeight": 260.8,
+    "baselineBMI": 77777
+  },
+  "663390": {
+    "baselineHeight": 233.7,
+    "baselineWeight": 4.5,
+    "baselineBMI": 77777
+  },
+  "852812": {
+    "baselineHeight": 228.6,
+    "baselineWeight": 113.4,
+    "baselineBMI": 21.7
+  },
+  "108094": {
+    "baselineHeight": 157.5,
+    "baselineWeight": 126.6,
+    "baselineBMI": 51.0
+  },
+  "305487": {
+    "baselineHeight": 264.2,
+    "baselineWeight": 114.8,
+    "baselineBMI": 16.4
+  },
+  "566170": {
+    "baselineHeight": 150,
+    "baselineWeight": 31.8,
+    "baselineBMI": 77777
+  },
+  "668668": {
+    "baselineHeight": 7.6,
+    "baselineWeight": 98.9,
+    "baselineBMI": 77777
+  },
+  "377632": {
+    "baselineHeight": 251.5,
+    "baselineWeight": 152.4,
+    "baselineBMI": 24.1
+  },
+  "297989": {
+    "baselineHeight": 43.2,
+    "baselineWeight": 336,
+    "baselineBMI": 77777
+  },
+  "102636": {
+    "baselineHeight": 31,
+    "baselineWeight": 19.5,
+    "baselineBMI": 77777
+  },
+  "760198": {
+    "baselineHeight": 269.2,
+    "baselineWeight": 293.5,
+    "baselineBMI": 40.5
+  },
+  "284129": {
+    "baselineHeight": 5.1,
+    "baselineWeight": 204.6,
+    "baselineBMI": 77777
+  },
+  "429302": {
+    "baselineHeight": 61.0,
+    "baselineWeight": 236.8,
+    "baselineBMI": 77777
+  },
+  "756888": {
+    "baselineHeight": 271.8,
+    "baselineWeight": 263.1,
+    "baselineBMI": 35.6
+  },
+  "962184": {
+    "baselineHeight": 27.9,
+    "baselineWeight": 298,
+    "baselineBMI": 77777
+  },
+  "394650": {
+    "baselineHeight": 195.6,
+    "baselineWeight": 128.4,
+    "baselineBMI": 33.6
+  },
+  "357800": {
+    "baselineHeight": 48.3,
+    "baselineWeight": 278.5,
+    "baselineBMI": 77777
+  },
+  "786332": {
+    "baselineHeight": 99999,
+    "baselineWeight": 184.2,
+    "baselineBMI": 99999
+  },
+  "829692": {
+    "baselineHeight": 175,
+    "baselineWeight": 49.9,
+    "baselineBMI": 16.3
+  },
+  "926970": {
+    "baselineHeight": 165.1,
+    "baselineWeight": 315,
+    "baselineBMI": 77777
+  },
+  "911549": {
+    "baselineHeight": 175.3,
+    "baselineWeight": 133.4,
+    "baselineBMI": 43.4
+  }
+}
