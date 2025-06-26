@@ -1,0 +1,161 @@
+{
+  "type": "object",
+  "properties": {
+    "StudyID": {
+      "description": "Internal Study ID",
+      "type": ["string", "not null"],
+      "maxLength": 6
+    },
+    "ReportCount": {
+      "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual",
+      "type": ["integer", "not null"],
+      "maxLength": 1,
+      "anyOf": [
+            {"minimum": 1, "maximum": ""}
+            ]      
+    },
+    "TumourCount": {
+      "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour.",
+      "type": ["integer", "not null"],
+      "maxLength": 1,
+      "anyOf": [
+            {"minimum": 1, "maximum": ""}
+            ]
+    },
+    "DateSpecimenTaken": {
+      "description": "Specimen taken date. Missing is coded as null (blank)",
+      "type": ["datetime", "null"],
+      "maxLength": 23
+    },
+    "DateSpecimenReceived": {
+      "description": "Specimen received in hospital laboratory. Missing is coded as null (blank)",
+      "type": ["datetime", "null"],
+      "maxLength": 23
+    },
+    "PostNeoadjuvantChemo": {
+      "description": "Specimen taken after treatment (Chemotherapy or Endocrine)",
+      "type": ["string", "null"],
+      "maxLength": 2
+    },
+    "Primary_Site_Side": {
+      "description": "Side of Primary Site. Missing is coded as null",
+      "type": ["string", "null"],
+      "maxLength": 1
+    },
+    "R_Benign_Tumour": {
+      "description": "Type of right benign ovarian tumour. Missing / not applicable coded as null (blank)",
+      "type": ["string", "null"],
+      "maxLength": 20
+    },
+    "R_Benign_Details": {
+      "description": "Details of right benign ovarian tumour (free text)",
+      "type": ["string"],
+      "maxLength": 50
+    },
+    "R_Borderline": {
+      "description": "Type of right borderline ovarian tumour. Missing / not applicable coded as null (blank)",
+      "type": ["string", "null"],
+      "maxLength": 30
+    },
+    "R_Invasive": {
+      "description": "Right Invasive. Missing is coded as null (blank)",
+      "type": ["string", "null"],
+      "maxLength": 1
+    },
+    "R_Epithelium": {
+      "description": "Right Epithelium. Missing not applicable coded as null (blank)",
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "R_Epithelium_Other": {
+      "description": "Details of Right Epithelium Other (free text)",
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "R_Grade_HL": {
+      "description": "Right Grade differentiation. Missing is coded as null (blank)",
+      "type": ["string", "null"],
+      "maxLength": 1
+    },
+    "R_Grade_I_II_III": {
+      "description": "Right Tumour Grade",
+      "type": ["number", "null"],
+      "maxLength": 7
+    },
+    "R_Primary_Germ_Cells": {
+      "description": "Right Germ (Egg) Cell Tumour. Missing / not applicable coded as null (blank)",
+      "type": ["string", "null"],
+      "maxLength": 20
+    },
+    "R_Sex_Cord_Stromal_Cells": {
+      "description": "Right ovary sex Cord Stromal Tumour Cells (SCSTs). Missing / not applicable coded as null (blank)",
+      "type": ["string", "null"],
+      "maxLength": 30
+    },
+    "L_Benign_Tumour": {
+      "description": "Type of left benign ovarian tumour. Missing / not applicable coded as null (blank)",
+      "type": ["string"],
+      "maxLength": 20
+    },
+    "L_Benign_Details": {
+      "description": "Details of left benign ovarian tumour (free text)",
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "L_Borderline": {
+      "description": "Type of left borderline ovarian tumour. Missing / not applicable coded as null (blank)",
+      "type": ["string", "null"],
+      "maxLength": 30
+    },
+    "L_Invasive": {
+      "description": "Left Invasive. Missing is coded as null (blank)",
+      "type": ["string", "null"],
+      "maxLength": 1
+    },
+    "L_Epithelium": {
+      "description": "Left Epithelium. Missing not applicable coded as null (blank)",
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "L_Epithelium_Other": {
+      "description": "Details of Left Epithelium Other (free text)",
+      "type": ["string"],
+      "maxLength": 50
+    },
+    "L_Grade_HL": {
+      "description": "Left Grade differentiation. Missing is coded as null (blank)",
+      "type": ["string", "null"],
+      "maxLength": 1
+    },
+    "L_Grade_I_II_III": {
+      "description": "Left Tumour Grade",
+      "type": ["number", "null"],
+      "maxLength": 7
+    },
+    "L_Primary_Germ_Cells": {
+      "description": "Left Germ (Egg) Cell Tumour. Missing / not applicable coded as null (blank)",
+      "type": ["string", "null"],
+      "maxLength": 30
+    },
+    "L_Sex_Cord_Stromal_Cells": {
+      "description": "Left ovary sex Cord Stromal Tumour Cells (SCSTs). Missing / not applicable coded as null (blank)",
+      "type": ["string", "null"],
+      "maxLength": 30
+    },
+    "ReportDat": {
+      "description": "Date of Report. Missing information is null (blank)",
+      "type": ["datetime", "null"],
+      "maxLength": 23
+    },
+    "CoreDat": {
+      "description": "Date of Core Biopsy (if previously performed and indicated in the report or if the report is for a core biopsy - in this case ReportDat = CoreDat). Missing is coded null.",
+      "type": ["datetime", "null"],
+      "maxLength": 23
+    },
+    "PostChemo": {
+      "description": "Date of Core Biopsy (if previously performed and indicated in the report or if the report is for a core biopsy - in this case ReportDat = CoreDat). Missing is coded null.",
+      "type": ["string", "null"],
+      "maxLength": 2
+    }
+  }
+}

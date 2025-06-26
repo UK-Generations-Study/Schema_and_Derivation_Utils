@@ -1,0 +1,329 @@
+{
+  "type": "object",
+  "properties": {
+    "ExcisionMargin": {
+      "description": "Surgical margin",
+      "type": ["string", "null"],
+      "maxLength": 5
+    },
+    "ClosestRelevantMargin": {
+      "description": "Closest Relevant Margin (mm)",
+      "type": ["number", "null"],
+      "maxLength": 7
+    },
+    "ER_Status": {
+      "description": "ER Receptor Status as indicated in report",
+      "type": ["string", "null"],
+      "maxLength": 5
+    },
+    "ER_Type": {
+      "description": "ER Scoring system used to score estrogen receptor (ER) tumour immunohistochemistry stains)",
+      "type": ["string", "null"],
+      "maxLength": 3
+    },
+    "PR_Status": {
+      "description": "PR Receptor Status as indicated in report",
+      "type": ["string", "null"],
+      "maxLength": 5
+    },
+    "PR_Type": {
+      "description": "PR Scoring system used to score estrogen receptor (PR) tumour immunohistochemistry stains)",
+      "type": ["string", "null"],
+      "maxLength": 3
+    },
+    "HER2_Status": {
+      "description": "HER2 Receptor Status as indicated in report",
+      "type": ["string", "null"],
+      "maxLength": 5
+    },
+    "HER2_Score": {
+      "description": "HER2 ImmunoHistoChemistry Score as reported. There are combinations of these scores eg. 2/3+",
+      "type": ["string", "null"],
+      "maxLength": 20
+    },
+    "HER2_FISH": {
+      "description": "Fluorescence in situ hybridisation test for HER2 as reported",
+      "type": ["string", "null"],
+      "maxLength": 5
+    },
+    "Ki67": {
+      "description": "Ki67 % Positive nuclei as indicated in report",
+      "type": ["number", "null"],
+      "maxLength": 7
+    },
+    "ICDMorphologyCode": {
+      "description": "Intl Classification of Diseases Morphology Code (ICD_O) when indicated in report. Missing information or not applicable is coded as Null",
+      "type": ["string", "null"],
+      "maxLength": 6
+    },
+    "Malignant": {
+      "description": "Malignant Cancer",
+      "type": ["string", "not null"],
+      "maxLength": 1
+    },
+    "BrCa1": {
+      "description": "BrCa 1 gene present when indicated in report",
+      "type": ["string", "null"],
+      "maxLength": 2
+    },
+    "BrCa2": {
+      "description": "BrCa 2 gene present when indicated in report",
+      "type": ["string", "null"],
+      "maxLength": 2
+    },
+    "MitoticActivity": {
+      "description": "Presence of proliferating cells for assessing Grade",
+      "type": ["integer", "null"],
+      "maxLength": 1
+    },
+    "StudyID": {
+      "description": "Internal Study ID",
+      "type": ["string", "not null"],
+      "maxLength": 6
+    },
+    "Side": {
+      "description": "Laterality",
+      "type": ["string", "not null"],
+      "maxLength": 1
+    },
+    "TumourCount": {
+      "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour",
+      "type": ["integer", "not null"],
+      "maxLength": 1,
+      "anyOf": [
+            {"minimum": 1, "maximum": ""}
+            ]
+    },
+    "ReportDat": {
+      "description": "Date of Report. Missing information is null (blank)",
+      "type": ["datetime", "null"],
+      "maxLength": 23
+    },
+    "CoreDat": {
+      "description": "Date of Core Biopsy (if previously performed and indicated in the report or if the report is for a core biopsy - in this case ReportDat = CoreDat). Missing is coded null.",
+      "type": ["datetime", "null"],
+      "maxLength": 23
+    },
+    "DateSpecimenTaken": {
+      "description": "Specimen taken date. Missing is coded as null (blank)",
+      "type": ["datetime", "null"],
+      "maxLength": 23
+    },
+    "DateSpecimenReceived": {
+      "description": "Specimen received in hospital laboratory. Missing is coded as null (blank)",
+      "type": ["datetime", "null"],
+      "maxLength": 23
+    },
+    "ScreenDetected": {
+      "description": "Screen Detection Report",
+      "type": ["string", "null"],
+      "maxLength": 5
+    },
+    "SpecimenType": {
+      "description": "Type of specimen",
+      "type": ["string", "not null"],
+      "maxLength": 5
+    },
+    "SpecimenWeight": {
+      "description": "Weight of specimen (grams). Missing is coded as null (blank)",
+      "type": ["number", "null"]
+    },
+    "AxillaryProcedure": {
+      "description": "Axillary Procedure indicates the procedures performed during surgery to remove or sample axillary lymph nodes. If the same procedure for multiple tumours in a report, information is repeated for each tumour.",
+      "type": ["string", "null"],
+      "maxLength": 5
+    },
+    "PostNeoadjuvantChemo": {
+      "description": "Specimen taken after treatment (Chemotherapy or Endocrine)",
+      "type": ["string", "null"],
+      "maxLength": 2
+    },
+    "InsituCarcinoma": {
+      "description": "In situ Carcinoma",
+      "type": ["string", "null"],
+      "maxLength": 1
+    },
+    "DuctalCarcinomaInsitu": {
+      "description": "In situ Ductal Carcinoma",
+      "type": ["string", "null"],
+      "maxLength": 1
+    },
+    "DCISGrade": {
+      "description": "In situ Grade",
+      "type": ["string", "null"],
+      "maxLength": 2
+    },
+    "Solid_DCISGP": {
+      "description": "In situ Growth pattern",
+      "type": ["boolean", "not null"],
+      "enum": ["Yes", "No"],
+      "maxLength": 1
+    },
+    "Cribiform_DCISGP": {
+      "description": "In situ Growth pattern",
+      "type": ["boolean", "null"],
+      "enum": ["Yes", "No"],
+      "maxLength": 1
+    },
+    "Micropapillary_DCISGP": {
+      "description": "In situ Growth pattern",
+      "type": ["boolean", "null"],
+      "enum": ["Yes", "No"],
+      "maxLength": 1
+    },
+    "Papillary_DCISGP": {
+      "description": "In situ Growth pattern",
+      "type": ["boolean", "null"],
+      "enum": ["Yes", "No"],
+      "maxLength": 1
+    },
+    "Apocrine_DCISGP": {
+      "description": "In situ Growth pattern",
+      "type": ["boolean", "null"],
+      "enum": ["Yes", "No"],
+      "maxLength": 1
+    },
+    "Flat_DCISGP": {
+      "description": "In situ Growth pattern",
+      "type": ["boolean", "null"],
+      "enum": ["Yes", "No"],
+      "maxLength": 1
+    },
+    "Comedo_DCISGP": {
+      "description": "In situ Growth pattern",
+      "type": ["string", "null"],
+      "enum": ["Yes", "No"],
+      "maxLength": 1
+    },
+    "Clinging_DCISGP": {
+      "description": "In situ Growth pattern",
+      "type": ["boolean", "null"],
+      "enum": ["Yes", "No"],
+      "maxLength": 1
+    },
+    "ComedoNecrosis": {
+      "description": "Comedo Necrosis characteristics of DCIS",
+      "type": ["string", "null"],
+      "maxLength": 5
+    },
+    "SizeDCISOnly": {
+      "description": "Size of in situ carcinoma only (mm). Missing information or not applicable is coded as null.",
+      "type": ["number", "null"],
+      "maxLength": 5
+    },
+    "LobularCarcinomaInsitu": {
+      "description": "In situ Lobular Carcinoma",
+      "type": ["string", "null"],
+      "maxLength": 1
+    },
+    "PleomorphicLCIS": {
+      "description": "Pleomorphic LCIS",
+      "type": ["string", "null"],
+      "maxLength": 1
+    },
+    "PagetsDisease": {
+      "description": "Paget's Disease",
+      "type": ["string", "null"],
+      "maxLength": 1
+    },
+    "Microinvasion": {
+      "description": "Invasive carcinoma of the breast with no invasive focus measuring more than 1 mm",
+      "type": ["string", "null"],
+      "maxLength": 1
+    },
+    "InvasiveCarcinoma": {
+      "description": "Invasive carcinoma",
+      "type": ["string", "null"],
+      "maxLength": 1
+    },
+    "SizeInvasiveTumour": {
+      "description": "Largest dimension of dominant invasive tumour (mm). Missing information or not applicable is coded null.",
+      "type": ["number", "null"],
+      "maxLength": 7
+    },
+    "SizeWholeTumour": {
+      "description": "Invasive plus surrounding DCIS if DCIS extends >1mm (mm). Missing information or not applicable is coded null.",
+      "type": ["number", "null"],
+      "maxLength": 7
+    },
+    "Type": {
+      "description": "Type of Invasive Carcinoma",
+      "type": ["string", "null"],
+      "maxLength": 5
+    },
+    "TypeComponent": {
+      "description": "Type of Component",
+      "type": ["string", "null"],
+      "maxLength": 5
+    },
+    "InvasiveGrade": {
+      "description": "Invasive Grade",
+      "type": ["string", "null"],
+      "maxLength": 5
+    },
+    "Tubules": {
+      "description": "Percentage of cells in the tumour that have tube shaped structures for assessing Grade",
+      "type": ["integer", "null"],
+      "maxLength": 1
+    },
+    "Pleomorphism": {
+      "description": "Variability in size and shape for assessing Grade",
+      "type": ["integer", "null"],
+      "maxLength": 1
+    },
+    "TumourExtent": {
+      "description": "Extent of Tumour",
+      "type": ["string", "null"],
+      "maxLength": 3
+    },
+    "VascularInvasion": {
+      "description": "Presence of Tumour cells within the lumen of blood and / or lymph vessel",
+      "type": ["string", "null"],
+      "maxLength": 5
+    },
+    "AxillaryNodesPresent": {
+      "description": "Axillary lymph nodes present",
+      "type": ["string", "null"],
+      "maxLength": 1
+    },
+    "AxillaryNodesTotal": {
+      "description": "Total number of axillary nodes. Missing information or not applicable",
+      "type": ["integer", "null"]
+    },
+    "AxillaryNodesPositive": {
+      "description": "Total number of positive axillary nodes. Missing information or not applicable",
+      "type": ["integer", "null"]
+    },
+    "OtherNodesPresent": {
+      "description": "Nodes other than axillary present",
+      "type": ["string", "null"],
+      "maxLength": 1
+    },
+    "OtherNodesTotal": {
+      "description": "Total of nodes other than axillary. Missing information or not applicable is coded as Null",
+      "type": ["integer", "null"],
+      "maxLength": 2
+    },
+    "OtherNodesPositive": {
+      "description": "Total number of nodes other than axillary that are positive. Missing information or not applicable is coded as Null",
+      "type": ["integer", "null"],
+      "maxLength": 2
+    },
+    "Tstage": {
+      "description": "Tumour staging for extent (size) of the primary tumour - taken as reported, could follow different editions of American Joint Committee on Cancer (AJCC) guidance | AJCC TMA staging system. Prefix c= clinical stage, p = pathological or surgical stage, yp = post therapy pathological stage, yc post therapy clinical stage. Suffix mic = microinvasive",
+      "type": ["string", "null"],
+      "maxLength": 15
+      
+    },
+    "NStage": {
+      "description": "Lymph Node staging | AJCC TMA staging system. Prefix c = clinical stage, p = pathological or surgical stage. Suffix sn = Sentinel lymph node metastasis, ONSA = One step nucleic acid amplification",
+      "type": ["string", "null"],
+      "maxLength": 15
+    },
+    "Mstage": {
+      "description": "Metastasis staging describes whether cancer has spread to a different part of the body | Prefix c = Clinical assessment data (examination, imaging , endoscopy), p = pathological data (histopathologic examination of tissue sample)",
+      "type": ["string", "null"],
+      "maxLength": 15
+    }
+  }
+}
