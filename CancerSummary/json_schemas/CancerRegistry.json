@@ -1,0 +1,1283 @@
+{
+  "type": "object",
+  "properties": {
+    "PATIENTID": {
+      "description": "Project specific ID for each person. In some cases the same person may have multiple patient IDs. Patient IDs will be retained even after two patient records are found to be the same person.",
+      "type": ["number", "not null"]
+    },
+    "TUMOURID": {
+      "description": "Project specific ID for each tumour. As someone can have more than one tumour a patient can have multiple unique tumour IDs.",
+      "type": ["number", "not null"]
+    },
+    "FORENAME": {
+      "description": "The Patient's forename",
+      "type": ["string", "null"]
+    },
+    "SURNAME": {
+      "description": "The Patient's surname",
+      "type": ["string", "null"]
+    },
+    "NHSNUMBER": {
+      "description": "Valid NHS Number. 10 numeric characters.",
+      "type": ["string", "null"],
+      "maxLength": 10
+    },
+    "SEX": {
+      "description": "Self-stated gender at diagnosis.",
+      "type": ["string", "not null"],
+      "enum": ["0", "1", "2", "9"],
+      "enumDescriptions": [
+        "0 : Not known",
+        "1 : Male",
+        "2 : Female",
+        "9 : Not specified"
+      ]
+    },
+    "BIRTHDATEBEST": {
+      "description": "Usually a patient's correct date of birth, when date of birth is defined by a range the average of the two dates is taken. Patients with only their year of birth recorded have a date of either 1st or 2nd July recorded as a halfway point. If a patient has a month and a year of birth the date is recorded as either the 15th or 16th as the halfway point of the month.",
+      "type": ["date", "null"]
+    },
+    "BIRTHDATEFLAG": {
+      "description": "Indicates completeness of BIRTHDATEBEST.",
+      "type": ["number", "not null"],
+      "enum": [0, 1, 2, 3],
+      "enumDescriptions": [
+        "0 : Date fully specified",
+        "1 : Month and year specified",
+        "2 : Year specified",
+        "3 : Date less specific than any of above"
+      ]
+    },
+    "ETHNICITY": {
+      "description": "The 16+1 ethnic data categories defined in the 2001 census is the national mandatory standard for the collection and analysis of ethnicity.",
+      "type": ["string", "null"],
+      "enum": ["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "R", "S", "Z", "X"],
+      "enumDescriptions": [
+        "A : (White) British",
+        "B : (White) Irish",
+        "C : Any other White background",
+        "D : White and Black Caribbean",
+        "E : White and Black African",
+        "F : White and Asian",
+        "G : Any other mixed background",
+        "H : Indian",
+        "J : Pakistani",
+        "K : Bangladeshi",
+        "L : Any other Asian background",
+        "M : Caribbean",
+        "N : African",
+        "P : Any other Black background",
+        "R : Chinese",
+        "S : Any other ethnic group",
+        "Z : Not stated",
+        "X : Not Known"
+      ]
+    },
+    "ETHNICITYNAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "AGE": {
+      "description": "Age of the patient when they were diagnosed with the tumour in years.",
+      "type": ["number", "not null"]
+    },
+    "FIVEYEARAGEBAND": {
+      "description": "Range for the age such as 0-4 or 5-9 or 10-14 until 85-89 and 90+",
+      "type": ["string", "null"]
+    },
+    "AGE_GROUP_BROAD": {
+      "description": "Derived by NDRS, under direction from the applicant. Applicants must include an explanation of how this should be formatted, alongside their justification.",
+      "type": ["string", "null"]
+    },
+    "DIAGNOSISDATE1": {
+      "description": "The earliest date when the diagnosis may have taken place, when the dates are ambiguous.",
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "DIAGNOSISDATE1MONTH": {
+      "description": "MM",
+      "type": ["number", "null"]
+    },
+    "DIAGNOSISDATE1YEAR": {
+      "description": "YYYY",
+      "type": ["number", "null"]
+    },
+    "DAYS_TOFROM_INDEXDATE_DIAGNOSISDATE": {
+      "description": "Derived by NDRS, under direction from the applicant. Applicants must include an explanation of how this interval should be calculated alongside their justification (e.g. Days from date of diagnosis to death)",
+      "type": ["number", "null"]
+    },
+    "DIAGNOSISDATE2": {
+      "description": "The latest date when the diagnosis may have taken place, when the dates are ambiguous.",
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "DIAGNOSISDATE2MONTH": {
+      "description": "MM",
+      "type": ["number", "null"]
+    },
+    "DIAGNOSISDATE2YEAR": {
+      "description": "YYYY",
+      "type": ["number", "null"]
+    },
+    "DAYS_TOFROM_INDEXDATE_DIAGNOSISDATE1": {
+      "description": "Derived by NDRS, under direction from the applicant. Applicants must include an explanation of how this interval should be calculated alongside their justification (e.g. Days from date of diagnosis to death)",
+      "type": ["number", "null"]
+    },
+    "DIAGNOSISDATEBEST": {
+      "description": "Mid-point between diagnosisdate1 and diagnosisdate2.",
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "DIAGNOSISDATEBESTMONTH": {
+      "description": "MM",
+      "type": ["number", "null"]
+    },
+    "DIAGNOSISDATEBESTYEAR": {
+      "description": "YYYY",
+      "type": ["number", "null"]
+    },
+    "DAYS_TOFROM_INDEXDATE_DIAGNOSIS": {
+      "description": "Derived by NDRS, under direction from the applicant. Applicants must include an explanation of how this interval should be calculated alongside their justification (e.g. Days from date of diagnosis to death)",
+      "type": ["number", "null"]
+    },
+    "DIAGNOSISDATEFLAG": {
+      "description": "Indicates completeness of DIAGNOSISDATEBEST",
+      "type": ["number", "not null"],
+      "enum": [0, 1, 2, 3],
+      "enumDescriptions": [
+        "0 : Date fully specified",
+        "1 : Month and year specified",
+        "2 : Year specified",
+        "3 : Date less specific than any of above"
+      ]
+    },
+    "FINANCIALYEAR": {
+      "description": "Financial year of diagnosis based on DIAGNOSISDATEBEST.",
+      "type": ["string", "null"]
+    },
+    "BASISOFDIAGNOSIS": {
+      "description": "Basis of diagnosis of the tumour according to all the data received by the registry.",
+      "type": ["string", "not null"],
+      "enum": ["0", "1", "2", "4", "5", "6", "7", "9"],
+      "enumDescriptions": [
+        "0 : Death certificate",
+        "1 : Clinical: Diagnosis made before death without (2-7)",
+        "2 : Clinical investigation: Includes all diagnostic techniques without a tissue diagnosis",
+        "4 : Specific tumour markers: Includes biochemical and/or immunological markers which are site specific",
+        "5 : Cytology: Examination of cells whether from a primary or secondary site, including fluids aspirated using endoscopes or needles. Also including microscopic examination of periNHS Englandral blood films and trephine bone marrow aspirates",
+        "6 : Histology of a metastases: Includes autopsy specimens",
+        "7 : Histology of a primary tumour: Includes all cutting and bone marrow biopsies. Also includes autopsy specimens of a primary tumour",
+        "9 : Unknown, e.g. PAS or HISS record only"
+      ]
+    },
+    "SITE_ICD10_O2": {
+      "description": "Describes site of origin of the neoplasm.",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "SITE_ICD10_O2_3CHAR": {
+      "description": "Describes site of origin of the neoplasm.",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MORPH_ICD10_O2": {
+      "description": "Number 8000-9990 or blank.",
+      "type": ["string", "null"]
+    },
+    "BEHAVIOUR_ICD10_O2": {
+      "description": "",
+      "type": ["string", "not null"],
+      "enum": ["0", "1", "2", "3", "5", "6", "9", "X"],
+      "enumDescriptions": [
+        "0 : Benign",
+        "1 : Uncertain",
+        "2 : In Situ",
+        "3 : Malignant",
+        "5 : Micro-Invasive",
+        "6 : Malignant, Metastatic / Secondary Site",
+        "9 : Malignant, Uncertain whether primary or metastatic",
+        "X : Unknown / Inapplicable"
+      ]
+    },
+    "SITE_CODED": {
+      "description": "Site code of the cancer, in the coding system that the tumour was originally coded in and string description. The coding system it is coded in is specified in coding_system/_desc.",
+      "type": ["string", "null"]
+    },
+    "SITE_CODED_DESC": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "SITE_CODED_3CHAR": {
+      "description": "Three digit version of SITE_CODED.",
+      "type": ["string", "null"],
+      "maxLength": 3
+    },
+    "CODING_SYSTEM": {
+      "description": "",
+      "type": ["string", "not null"],
+      "enum": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "14", "15", "16", "17"],
+      "enumDescriptions": [
+        "1 : ICD-8",
+        "2 : ICD-9",
+        "3 : ICD-10/O-2",
+        "4 : ICD-10/O-3",
+        "5 : ICD-O-3",
+        "6 : ICD-7",
+        "7 : ICD-8pre1971",
+        "8 : ICD-O-2",
+        "9 : ICD-O",
+        "10 : ICD-O-3 (2011)",
+        "11 : ICD-10rev4/O-2",
+        "12 : MOTNAC",
+        "14 : SNOMED/O(TCR)",
+        "15 : SNOMED/O-1",
+        "16 : SNOMED/O-2",
+        "17 : SNOMED/O-3"
+      ]
+    },
+    "CODING_SYSTEM_DESC": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "MORPH_CODED": {
+      "description": "Morphology code",
+      "type": ["string", "null"]
+    },
+    "BEHAVIOUR_CODED": {
+      "description": "",
+      "type": ["string", "not null"],
+      "enum": ["0", "1", "2", "3", "5", "6", "9", "X"],
+      "enumDescriptions": [
+        "0 : Benign",
+        "1 : Uncertain",
+        "2 : In Situ",
+        "3 : Malignant",
+        "5 : Micro-Invasive",
+        "6 : Malignant, Metastatic / Secondary Site",
+        "9 : Malignant, Uncertain whether primary or metastatic",
+        "X : Unknown / Inapplicable"
+      ]
+    },
+    "BEHAVIOUR_CODED_DESC": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "HISTOLOGY_CODED": {
+      "description": "Histology code - combines the morphology and behaviour codes.",
+      "type": ["string", "null"]
+    },
+    "HISTOLOGY_CODED_DESC": {
+      "description": "Name for the histology type, for example clear cell meningioma.",
+      "type": ["string", "null"]
+    },
+    "GRADE": {
+      "description": "",
+      "type": ["string", "not null"],
+      "enum": ["GX", "G0", "G1", "G2", "G3", "G4", "G5", "G6", "G7"],
+      "enumDescriptions": [
+        "GX : Grade of differentiation is not appropriate or cannot be assessed",
+        "G0 : Borderline malignancy",
+        "G1 : Well differentiated",
+        "G2 : Moderately differentiated",
+        "G3 : Poorly differentiated",
+        "G4 : Undifferentiated / anaplastic",
+        "G5 : T Cell",
+        "G6 : B Cell",
+        "G7 : Null cell"
+      ]
+    },
+    "TUMOURSIZE": {
+      "description": "Size in mm.",
+      "type": ["number", "null"]
+    },
+    "NODESEXCISED": {
+      "description": "The number of local and regional nodes reported as being positive.",
+      "type": ["number", "null"]
+    },
+    "NODESINVOLVED": {
+      "description": "The number of local and regional nodes examined.",
+      "type": ["number", "null"]
+    },
+    "TUMOURCOUNT": {
+      "description": "A count of every tumour assigned to a particular patientid.",
+      "type": ["number", "null"]
+    },
+    "BIGTUMOURCOUNT": {
+      "description": "A count of every tumour assigned to a particular patientid in the range C00-C97 excluding C44.",
+      "type": ["number", "null"]
+    },
+    "ROUTE_CODE": {
+      "description": "The code assigned to the route for the purpose of the algorithm",
+      "type": ["string", "null"]
+    },
+    "FINAL_ROUTE": {
+      "description": "",
+      "type": ["string", "not null"],
+      "enum": ["DCO", "Emergency Presentation", "GP Referral", "Screening", "TWW", "Other Outpatient", "Inpatient Elective", "Unknown"],
+      "enumDescriptions": []
+    },
+    "STAGE_BEST": {
+      "description": "",
+      "type": ["string", "null"],
+      "enum": ["0", "0A", "0B", "0C", "0IS", "1", "1A", "1A1", "1A2", "1A3", "1AE", "1AES", "1AEX", "1AEXS", "1AS", "1AX", "1B", "1B1", "1B2", "1BE", "1BES", "1BEX", "1BS", "1BX", "1C", "1C1", "1C2", "IC3", "1E", "1ES", "1EX", "1S", "1X", "1XS", "2", "2A", "2A1", "2A2", "2AE", "2AES", "2AEX", "2AS", "2AX", "2B", "2BE", "2BEX", "2BS", "2BX", "2C", "2E", "2ES", "2EX", "2S", "2X", "3", "3A", "3A1", "3A1i", "3A1ii", "3A2", "3AE", "3AES", "3AEX", "3AS", "3AX", "3B", "3BE", "3BES", "3BEX", "3BEXS", "3BS", "3BX", "3BXS", "3C", "3C1", "3C2", "3D", "3E", "3ES", "3EX", "3S", "3X", "3XS", "4", "4A", "4AE", "4AES", "4AEX", "4AEXS", "4AS", "4AX", "4AXS", "4B", "4BE", "4BES", "4BEX", "4BEXS", "4BS", "4BX", "4BXS", "4BS", "4BX", "4BXS", "4C", "4E", "4ES", "4EX", "4EXS", "4S", "4X", "A", "B", "C", "5", "6", "?", "U", "X"],
+      "enumDescriptions": []
+    },
+    "T_BEST": {
+      "description": "Local size of the tumour.",
+      "type": ["string", "null"]
+    },
+    "N_BEST": {
+      "description": "How far the tumour has grown through local tissues and distant spread of disease with involvement of lymph nodes.",
+      "type": ["string", "null"]
+    },
+    "M_BEST": {
+      "description": "Metastases to other organs.",
+      "type": ["string", "null"]
+    },
+    "STAGE_BEST_SYSTEM": {
+      "description": "Staging system associated with stage_best.",
+      "type": ["string", "null"],
+      "enum": ["5th", "6th", "7th", "8th", "UICC5", "UICC6", "UICC7", "UICC8", "AJCC7", "AJCC8", "ENETS 2007", "ANNARBOR", "FIGO", "ISS", "RaiBinet", "UNKNOWN"],
+      "enumDescriptions": [
+        "5 : 5th",
+        "6 : 6th",
+        "7 : 7th",
+        "8 : 8th",
+        "20 : UICC5",
+        "21 : UICC6",
+        "22 : UICC7",
+        "23 : UICC8",
+        "23 : AJCC7",
+        "26 : AJCC8",
+        "27 : ENETS 2007",
+        "ANNARBOR : Ann Arbor staging system",
+        "FIGO : FIGO staging system",
+        "ISS : International Staging System",
+        "RaiBinet : Rai-Binet staging system",
+        "UNKNOWN : Unknown staging system"
+      ]
+    },
+    "T_IMG": {
+      "description": "The UICC code which classifies the size and extent of the primary tumour before treatment.",
+      "type": ["string", "null"]
+    },
+    "N_IMG": {
+      "description": "The UICC code which classifies the absence or presence and extent of regional lymph node metastases before treatment.",
+      "type": ["string", "null"],
+      "enum": ["+", "0", "1", "1a", "1b", "1c", "1mi", "2", "2a", "2b", "2c", "3", "3a", "3b", "3c", "X"],
+      "enumDescriptions": []
+    },
+    "M_IMG": {
+      "description": "The UICC code which classifies the absence or presence of distant metastases pre-treatment.",
+      "type": ["string", "null"],
+      "enum": ["0", "1", "1a", "1b", "1c", "1e", "X"],
+      "enumDescriptions": [
+        "0 : no distant metastasis",
+        "1 : distant metastasis",
+        "1a : distant metastasis",
+        "1b : distant metastasis",
+        "1c : distant metastasis",
+        "1e : distant metastasis",
+        "X : unknown"
+      ]
+    },
+    "STAGE_IMG": {
+      "description": "",
+      "type": ["string", "null"],
+      "enum": ["0", "1", "1A", "1A1", "1A2", "1B", "1B1", "1B2", "1C", "1E", "2", "2A", "2A1", "2A2", "2B", "2C", "2E", "2S", "3", "3A", "3B", "3C", "3E", "3S", "4", "4A", "4B", "4C", "4S", "6", "?", "U", "X"],
+      "enumDescriptions": []
+    },
+    "STAGE_IMG_SYSTEM": {
+      "description": "",
+      "type": ["number", "null"],
+      "enum": ["5", "6", "7", "8", "20", "21", "22", "23", "24", "25", "26", "27"],
+      "enumDescriptions": [
+        "5 : 5th",
+        "6 : 6th",
+        "7 : 7th",
+        "8 : 8th",
+        "20 : UICC 5",
+        "21 : UICC 6",
+        "22 : UICC 7",
+        "23 : AJCC 7",
+        "24 : Unknown",
+        "25 : UICC 8",
+        "26 : AJCC 8",
+        "27 : ENETS 2007"
+      ]
+    },
+    "T_PATH": {
+      "description": "The UICC code which classifies the size and extent of the primary tumour based on the evidence from a pathological examination.",
+      "type": ["string", "null"],
+      "enum": ["0", "1", "1A", "1B", "1C", "1a", "1a1", "1a2", "1b", "1b1", "1b2", "1c", "1d", "1mi", "2", "2A", "2B", "2a", "2a1", "2a2", "2b", "2c", "2d", "2s", "3", "3A", "3a", "3b", "3c", "3d", "3s", "4", "4B", "4a", "4b", "4c", "4d", "4e", "A", "IS", "S", "T1", "T2", "T3", "TA", "X", "a", "is"],
+      "enumDescriptions": []
+    },
+    "N_PATH": {
+      "description": "The UICC code which classifies the absence or presence and extent of regional lymph node metastases based on the evidence from a pathological examination.",
+      "type": ["string", "null"],
+      "enum": ["+", "-", "0", "00", "1", "11", "1B", "1a", "1b", "1c", "1mi", "2", "2a", "2b", "2c", "3", "3a", "3b", "3c", "4", "9", "N0", "N1", "N2", "X"],
+      "enumDescriptions": []
+    },
+    "M_PATH": {
+      "description": "The UICC code which classifies the absence or presence of distant metastases bases on the evidence from a pathological examination.",
+      "type": ["string", "null"],
+      "enum": ["0", "1", "1a", "1b", "1c", "1e", "2", "3", "4", "9", "X", "blank"],
+      "enumDescriptions": []
+    },
+    "STAGE_PATH": {
+      "description": "Pathological stage at diagnosis.",
+      "type": ["string", "null"],
+      "enum": ["0", "0A", "0IS", "1", "1A", "1A1", "1A2", "1B", "1B1", "1B2", "1C", "1E", "2", "2A", "2B", "2C", "2E", "3", "3A", "3B", "3C", "3E", "4", "4A", "4B", "4C", "5", "6", "?", "U", "X", "blank"],
+      "enumDescriptions": []
+    },
+    "STAGE_PATH_SYSTEM": {
+      "description": "",
+      "type": ["number", "null"],
+      "enum": ["5", "6", "7", "8", "20", "21", "22", "23", "24", "25", "26", "27"],
+      "enumDescriptions": [
+        "5 : 5th",
+        "6 : 6th",
+        "7 : 7th",
+        "8 : 8th",
+        "20 : UICC 5",
+        "21 : UICC 6",
+        "22 : UICC 7",
+        "23 : AJCC 7",
+        "24 : Unknown",
+        "25 : UICC 8",
+        "26 : AJCC 8",
+        "27 : ENETS 2007"
+      ]
+    },
+    "STAGE_PATH_PRETREATED": {
+      "description": "Pathological stage at diagnosis recorded prior to treatment.",
+      "type": ["string", "null"],
+      "enum": ["Y", "X"],
+      "enumDescriptions": ["Y : Yes", "X : No"]
+    },
+    "CHRL_TOT_27_03": {
+      "description": "Lookback of 27 to 3 months prior to diagnosis",
+      "type": ["number", "null"]
+    },
+    "CHRL_TOT_78_06": {
+      "description": "Lookback of 78 to 6 months prior to diagnosis,",
+      "type": ["number", "null"]
+    },
+    "HES_LINKED": {
+      "description": "An indicator that HES is available for the patient.",
+      "type": ["string", "null"],
+      "enum": ["Y", "N"],
+      "enumDescriptions": ["Y : Yes", "N : No"]
+    },
+    "ER_STATUS": {
+      "description": "",
+      "type": ["string", "null"],
+      "enum": ["N", "P", "X"],
+      "enumDescriptions": ["N : Negative", "P : Positive", "X : Not Performed"]
+    },
+    "ER_SCORE": {
+      "description": "ER Allred score (range 0, 2-8).",
+      "type": ["string", "null"],
+      "minimum": 0,
+      "maximum": 8
+    },
+    "PR_STATUS": {
+      "description": "",
+      "type": ["string", "null"],
+      "enum": ["N", "P", "X"],
+      "enumDescriptions": ["N : Negative", "P : Positive", "X : Not Performed"]
+    },
+    "PR_SCORE": {
+      "description": "PR Allred score (range 0, 2-8).",
+      "type": ["string", "null"],
+      "minimum": 0,
+      "maximum": 8
+    },
+    "HER2_STATUS": {
+      "description": "",
+      "type": ["string", "null"],
+      "enum": ["N", "P", "B", "X"],
+      "enumDescriptions": ["N : Negative", "P : Positive", "B : Borderline", "X : Not Performed"]
+    },
+    "NPI": {
+      "description": "Calculated from tumour size, grade and lymph node involvement.",
+      "type": ["number", "null"],
+      "minimum": 3,
+      "maximum": 19
+    },
+    "DUKES": {
+      "description": "Dukes stage of disease at diagnosis, based on pathological evidence but upgraded to Dukes D if clinical evidence of metastasis.",
+      "type": ["string", "null"],
+      "enum": ["A", "B", "C1", "C2", "D", "99"],
+      "enumDescriptions": [
+        "A : Dukes' A: Tumour confined to wall of bowel, nodes negative",
+        "B : Dukes' B: Tumour penetrates through the muscularis propria to involve extramural tissues, nodes negative",
+        "C1 : Dukes' C1: Metastases confined to regional lymph nodes (node/s positive but apical node negative)",
+        "C2 : Dukes' C2: Metastases present in nodes at mesenteric artery ligature (apical node positive)",
+        "D : Dukes D: Metastatic spread outside the operative field",
+        "99 : Not Known"
+      ]
+    },
+    "FIGO": {
+      "description": "Staging system for tumours of the female reproductive system.",
+      "type": ["string", "null"],
+      "enum": ["0", "1", "1a", "1a1", "1a2", "1b", "1b1", "1b2", "1c", "1c1", "1c2", "1c3", "2", "2a", "2a1", "2a2", "2b", "2c", "3", "3a", "3b", "3c", "3c1", "3c2", "4", "4a", "4b", "I", "IA", "IA1", "IA2", "IB", "IB1", "IB2", "IC", "II", "IIA", "IIA2", "IIB", "IIC", "III", "IIIA", "IIIB", "IIIC", "IIIC1", "IIIC2", "IV", "IVA", "IVB", ""],
+      "enumDescriptions": []
+    },
+    "GLEASON_PRIMARY": {
+      "description": "The primary pattern is the grade that comprises most of the tumour volume.",
+      "type": ["number", "null"],
+      "enum": ["2", "3", "4", "5", "8"],
+      "enumDescriptions": []
+    },
+    "GLEASON_SECONDARY": {
+      "description": "If additional grades are present, what is the highest grade (biopsy) or the second most extensive grade (TURP and radicals). If no additional grades are present, primary and secondary grades are the same.",
+      "type": ["number", "null"],
+      "enum": ["2", "3", "4", "5", "8"],
+      "enumDescriptions": ["8: Not applicable"]
+    },
+    "GLEASON_TERTIARY": {
+      "description": "Is there a different third grade in addition to the primary and secondary grades and what is the value?",
+      "type": ["number", "null"],
+      "enum": ["3", "4", "5", "8"],
+      "enumDescriptions": ["8: Not applicable"]
+    },
+    "GLEASON_COMBINED": {
+      "description": "Combined Gleason primary and secondary scores (+/- tertiary). The worst score is recorded, if both scores are the same but have different primary and secondary grades, the score with the highest primary grade is recorded first, i.e. 4+3:7 would be recorded over 3+4:7.",
+      "type": ["number", "null"],
+      "enum": ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", ""],
+      "enumDescriptions": []
+    },
+    "SCREENDETECTED": {
+      "description": "Whether or not the tumour was detected by a screening programme.",
+      "type": ["string", "null"],
+      "enum": ["N", "Y", "8", "9"],
+      "enumDescriptions": ["N : No", "Y : Yes", "8 : Not applicable", "9 : Not known"]
+    },
+    "SCREENINGSTATUSCOSD_CODE": {
+      "description": "",
+      "type": ["string", "null"],
+      "enum": ["1", "2", "4", "5", "6", "7", "9", "NM"],
+      "enumDescriptions": [
+        "1 : Screen-detected",
+        "2 : Interval Cancer",
+        "4 : Lapsed Attender",
+        "5 : Never Attended",
+        "6 : Never Invited",
+        "7 : Other",
+        "9 : Not Known",
+        "NM : Not Mapped"
+      ]
+    },
+    "SCREENINGSTATUSCOSD_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "SCREENINGSTATUSFULL_CODE": {
+      "description": "Large number of codes used to detail screening status.",
+      "type": ["string", "null"]
+    },
+    "SCREENINGSTATUSFULL_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "LATERALITY": {
+      "description": "Identifies the side of the body for a tumour relating to paired organs within a patient, based on the evidence from a pathological examination. The data field is used to differentiate tumours in paired organs (and define the site of the pathology/cytology specimen).",
+      "type": ["string", "null"],
+      "enum": ["L", "R", "M", "B", "8", "9"],
+      "enumDescriptions": ["L : Left", "R : Right", "M : Midline", "B : Bilateral", "8 : Not applicable", "9 : Not Known"]
+    },
+    "DCO": {
+      "description": "Whether the tumour was registered from a death certificate only.",
+      "type": ["string", "null"],
+      "enum": ["Y", "N"],
+      "enumDescriptions": ["Y : Yes", "N : No"]
+    },
+    "VITALSTATUS": {
+      "description": "Records whether the patient is currently alive or deceased at the time of the snapshot.",
+      "type": ["string", "not null"],
+      "enum": ["A", "D", "X1", "X2", "X3", "X4", "X5", "X"],
+      "enumDescriptions": [
+        "A : Alive",
+        "D : Dead",
+        "X1 : Is lost to follow-up at a date in the future (cf the date of the snapshot creation)",
+        "X2 : This patient may have returned and has been successfully traced",
+        "X3 : This patient may have returned but has not been successfully traced",
+        "X4 : Trace returned as embarked but this is not yet recorded in CAS",
+        "X5 : Lost to follow-up, not in X or X1-4",
+        "X : Embarked"
+      ]
+    },
+    "VITALSTATUSDATE": {
+      "description": "The last known date of vital status",
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "DEATHDATEBEST": {
+      "description": "The date the patient died. Usually a patient's correct date of death, when date of death is defined by a range the average of the two dates is taken.",
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "deathmonth": {
+      "description": "Month of death of the patient.",
+      "type": ["number", "null"]
+    },
+    "deathyear": {
+      "description": "Year of death of the patient.",
+      "type": ["number", "null"]
+    },
+    "DAYS_TOFROM_INDEXDATE_DEATHDATEBEST": {
+      "description": "Derived by NDRS, under direction from the applicant. Applicants must include an explanation of how this interval should be calculated alongside their justification (e.g. Days from date of diagnosis to death)",
+      "type": ["number", "null"]
+    },
+    "DEATHDATEFLAG": {
+      "description": "Indicates completeness of DEATHDATEBEST.",
+      "type": ["number", "null"],
+      "enum": [0, 1, 2, 3],
+      "enumDescriptions": [
+        "0 : Date fully specified",
+        "1 : Month and year specified",
+        "2 : Year specified",
+        "3 : Date less specific than any of above"
+      ]
+    },
+    "EMBARKATION": {
+      "description": "Whether there is a record of the patient leaving the UK, this is set by the vitalstatus having a value of X (exit posting).",
+      "type": ["string", "null"],
+      "enum": ["Y", "X", ""],
+      "enumDescriptions": ["Y: Yes", "X: exit posting"]
+    },
+    "EMBARKATIONDATE": {
+      "description": "Date the patient is recorded as leaving the UK. This is taken as the average of vitalstatusdate1 and vitalstatusdate2 when vitalstatus : X.",
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "Month of embarkation": {
+      "description": "MM",
+      "type": ["number", "null"]
+    },
+    "Year of embarkation": {
+      "description": "YYYY",
+      "type": ["number", "null"]
+    },
+    "DAYS_TOFROM_INDEXDATE_EMBARKATIONDATE": {
+      "description": "Derived by NDRS, under direction from the applicant. Applicants must include an explanation of how this interval should be calculated alongside their justification (e.g. Days from date of diagnosis to death)",
+      "type": ["number", "null"]
+    },
+    "DEATHCAUSECODE_1A": {
+      "description": "A numeric code listed on the first line for the primary cause of death on the ONS death certificate. Comma separated when multiple codes are recorded.",
+      "type": ["string", "null"]
+    },
+    "DEATHCAUSECODE_1B": {
+      "description": "A numeric code listed on the second line for the primary cause of death on the ONS death certificate, after DEATHCAUSECODE_1A. Comma separated when multiple codes are recorded.",
+      "type": ["string", "null"]
+    },
+    "DEATHCAUSECODE_1C": {
+      "description": "An additional numeric code listed on the third line for the primary cause of death on the ONS death certificate, after DEATHCAUSECODE_1B. Comma separated when multiple codes are recorded.",
+      "type": ["string", "null"]
+    },
+    "DEATHCAUSECODE_2": {
+      "description": "A numeric code for a secondary cause of death. Comma separated when multiple codes are recorded.",
+      "type": ["string", "null"]
+    },
+    "DEATHCAUSECODE_UNDERLYING": {
+      "description": "A numeric code listed as 'Death cause code underlying (1C)' on the ONS death certificate. Comma separated when multiple codes are recorded.",
+      "type": ["string", "null"]
+    },
+    "DEATHLOCATIONCODE": {
+      "description": "",
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "4", "5", "6", "X"],
+      "enumDescriptions": [
+        "1 : Hospital",
+        "2 : Hospice NOS, NHS hospice / specialist palliative care unit",
+        "3 : Voluntary hospice / specialist palliative care unit",
+        "4 : Other private residence (e.g. relatives home, carers home), patient's own home, private home",
+        "5 : Care home, care home with nursing, nursing home",
+        "6 : Other",
+        "X : Unknown"
+      ]
+    },
+    "DEATHLOCATIONDESC": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "SITECODEOFDEATH": {
+      "description": "A numeric code for the institution where the patient's death took place.",
+      "type": ["string", "null"]
+    },
+    "SITECODEOFDEATH (Pseudonymised)": {
+      "description": "A project specific pseudonymised version of numeric code for the institution where the patient's death took place.",
+      "type": ["string", "null"]
+    },
+    "POSTMORTEM": {
+      "description": "Indication on the ONS death card of whether a postmortem took place.",
+      "type": ["string", "null"],
+      "enum": ["Y", "N", "8", "9"],
+      "enumDescriptions": ["Y : Yes", "N : No", "8 : N/A", "9 : Unknown"]
+    },
+    "DIAG_HOSP": {
+      "description": "Valid hospital code and name, as described",
+      "type": ["string", "null"]
+    },
+    "DIAG_HOSP_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "DIAG_HOSP (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of DIAG_HOSP",
+      "type": ["string", "null"]
+    },
+    "FIRST_HOSP": {
+      "description": "Valid hospital code and name for first event.",
+      "type": ["string", "null"]
+    },
+    "FIRST_HOSP_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "FIRST_HOSP (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of FIRST_HOSP",
+      "type": ["string", "null"]
+    },
+    "FIRST_HOSP_DATE": {
+      "description": "Date of first event",
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "EVENTMONTH": {
+      "description": "Month the event took place - MM",
+      "type": ["number", "null"]
+    },
+    "EVENTYEAR": {
+      "description": "Year the event took place - YYYY",
+      "type": ["number", "null"]
+    },
+    "DAYS_TOFROM_INDEXDATE_FIRST_HOSPDATE": {
+      "description": "Interval to be derived as per applicant requirements. Applicants are advised to describe in the justification column how the interval should be calculated.",
+      "type": ["number", "null"]
+    },
+    "DIAG_TRUST": {
+      "description": "Valid trust code and name.",
+      "type": ["string", "null"]
+    },
+    "DIAG_TRUST_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "DIAG_TRUST (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of DIAG_TRUST",
+      "type": ["string", "null"]
+    },
+    "FIRST_TRUST": {
+      "description": "Valid trust code and name for first event.",
+      "type": ["string", "null"]
+    },
+    "FIRST_TRUST_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "FIRST_TRUST (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of FIRST_TRUST_CODE",
+      "type": ["string", "null"]
+    },
+    "PRAC_TO_USE": {
+      "description": "The organisational code for the patient's most likely general practice at time of diagnosis; Format of CXXXXX, where C is alphabetic and X is numeric",
+      "type": ["string", "null"]
+    },
+    "PRAC_TO_USE (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of PRAC_TO_USE",
+      "type": ["string", "null"]
+    },
+    "PRAC_TO_USE_SOURCE": {
+      "description": "The data source for the derived general practice at diagnosis, from CWT and/or HES",
+      "type": ["string", "null"]
+    },
+    "POSTCODE": {
+      "description": "Postcode-7 format.",
+      "type": ["string", "null"]
+    },
+    "POSTCODE_OUTWARD": {
+      "description": "The first part of the Postcode eg PO1 is called the outward code as it identifies the town or district to which the letter is to be sent for further sorting",
+      "type": ["string", "null"]
+    },
+    "LSOA11_CODE": {
+      "description": "2011 LSOA the patient was resident in when the tumour was diagnosed.",
+      "type": ["string", "null"]
+    },
+    "LSOA11_CODE (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of LSOA11_CODE",
+      "type": ["string", "null"]
+    },
+    "LSOA01_CODE": {
+      "description": "2001 LSOA the patient was resident in when the tumour was diagnosed.",
+      "type": ["string", "null"]
+    },
+    "LSOA01_CODE (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of LSOA01_CODE",
+      "type": ["string", "null"]
+    },
+    "MSOA11_CODE": {
+      "description": "2011 MSOA the patient was resident in when the tumour was diagnosed.",
+      "type": ["string", "null"]
+    },
+    "MSOA11_CODE (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of MSOA11_CODE",
+      "type": ["string", "null"]
+    },
+    "MSOA01_CODE": {
+      "description": "2001 MSOA the patient was resident in when the tumour was diagnosed.",
+      "type": ["string", "null"]
+    },
+    "MSOA01_CODE (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of MSOA01_CODE",
+      "type": ["string", "null"]
+    },
+    "CCG_CODE": {
+      "description": "Code format: X00000000",
+      "type": ["string", "null"],
+      "pattern": "^X\\d{8}$"
+    },
+    "CCG_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "CCG_CODE (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of CCG_CODE",
+      "type": ["string", "null"]
+    },
+    "LAUA_CODE": {
+      "description": "Code Format: X00000000.",
+      "type": ["string", "null"],
+      "pattern": "^X\\d{8}$"
+    },
+    "LAUA_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "LAUA_CODE (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of LAUA_CODE",
+      "type": ["string", "null"]
+    },
+    "UTLA_CODE": {
+      "description": "Code Format: E00000000.",
+      "type": ["string", "null"],
+      "pattern": "^E\\d{8}$"
+    },
+    "UTLA_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "UTLA_CODE (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of UTLA_CODE",
+      "type": ["string", "null"]
+    },
+    "COUNTY_CODE": {
+      "description": "Code Format: E10000000.",
+      "type": ["string", "null"],
+      "pattern": "^E1\\d{7}$"
+    },
+    "COUNTY_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "GOR_CODE": {
+      "description": "",
+      "type": ["string", "null"],
+      "enum": ["E12000001", "E12000002", "E12000003", "E12000004", "E12000005", "E12000006", "E12000007", "E12000008", "E12000009"],
+      "enumDescriptions": [
+        "E12000001 : North East",
+        "E12000002 : North West",
+        "E12000003 : Yorkshire and The Humber",
+        "E12000004 : East Midlands",
+        "E12000005 : West Midlands",
+        "E12000006 : East of England",
+        "E12000007 : London",
+        "E12000008 : South East",
+        "E12000009 : South West"
+      ]
+    },
+    "GOR_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "CREG_CODE": {
+      "description": "",
+      "type": ["string", "null"],
+      "enum": ["Y0201", "Y0301", "Y0401", "Y0801", "Y0901", "Y1001", "Y1101", "Y1201", "Y1701", "Z9999"],
+      "enumDescriptions": [
+        "Y0201 : Northern and Yorkshire Cancer Registry and Information Service",
+        "Y0301 : Trent Cancer Registry",
+        "Y0401 : Eastern Cancer Registration and Information Centre",
+        "Y0801 : Thames Cancer Registry",
+        "Y0901 : Oxford Cancer Intelligence Unit",
+        "Y1001 : South West Cancer Intelligence Service",
+        "Y1101 : Welsh Cancer Intelligence and Surveillance Unit",
+        "Y1201 : West Midlands Cancer Intelligence Unit",
+        "Y1701 : North West Cancer Intelligence Service",
+        "Z9999 : null"
+      ]
+    },
+    "CREG_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "CTRY_CODE": {
+      "description": "",
+      "type": ["string", "null"],
+      "enum": ["E", "W", "S", "M", "N", "L"],
+      "enumDescriptions": [
+        "E : England",
+        "W : Wales",
+        "S : Scotland",
+        "M : Isle of Man",
+        "N : Northern Ireland",
+        "L : Channel Islands"
+      ]
+    },
+    "CTRY_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "PARL_CON_CODE": {
+      "description": "Parliamentary constituency codes for each postcode.",
+      "type": ["string", "null"]
+    },
+    "PARL_CON_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "PARL_CON_CODE (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of PARL_CON_CODE",
+      "type": ["string", "null"]
+    },
+    "RURAL_URBAN_IND_CODE": {
+      "description": "Based on the 2011 urban-rural classification of output areas:",
+      "type": ["string", "null"],
+      "enum": ["A1", "B1", "C1", "C2", "D1", "D2", "E1", "E2", "F1", "F2"],
+      "enumDescriptions": [
+        "A1 : Urban major conurbation",
+        "B1 : Urban minor conurbation",
+        "C1 : Urban city and town",
+        "C2 : Urban city and town in a sparse setting",
+        "D1 : Rural town and fringe",
+        "D2 : Rural town and fringe in a sparse setting",
+        "E1 : Rural village",
+        "E2 : Rural village in a sparse setting",
+        "F1 : Rural hamlet and isolated dwellings",
+        "F2 : Rural hamlet and isolated dwellings in a sparse setting"
+      ]
+    },
+    "RURAL_URBAN_IND_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "STP_CODE": {
+      "description": "England Code Format: E54000000.",
+      "type": ["string", "null"],
+      "pattern": "^E54\\d{6}$"
+    },
+    "STP_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "CANALLIANCE_CODE": {
+      "description": "England Code Format: E56000000 or E57000000.",
+      "type": ["string", "null"],
+      "pattern": "^E5\\d{7}$"
+    },
+    "CANALLIANCE_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "NHS_REGION_CODE": {
+      "description": "",
+      "type": ["string", "null"],
+      "enum": ["E40000003", "E40000005", "E40000006", "E40000007", "E40000008", "E40000009", "E40000010"],
+      "enumDescriptions": [
+        "E40000003 : London",
+        "E40000005 : South East",
+        "E40000006 : South West",
+        "E40000007 : East of England",
+        "E40000008 : Midlands",
+        "E40000009 : North East and Yorkshire",
+        "E40000010 : North West"
+      ]
+    },
+    "NHS_REGION_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "imd04_quintile_lsoas": {
+      "description": "1 (least deprived),2,3,4 and 5 (most deprived)",
+      "type": ["number", "null"]
+    },
+    "imd07_quintile_lsoas": {
+      "description": "1 (least deprived),2,3,4 and 5 (most deprived)",
+      "type": ["number", "null"]
+    },
+    "imd10_quintile_lsoas": {
+      "description": "1 (least deprived),2,3,4 and 5 (most deprived)",
+      "type": ["number", "null"]
+    },
+    "imd15_quintile_lsoas": {
+      "description": "1 (least deprived),2,3,4 and 5 (most deprived)",
+      "type": ["number", "null"]
+    },
+    "imd19_quintile_lsoas": {
+      "description": "1 (least deprived),2,3,4 and 5 (most deprived)",
+      "type": ["number", "null"]
+    },
+    "RT_FLAG": {
+      "description": "1 : Had radiotherapy\n0 : No recorded radiotherapy",
+      "type": ["number", "not null"]
+    },
+    "CT_FLAG": {
+      "description": "1 : Had chemotherapy\n0 : No recorded chemotherapy",
+      "type": ["number", "not null"]
+    },
+    "SG_FLAG": {
+      "description": "1 : Had surgery to remove primary tumour\n0 : No recorded surgery",
+      "type": ["number", "not null"]
+    },
+    "EVENTID": {
+      "description": "Project specific ID for each event.\nAs someone can have more than one event per tumour, a patient can have multiple unique event IDs.",
+      "type": ["number", "not null"]
+    },
+    "NUMBER_OF_TUMOURS": {
+      "description": "Count of the number of tumours affected by the event in EVENTCODE",
+      "type": ["number", "not null"]
+    },
+    "EVENTCODE": {
+      "description": "",
+      "type": ["string", "not null"],
+      "enum": ["01a", "01b", "01z", "02", "03", "04", "05", "06", "07", "08", "09", "14", "15", "19", "22", "97", "98", "99", "CTX", "IM", "RTX"],
+      "enumDescriptions": [
+        "01a : Surgery - curative",
+        "01b : Surgery - not curative",
+        "01z : Surgery - type unknown",
+        "02 : Cytotoxic Chemotherapy",
+        "03 : Hormone Therapy",
+        "04 : Chemoradiotherapy",
+        "05 : RT–Teletherapy",
+        "06 : RT–Brachytherapy",
+        "07 : Specialist Palliative Care",
+        "08 : Active Monitoring",
+        "09 : Non-Specialist Palliative Care",
+        "14 : Anti Cancer Drug Regimen (other)",
+        "15 : Immunotherapy",
+        "19 : Radioisotope Therapy",
+        "22 : Radiosurgery",
+        "97 : Other Treatment",
+        "98 : All treatment declined",
+        "99 : Treatment unknown",
+        "CTX : CT–Other",
+        "IM : Imaging",
+        "RTX : RT-Other/NK"
+      ]
+    },
+    "EVENTDESC": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "EVENTDATE": {
+      "description": "Date the event took place",
+      "type": ["date", "null"]
+    },
+    "EVENTMONTH": {
+      "description": "Month the event took place - MM",
+      "type": ["number", "null"]
+    },
+    "EVENTYEAR": {
+      "description": "Year the event took place - YYYY",
+      "type": ["number", "null"]
+    },
+    "DAYS_EVENT_EVENT": {
+      "description": "Interval to be derived as per applicant requirements. Applicants are advised to describe in the justification column how the interval should be calculated.",
+      "type": ["number", "null"]
+    },
+    "PROVIDERCODE": {
+      "description": "Code and name of the organisation where the event took place. This is the organisation acting as the healthcare provider.",
+      "type": ["string", "null"]
+    },
+    "PROVIDERDESC": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "PROVIDERCODE (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of PROVIDERCODE",
+      "type": ["string", "null"]
+    },
+    "TRUST_CODE": {
+      "description": "Code and name of the NHS trust where the event took place.",
+      "type": ["string", "null"]
+    },
+    "TRUST_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "TRUST_CODE (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of TRUST_CODE",
+      "type": ["string", "null"]
+    },
+    "PRACTITIONERCODE": {
+      "description": "Valid consultant or GP code and name",
+      "type": ["string", "null"]
+    },
+    "PRACTITIONERDESC": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "PRACTITIONERCODE (Pseudonymised)": {
+      "description": "Project specific pseudonymised version of PRACTIONERCODE",
+      "type": ["string", "null"]
+    },
+    "WITHIN_SIX_MONTHS_FLAG": {
+      "description": "Whether treatment was within six months of diagnosis.",
+      "type": ["number", "not null"],
+      "enum": ["0", "1"],
+      "enumDescriptions": ["0 : No", "1 : Yes"]
+    },
+    "SIX_MONTHS_AFTER_FLAG": {
+      "description": "Whether treatment was after six months from diagnosis date.",
+      "type": ["number", "not null"],
+      "enum": ["0", "1"],
+      "enumDescriptions": ["0 : No", "1 : Yes"]
+    },
+    "OPCS4_CODE": {
+      "description": "Valid four digit OPCS4 code and description. Code Format: X000.",
+      "type": ["string", "null"]
+    },
+    "OPCS4_NAME": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "RADIOCODE": {
+      "description": "",
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "4", "5", "8", "B", "X"],
+      "enumDescriptions": [
+        "1 : External Beam",
+        "2 : Intracavity or Interstitial",
+        "3 : 1 + 2",
+        "4 : Radioactive Isotopes",
+        "5 : 1 + 4",
+        "8 : Other",
+        "B : Brachytherapy",
+        "X : Unknown / Inapplicable"
+      ]
+    },
+    "RADIODESC": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "IMAGINGCODE": {
+      "description": "",
+      "type": ["string", "null"],
+      "enum": ["1", "1A", "1B", "1C", "1D", "1E", "1F", "1G", "1H", "1J", "1K", "1L", "2", "2A", "2B", "3", "3A", "3B", "3C", "4", "5", "5A", "5B", "5C", "5D", "5E", "5F", "6", "6A", "6B", "6C", "7", "8", "8A", "8B", "9", "99", "C02C", "C08U", "C09X", "CXXX"],
+      "enumDescriptions": [
+        "1 : Standard Radiography",
+        "1A : Chest X-Ray",
+        "1B : Sinus X-Rays",
+        "1C : Mastoid Views",
+        "1D : Orthopantomogram (OPG)",
+        "1E : Skull Base X-Rays",
+        "1F : Angiography",
+        "1G : Intravenous Urography",
+        "1H : Retrograde Urography",
+        "1J : Inferior Vena Cavography",
+        "1K : Bone Angiography",
+        "1L : Soft Tissue Angiography",
+        "2 : CT Scan with unspecified contrast",
+        "2A : CT scan with contrast",
+        "2B : CT scan without contrast",
+        "3 : MRI scan with unspecified contrast",
+        "3A : MRI scan with contrast",
+        "3B : MRI scan without contrast",
+        "3C : MRI scan cholangiography",
+        "4 : PET Scan",
+        "5 : Ultrasound",
+        "5A : Transabdominal ultrasound",
+        "5B : Transvaginal ultrasound",
+        "5C : Doppler ultrasound",
+        "5D : Transrectal ultrasound",
+        "5E : Endoscopic ultrasound",
+        "5F : Laparoscopic ultrasound",
+        "6 : Nuclear medicine imaging",
+        "6A : Radio-isotope bone scan",
+        "6B : Other radio-isotope",
+        "6C : Ventilation/Perfusion scan",
+        "7 : Mammography",
+        "8 : Barium",
+        "8A : Barium Enema",
+        "8B : Barium Swallow",
+        "9 : Lymphoscintigraphy",
+        "99 : Other",
+        "C02C : Virtual Colonoscopy",
+        "C08U : Urography (IV and retrograde)",
+        "C09X : Intervention radiography",
+        "CXXX : Other (COSD)"
+      ]
+    },
+    "IMAGINGDESC": {
+      "description": "",
+      "type": ["string", "null"]
+    },
+    "IMAGINGSITE": {
+      "description": "Valid four digit OPCS4 code. Code Format: X000.",
+      "type": ["string", "null"]
+    },
+    "LESIONSIZE": {
+      "description": "The size in mm of the diameter of a lesion, largest if more than one, if the histology of a site proves to be invasive.",
+      "type": ["number", "null"]
+    },
+    "CHEMO_ALL_DRUGS": {
+      "description": "Chemotherapy drug name/s",
+      "type": ["string", "null"]
+    },
+    "CHEMO_DRUG_GROUP": {
+      "description": "e.g. R-CHOP or FEC-T",
+      "type": ["string", "null"]
+    },
+    "MULTIFOCAL": {
+      "description": "Multifocal tumours are defined as discrete tumours apparently not in continuity with other primary cancers originating in the same site or tissue.",
+      "type": ["string", "null"],
+      "enum": ["N", "Y", "8", "9"],
+      "enumDescriptions": ["N : No", "Y : Yes", "8 : Not applicable", "9 : Not known"]
+    },
+    "CLARKS": {
+      "description": "",
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "4", "5"],
+      "enumDescriptions": [
+        "1 : melanoma in situ: melanoma cells are only in the epidermis",
+        "2 : melanoma cells in the papillary dermis",
+        "3 : melanoma cells throughout papillary dermis and touching reticula",
+        "4 : melanoma has spread into the reticular or deep dermis",
+        "5 : melanoma has grown into the subcutaneous fat"
+      ]
+    },
+    "BRESLOW": {
+      "description": "Breslow thickness is used in staging melanoma of the skin and is related to thickness of the tumour.",
+      "type": ["string", "null"]
+    },
+    "EXCISIONMARGIN": {
+      "description": "An indication of whether the surgical excision margin finding was clear of the tumour and if so, by how much.",
+      "type": ["string", "null"],
+      "enum": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "98", "99"],
+      "enumDescriptions": [
+        "01 : Excision margins are clear (distance from margin not stated)",
+        "02 : Excision margins are clear (tumour >5mm from the margin)",
+        "03 : Excision margins are clear (tumour >1mm but less than or equal to 5mm from the margin",
+        "04 : Tumour is less than or equal to 1mm from excision margin, but does not reach margin",
+        "05 : Tumour reaches excision margin",
+        "06 : Uncertain",
+        "07 : Margin not involved ≥1mm",
+        "08 : Margin not involved <1mm",
+        "09 : Margin not involved 1-5mm",
+        "98 : Not applicable",
+        "99 : Not Known"
+      ]
+    }
+  }
+}
