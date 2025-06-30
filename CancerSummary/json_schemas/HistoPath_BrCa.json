@@ -96,21 +96,25 @@
     "ReportDat": {
       "description": "Date of Report. Missing information is null (blank)",
       "type": ["string", "null"],
+      "format": "date-time",
       "maxLength": 23
     },
     "CoreDat": {
       "description": "Date of Core Biopsy (if previously performed and indicated in the report or if the report is for a core biopsy - in this case ReportDat = CoreDat). Missing is coded null.",
       "type": ["string", "null"],
+      "format": "date-time",
       "maxLength": 23
     },
     "DateSpecimenTaken": {
       "description": "Specimen taken date. Missing is coded as null (blank)",
       "type": ["string", "null"],
+      "format": "date-time",
       "maxLength": 23
     },
     "DateSpecimenReceived": {
       "description": "Specimen received in hospital laboratory. Missing is coded as null (blank)",
       "type": ["string", "null"],
+      "format": "date-time",
       "maxLength": 23
     },
     "ScreenDetected": {

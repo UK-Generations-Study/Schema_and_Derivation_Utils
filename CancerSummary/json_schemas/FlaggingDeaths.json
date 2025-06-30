@@ -1,0 +1,179 @@
+{
+  "type": "object",
+  "properties": {
+    "StudyID": {
+      "description": "Internal Study ID",
+      "type": ["string", "not null"],
+      "maxLength": 6
+    },
+    "DDeath": {
+      "description": "Date of death",
+      "type": ["string", "not null"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "UCCode": {
+      "description": "ICD10 Code for underlying cause of death",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode1": {
+      "description": "ICD10 Code for multiple cause of death 1",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode2": {
+      "description": "ICD10 Code for multiple cause of death 2",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode3": {
+      "description": "ICD10 Code for multiple cause of death 3",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode4": {
+      "description": "ICD10 Code for multiple cause of death 4",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode5": {
+      "description": "ICD10 Code for multiple cause of death 5",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode6": {
+      "description": "ICD10 Code for multiple cause of death 6",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode7": {
+      "description": "ICD10 Code for multiple cause of death 7",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode8": {
+      "description": "ICD10 Code for multiple cause of death 8",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode9": {
+      "description": "ICD10 Code for multiple cause of death 9",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode10": {
+      "description": "ICD10 Code for multiple cause of death 10",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode11": {
+      "description": "ICD10 Code for multiple cause of death 11",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode12": {
+      "description": "ICD10 Code for multiple cause of death 12",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode13": {
+      "description": "ICD10 Code for multiple cause of death 13",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode14": {
+      "description": "ICD10 Code for multiple cause of death 14",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MCCode15": {
+      "description": "ICD10 Code for multiple cause of death 15",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "Part1A": {
+      "description": "Text description of cause of death from Part1A of death certificate",
+      "type": ["string", "null"],
+      "maxLength": 100
+    },
+    "Part1B": {
+      "description": "Text description of cause of death from Part1B of death certificate",
+      "type": ["string", "null"],
+      "maxLength": 100
+    },
+    "Part1C": {
+      "description": "Text description of cause of death from Part1C of death certificate",
+      "type": ["string", "null"],
+      "maxLength": 100
+    },
+    "Part1D": {
+      "description": "Text description of cause of death from Part1D of death certificate",
+      "type": ["string", "null"],
+      "maxLength": 100
+    },
+    "Part2A": {
+      "description": "Text description of cause of death from Part2A of death certificate",
+      "type": ["string", "null"],
+      "maxLength": 100
+    },
+    "Part2B": {
+      "description": "Text description of cause of death from Part2B of death certificate",
+      "type": ["string", "null"],
+      "maxLength": 100
+    },
+    "Part2C": {
+      "description": "Text description of cause of death from Part2C of death certificate",
+      "type": ["string", "null"],
+      "maxLength": 100
+    },
+    "Verdict": {
+      "description": "Verdict from inquest if held",
+      "type": ["string", "null"],
+      "maxLength": 100
+    },
+    "DReceived": {
+      "description": "Date received | This date will match to a folder N:\\CancerEpidem\\BrBreakthrough\\Janeh\\Flagging\\CEN\\yyyymmdd containing the source data received.",
+      "type": ["string", "not null"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "Region": {
+      "description": "Region | England and Wales: Received from NSCIC (Health & Social Care Information Centre) or earlier equivalent. Scotland: Received from GRO NHSCR (General Register Office for Scotland, NHS Central Register). Northern Ireland: Death notified by HSCNI (Health and Social Care, Northern Ireland). Guernsey: Death information obtained from Guernsey registrar. Death Certificate: Death Certificate received",
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "DCreated": {
+      "description": "Date record created",
+      "type": ["string", "not null"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "CreatedBy": {
+      "description": "Record created by | 'CEN' if automated import, Network login ID of user if manually entered",
+      "type": ["string", "null"],
+      "maxLength": 15
+    },
+    "DUpdated": {
+      "description": "Date record updated",
+      "type": ["string", "null"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "UpdatedBy": {
+      "description": "Record updated by | 'CENdeaths' if automated update of causes, Network login ID of user if manually entered",
+      "type": ["string", "null"],
+      "maxLength": 15
+    },
+    "Notes": {
+      "description": "Additional notes",
+      "type": ["string", "null"],
+      "maxLength": 200
+    },
+    "PersonID": {
+      "description": "BGS PersonID",
+      "type": ["integer", "not null"],
+      "maxLength": 6
+    }
+  }
+}
