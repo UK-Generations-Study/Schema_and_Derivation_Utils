@@ -1010,38 +1010,54 @@
     },
     "imd04_quintile_lsoas": {
       "description": "1 (least deprived),2,3,4 and 5 (most deprived)",
-      "type": ["number", "null"]
+      "type": ["number", "null"],
+      "minimum": 1,
+      "maximum": 5
     },
     "imd07_quintile_lsoas": {
       "description": "1 (least deprived),2,3,4 and 5 (most deprived)",
-      "type": ["number", "null"]
+      "type": ["number", "null"],
+      "minimum": 1,
+      "maximum": 5
     },
     "imd10_quintile_lsoas": {
       "description": "1 (least deprived),2,3,4 and 5 (most deprived)",
-      "type": ["number", "null"]
+      "type": ["number", "null"],
+      "minimum": 1,
+      "maximum": 5
     },
     "imd15_quintile_lsoas": {
       "description": "1 (least deprived),2,3,4 and 5 (most deprived)",
-      "type": ["number", "null"]
+      "type": ["number", "null"],
+      "minimum": 1,
+      "maximum": 5
     },
     "imd19_quintile_lsoas": {
       "description": "1 (least deprived),2,3,4 and 5 (most deprived)",
-      "type": ["number", "null"]
+      "type": ["number", "null"],
+      "minimum": 1,
+      "maximum": 5
     },
     "RT_FLAG": {
-      "description": "1 : Had radiotherapy\n0 : No recorded radiotherapy",
-      "type": ["number", "not null"]
+      "description": "Inidicating radiotherapy treatment",
+      "type": ["number", "not null"],
+      "enum": [0,1],
+      "enumDescriptions": ["1 : Had radiotherapy", "0 : No recorded radiotherapy"]
     },
     "CT_FLAG": {
-      "description": "1 : Had chemotherapy\n0 : No recorded chemotherapy",
-      "type": ["number", "not null"]
+      "description": "Inidicating chemotherapy treatment",
+      "type": ["number", "not null"],
+      "enum": [0,1],
+      "enumDescriptions": ["1 : Had chemotherapy", "0 : No recorded chemotherapy"]
     },
     "SG_FLAG": {
-      "description": "1 : Had surgery to remove primary tumour\n0 : No recorded surgery",
-      "type": ["number", "not null"]
+      "description": "Inidicating surgery",
+      "type": ["number", "not null"],
+      "enum": [0,1],
+      "enumDescriptions": ["1 : Had surgery to remove primary tumour", "0 : No recorded surgery"]
     },
     "EVENTID": {
-      "description": "Project specific ID for each event.\nAs someone can have more than one event per tumour, a patient can have multiple unique event IDs.",
+      "description": "Project specific ID for each event. As someone can have more than one event per tumour, a patient can have multiple unique event IDs.",
       "type": ["number", "not null"]
     },
     "NUMBER_OF_TUMOURS": {
@@ -1082,14 +1098,15 @@
     },
     "EVENTDATE": {
       "description": "Date the event took place",
-      "type": ["date", "null"]
+      "type": ["string", "null"],
+      "format": "date"
     },
-    "EVENTMONTH": {
-      "description": "Month the event took place - MM",
+    "TREATMENTMONTH": {
+      "description": "Month the treament event took place - MM",
       "type": ["number", "null"]
     },
-    "EVENTYEAR": {
-      "description": "Year the event took place - YYYY",
+    "TREATMENTYEAR": {
+      "description": "Year the treament event took place - YYYY",
       "type": ["number", "null"]
     },
     "DAYS_EVENT_EVENT": {
@@ -1135,18 +1152,20 @@
     "WITHIN_SIX_MONTHS_FLAG": {
       "description": "Whether treatment was within six months of diagnosis.",
       "type": ["number", "not null"],
-      "enum": ["0", "1"],
+      "enum": [0, 1],
       "enumDescriptions": ["0 : No", "1 : Yes"]
     },
     "SIX_MONTHS_AFTER_FLAG": {
       "description": "Whether treatment was after six months from diagnosis date.",
       "type": ["number", "not null"],
-      "enum": ["0", "1"],
+      "enum": [0, 1],
       "enumDescriptions": ["0 : No", "1 : Yes"]
     },
     "OPCS4_CODE": {
       "description": "Valid four digit OPCS4 code and description. Code Format: X000.",
-      "type": ["string", "null"]
+      "type": ["string", "null"],
+      "pattern": "^X\\d{3}$", 
+      "maxLength": 4
     },
     "OPCS4_NAME": {
       "description": "",
@@ -1225,7 +1244,9 @@
     },
     "IMAGINGSITE": {
       "description": "Valid four digit OPCS4 code. Code Format: X000.",
-      "type": ["string", "null"]
+      "type": ["string", "null"],
+      "pattern": "^X\\d{3}$", 
+      "maxLength": 4
     },
     "LESIONSIZE": {
       "description": "The size in mm of the diameter of a lesion, largest if more than one, if the histology of a site proves to be invasive.",
