@@ -3,12 +3,13 @@
   "properties": {
     "StudyID": {
       "description": "Internal Study ID",
-      "type": ["string", "not null"],
-      "maxLength": 6
+      "type": ["integer"],
+      "minimum": 0,
+      "maximum": 499994
     },
     "DDeath": {
       "description": "Date of death",
-      "type": ["string", "not null"],
+      "type": ["string"],
       "format": "date-time",
       "maxLength": 23
     },
@@ -134,7 +135,7 @@
     },
     "DReceived": {
       "description": "Date received | This date will match to a folder N:\\CancerEpidem\\BrBreakthrough\\Janeh\\Flagging\\CEN\\yyyymmdd containing the source data received.",
-      "type": ["string", "not null"],
+      "type": ["string"],
       "format": "date-time",
       "maxLength": 23
     },
@@ -145,7 +146,7 @@
     },
     "DCreated": {
       "description": "Date record created",
-      "type": ["string", "not null"],
+      "type": ["string"],
       "format": "date-time",
       "maxLength": 23
     },
@@ -170,10 +171,11 @@
       "type": ["string", "null"],
       "maxLength": 200
     },
-    "PersonID": {
+    "PersonId": {
       "description": "BGS PersonID",
-      "type": ["integer", "not null"],
-      "maxLength": 6
+      "type": ["integer"],
+      "minimum":1,
+      "maximum": 777656
     }
   }
 }

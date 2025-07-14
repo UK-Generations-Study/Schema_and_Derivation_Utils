@@ -3,22 +3,23 @@
   "properties": {
     "StudyID": {
       "description": "Internal Study ID",
-      "type": ["string", "not null"],
-      "maxLength": 6
+      "type": ["integer"],
+      "minimum": 0,
+      "maximum": 499994
     },
     "TumourCount": {
       "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour.",
-      "type": ["integer", "not null"],
-      "maxLength": 1
+      "type": ["integer"],
+      "minimum": 1, 
+      "maximum": 8
     },
     "ReportCount": {
       "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual",
-      "type": ["integer", "not null"],
-      "maxLength": 1
+      "type": ["integer"]
     },
     "Edat": {
       "description": "Date Data Entered by coder extracting data from the pathology report.",
-      "type": ["string", "not null"],
+      "type": ["string"],
       "format": "date-time",
       "maxLength": 23
     },
@@ -49,7 +50,7 @@
     "Primary_Site": {
       "description": "Primary site of the cancer. Missing or not applicable is coded as null",
       "type": ["string", "null"],
-      "maxLength": 20,
+      "maxLength": 50,
       "enum": ["Ovary", "Tubo-Ovarian", "Fallopian", "Uterus", "Omentum", "Peritoneal", "Breast", null]
     },
     "Stage_FIGO": {
@@ -82,12 +83,13 @@
       "description": "Tumour stage where system is not reported or is other. Missing is coded as null (blank)",
       "type": ["string", "null"],
       "maxLength": 1,
-      "enum": ["1", "2", "3", "4", null],
+      "enum": ["1", "2", "3", "4", "N", null],
       "enumDescriptions": [
         "1: Stage 1",
         "2: Stage 2",
         "3: Stage 3",
         "4: Stage 4",
+        "N: ",
         "null: Not reported"
       ]
     },
@@ -129,10 +131,12 @@
     },
     "Epithelium": {
       "description": "Type of epithelial tumour. Missing or not applicable is coded as null (blank)Type",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 50,
-      "enum": ["Serous High", "Serous Low", "Clear Cell (automatically Grade 3)", "Undifferentiated (automatically Grade 3)", "Endometroid",
-                  "Mucinous", "Transitional", "Mixed Epithelial Types", "Endometroid,Mucinous, Clear Cell", "Mixed Endometroid, Serous", "Other", null]
+      "enum": ["Adenocarcinoma - NOS", "Carcinosarcoma", "Serous High", "Serous Low", "Clear Cell (automatically Grade 3)", 
+                "Undifferentiated (automatically Grade 3)", "Endometroid", "Endometrioid, Clear Cell", "Mucinous", "Transitional", 
+                "Mixed Epithelial Types", "Endometroid, Mucinous, Clear Cell", "Mixed Endometroid, Serous", "Pseudomyxoma peritoneii",
+                "Serous - NOS", "Other", null]
     },
     "Grade_HL": {
       "description": "Grade differentiation. Missing is coded as null (blank)",
@@ -148,7 +152,7 @@
     },
     "Grade_I_II_III": {
       "description": "Tumour Grade",
-      "type": ["string", "not null"],
+      "type": ["string"],
       "maxLength": 7,
       "enum": ["1", "2", "3", "N"],
       "enumDescriptions": [

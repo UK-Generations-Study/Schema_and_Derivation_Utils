@@ -8,8 +8,7 @@
     },
     "ClosestRelevantMargin": {
       "description": "Closest Relevant Margin (mm)",
-      "type": ["number", "null"],
-      "maxLength": 7
+      "type": ["number", "null"]
     },
     "ER_Status": {
       "description": "ER Receptor Status as indicated in report",
@@ -26,7 +25,7 @@
       "type": ["string", "null"],
       "maxLength": 5
     },
-    "PR_Type": {
+    "Pr_Type": {
       "description": "PR Scoring system used to score estrogen receptor (PR) tumour immunohistochemistry stains)",
       "type": ["string", "null"],
       "maxLength": 3
@@ -48,8 +47,7 @@
     },
     "Ki67": {
       "description": "Ki67 % Positive nuclei as indicated in report",
-      "type": ["number", "null"],
-      "maxLength": 7
+      "type": ["number", "null"]
     },
     "ICDMorphologyCode": {
       "description": "Intl Classification of Diseases Morphology Code (ICD_O) when indicated in report. Missing information or not applicable is coded as Null",
@@ -58,7 +56,7 @@
     },
     "Malignant": {
       "description": "Malignant Cancer",
-      "type": ["string", "not null"],
+      "type": ["string"],
       "maxLength": 1
     },
     "BrCa1": {
@@ -73,23 +71,22 @@
     },
     "MitoticActivity": {
       "description": "Presence of proliferating cells for assessing Grade",
-      "type": ["integer", "null"],
-      "maxLength": 1
+      "type": ["integer", "null"]
     },
     "StudyID": {
       "description": "Internal Study ID",
-      "type": ["string", "not null"],
-      "maxLength": 6
+      "type": ["integer"],
+      "minimum": 0,
+      "maximum": 499994
     },
     "Side": {
       "description": "Laterality",
-      "type": ["string", "not null"],
+      "type": ["string"],
       "maxLength": 1
     },
     "TumourCount": {
       "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour",
-      "type": ["integer", "not null"],
-      "maxLength": 1,
+      "type": ["integer"],
       "minimum": 1, 
       "maximum": 8
     },
@@ -124,7 +121,7 @@
     },
     "SpecimenType": {
       "description": "Type of specimen",
-      "type": ["string", "not null"],
+      "type": ["string"],
       "maxLength": 5
     },
     "SpecimenWeight": {
@@ -158,7 +155,7 @@
     },
     "Solid_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["string", "not null"],
+      "type": ["string", "null"],
       "maxLength": 1
     },
     "Cribiform_DCISGP": {
@@ -203,8 +200,7 @@
     },
     "SizeDCISOnly": {
       "description": "Size of in situ carcinoma only (mm). Missing information or not applicable is coded as null.",
-      "type": ["number", "null"],
-      "maxLength": 5
+      "type": ["number", "null"]
     },
     "LobularCarcinomaInsitu": {
       "description": "In situ Lobular Carcinoma",
@@ -233,13 +229,11 @@
     },
     "SizeInvasiveTumour": {
       "description": "Largest dimension of dominant invasive tumour (mm). Missing information or not applicable is coded null.",
-      "type": ["number", "null"],
-      "maxLength": 7
+      "type": ["number", "null"]
     },
     "SizeWholeTumour": {
       "description": "Invasive plus surrounding DCIS if DCIS extends >1mm (mm). Missing information or not applicable is coded null.",
-      "type": ["number", "null"],
-      "maxLength": 7
+      "type": ["number", "null"]
     },
     "Type": {
       "description": "Type of Invasive Carcinoma",
@@ -258,13 +252,11 @@
     },
     "Tubules": {
       "description": "Percentage of cells in the tumour that have tube shaped structures for assessing Grade",
-      "type": ["integer", "null"],
-      "maxLength": 1
+      "type": ["integer", "null"]
     },
     "Pleomorphism": {
       "description": "Variability in size and shape for assessing Grade",
-      "type": ["integer", "null"],
-      "maxLength": 1
+      "type": ["integer", "null"]
     },
     "TumourExtent": {
       "description": "Extent of Tumour",
@@ -296,13 +288,11 @@
     },
     "OtherNodesTotal": {
       "description": "Total of nodes other than axillary. Missing information or not applicable is coded as Null",
-      "type": ["integer", "null"],
-      "maxLength": 2
+      "type": ["integer", "null"]
     },
     "OtherNodesPositive": {
       "description": "Total number of nodes other than axillary that are positive. Missing information or not applicable is coded as Null",
-      "type": ["integer", "null"],
-      "maxLength": 2
+      "type": ["integer", "null"]
     },
     "Tstage": {
       "description": "Tumour staging for extent (size) of the primary tumour - taken as reported, could follow different editions of American Joint Committee on Cancer (AJCC) guidance | AJCC TMA staging system. Prefix c= clinical stage, p = pathological or surgical stage, yp = post therapy pathological stage, yc post therapy clinical stage. Suffix mic = microinvasive",

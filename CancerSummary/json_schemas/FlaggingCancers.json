@@ -3,8 +3,9 @@
   "properties": {
     "StudyID": {
       "description": "Internal Study ID",
-      "type": ["string", "not null"],
-      "maxLength": 6
+      "type": ["integer"],
+      "minimum": 0,
+      "maximum": 499994
     },
     "DCancer": {
       "description": "Cancer diagnosis date",
@@ -29,18 +30,18 @@
     },
     "DReceived": {
       "description": "Date received | This date will match to a folder N:\\CancerEpidem\\BrBreakthrough\\Janeh\\Flagging\\CEN\\yyyymmdd containing the source data received.",
-      "type": ["string", "not null"],
+      "type": ["string"],
       "format": "date-time",
       "maxLength": 23
     },
     "Region": {
       "description": "Region | England and Wales: Received from HSCIC (Health & Social Care Information Centre) or earlier equivalent. Scotland: Received from GRO NHSCR (General Register Office for Scotland, NHS Central Register)",
-      "type": ["string", "not null"],
+      "type": ["string"],
       "maxLength": 50
     },
     "DCreated": {
       "description": "Date record created",
-      "type": ["string", "not null"],
+      "type": ["string"],
       "format": "date-time",
       "maxLength": 23
     },
@@ -57,7 +58,7 @@
     },
     "UpdatedBy": {
       "description": "Record updated by | Network Login ID of user performing the update",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 15
     },
     "DCancelled": {
@@ -71,10 +72,11 @@
       "type": ["string", "null"],
       "maxLength": 255
     },
-    "PersonID": {
+    "PersonId": {
       "description": "BGS PersonID",
-      "type": ["integer", "not null"],
-      "maxLength": 6
+      "type": ["integer"],
+      "minimum":1,
+      "maximum": 777656
     }
   }
 }
