@@ -1,35 +1,49 @@
 {
-  "$id": "DerivedVariables_JSON.json",
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/DerivedVariables.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "DerivedVariables",
+  "round": 1,
   "type": "object",
   "properties": {
+    "R0_StudyID": {
+      "name": "StudyID",
+      "description": "Unique 6-digit identifier for each participant in the study.",
+      "type": ["number"],
+      "minLength": 6,
+      "maxLength": 6
+    },
     "baselineHeight": {
       "questionID": "",
       "type": "number",
-      "description": "",
-      "x-derivedFrom": [
-        "#/$defs/pd/properties/Q3_13_feet",
-        "#/$defs/pd/properties/Q3_13_inch",
-        "#/$defs/pd/properties/Q3_13_cm"
+      "description": "Height in centimeters. Derived using priority: 1) Imperial inputs converted to cm (ft*30.48 + in*2.54) 2) Direct metric input. If both sources exist and differ by >5cm, uses value in [145-185]cm range. If neither valid, defaults to 99999 (unknown).",
+      "anyOf": [
+        {"type": "number"},
+        {"enum": [77777, 88888, 99999]}
       ],
-      "x-calculation": ""
-      },
+      "x-derivedFrom": [
+        "#/$defs/PhysicalDevelopment/properties/R0_CurrentHght_Ft",
+        "#/$defs/PhysicalDevelopment/properties/R0_CurrentHght_In",
+        "#/$defs/PhysicalDevelopment/properties/R0_CurrentHght_Cm"
+      ]
+    },
     "baselineWeight": {
       "questionID": "",
       "type": "number",
-      "description": "",
-      "x-derivedFrom": [
-        "#/$defs/pd/properties/Q3_8_stones",
-        "#/$defs/pd/properties/Q3_8_lbs",
-        "#/$defs/pd/properties/Q3_8_kgs"
+      "description": "Weight in kilograms. Derived using priority: 1) Imperial inputs converted to kg (st*6.350293 + lbs*0.45359237) 2) Direct metric input. Uses imperial conversion when both sources exist. If neither valid, defaults to 99999 (unknown).",
+      "anyOf": [
+        {"type": "number"},
+        {"enum": [77777, 88888, 99999]}
       ],
-      "x-calculation": ""
+      "x-derivedFrom": [
+        "#/$defs/PhysicalDevelopment/properties/R0_CurrentWght_St",
+        "#/$defs/PhysicalDevelopment/properties/R0_CurrentWght_Lbs",
+        "#/$defs/PhysicalDevelopment/properties/R0_CurrentWght_Kg"
+      ]
     },
     "baselineBMI": {
       "questionID": "",
       "type": "number",
-      "description": "Body Mass Index (kg / m²), computed from current height and weight",
+      "description": "Body Mass Index (kg/m²). Set to 88888 if participant is currently pregnant.",
       "anyOf": [
         {"minimum": 15, "maximum": 60},
         {"enum": [77777, 88888, 99999]}
@@ -38,13 +52,34 @@
         "#/properties/baselineHeight",
         "#/properties/baselineWeight"
       ],
-      "x-calculation": "baselineWeight / ( (baselineHeight / 100) ^ 2 )"
+      "x-calculation": "baselineWeight / ((baselineHeight / 100) ^ 2)"
+    },
+    "baselineCurrPreg": {
+      "questionID": "",
+      "type": ["integer", "null"],
+      "description": "Current pregnancy status at baseline",
+      "enum": [0, 1, 2, 3, 77777, 88888, 99999, null],
+      "enumDescriptions": [
+                    "0: More than one option chosen.",
+                    "1: Yes.",
+                    "2: No.",
+                    "3: Not sure.",
+                    "77777: Unknown - Unlikely or impossible answer.",
+                    "88888: Unknown - Invalid entry",
+                    "99999: Unknown - Entry unknown.",
+                    "null: No information on whether participant is currently pregnant."
+                ],
+      "x-derivedFrom": "#/$defs/Pregnancies/properties/R0_CurrentPreg"
     }
   },
+  "required": ["R0_StudyID"],
+  "additionalProperties": false,
   "$defs": {
-    "pd": { 
+    "PhysicalDevelopment": { 
       "$ref": "PhysicalDevelopment_JSON.json" 
+    },
+    "Pregnancies": {
+      "$ref": "Pregnancies_JSON.json"
     }
   }
 }
-  
