@@ -38,10 +38,12 @@ def getJsonData(df):
         if col in df.columns:
             df[col] = pd.to_datetime(df[col], errors='coerce')
     
-    # convert datetime columns into string with a format
+    # convert datetime columns into string with a format and same name for all StudyID fields
     for col in df.columns:
         if pd.api.types.is_datetime64_any_dtype(df[col]):
             df[col] = df[col].dt.strftime('%Y-%m-%dT%H:%M:%SZ')
+        elif col in cf.casum_StudyID:
+            df.rename(columns={col:'StudyID'}, inplace=True)
 
     # nan to null
     df = df.where(pd.notna(df), None)
@@ -142,4 +144,4 @@ fl_cancers = fl_cancers[['StudyID', 'DCancer', 'CancerICD']]
 hist_Brca = hist_Brca[['StudyID', 'Side', 'DiagDat', 'ReportDat', 'ER_Status', 'PR_Status', 'HER2_Status', 'CK56_Status', 'InvasiveGrade',\
                        'DCISGrade', 'Tstage', 'MStage', 'NStage', 'Type', 'AxillaryNodesTotal', 'ScreenDetected']]
     
-hist_Ovca = hist_Ovca[['StudyID','ReportDat', 'DiagDat', 'PrimarySite']]
+hist_Ovca = hist_Ovca[['StudyID','ReportDat', 'DiagDat', 'Primary_Site']]

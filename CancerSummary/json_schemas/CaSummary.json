@@ -16,7 +16,7 @@
       "type": ["string"],
       "maxLength": 3
     },
-    "studyid": {
+    "StudyID": {
       "description": "Internal Study ID",
       "type": ["integer"],
       "minimum": 0,

@@ -97,11 +97,6 @@
       "type": ["string", "null"],
       "format": "date"
     },
-    "DIAGNOSISDATE1MONTH": {
-      "description": "MM",
-      "type": ["number", "null"],
-      "maximum": 12
-    },
     "DIAGNOSISDATE1YEAR": {
       "description": "YYYY",
       "type": ["number", "null"],
@@ -117,11 +112,6 @@
       "type": ["string", "null"],
       "format": "date"
     },
-    "DIAGNOSISDATE2MONTH": {
-      "description": "MM",
-      "type": ["number", "null"],
-      "maximum": 12
-    },
     "DIAGNOSISDATE2YEAR": {
       "description": "YYYY",
       "type": ["number", "null"],
@@ -136,11 +126,6 @@
       "description": "Mid-point between diagnosisdate1 and diagnosisdate2.",
       "type": ["string", "null"],
       "format": "date"
-    },
-    "DIAGNOSISDATEBESTMONTH": {
-      "description": "MM",
-      "type": ["number", "null"],
-      "maximum": 12
     },
     "DIAGNOSISDATEBESTYEAR": {
       "description": "YYYY",
@@ -634,17 +619,6 @@
       "type": ["string", "null"],
       "format": "date"
     },
-    "deathmonth": {
-      "description": "Month of death of the patient.",
-      "type": ["number", "null"],
-      "maximum": 12
-    },
-    "deathyear": {
-      "description": "Year of death of the patient.",
-      "type": ["number", "null"],
-      "minimum": 1900,
-      "maximum": 2099
-    },
     "DAYS_TOFROM_INDEXDATE_DEATHDATEBEST": {
       "description": "Derived by NDRS, under direction from the applicant. Applicants must include an explanation of how this interval should be calculated alongside their justification (e.g. Days from date of diagnosis to death)",
       "type": ["number", "null"]
@@ -670,17 +644,6 @@
       "description": "Date the patient is recorded as leaving the UK. This is taken as the average of vitalstatusdate1 and vitalstatusdate2 when vitalstatus : X.",
       "type": ["string", "null"],
       "format": "date"
-    },
-    "Month of embarkation": {
-      "description": "MM",
-      "type": ["number", "null"],
-      "maximum": 12
-    },
-    "Year of embarkation": {
-      "description": "YYYY",
-      "type": ["number", "null"],
-      "minimum": 1900,
-      "maximum": 2099
     },
     "DAYS_TOFROM_INDEXDATE_EMBARKATIONDATE": {
       "description": "Derived by NDRS, under direction from the applicant. Applicants must include an explanation of how this interval should be calculated alongside their justification (e.g. Days from date of diagnosis to death)",
@@ -766,17 +729,6 @@
       "description": "Date of first event",
       "type": ["string", "null"],
       "format": "date"
-    },
-    "EVENTMONTH": {
-      "description": "Month the event took place - MM",
-      "type": ["number", "null"],
-      "maximum": 12
-    },
-    "EVENTYEAR": {
-      "description": "Year the event took place - YYYY",
-      "type": ["number", "null"],
-      "minimum": 1900,
-      "maximum": 2099
     },
     "DAYS_TOFROM_INDEXDATE_FIRST_HOSPDATE": {
       "description": "Interval to be derived as per applicant requirements. Applicants are advised to describe in the justification column how the interval should be calculated.",
@@ -1125,17 +1077,6 @@
       "description": "Date the event took place",
       "type": ["string", "null"],
       "format": "date"
-    },
-    "TREATMENTMONTH": {
-      "description": "Month the treament event took place - MM",
-      "type": ["number", "null"],
-      "maximum": 12
-    },
-    "TREATMENTYEAR": {
-      "description": "Year the treament event took place - YYYY",
-      "type": ["number", "null"],
-      "minimum": 1900,
-      "maximum": 2099
     },
     "DAYS_EVENT_EVENT": {
       "description": "Interval to be derived as per applicant requirements. Applicants are advised to describe in the justification column how the interval should be calculated.",
