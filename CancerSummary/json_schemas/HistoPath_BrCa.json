@@ -4,7 +4,12 @@
     "ExcisionMargin": {
       "description": "Surgical margin",
       "type": ["string", "null"],
-      "maxLength": 5
+      "enum": ["RRM", "NRM", null],
+      "enumDescriptions": [
+        "RRM: tumour reaches the relevant margin in the excision",
+        "NRM: tumour does not reach the relevant margin in the excision",
+        "null: no mention about the tumour reaching the relevant margins in the excision and neither 'RRM' nor 'NRM' is applicable."
+      ]
     },
     "ClosestRelevantMargin": {
       "description": "Closest Relevant Margin (mm)",
@@ -13,41 +18,86 @@
     "ER_Status": {
       "description": "ER Receptor Status as indicated in report",
       "type": ["string", "null"],
-      "maxLength": 5
+      "enum": ["P", "N", "NP", null],
+      "enumDescriptions": [
+        "P: ER status is positive",
+        "N: ER status is negative",
+        "NP: if the ER status test is explicitly specified as Not Performed in the report",
+        "null: ER status is not specified in the report or if the report mentions that the ER test is not applicable (N/A) to the patient."
+      ]
     },
     "ER_Type": {
       "description": "ER Scoring system used to score estrogen receptor (ER) tumour immunohistochemistry stains)",
       "type": ["string", "null"],
-      "maxLength": 3
+      "enum": ["QS", "IP", "MD", "I", "P", null],
+      "enumDescriptions": [
+        "QS: reporting an Allred score or a quick score (QS) for ER status. Its value ranges from 0-8",
+        "IP: reporting a H-score or a combined score obtained by multiplying the intensity of staining and the percentage of positive cells for ER status. Its value ranges from 0-300",
+        "MD: reporting the Mitch Dowsett score for ER status. Its value ranges from 0-18",
+        "I: intensity of staining for ER status and does not mention any derived scores (i.e. quick/Allred score, H-score/combined score, Mitch Dowsett score). This case is unusual. Its value ranges from 0-3",
+        "P: percentage of positive cells for ER status and does not mention any derived scores (i.e. quick/Allred score, H-score/combined score, Mitch Dowsett score). This case is unusual. Its value ranges from 0-100%",
+        "null: if the report does not mention any of the ER score types"
+      ]
     },
     "PR_Status": {
       "description": "PR Receptor Status as indicated in report",
       "type": ["string", "null"],
-      "maxLength": 5
+      "enum": ["P", "N", "NP", null],
+      "enumDescriptions": [
+        "P: ER status is positive",
+        "N: ER status is negative",
+        "NP: if the ER status test is explicitly specified as Not Performed in the report",
+        "null: ER status is not specified in the report or if the report mentions that the ER test is not applicable (N/A) to the patient."
+      ]
     },
     "Pr_Type": {
       "description": "PR Scoring system used to score estrogen receptor (PR) tumour immunohistochemistry stains)",
       "type": ["string", "null"],
-      "maxLength": 3
+      "enum": ["QS", "IP", "MD", "I", "P", null],
+      "enumDescriptions": [
+        "QS: reporting an Allred score or a quick score (QS) for PR status. Its value ranges from 0-8",
+        "IP: reporting a H-score or a combined score obtained by multiplying the intensity of staining and the percentage of positive cells for PR status. Its value ranges from 0-300",
+        "MD: reporting the Mitch Dowsett score for PR status. Its value ranges from 0-18",
+        "I: intensity of staining for PR status and does not mention any derived scores (i.e. quick/Allred score, H-score/combined score, Mitch Dowsett score). This case is unusual. Its value ranges from 0-3",
+        "P: percentage of positive cells for PR status and does not mention any derived scores (i.e. quick/Allred score, H-score/combined score, Mitch Dowsett score). This case is unusual. Its value ranges from 0-100%",
+        "null: if the report does not mention any of the PR score types"
+      ]
     },
     "HER2_Status": {
       "description": "HER2 Receptor Status as indicated in report",
       "type": ["string", "null"],
-      "maxLength": 5
+      "enum": ["N", "B", "P", "NP", null],
+      "enumDescriptions": [
+        "N: if the HER2 status is specified as Negative in the report.",
+        "B: if the HER2 status is specified as Borderline in the report.",
+        "P: if the HER2 status is specified as Positive in the report.",
+        "NP: if the HER2 status test is explicitly specified as Not Performed in the report",
+        "null: if the HER2 status is not specified in the report or if the report mentions that the HER2 test is not applicable (N/A) to the patient."
+      ]
     },
     "HER2_Score": {
       "description": "HER2 ImmunoHistoChemistry Score as reported. There are combinations of these scores eg. 2/3+",
       "type": ["string", "null"],
-      "maxLength": 20
+      "enum": ["0", "1+", "2+", "3+", null]
     },
     "HER2_FISH": {
       "description": "Fluorescence in situ hybridisation test for HER2 as reported",
       "type": ["string", "null"],
-      "maxLength": 5
+      "enum": ["A", "N", "P", "NEG", "NP", null],
+      "enumDescriptions": [
+        "A: if the HER2 FISH/ISH test result/significance is described as Amplified in the report.",
+        "N: if the HER2 FISH/ISH test result/significance is described as Non-Amplified in the report.",
+        "P: if the HER2 FISH/ISH test result/significance is described as Positive in the report.",
+        "NEG: if the HER2 FISH/ISH test result/significance is described as Negative or Normal in the report.",
+        "NP: if the HER2 FISH/ISH test is explicitly specified as Not Performed in the report",
+        "null: if the HER2 FISH/ISH test result is not present in the report, if the FISH/ISH test is requested but no FISH/ISH test results are present in this report, and if the report mentions that the FISH/ISH test is not applicable (N/A) to the patient."
+      ]
     },
     "Ki67": {
       "description": "Ki67 % Positive nuclei as indicated in report",
-      "type": ["number", "null"]
+      "type": ["number", "null"],
+      "minimum": 1,
+      "maximum": 100
     },
     "ICDMorphologyCode": {
       "description": "Intl Classification of Diseases Morphology Code (ICD_O) when indicated in report. Missing information or not applicable is coded as Null",
@@ -57,21 +107,23 @@
     "Malignant": {
       "description": "Malignant Cancer",
       "type": ["string"],
-      "maxLength": 1
+      "enum": ["N", "X", null, "U", "B", "Y"],
+      "enumDescriptions": []
     },
     "BrCa1": {
       "description": "BrCa 1 gene present when indicated in report",
       "type": ["string", "null"],
-      "maxLength": 2
+      "enum": ["Y", null]
     },
     "BrCa2": {
       "description": "BrCa 2 gene present when indicated in report",
       "type": ["string", "null"],
-      "maxLength": 2
+      "enum": ["Y", null]
     },
     "MitoticActivity": {
       "description": "Presence of proliferating cells for assessing Grade",
-      "type": ["integer", "null"]
+      "type": ["integer", "null"],
+      "enum": [1,2,3, null]
     },
     "StudyID": {
       "description": "Internal Study ID",
@@ -80,9 +132,14 @@
       "maximum": 499994
     },
     "Side": {
-      "description": "Laterality",
-      "type": ["string"],
-      "maxLength": 1
+      "description": "The laterality of the breast from which the main tissue specimen was collected",
+      "type": ["string", "null"],
+      "enum": ["L", "R", null],
+      "enumDescriptions": [
+        "L: if the specimen was collected from the left breast.",
+        "R: if the specimen was collected from the right breast.",
+        "null: if the laterality of the specimen is not known or if the information is missing in the report."
+      ]
     },
     "TumourCount": {
       "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour",
@@ -117,12 +174,31 @@
     "ScreenDetected": {
       "description": "Screen Detection Report",
       "type": ["string", "null"],
-      "maxLength": 5
+      "enum": ["Y", "N", null],
+      "enumDescriptions": [
+        "Y: if the report mentions that the tumour/abnormality was detected through cancer screening.",
+        "N: if the report explicitly mentions that the tumour/abnormality was not detected through cancer screening.",
+        "null: if the method of detection is not known or there is no information in the report regarding the tumour/abnormality detection method."
+      ]
     },
     "SpecimenType": {
       "description": "Type of specimen",
       "type": ["string"],
-      "maxLength": 5
+      "enum": ["WBB", "WLE", "M", "NBO", "OB", "Re-ex", "SE", "TMP", "FNA", "LB", null],
+      "enumDescriptions": [
+        "WBB: if Wide Bore Needle Biopsy (also called Core Biopsy or Mammotome Biopsy) was performed.",
+        "WLE: if Wide Local Excision was performed.",
+        "M: if Mastectomy was performed.",
+        "NBO: if only Node Biopsy was performed.",
+        "OB: if Open Biopsy was performed.",
+        "Re-ex: if a re-excision (wide excision) was performed.",
+        "SE: if Segmental Excision was performed.",
+        "TMP: if Therapeutic Mammoplasty was performed.",
+        "FNA: if Fine Needle Aspiration was performed.",
+        "LB: if Local Biopsy was performed.",
+        "null: if this information is missing in the report or it cannot be determined from the information in the report."
+      ]
+
     },
     "SpecimenWeight": {
       "description": "Weight of specimen (grams). Missing is coded as null (blank)",
@@ -131,72 +207,102 @@
     "AxillaryProcedure": {
       "description": "Axillary Procedure indicates the procedures performed during surgery to remove or sample axillary lymph nodes. If the same procedure for multiple tumours in a report, information is repeated for each tumour.",
       "type": ["string", "null"],
-      "maxLength": 5
+      "enum": ["ANC", "ANS", "NLN", "OSNA", "SNB"],
+      "enumDescriptions": [
+        "ANC: if Axillary Node Clearance was done.",
+        "ANS: if Axillary Node Sample was collected.",
+        "NLN: if the report explicitly mentions that no Lymph node procedure was done",
+        "OSNA: if One-Step Nucleic Acid Amplification (OSNA) assessment was performed.",
+        "SNB: if Sentinel Node Biopsy."
+      ]
     },
     "PostNeoadjuvantChemo": {
       "description": "Specimen taken after treatment (Chemotherapy or Endocrine)",
       "type": ["string", "null"],
-      "maxLength": 2
+      "enum": ["C", "E", null],
+      "enumDescriptions": [
+        "C: if the report explicitly mentions that the patient received chemotherapy.",
+        "E: if the report explicitly mentions that the patient received endocrine therapy.",
+        "null: if the report does not contain any information on neoadjuvant therapy status."
+      ]
     },
     "InsituCarcinoma": {
       "description": "In situ Carcinoma",
       "type": ["string", "null"],
-      "maxLength": 1
+      "enum": ["N", "P", null],
+      "enumDescriptions":[
+        "P: In situ Carcinoma is present",
+        "N: In situ Carcinoma not present",
+        "null: Missing or not applicable"
+      ]
     },
     "DuctalCarcinomaInsitu": {
       "description": "In situ Ductal Carcinoma",
       "type": ["string", "null"],
-      "maxLength": 1
+      "enum": ["N", "P", null],
+      "enumDescriptions":[
+        "P: In situ Ductal Carcinoma is present",
+        "N: In situ Ductal Carcinoma not present",
+        "null: Missing or not applicable"
+      ]
     },
     "DCISGrade": {
       "description": "In situ Grade",
       "type": ["string", "null"],
-      "maxLength": 2
+      "enum": ["L", "IL", "I", "HI", "H", null],
+      "enumDescriptions": [
+        "L: if the report specifies a low grade DCIS.",
+        "IL: if the report specifies an intermediate and low grade DCIS.",
+        "I: if the report specifies an intermediate grade DCIS.",
+        "HI: if the report specifies a high and intermediate grade DCIS.",
+        "H: if the report specifies a high grade DCIS.",
+        "null: if the DCIS grade was not described in the report."
+      ]
     },
     "Solid_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["string", "null"],
-      "maxLength": 1
+      "type": ["boolean", "null"]
     },
     "Cribiform_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["string", "null"],
-      "maxLength": 1
+      "type": ["boolean", "null"]
     },
     "Micropapillary_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["string", "null"],
-      "maxLength": 1
+      "type": ["boolean", "null"]
     },
     "Papillary_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["string", "null"],
-      "maxLength": 1
+      "type": ["boolean", "null"]
     },
     "Apocrine_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["string", "null"],
-      "maxLength": 1
+      "type": ["boolean", "null"]
     },
     "Flat_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["string", "null"],
-      "maxLength": 1
+      "type": ["boolean", "null"]
     },
     "Comedo_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["string", "null"],
-      "maxLength": 1
+      "type": ["boolean", "null"]
     },
     "Clinging_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["string", "null"],
-      "maxLength": 1
+      "type": ["boolean", "null"]
     },
     "ComedoNecrosis": {
       "description": "Comedo Necrosis characteristics of DCIS",
       "type": ["string", "null"],
-      "maxLength": 5
+      "enum": ["Y", "N", "Mil", "Mod", "Mar", null],
+      "enumDescriptions": [
+        "Y: if the report specifies that comedo necrosis is present in DCIS but the extent is not specified.",
+        "N: if the report explicitly specifies that comedo necrosis is not present in DCIS.",
+        "Mil: if the report specifies that comedo necrosis is present in DCIS and the extent is mild.",
+        "Mod: if the report specifies that comedo necrosis is present in DCIS and the extent is moderate.",
+        "Mar: if the report specifies that comedo necrosis is present in DCIS and the extent is marked.",
+        "null: if the report does not contain information on comedo necrosis in DCIS."
+      ]
     },
     "SizeDCISOnly": {
       "description": "Size of in situ carcinoma only (mm). Missing information or not applicable is coded as null.",
@@ -205,27 +311,52 @@
     "LobularCarcinomaInsitu": {
       "description": "In situ Lobular Carcinoma",
       "type": ["string", "null"],
-      "maxLength": 1
+      "enum": ["N", "P", null],
+      "enumDescriptions":[
+        "P: In situ Lobular Carcinoma is present",
+        "N: In situ Lobular Carcinoma not present",
+        "null: Missing or not applicable"
+      ]
     },
     "PleomorphicLCIS": {
       "description": "Pleomorphic LCIS",
       "type": ["string", "null"],
-      "maxLength": 1
+      "enum": ["N", "P", null],
+      "enumDescriptions":[
+        "P: In situ Lobular Carcinoma is present",
+        "N: In situ Lobular Carcinoma not present",
+        "null: Missing or not applicable"
+      ]
     },
     "PagetsDisease": {
       "description": "Paget's Disease",
       "type": ["string", "null"],
-      "maxLength": 1
+      "enum": ["N", "P", null],
+      "enumDescriptions":[
+        "P: In situ Lobular Carcinoma is present",
+        "N: In situ Lobular Carcinoma not present",
+        "null: Missing or not applicable"
+      ]
     },
     "Microinvasion": {
       "description": "Invasive carcinoma of the breast with no invasive focus measuring more than 1 mm",
       "type": ["string", "null"],
-      "maxLength": 1
+      "enum": ["N", "P", null],
+      "enumDescriptions":[
+        "P: In situ Lobular Carcinoma is present",
+        "N: In situ Lobular Carcinoma not present",
+        "null: Missing or not applicable"
+      ]
     },
     "InvasiveCarcinoma": {
       "description": "Invasive carcinoma",
       "type": ["string", "null"],
-      "maxLength": 1
+      "enum": ["N", "P", null],
+      "enumDescriptions":[
+        "P: In situ Lobular Carcinoma is present",
+        "N: In situ Lobular Carcinoma not present",
+        "null: Missing or not applicable"
+      ]
     },
     "SizeInvasiveTumour": {
       "description": "Largest dimension of dominant invasive tumour (mm). Missing information or not applicable is coded null.",
@@ -238,40 +369,76 @@
     "Type": {
       "description": "Type of Invasive Carcinoma",
       "type": ["string", "null"],
-      "maxLength": 5
+      "enum": ["NST", "PST", "MTT", "MIX", "OTH", null],
+      "enumDescriptions": [
+        "NST: if the invasive carcinoma type is specified as of 'No Special Type' (NST). When there is no mixed tumour component, invasive/infiltrating ductal carcinoma (IDC) implies No Special Type.",
+        "PST: if the invasive carcinoma type is specified as of 'Pure Special Type'. When there is no mixed tumour component and the tumour type is not described as type other, a single invasive component such as— only invasive lobular carcinoma (ILC), only invasive tubular carcinoma, only invasive cribriform carcinoma, only invasive mucinous carcinoma, only papillary carcinoma, only medullary breast cancer, etc.— each imply that the invasive carcinoma is of Pure Special Type.",
+        "MTT: if the invasive carcinoma type is specified as of 'Mixed' type, and the mixed components were specifically ductal (NST) and lobular.",
+        "MIX: if the invasive carcinoma type is specified as of 'Mixed' type, and the mixed components were anything other than the pair— ductal (NST) and lobular. For example, mixed ductal and mucinous, mixed ductal and tubular, mixed lobular and cribriform, etc.",
+        "OTH: if the invasive carcinoma type is specified as of 'Other' type.",
+        "null: if the invasive carcinoma type is not specified in the report."
+      ]
     },
     "TypeComponent": {
       "description": "Type of Component",
       "type": ["string", "null"],
-      "maxLength": 5
+      "enum": ["Lob","Pap", "Tub", "Crb", "Muc", "Med", null],
+      "enumDescriptions": [
+        "Lob': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Lobular'.",
+        "Pap': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Papillary'.",
+        "Tub': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Tubular'.",
+        "Crb': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Cribriform'.",
+        "Muc': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Mucinous'.",
+        "Med': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Medullary'.",
+        "null: if the invasive carcinoma type is not specified as of 'Pure Special Type' in the report (and so variable 'invasiveCarcinomaType' is not 'PST') or the component type is not specified in the report."
+      ]
     },
     "InvasiveGrade": {
       "description": "Invasive Grade",
-      "type": ["string", "null"],
-      "maxLength": 5
+      "type": ["integer", "null"],
+      "enum": [1, 2, 3, null]
     },
     "Tubules": {
       "description": "Percentage of cells in the tumour that have tube shaped structures for assessing Grade",
-      "type": ["integer", "null"]
+      "type": ["integer", "null"],
+      "enum": [1, 2, 3, null]
     },
     "Pleomorphism": {
       "description": "Variability in size and shape for assessing Grade",
-      "type": ["integer", "null"]
+      "type": ["integer", "null"],
+      "enum": [1, 2, 3, null]
     },
     "TumourExtent": {
       "description": "Extent of Tumour",
       "type": ["string", "null"],
-      "maxLength": 3
+      "enum": ["LOC", "MIF", "UNI", null],
+      "enumDescriptions": [
+        "LOC: if the tumour extent is explicitly described as 'Localised' in the report.",
+        "MIF: if the tumour extent is explicitly described as 'Multifocal' (or Multiple foci, Multi invasive foci, etc.) in the report.",
+        "UNI: if the tumour extent is explicitly described as 'Unifocal' in the report",
+        "null: if the tumour extent is not explicitly specified in the report."
+      ]
     },
     "VascularInvasion": {
       "description": "Presence of Tumour cells within the lumen of blood and / or lymph vessel",
       "type": ["string", "null"],
-      "maxLength": 5
+      "enum": ["Pres", "Poss", "NS", null],
+      "enumDescriptions": [
+        "Pres: if the pathologist has reported that lymphatic or vascular invasion is present.",
+        "Poss: if the pathologist has reported that lymphatic or vascular invasion is possible or probable.",
+        "NS: if the pathologist has reported that lymphatic or vascular invasion is not seen.",
+        "null: if the pathologist has not reported on the status of lymphatic or vascular invasion."
+      ]
     },
     "AxillaryNodesPresent": {
       "description": "Axillary lymph nodes present",
       "type": ["string", "null"],
-      "maxLength": 1
+      "enum": ["Y", "N", null],
+      "enumDescriptions": [
+        "Y: if the report clearly indicates that axillary lymph nodes are present/sampled for analysis.",
+        "N: if the report explicitly specifies that axillary lymph nodes are not present/sampled for analysis. Note 1: If the total number of axillary nodes is specified as 0, assign 'N'. Note 2: If only nodes of type 'other' are mentioned in the report, assign 'N'.",
+        "null: if the report does not contain this information."
+      ]
     },
     "AxillaryNodesTotal": {
       "description": "Total number of axillary nodes. Missing information or not applicable",
@@ -284,7 +451,12 @@
     "OtherNodesPresent": {
       "description": "Nodes other than axillary present",
       "type": ["string", "null"],
-      "maxLength": 1
+      "enum": ["Y", "N", null],
+      "enumDescriptions": [
+        "Y: if the report clearly indicates that lymph nodes of type 'other' are present/sampled",
+        "N: if the report clearly indicates that lymph nodes of type 'other' are not present/sampled",
+        "null: if the report does not contain this information."
+      ]
     },
     "OtherNodesTotal": {
       "description": "Total of nodes other than axillary. Missing information or not applicable is coded as Null",
@@ -297,17 +469,17 @@
     "Tstage": {
       "description": "Tumour staging for extent (size) of the primary tumour - taken as reported, could follow different editions of American Joint Committee on Cancer (AJCC) guidance | AJCC TMA staging system. Prefix c= clinical stage, p = pathological or surgical stage, yp = post therapy pathological stage, yc post therapy clinical stage. Suffix mic = microinvasive",
       "type": ["string", "null"],
-      "maxLength": 15
+      "pattern": "^(y)?(c|p)?(TX|T0|Tis|T1|T1mi|T1a|T1b|T1c|T2|T3|T4|T4a|T4b|T4c|T4d)(\\(m\\)|\\(mic\\))?$"
     },
     "NStage": {
       "description": "Lymph Node staging | AJCC TMA staging system. Prefix c = clinical stage, p = pathological or surgical stage. Suffix sn = Sentinel lymph node metastasis, ONSA = One step nucleic acid amplification",
       "type": ["string", "null"],
-      "maxLength": 15
+      "pattern": "^(y)?(c|p)?(NX|N0|N1|N1mi|N1a|N1b|N1c|N2|N2a|N2b|N3|N3a|N3b|N3c)(\\(sn\\)|\\(OSNA\\))?$"
     },
     "Mstage": {
       "description": "Metastasis staging describes whether cancer has spread to a different part of the body | Prefix c = Clinical assessment data (examination, imaging , endoscopy), p = pathological data (histopathologic examination of tissue sample)",
       "type": ["string", "null"],
-      "maxLength": 15
+      "pattern": "^(c|p)?(MX|M0|M0\\(i\\+\\)|M1)$"
     }
   }
 }

@@ -142,7 +142,8 @@
     "Region": {
       "description": "Region | England and Wales: Received from NSCIC (Health & Social Care Information Centre) or earlier equivalent. Scotland: Received from GRO NHSCR (General Register Office for Scotland, NHS Central Register). Northern Ireland: Death notified by HSCNI (Health and Social Care, Northern Ireland). Guernsey: Death information obtained from Guernsey registrar. Death Certificate: Death Certificate received",
       "type": ["string", "null"],
-      "maxLength": 50
+      "maxLength": 50,
+      "enum": ["Scotland", "Guernsey", "England and Wales", "Northern Ireland"]
     },
     "DCreated": {
       "description": "Date record created",

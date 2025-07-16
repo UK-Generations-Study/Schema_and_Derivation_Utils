@@ -134,14 +134,14 @@ for source, raw_schema in cf.casum_data_sources.items():
         logger.info("Validation complete. No erros")
 
 #%% combine registered data
-fl_cancers = dataframes['FlaggingCancers']
-hist_Brca = dataframes['Histopath_BrCa_GS_v1']
-hist_Ovca = dataframes['OvCa_Histopath_II']
-can_reg = dataframes['CancerRegistry']
-ca_sum = dataframes['casummary_v1']
+# fl_cancers = dataframes['FlaggingCancers']
+# hist_Brca = dataframes['Histopath_BrCa_GS_v1']
+# hist_Ovca = dataframes['OvCa_Histopath_II']
+# can_reg = dataframes['CancerRegistry']
+# ca_sum = dataframes['casummary_v1']
 
-fl_cancers = fl_cancers[['StudyID', 'DCancer', 'CancerICD']]
-hist_Brca = hist_Brca[['StudyID', 'Side', 'DiagDat', 'ReportDat', 'ER_Status', 'PR_Status', 'HER2_Status', 'CK56_Status', 'InvasiveGrade',\
-                       'DCISGrade', 'Tstage', 'MStage', 'NStage', 'Type', 'AxillaryNodesTotal', 'ScreenDetected']]
+# fl_cancers = fl_cancers[['StudyID', 'DCancer', 'CancerICD']]
+# hist_Brca = hist_Brca[['StudyID', 'Side', 'DiagDat', 'ReportDat', 'ER_Status', 'PR_Status', 'HER2_Status', 'CK56_Status', 'InvasiveGrade',\
+#                        'DCISGrade', 'Tstage', 'MStage', 'NStage', 'Type', 'AxillaryNodesTotal', 'ScreenDetected']]
     
-hist_Ovca = hist_Ovca[['StudyID','ReportDat', 'DiagDat', 'Primary_Site']]
+# hist_Ovca = hist_Ovca[['StudyID','ReportDat', 'DiagDat', 'Primary_Site']]

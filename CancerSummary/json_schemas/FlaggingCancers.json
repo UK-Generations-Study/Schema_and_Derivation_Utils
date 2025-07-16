@@ -37,7 +37,8 @@
     "Region": {
       "description": "Region | England and Wales: Received from HSCIC (Health & Social Care Information Centre) or earlier equivalent. Scotland: Received from GRO NHSCR (General Register Office for Scotland, NHS Central Register)",
       "type": ["string"],
-      "maxLength": 50
+      "maxLength": 50,
+      "enum":["Scotland", "England and Wales"]
     },
     "DCreated": {
       "description": "Date record created",
