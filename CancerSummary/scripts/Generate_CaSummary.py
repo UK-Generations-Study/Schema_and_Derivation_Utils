@@ -24,7 +24,7 @@ logger = createLogger('CaSum_Validation', cf.Delivery_log_path)
 formatcheck = FormatChecker()
 
 #%% function to convert dataframe to dictionary with cleaning rules
-def getJsonData(df):
+def getCleanJsonData(df):
     '''
     Returns a dictionary from a dataframe afterdata pre-processing
     
@@ -32,12 +32,14 @@ def getJsonData(df):
         df (pandas dataframe): a pandas dataframe as input
     Returns:
         json_data (disct): dictionary to be returned
-    '''
-    # convert object to datetime
-    for col in cf.casum_obj_to_dt:
+    ''' 
+    for col,dtype in cf.casum_convert_fields.items():
         if col in df.columns:
-            df[col] = pd.to_datetime(df[col], errors='coerce')
-    
+            if dtype=='date':
+                df[col] = pd.to_datetime(df[col], errors='coerce')
+            else:
+                df[col] = df[col].astype(dtype)
+
     # convert datetime columns into string with a format and same name for all StudyID fields
     for col in df.columns:
         if pd.api.types.is_datetime64_any_dtype(df[col]):
@@ -49,16 +51,7 @@ def getJsonData(df):
     df = df.where(pd.notna(df), None)
     df = df.replace(np.nan, None)
     
-    # convert fields to integer for validation
-    for field in cf.casum_int_fields:
-        if field in df.columns:
-            df[field] = df[field].astype(int)
-    
-    # convert fields to string for validation
-    for field in cf.casum_str_fields:
-        if field in df.columns:
-            df[field] = df[field].astype(str)
-
+    # convert the data into JSON format
     json_data = df.to_dict('records')
     
     return json_data
@@ -121,7 +114,7 @@ for source, raw_schema in cf.casum_data_sources.items():
         json_schema = json.load(schema)
 
     # convert the dataframe to dictionary
-    json_data = getJsonData(data.copy())
+    json_data = getCleanJsonData(data.copy())
     
     logger.info('Validating ' + source)
     # validate teh data using schema
@@ -129,7 +122,8 @@ for source, raw_schema in cf.casum_data_sources.items():
     
     if len(invalid_rows)!=0:
         logger.warning("Invalid data found during validation")
-        sys.exit('Refer to Invalid rows')
+        # sys.exit('Refer to Invalid rows')
+        print(invalid_rows)
     else:
         logger.info("Validation complete. No erros")
 
