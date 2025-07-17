@@ -79,15 +79,15 @@
       ]
     },
     "Stage_Other_Not_Reported": {
-      "description": "Tumour stage where system is not reported or is other. Missing is coded as null (blank)",
+      "description": "Tumour stage where system is not reported or is other",
       "type": ["string", "null"],
-      "enum": ["1", "2", "3", "4", null],
+      "enum": ["1", "2", "3", "4", "N"],
       "enumDescriptions": [
         "1: Stage 1",
         "2: Stage 2",
         "3: Stage 3",
         "4: Stage 4",
-        "null: Not reported"
+        "N: Not reported"
       ]
     },
     "Stage_Best": {
@@ -127,7 +127,8 @@
       "type": ["string", "null"],
       "enum": ["Carcinosarcoma", "Serous High", "Serous Low", "Clear Cell (automatically Grade 3)", 
                 "Undifferentiated (automatically Grade 3)", "Endometroid", "Mucinous", "Transitional", 
-                "Mixed Epithelial Types", "Endometroid, Mucinous, Clear Cell", "Mixed Endometroid, Serous", "Other", null]
+                "Mixed Epithelial Types", "Endometroid, Mucinous, Clear Cell", "Mixed Endometroid, Serous", 
+                "Adenocarcinoma - NOS",  "Endometrioid, Clear Cell", "Pseudomyxoma peritoneii", "Serous - NOS", "Other", null]
     },
     "Grade_HL": {
       "description": "Grade differentiation. Missing is coded as null (blank)",

@@ -47,6 +47,11 @@ def getCleanJsonData(df):
         elif col in cf.casum_StudyID:
             df.rename(columns={col:'StudyID'}, inplace=True)
 
+    # clean and pre-process the null values in raw data
+    for field, new_val in cf.casum_clean_null_fields.items():
+        if field in df.columns:
+            df[field].fillna(new_val, inplace=True)
+            
     # nan to null
     df = df.where(pd.notna(df), None)
     df = df.replace(np.nan, None)
@@ -54,7 +59,7 @@ def getCleanJsonData(df):
     # convert the data into JSON format
     json_data = df.to_dict('records')
     
-    return json_data
+    return json_data, df
 
 
 # function to validate the data using JSON schema
@@ -90,7 +95,7 @@ nobkp_conn = connect_DB('NOBACKUP', cf.live_server, logger)
 # read the data source for cancer summary
 logger.info('Reading and Validate Cancer Summary source data')
 
-dataframes = {}
+all_data = {}
 
 for source, raw_schema in cf.casum_data_sources.items():
     
@@ -106,15 +111,15 @@ for source, raw_schema in cf.casum_data_sources.items():
     else:
         data = read_data('select * from ' + source + '', upload_conn, logger)
         logger.info(source + ' row count: ' + str(len(data)))
-        
-    dataframes[source] = data.copy()
 
     # read the JSON schema
     with open(os.path.join(cf.casum_json_path, raw_schema), 'r') as schema:    
         json_schema = json.load(schema)
 
     # convert the dataframe to dictionary
-    json_data = getCleanJsonData(data.copy())
+    json_data, cleaned_data = getCleanJsonData(data.copy())
+    
+    all_data[source] = cleaned_data
     
     logger.info('Validating ' + source)
     # validate teh data using schema
@@ -128,11 +133,11 @@ for source, raw_schema in cf.casum_data_sources.items():
         logger.info("Validation complete. No erros")
 
 #%% combine registered data
-# fl_cancers = dataframes['FlaggingCancers']
-# hist_Brca = dataframes['Histopath_BrCa_GS_v1']
-# hist_Ovca = dataframes['OvCa_Histopath_II']
-# can_reg = dataframes['CancerRegistry']
-# ca_sum = dataframes['casummary_v1']
+# fl_cancers = all_data['FlaggingCancers']
+# hist_Brca = all_data['Histopath_BrCa_GS_v1']
+# hist_Ovca = all_data['OvCa_Histopath_II']
+# can_reg = all_data['CancerRegistry']
+# ca_sum = all_data['casummary_v1']
 
 # fl_cancers = fl_cancers[['StudyID', 'DCancer', 'CancerICD']]
 # hist_Brca = hist_Brca[['StudyID', 'Side', 'DiagDat', 'ReportDat', 'ER_Status', 'PR_Status', 'HER2_Status', 'CK56_Status', 'InvasiveGrade',\

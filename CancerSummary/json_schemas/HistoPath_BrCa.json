@@ -107,8 +107,14 @@
     "Malignant": {
       "description": "Malignant Cancer",
       "type": ["string"],
-      "enum": ["N", "X", null, "U", "B", "Y"],
-      "enumDescriptions": []
+      "enum": ["N", "X", "U", "B", "Y"],
+      "enumDescriptions": [
+        "N: Not Malignant",
+        "X: Not breast primary",
+        "U: Not Known",
+        "B: Borderline",
+        "Y: Yes Malignant"
+      ]
     },
     "BrCa1": {
       "description": "BrCa 1 gene present when indicated in report",
@@ -133,12 +139,12 @@
     },
     "Side": {
       "description": "The laterality of the breast from which the main tissue specimen was collected",
-      "type": ["string", "null"],
-      "enum": ["L", "R", null],
+      "type": ["string"],
+      "enum": ["L", "R", "U"],
       "enumDescriptions": [
         "L: if the specimen was collected from the left breast.",
         "R: if the specimen was collected from the right breast.",
-        "null: if the laterality of the specimen is not known or if the information is missing in the report."
+        "U: Unknown laterality"
       ]
     },
     "TumourCount": {
@@ -178,6 +184,7 @@
       "enumDescriptions": [
         "Y: if the report mentions that the tumour/abnormality was detected through cancer screening.",
         "N: if the report explicitly mentions that the tumour/abnormality was not detected through cancer screening.",
+        "NK: Not known about the screen detection",
         "null: if the method of detection is not known or there is no information in the report regarding the tumour/abnormality detection method."
       ]
     },
@@ -395,8 +402,15 @@
     },
     "InvasiveGrade": {
       "description": "Invasive Grade",
-      "type": ["integer", "null"],
-      "enum": [1, 2, 3, null]
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "NA",null],
+      "enumDescriptions":[
+        "1: Grade 1 or well differentiated", 
+        "2: Grade 2 or moderately differentiated", 
+        "3: Grade 3 or poorly differentiated",
+        "NA: Not assessable",
+        "null: Missing or not applicable"
+      ]
     },
     "Tubules": {
       "description": "Percentage of cells in the tumour that have tube shaped structures for assessing Grade",
