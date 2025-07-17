@@ -180,12 +180,12 @@
     "ScreenDetected": {
       "description": "Screen Detection Report",
       "type": ["string", "null"],
-      "enum": ["Y", "N", null],
+      "enum": ["Y", "N", "NK", null],
       "enumDescriptions": [
         "Y: if the report mentions that the tumour/abnormality was detected through cancer screening.",
         "N: if the report explicitly mentions that the tumour/abnormality was not detected through cancer screening.",
         "NK: Not known about the screen detection",
-        "null: if the method of detection is not known or there is no information in the report regarding the tumour/abnormality detection method."
+        "null: missing or not applicable"
       ]
     },
     "SpecimenType": {
