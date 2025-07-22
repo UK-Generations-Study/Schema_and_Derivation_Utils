@@ -542,7 +542,7 @@
     "NStage": {
       "description": "Lymph Node staging | AJCC TMA staging system. Prefix c = clinical stage, p = pathological or surgical stage. Suffix sn = Sentinel lymph node metastasis, ONSA = One step nucleic acid amplification",
       "type": ["string", "null"],
-      "pattern": "(?ix)^(y)?(c|p)?(NX|N0|NO|N1(?:mi|a|b|c|biv|mic)?|N2(?:a|b)?|N3(?:a|b|c)?|NIbiv|N)?((?:\\([\\w/+\\-\\d]+(?:\\s+[\\w/+\\-\\d]+)*\\))*[\\w/+\\-\\d]*)$"
+      "pattern": "(?ix)^(y)?(c|p|L1|pT)?(NX|N[0O]|T[0O]|TN[0O]|N1(?:mi|a|b|c|biv|mic|mc|osna)?(?:/\\d+)?|N2[ab]?|N3[abc]?|NIbiv|N)?\\s*(i\\+)?((?:\\([^)]+(\\)|$))*)((?:\\([^)]+\\))*)[\\w/+±\\-]*$"
     },
     "Mstage": {
       "description": "Metastasis staging describes whether cancer has spread to a different part of the body | Prefix c = Clinical assessment data (examination, imaging , endoscopy), p = pathological data (histopathologic examination of tissue sample)",
