@@ -181,7 +181,7 @@
       "description": "Number 8000-9990 or blank.",
       "type": ["number", "null"],
       "minimum": 8000,
-      "maximum": 9900
+      "maximum": 9999
     },
     "BEHAVIOUR_ICD10_O2": {
       "description": "",
@@ -272,7 +272,7 @@
     "GRADE": {
       "description": "",
       "type": ["string"],
-      "enum": ["GX", "G0", "G1", "G2", "G3", "G4", "G5", "G6", "G7"],
+      "enum": ["GX", "G0", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "GL", "GH", "GI", "G"],
       "enumDescriptions": [
         "GX : Grade of differentiation is not appropriate or cannot be assessed",
         "G0 : Borderline malignancy",
@@ -282,7 +282,11 @@
         "G4 : Undifferentiated / anaplastic",
         "G5 : T Cell",
         "G6 : B Cell",
-        "G7 : Null cell"
+        "G7 : Null cell",
+        "GL: ",
+        "GH: ",
+        "GI: ",
+        "G:"
       ]
     },
     "TUMOURSIZE": {
@@ -318,7 +322,7 @@
     "STAGE_BEST": {
       "description": "",
       "type": ["string", "null"],
-      "enum": ["0", "0A", "0B", "0C", "0IS", "1", "1A", "1A1", "1A2", "1A3", "1AE", "1AES", "1AEX", "1AEXS", "1AS", "1AX", "1B", "1B1", "1B2", "1BE", "1BES", "1BEX", "1BS", "1BX", "1C", "1C1", "1C2", "IC3", "1E", "1ES", "1EX", "1S", "1X", "1XS", "2", "2A", "2A1", "2A2", "2AE", "2AES", "2AEX", "2AS", "2AX", "2B", "2BE", "2BEX", "2BS", "2BX", "2C", "2E", "2ES", "2EX", "2S", "2X", "3", "3A", "3A1", "3A1i", "3A1ii", "3A2", "3AE", "3AES", "3AEX", "3AS", "3AX", "3B", "3BE", "3BES", "3BEX", "3BEXS", "3BS", "3BX", "3BXS", "3C", "3C1", "3C2", "3D", "3E", "3ES", "3EX", "3S", "3X", "3XS", "4", "4A", "4AE", "4AES", "4AEX", "4AEXS", "4AS", "4AX", "4AXS", "4B", "4BE", "4BES", "4BEX", "4BEXS", "4BS", "4BX", "4BXS", "4BS", "4BX", "4BXS", "4C", "4E", "4ES", "4EX", "4EXS", "4S", "4X", "A", "B", "C", "5", "6", "?", "U", "X", null],
+      "enum": ["0", "0A", "0B", "0C", "0IS", "1", "1C3" ,"1A", "1A1", "1A2", "1A3", "1AE", "1AES", "1AEX", "1AEXS", "1AS", "1AX", "1B", "1B1", "1B2", "1BE", "1BES", "1BEX", "1BS", "1BX", "1C", "1C1", "1C2", "IC3", "1E", "1ES", "1EX", "1S", "1X", "1XS", "2", "2A", "2A1", "2A2", "2AE", "2AES", "2AEX", "2AS", "2AX", "2B", "2BE", "2BEX", "2BS", "2BX", "2C", "2E", "2ES", "2EX", "2S", "2X", "3", "3A", "3A1", "3A1i", "3A1ii", "3A2", "3AE", "3AES", "3AEX", "3AS", "3AX", "3B", "3BE", "3BES", "3BEX", "3BEXS", "3BS", "3BX", "3BXS", "3C", "3C1", "3C2", "3D", "3E", "3ES", "3EX", "3S", "3X", "3XS", "4", "4A", "4AE", "4AES", "4AEX", "4AEXS", "4AS", "4AX", "4AXS", "4B", "4BE", "4BES", "4BEX", "4BEXS", "4BS", "4BX", "4BXS", "4BS", "4BX", "4BXS", "4C", "4E", "4ES", "4EX", "4EXS", "4S", "4X", "A", "B", "C", "5", "6", "?", "U", "X", null],
       "enumDescriptions": []
     },
     "T_BEST": {
@@ -336,7 +340,7 @@
     "STAGE_BEST_SYSTEM": {
       "description": "Staging system associated with stage_best.",
       "type": ["string", "null"],
-      "enum": ["5th", "6th", "7th", "8th", "UICC 5", "UICC 6", "UICC 7", "UICC 8", "AJCC 7", "AJCC 8", "ENETS 2007", "ANNARBOR", "FIGO", "ISS", "RaiBinet", "UNKNOWN", null],
+      "enum": ["5th", "6th", "7th", "8th", "UICC 5", "UICC 6", "UICC 7", "UICC 8", "AJCC 7", "AJCC 8", "ENETS 2007", "AnnArbor", "Wilms", "FIGO", "ISS", "RaiBinet", "Binet", "Unknown", "X", "U", null],
       "enumDescriptions": [
         "5 : 5th",
         "6 : 6th",
@@ -349,7 +353,7 @@
         "23 : AJCC7",
         "26 : AJCC8",
         "27 : ENETS 2007",
-        "ANNARBOR : Ann Arbor staging system",
+        "AnnArbor : Ann Arbor staging system",
         "FIGO : FIGO staging system",
         "ISS : International Staging System",
         "RaiBinet : Rai-Binet staging system",
@@ -357,6 +361,7 @@
         "Wilms: ",
         "Binet: ",
         "X: ",
+        "U: ",
         "null : blank or empty"
       ]
     },
@@ -412,13 +417,13 @@
     "T_PATH": {
       "description": "The UICC code which classifies the size and extent of the primary tumour based on the evidence from a pathological examination.",
       "type": ["string", "null"],
-      "enum": ["0", "1", "1A", "1B", "1C", "1a", "1a1", "1a2", "1b", "1b1", "1b2", "1c", "1d", "1mi", "2", "2A", "2B", "2a", "2a1", "2a2", "2b", "2c", "2d", "2s", "3", "3A", "3a", "3b", "3c", "3d", "3s", "4", "4B", "4a", "4b", "4c", "4d", "4e", "A", "IS", "S", "T1", "T2", "T3", "TA", "X", "a", "is", null],
+      "enum": ["0", "1", "1A", "1B", "1C", "1a", "1a1", "1c2", "1a2", "1b", "1b1", "1b2", "1c", "1d", "1mi", "2", "2A", "2B", "2a", "2a1", "2a2", "2b", "2c", "2d", "2s", "3", "3A", "3a", "3b", "3c", "3d", "3s", "4", "4B", "4a", "4b", "4c", "4d", "4e", "A", "IS", "S", "T1", "T2", "T3", "TA", "X", "a", "is", "is(DCIS)", "is(LCIS)", null],
       "enumDescriptions": []
     },
     "N_PATH": {
       "description": "The UICC code which classifies the absence or presence and extent of regional lymph node metastases based on the evidence from a pathological examination.",
       "type": ["string", "null"],
-      "enum": ["+", "-", "0", "00", "1", "11", "1B", "1a", "1b", "1c", "1mi", "2", "2a", "2b", "2c", "3", "3a", "3b", "3c", "4", "9", "N0", "N1", "N2", "X", null],
+      "enum": ["+", "-", "0", "00", "1", "11", "1B", "1a", "1b", "1c", "1mi", "2", "2a", "2a2","2b", "2c", "3", "3a", "3b", "3c", "4", "9", "N0", "N1", "N2", "X", null],
       "enumDescriptions": []
     },
     "M_PATH": {
@@ -509,20 +514,23 @@
     "DUKES": {
       "description": "Dukes stage of disease at diagnosis, based on pathological evidence but upgraded to Dukes D if clinical evidence of metastasis.",
       "type": ["string", "null"],
-      "enum": ["A", "B", "C1", "C2", "D", "99", null],
+      "enum": ["A", "B", "C1", "C2", "D", "99", null, "C", "X", "N"],
       "enumDescriptions": [
         "A : Dukes' A: Tumour confined to wall of bowel, nodes negative",
         "B : Dukes' B: Tumour penetrates through the muscularis propria to involve extramural tissues, nodes negative",
         "C1 : Dukes' C1: Metastases confined to regional lymph nodes (node/s positive but apical node negative)",
         "C2 : Dukes' C2: Metastases present in nodes at mesenteric artery ligature (apical node positive)",
         "D : Dukes D: Metastatic spread outside the operative field",
+        "C: ",
+        "X: ",
+        "N: ",
         "99 : Not Known"
       ]
     },
     "FIGO": {
       "description": "Staging system for tumours of the female reproductive system.",
       "type": ["string", "null"],
-      "enum": ["0", "1", "1a", "1a1", "1a2", "1b", "1b1", "1b2", "1c", "1c1", "1c2", "1c3", "2", "2a", "2a1", "2a2", "2b", "2c", "3", "3a", "3b", "3c", "3c1", "3c2", "4", "4a", "4b", "I", "IA", "IA1", "IA2", "IB", "IB1", "IB2", "IC", "II", "IIA", "IIA2", "IIB", "IIC", "III", "IIIA", "IIIB", "IIIC", "IIIC1", "IIIC2", "IV", "IVA", "IVB", null],
+      "enum": ["0", "1", "1a", "1a1", "3a1ii", "IIIA1i", "IC3", "1a2", "3a1", "1b", "1b1", "1b2", "1c", "1c1", "1c2", "1c3", "2", "2a", "2a1", "2a2", "2b", "2c", "3", "3a", "3b", "3c", "3c1", "3c2", "4", "4a", "4b", "I", "IA", "IA1", "IA2", "IB", "IB1", "IB2", "IC", "II", "IIA", "IIA2", "IIB", "IIC", "III", "IIIA", "IIIB", "IIIC", "IIIC1", "IIIC2", "IV", "IVA", "IVB", "3a2", null],
       "enumDescriptions": []
     },
     "GLEASON_PRIMARY": {
@@ -1255,7 +1263,7 @@
     "EXCISIONMARGIN": {
       "description": "An indication of whether the surgical excision margin finding was clear of the tumour and if so, by how much.",
       "type": ["string", "null"],
-      "enum": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "98", "99", null],
+      "enum": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "98", "99", null],
       "enumDescriptions": [
         "01 : Excision margins are clear (distance from margin not stated)",
         "02 : Excision margins are clear (tumour >5mm from the margin)",

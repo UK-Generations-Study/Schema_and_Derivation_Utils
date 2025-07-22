@@ -78,16 +78,23 @@
     "HER2_Score": {
       "description": "HER2 ImmunoHistoChemistry Score as reported. There are combinations of these scores eg. 2/3+",
       "type": ["string", "null"],
-      "enum": ["0", "1+", "2+", "3+", null]
+      "enum": ["0", "1+", "2+", "3+", null],
+      "enumDescriptions":[
+        "0: Negative",
+        "1+: Negative",
+        "2+: Borderline",
+        "3+: Positive",
+        "null: Missing information or not applicable"
+      ]
     },
     "HER2_FISH": {
       "description": "Fluorescence in situ hybridisation test for HER2 as reported",
       "type": ["string", "null"],
-      "enum": ["A", "N", "P", "NEG", "NP", null],
+      "enum": ["A", "N", "POS", "NEG", "NP", null],
       "enumDescriptions": [
         "A: if the HER2 FISH/ISH test result/significance is described as Amplified in the report.",
         "N: if the HER2 FISH/ISH test result/significance is described as Non-Amplified in the report.",
-        "P: if the HER2 FISH/ISH test result/significance is described as Positive in the report.",
+        "POS: if the HER2 FISH/ISH test result/significance is described as Positive in the report.",
         "NEG: if the HER2 FISH/ISH test result/significance is described as Negative or Normal in the report.",
         "NP: if the HER2 FISH/ISH test is explicitly specified as Not Performed in the report",
         "null: if the HER2 FISH/ISH test result is not present in the report, if the FISH/ISH test is requested but no FISH/ISH test results are present in this report, and if the report mentions that the FISH/ISH test is not applicable (N/A) to the patient."
@@ -106,8 +113,8 @@
     },
     "Malignant": {
       "description": "Malignant Cancer",
-      "type": ["string"],
-      "enum": ["N", "X", "U", "B", "Y"],
+      "type": ["string", "null"],
+      "enum": ["N", "X", "U", "B", "Y", null],
       "enumDescriptions": [
         "N: Not Malignant",
         "X: Not breast primary",
@@ -190,7 +197,7 @@
     },
     "SpecimenType": {
       "description": "Type of specimen",
-      "type": ["string"],
+      "type": ["string", "null"],
       "enum": ["WBB", "WLE", "M", "NBO", "OB", "Re-ex", "SE", "TMP", "FNA", "LB", null],
       "enumDescriptions": [
         "WBB: if Wide Bore Needle Biopsy (also called Core Biopsy or Mammotome Biopsy) was performed.",
@@ -205,7 +212,6 @@
         "LB: if Local Biopsy was performed.",
         "null: if this information is missing in the report or it cannot be determined from the information in the report."
       ]
-
     },
     "SpecimenWeight": {
       "description": "Weight of specimen (grams). Missing is coded as null (blank)",
@@ -214,22 +220,25 @@
     "AxillaryProcedure": {
       "description": "Axillary Procedure indicates the procedures performed during surgery to remove or sample axillary lymph nodes. If the same procedure for multiple tumours in a report, information is repeated for each tumour.",
       "type": ["string", "null"],
-      "enum": ["ANC", "ANS", "NLN", "OSNA", "SNB"],
+      "enum": ["ANC", "ANS", "NLN", "OSNA", "SNB", null],
       "enumDescriptions": [
         "ANC: if Axillary Node Clearance was done.",
         "ANS: if Axillary Node Sample was collected.",
         "NLN: if the report explicitly mentions that no Lymph node procedure was done",
         "OSNA: if One-Step Nucleic Acid Amplification (OSNA) assessment was performed.",
-        "SNB: if Sentinel Node Biopsy."
+        "SNB: if Sentinel Node Biopsy.",
+        "null: Missing or not applicable"
       ]
     },
     "PostNeoadjuvantChemo": {
       "description": "Specimen taken after treatment (Chemotherapy or Endocrine)",
       "type": ["string", "null"],
-      "enum": ["C", "E", null],
+      "enum": ["C", "E", "PC", "PE", null],
       "enumDescriptions": [
         "C: if the report explicitly mentions that the patient received chemotherapy.",
         "E: if the report explicitly mentions that the patient received endocrine therapy.",
+        "PC: Possible Chemotherapy",
+        "PE: Possible Endocrine therapy",
         "null: if the report does not contain any information on neoadjuvant therapy status."
       ]
     },
@@ -256,47 +265,88 @@
     "DCISGrade": {
       "description": "In situ Grade",
       "type": ["string", "null"],
-      "enum": ["L", "IL", "I", "HI", "H", null],
+      "enum": ["L", "IL", "I", "HI", "H", "N", null],
       "enumDescriptions": [
         "L: if the report specifies a low grade DCIS.",
         "IL: if the report specifies an intermediate and low grade DCIS.",
         "I: if the report specifies an intermediate grade DCIS.",
         "HI: if the report specifies a high and intermediate grade DCIS.",
         "H: if the report specifies a high grade DCIS.",
+        "N: Not assessable",
         "null: if the DCIS grade was not described in the report."
       ]
     },
     "Solid_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["boolean", "null"]
+      "type": ["string", "null"],
+      "enum": ["Y", null],
+      "enumDescriptions": [
+        "Y: DCIS Growth Pattern mentioned in the report",
+        "null: No DCIS Growth Pattern mentioned"
+      ]
     },
     "Cribiform_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["boolean", "null"]
+      "type": ["string", "null"],
+      "enum": ["Y", null],
+      "enumDescriptions": [
+        "Y: DCIS Growth Pattern mentioned in the report",
+        "null: No DCIS Growth Pattern mentioned"
+      ]
     },
     "Micropapillary_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["boolean", "null"]
+      "type": ["string", "null"],
+      "enum": ["Y", null],
+      "enumDescriptions": [
+        "Y: DCIS Growth Pattern mentioned in the report",
+        "null: No DCIS Growth Pattern mentioned"
+      ]
     },
     "Papillary_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["boolean", "null"]
+      "type": ["string", "null"],
+      "enum": ["Y", null],
+      "enumDescriptions": [
+        "Y: DCIS Growth Pattern mentioned in the report",
+        "null: No DCIS Growth Pattern mentioned"
+      ]
     },
     "Apocrine_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["boolean", "null"]
+      "type": ["string", "null"],
+      "enum": ["Y", null],
+      "enumDescriptions": [
+        "Y: DCIS Growth Pattern mentioned in the report",
+        "null: No DCIS Growth Pattern mentioned"
+      ]
     },
     "Flat_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["boolean", "null"]
+      "type": ["string", "null"],
+      "enum": ["Y", null],
+      "enumDescriptions": [
+        "Y: DCIS Growth Pattern mentioned in the report",
+        "null: No DCIS Growth Pattern mentioned"
+      ]
     },
     "Comedo_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["boolean", "null"]
+      "type": ["string", "null"],
+      "enum": ["Y", null],
+      "enumDescriptions": [
+        "Y: DCIS Growth Pattern mentioned in the report",
+        "null: No DCIS Growth Pattern mentioned"
+      ]
     },
     "Clinging_DCISGP": {
       "description": "In situ Growth pattern",
-      "type": ["boolean", "null"]
+      "type": ["string", "null"],
+      "enum": ["Y", null],
+      "enumDescriptions": [
+        "Y: DCIS Growth Pattern mentioned in the report",
+        "null: No DCIS Growth Pattern mentioned"
+      ]
     },
     "ComedoNecrosis": {
       "description": "Comedo Necrosis characteristics of DCIS",
@@ -318,9 +368,9 @@
     "LobularCarcinomaInsitu": {
       "description": "In situ Lobular Carcinoma",
       "type": ["string", "null"],
-      "enum": ["N", "P", null],
+      "enum": ["N", "Y", null],
       "enumDescriptions":[
-        "P: In situ Lobular Carcinoma is present",
+        "Y: In situ Lobular Carcinoma is present",
         "N: In situ Lobular Carcinoma not present",
         "null: Missing or not applicable"
       ]
@@ -328,9 +378,9 @@
     "PleomorphicLCIS": {
       "description": "Pleomorphic LCIS",
       "type": ["string", "null"],
-      "enum": ["N", "P", null],
+      "enum": ["N", "Y", null],
       "enumDescriptions":[
-        "P: In situ Lobular Carcinoma is present",
+        "Y: In situ Lobular Carcinoma is present",
         "N: In situ Lobular Carcinoma not present",
         "null: Missing or not applicable"
       ]
@@ -338,9 +388,9 @@
     "PagetsDisease": {
       "description": "Paget's Disease",
       "type": ["string", "null"],
-      "enum": ["N", "P", null],
+      "enum": ["N", "Y", null],
       "enumDescriptions":[
-        "P: In situ Lobular Carcinoma is present",
+        "Y: In situ Lobular Carcinoma is present",
         "N: In situ Lobular Carcinoma not present",
         "null: Missing or not applicable"
       ]
@@ -389,7 +439,7 @@
     "TypeComponent": {
       "description": "Type of Component",
       "type": ["string", "null"],
-      "enum": ["Lob","Pap", "Tub", "Crb", "Muc", "Med", null],
+      "enum": ["Lob", "Pap", "Tub", "Crb", "Muc", "Med", "T/C", "Oth", "D/L", "Tul", null],
       "enumDescriptions": [
         "Lob': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Lobular'.",
         "Pap': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Papillary'.",
@@ -397,6 +447,10 @@
         "Crb': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Cribriform'.",
         "Muc': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Mucinous'.",
         "Med': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Medullary'.",
+        "T/C: Tubular/Cribiform (mixed tumour with tubular and cribiform components. Type = MIX)", 
+        "Oth: Other", 
+        "D/L: Ductal/Lobular (mixed tumour with ductal and lobular components. Type = MTT)", 
+        "Tul: Tubulobular (mixed tumour with tubular and lobular components. Type = MIX)",
         "null: if the invasive carcinoma type is not specified as of 'Pure Special Type' in the report (and so variable 'invasiveCarcinomaType' is not 'PST') or the component type is not specified in the report."
       ]
     },
@@ -483,12 +537,12 @@
     "Tstage": {
       "description": "Tumour staging for extent (size) of the primary tumour - taken as reported, could follow different editions of American Joint Committee on Cancer (AJCC) guidance | AJCC TMA staging system. Prefix c= clinical stage, p = pathological or surgical stage, yp = post therapy pathological stage, yc post therapy clinical stage. Suffix mic = microinvasive",
       "type": ["string", "null"],
-      "pattern": "^(y)?(c|p)?(TX|T0|Tis|T1|T1mi|T1a|T1b|T1c|T2|T3|T4|T4a|T4b|T4c|T4d)(\\(m\\)|\\(mic\\))?$"
+      "pattern": "(?i)^(NA|[ycp]{1,2}|[ycp]{0,2}T?[0-4]?[a-dA-DcCmi]{0,3}|[ycp]{0,2}T?is|G\\d{1,2}\\s*T[0-4]?[a-dA-D]{0,2}|\\d{1,2}[a-dA-D]?|[ycp]{0,2}T[0-9a-zA-Z`']{0,4}|[ycp]{0,2}T[0-9a-zA-Z]{0,4}[\\s-]*\\([^)]+\\)|[ycp]{0,2}T[0-9a-zA-Z]{0,4}/[ycp]{0,2}T[0-9a-zA-Z]{0,4}|[ycp]{0,2}T[0-9a-zA-Z]{0,4}[\\s`'()\\-]*[a-zA-Z0-9]*)$"
     },
     "NStage": {
       "description": "Lymph Node staging | AJCC TMA staging system. Prefix c = clinical stage, p = pathological or surgical stage. Suffix sn = Sentinel lymph node metastasis, ONSA = One step nucleic acid amplification",
       "type": ["string", "null"],
-      "pattern": "^(y)?(c|p)?(NX|N0|N1|N1mi|N1a|N1b|N1c|N2|N2a|N2b|N3|N3a|N3b|N3c)(\\(sn\\)|\\(OSNA\\))?$"
+      "pattern": "(?ix)^(y)?(c|p)?(NX|N0|NO|N1(?:mi|a|b|c|biv|mic)?|N2(?:a|b)?|N3(?:a|b|c)?|NIbiv|N)?((?:\\([\\w/+\\-\\d]+(?:\\s+[\\w/+\\-\\d]+)*\\))*[\\w/+\\-\\d]*)$"
     },
     "Mstage": {
       "description": "Metastasis staging describes whether cancer has spread to a different part of the body | Prefix c = Clinical assessment data (examination, imaging , endoscopy), p = pathological data (histopathologic examination of tissue sample)",
