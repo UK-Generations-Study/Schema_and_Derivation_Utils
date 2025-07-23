@@ -95,10 +95,11 @@ def getCleanJsonData(df, source):
     if source=='FlaggingCancers':
         df['Region'] = df['Region'].replace("England And Wales", "England and Wales")
     
-    if source=='FlaggingDeaths':
+    if source=='FlaggingDeaths' or source=='Deaths_GS':
         df['Region'] = df['Region'].replace("England And Wales", "England and Wales")
         df['Region'] = df['Region'].replace("NI", "Northern Ireland")
         df['Region'] = df['Region'].replace("Death Certificate",  None)
+        df['Region'] = df['Region'].replace("",  None)
         
     if source=='Histopath_BrCa_GS_v1':
         df['Side'] = df['Side'].replace("l","L")
