@@ -243,7 +243,7 @@
       ]
     },
     "InsituCarcinoma": {
-      "description": "In situ Carcinoma",
+      "description": "In situ  is present or not in the report",
       "type": ["string", "null"],
       "enum": ["N", "P", null],
       "enumDescriptions":[
@@ -253,7 +253,7 @@
       ]
     },
     "DuctalCarcinomaInsitu": {
-      "description": "In situ Ductal Carcinoma",
+      "description": "In situ Ductal Carcinoma is present or not in the report",
       "type": ["string", "null"],
       "enum": ["N", "P", null],
       "enumDescriptions":[
@@ -263,7 +263,7 @@
       ]
     },
     "DCISGrade": {
-      "description": "In situ Grade",
+      "description": "DCIS grade mentioned in the report",
       "type": ["string", "null"],
       "enum": ["L", "IL", "I", "HI", "H", "N", null],
       "enumDescriptions": [
@@ -277,75 +277,75 @@
       ]
     },
     "Solid_DCISGP": {
-      "description": "In situ Growth pattern",
+      "description": "Solid DCIS growth pattern is described in the report or not",
       "type": ["string", "null"],
       "enum": ["Y", null],
       "enumDescriptions": [
-        "Y: DCIS Growth Pattern mentioned in the report",
-        "null: No DCIS Growth Pattern mentioned"
+        "Y: Solid DCIS Growth Pattern mentioned in the report",
+        "null: No Solid DCIS Growth Pattern mentioned"
       ]
     },
     "Cribiform_DCISGP": {
-      "description": "In situ Growth pattern",
+      "description": "Cribiform DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
       "enumDescriptions": [
-        "Y: DCIS Growth Pattern mentioned in the report",
-        "null: No DCIS Growth Pattern mentioned"
+        "Y: Cribiform DCIS Growth Pattern mentioned in the report",
+        "null: No Cribiform DCIS Growth Pattern mentioned"
       ]
     },
     "Micropapillary_DCISGP": {
-      "description": "In situ Growth pattern",
+      "description": "Micropapillary DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
       "enumDescriptions": [
-        "Y: DCIS Growth Pattern mentioned in the report",
-        "null: No DCIS Growth Pattern mentioned"
+        "Y: Micropapillary DCIS Growth Pattern mentioned in the report",
+        "null: No Micropapillary DCIS Growth Pattern mentioned"
       ]
     },
     "Papillary_DCISGP": {
-      "description": "In situ Growth pattern",
+      "description": "Papillary DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
       "enumDescriptions": [
-        "Y: DCIS Growth Pattern mentioned in the report",
-        "null: No DCIS Growth Pattern mentioned"
+        "Y: Papillary DCIS Growth Pattern mentioned in the report",
+        "null: No Papillary DCIS Growth Pattern mentioned"
       ]
     },
     "Apocrine_DCISGP": {
-      "description": "In situ Growth pattern",
+      "description": "Apocrine DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
       "enumDescriptions": [
-        "Y: DCIS Growth Pattern mentioned in the report",
-        "null: No DCIS Growth Pattern mentioned"
+        "Y: Apocrine DCIS Growth Pattern mentioned in the report",
+        "null: No Apocrine DCIS Growth Pattern mentioned"
       ]
     },
     "Flat_DCISGP": {
-      "description": "In situ Growth pattern",
+      "description": "Flat DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
       "enumDescriptions": [
-        "Y: DCIS Growth Pattern mentioned in the report",
-        "null: No DCIS Growth Pattern mentioned"
+        "Y: Flat DCIS Growth Pattern mentioned in the report",
+        "null: No Flat DCIS Growth Pattern mentioned"
       ]
     },
     "Comedo_DCISGP": {
-      "description": "In situ Growth pattern",
+      "description": "Comedo DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
       "enumDescriptions": [
-        "Y: DCIS Growth Pattern mentioned in the report",
-        "null: No DCIS Growth Pattern mentioned"
+        "Y: Comedo DCIS Growth Pattern mentioned in the report",
+        "null: No Comedo DCIS Growth Pattern mentioned"
       ]
     },
     "Clinging_DCISGP": {
-      "description": "In situ Growth pattern",
+      "description": "Clinging DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
       "enumDescriptions": [
-        "Y: DCIS Growth Pattern mentioned in the report",
-        "null: No DCIS Growth Pattern mentioned"
+        "Y: Clinging DCIS Growth Pattern mentioned in the report",
+        "null: No Clinging DCIS Growth Pattern mentioned"
       ]
     },
     "ComedoNecrosis": {
@@ -366,7 +366,7 @@
       "type": ["number", "null"]
     },
     "LobularCarcinomaInsitu": {
-      "description": "In situ Lobular Carcinoma",
+      "description": "In situ Lobular Carcinoma is present or not in the report",
       "type": ["string", "null"],
       "enum": ["N", "Y", null],
       "enumDescriptions":[
@@ -376,22 +376,22 @@
       ]
     },
     "PleomorphicLCIS": {
-      "description": "Pleomorphic LCIS",
+      "description": "Pleomorphic LCIS is present or not in the report",
       "type": ["string", "null"],
       "enum": ["N", "Y", null],
       "enumDescriptions":[
-        "Y: In situ Lobular Carcinoma is present",
-        "N: In situ Lobular Carcinoma not present",
+        "Y: Pleomorphic LCIS is present",
+        "N: Pleomorphic LCIS is not present",
         "null: Missing or not applicable"
       ]
     },
     "PagetsDisease": {
-      "description": "Paget's Disease",
+      "description": "Paget's Disease is present or not in the report",
       "type": ["string", "null"],
       "enum": ["N", "Y", null],
       "enumDescriptions":[
-        "Y: In situ Lobular Carcinoma is present",
-        "N: In situ Lobular Carcinoma not present",
+        "Y: Paget's Disease of the breast is present",
+        "N: Paget's Disease of the breast is not present",
         "null: Missing or not applicable"
       ]
     },
@@ -400,8 +400,8 @@
       "type": ["string", "null"],
       "enum": ["N", "P", null],
       "enumDescriptions":[
-        "P: In situ Lobular Carcinoma is present",
-        "N: In situ Lobular Carcinoma not present",
+        "P: Microinvasive breast cancer is present",
+        "N: Microinvasive breast cancer is not present",
         "null: Missing or not applicable"
       ]
     },
