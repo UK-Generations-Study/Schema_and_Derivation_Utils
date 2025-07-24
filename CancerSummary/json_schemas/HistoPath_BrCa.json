@@ -406,12 +406,12 @@
       ]
     },
     "InvasiveCarcinoma": {
-      "description": "Invasive carcinoma",
+      "description": "Invasive carcinoma is present in the report or not",
       "type": ["string", "null"],
       "enum": ["N", "P", null],
       "enumDescriptions":[
-        "P: In situ Lobular Carcinoma is present",
-        "N: In situ Lobular Carcinoma not present",
+        "P: Invasive Carcinoma present",
+        "N: Invasive Carcinoma is not present",
         "null: Missing or not applicable"
       ]
     },
