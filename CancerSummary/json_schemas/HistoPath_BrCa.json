@@ -255,7 +255,7 @@
     "DuctalCarcinomaInsitu": {
       "description": "In situ Ductal Carcinoma is present or not in the report",
       "type": ["string", "null"],
-      "enum": ["N", "P", null],
+      "enum": ["P", "N", null],
       "enumDescriptions":[
         "P: In situ Ductal Carcinoma is present",
         "N: In situ Ductal Carcinoma not present",
