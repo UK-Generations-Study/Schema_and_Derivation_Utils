@@ -245,7 +245,7 @@
     "InsituCarcinoma": {
       "description": "In situ  is present or not in the report",
       "type": ["string", "null"],
-      "enum": ["N", "P", null],
+      "enum": ["P", "N", null],
       "enumDescriptions":[
         "P: In situ Carcinoma is present",
         "N: In situ Carcinoma not present",
@@ -368,7 +368,7 @@
     "LobularCarcinomaInsitu": {
       "description": "In situ Lobular Carcinoma is present or not in the report",
       "type": ["string", "null"],
-      "enum": ["N", "Y", null],
+      "enum": ["Y", "N", null],
       "enumDescriptions":[
         "Y: In situ Lobular Carcinoma is present",
         "N: In situ Lobular Carcinoma not present",
@@ -378,7 +378,7 @@
     "PleomorphicLCIS": {
       "description": "Pleomorphic LCIS is present or not in the report",
       "type": ["string", "null"],
-      "enum": ["N", "Y", null],
+      "enum": ["Y", "N", null],
       "enumDescriptions":[
         "Y: Pleomorphic LCIS is present",
         "N: Pleomorphic LCIS is not present",
@@ -388,7 +388,7 @@
     "PagetsDisease": {
       "description": "Paget's Disease is present or not in the report",
       "type": ["string", "null"],
-      "enum": ["N", "Y", null],
+      "enum": ["Y", "N", null],
       "enumDescriptions":[
         "Y: Paget's Disease of the breast is present",
         "N: Paget's Disease of the breast is not present",
@@ -398,7 +398,7 @@
     "Microinvasion": {
       "description": "Invasive carcinoma of the breast with no invasive focus measuring more than 1 mm",
       "type": ["string", "null"],
-      "enum": ["N", "P", null],
+      "enum": ["P", "N", null],
       "enumDescriptions":[
         "P: Microinvasive breast cancer is present",
         "N: Microinvasive breast cancer is not present",
@@ -406,12 +406,12 @@
       ]
     },
     "InvasiveCarcinoma": {
-      "description": "Invasive carcinoma",
+      "description": "Invasive carcinoma is present in the report or not",
       "type": ["string", "null"],
-      "enum": ["N", "P", null],
+      "enum": ["P", "N", null],
       "enumDescriptions":[
-        "P: In situ Lobular Carcinoma is present",
-        "N: In situ Lobular Carcinoma not present",
+        "P: Invasive Carcinoma is present",
+        "N: Invasive Carcinoma is not present",
         "null: Missing or not applicable"
       ]
     },

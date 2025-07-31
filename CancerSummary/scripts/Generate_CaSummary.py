@@ -32,7 +32,7 @@ reverse_rank_map = {v: k for k, v in rank_map.items()}
 #%% convert HERScore to highest available marker
 def getHighestMarker(value):
     '''
-    Returns the highet value in the column
+    Returns the highest value in the column
     
     Parameters:
         value (str): column values passed as parameter
@@ -63,14 +63,18 @@ def getHighestMarker(value):
 # function to convert dataframe to dictionary with cleaning rules
 def getCleanJsonData(df, source):
     '''
-    Returns a dictionary from a dataframe afterdata pre-processing
+    Returns a dictionary from a dataframe after data pre-processing
     
     Parameters:
         df (pandas dataframe): a pandas dataframe as input
         source(str): name of the data source
     Returns:
-        json_data (disct): dictionary to be returned
-    ''' 
+        json_data (dict): dictionary to be returned
+    '''
+    for col in df.columns:
+        if col in cf.casum_StudyID:
+            df.rename(columns={col:'StudyID'}, inplace=True)
+
     # dtype conversion for data sources except Cancer registry
     for col,dtype in cf.casum_convert_fields.items():
         if col in df.columns:
@@ -79,12 +83,10 @@ def getCleanJsonData(df, source):
             else:
                 df[col] = df[col].astype(dtype)
 
-    # convert datetime columns into string with a format and same name for all StudyID fields
+    # convert datetime columns into string with a format
     for col in df.columns:
         if pd.api.types.is_datetime64_any_dtype(df[col]):
             df[col] = df[col].dt.strftime('%Y-%m-%dT%H:%M:%SZ')
-        elif col in cf.casum_StudyID:
-            df.rename(columns={col:'StudyID'}, inplace=True)
 
     # clean and pre-process the null values in raw data
     for field, new_val in cf.casum_clean_null_fields.items():
@@ -196,17 +198,20 @@ for source, raw_schema in cf.casum_data_sources.items():
         # sys.exit('Refer to Invalid rows')
         logger.info('Invalid entry count - ' + source + ': '+ str(len(invalid_rows)))
     else:
-        logger.info("Validation complete. No erros")
+        logger.info("Validation complete. No errors")
 
 #%% combine registered data
-# fl_cancers = all_data['FlaggingCancers']
-# hist_Brca = all_data['Histopath_BrCa_GS_v1']
-# hist_Ovca = all_data['OvCa_Histopath_II']
-# can_reg = all_data['CancerRegistry']
-# ca_sum = all_data['casummary_v1']
-
-# fl_cancers = fl_cancers[['StudyID', 'DCancer', 'CancerICD']]
-# hist_Brca = hist_Brca[['StudyID', 'Side', 'DiagDat', 'ReportDat', 'ER_Status', 'PR_Status', 'HER2_Status', 'CK56_Status', 'InvasiveGrade',\
+#fl_cancers = all_data['FlaggingCancers']
+#hist_Brca = all_data['Histopath_BrCa_GS_v1']
+#hist_Ovca = all_data['OvCa_Histopath_II']
+#can_reg = all_data['CancerRegistry']
+#deaths = all_data['Deaths_GS']
+#
+#can_reg.rename(columns={'STUDY_ID':'PersonID'}, inplace=True)
+#can_reg = can_reg[['PersonID', 'TUMOURID', '']]
+#fl_cancers = fl_cancers[['StudyID', 'DCancer', 'CancerICD']]
+#hist_Brca = hist_Brca[['StudyID', 'Side', 'DiagDat', 'ReportDat', 'ER_Status', 'PR_Status', 'HER2_Status', 'CK56_Status', 'InvasiveGrade',\
 #                        'DCISGrade', 'Tstage', 'MStage', 'NStage', 'Type', 'AxillaryNodesTotal', 'ScreenDetected']]
-    
-# hist_Ovca = hist_Ovca[['StudyID','ReportDat', 'DiagDat', 'Primary_Site']]
+#    
+#hist_Ovca = hist_Ovca[['StudyID','ReportDat', 'DiagDat', 'Primary_Site']]
+#deaths = deaths[['StudyID', 'Source', 'Confirmed_death', 'DOD', 'ReceivedDat', 'Reported_Cause']]

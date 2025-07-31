@@ -123,7 +123,7 @@
     },
     "grade": {
       "description": "Pathology grade",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 15
     },
     "stage": {
@@ -133,32 +133,32 @@
     },
     "Tsize": {
       "description": "Tumour Size (mm)",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 5
     },
     "T": {
       "description": "T Stage",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 8
     },
     "N": {
       "description": "N Stage",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 8
     },
     "M": {
       "description": "M Stage",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 8
     },
     "nodes_tot": {
       "description": "Total nodes",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 3
     },
     "nodes_pos": {
       "description": "Total positive nodes",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 3
     },
     "opcs_num": {
@@ -208,7 +208,7 @@
     },
     "S_grade": {
       "description": "Unique Source of Grade",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 100
     },
     "S_stage": {
@@ -243,32 +243,32 @@
     },
     "S_tsize": {
       "description": "Unique Source of Tsize",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 100
     },
     "S_nodes_tot": {
       "description": "Unique Source of nodes_Total",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 100
     },
     "S_nodes_pos": {
       "description": "Unique Source of nodes_Positive",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 100
     },
     "S_T": {
       "description": "Unique Source of T Stage",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 100
     },
     "S_N": {
       "description": "Unique Source of N Stage",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 100
     },
     "S_M": {
       "description": "Unique Source of M Stage",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 100
     },
     "cohortentrydate": {
@@ -301,7 +301,7 @@
     },
     "Screen_Detected": {
       "description": "Screen detected Brca reported by Histopathology or Registry",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 1
     },
     "First_inv_insitu_Brca": {
