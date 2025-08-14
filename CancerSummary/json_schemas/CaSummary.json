@@ -62,12 +62,13 @@
     "side": {
       "description": "Laterality",
       "type": ["string"],
-      "enum": ["1", "2", "3", "4"],
+      "enum": ["1", "2", "3", "4", "9"],
       "enumDescriptions" :[
         "1: Left",
         "2: Right",
         "3: Both",
-        "4: not known",
+        "4: Non breast cancers",
+        "9: not known",
         "null: missing or not applicable"
       ]
     },
