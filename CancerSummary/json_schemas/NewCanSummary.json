@@ -1,0 +1,179 @@
+{
+  "type": "object",
+  "properties": {
+    "STUDY_ID": {
+      "description": "Project specific ID for each person. In some cases the same person may have multiple patient IDs. Patient IDs will be retained even after two patient records are found to be the same person.",
+      "type": ["integer"]
+    },
+    "TUMOURID": {
+      "description": "Project specific ID for each tumour. As someone can have more than one tumour a patient can have multiple unique tumour IDs.",
+      "type": ["number"]
+    },
+    "DIAGNOSIS_DATE": {
+      "description": "Mid-point between diagnosisdate1 and diagnosisdate2.",
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "AGE": {
+      "description": "Age of the patient when they were diagnosed with the tumour in years.",
+      "type": ["number"],
+      "minimum": 0,
+      "maximum": 200
+    },
+    "ICD_CODE": {
+      "description": "Describes site of origin of the neoplasm.",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "ICD_CODE_3CHAR": {
+      "description": "Describes site of origin of the neoplasm.",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "MORPH_CODE": {
+      "description": "Morphology of the cancer, in the ICD-10-O2 system",
+      "type": ["number", "null"],
+      "minimum": 8000,
+      "maximum": 9999
+    },
+    "HISTOLOGY_CODE": {
+      "description": "Histology code - combines the morphology and behaviour codes.",
+      "type": ["number", "null"]
+    },
+    "GRADE": {
+      "description": "Grade of tumour",
+      "type": ["string"],
+      "enum": ["GX", "G0", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "GL", "GH", "GI", "G"],
+      "enumDescriptions": [
+        "GX : Grade of differentiation is not appropriate or cannot be assessed",
+        "G0 : Borderline malignancy",
+        "G1 : Well differentiated",
+        "G2 : Moderately differentiated",
+        "G3 : Poorly differentiated",
+        "G4 : Undifferentiated / anaplastic",
+        "G5 : T Cell",
+        "G6 : B Cell",
+        "G7 : Null cell",
+        "GL: ",
+        "GH: ",
+        "GI: ",
+        "G:"
+      ]
+    },
+    "TUMOUR_SIZE": {
+      "description": "Tumour Size in mm.",
+      "type": ["number", "null"]
+    },
+    "NODES_EXCISED": {
+      "description": "The number of local and regional nodes reported as being positive.",
+      "type": ["number", "null"]
+    },
+    "NODES_INVOLVED": {
+      "description": "The number of local and regional nodes examined.",
+      "type": ["number", "null"]
+    },
+    "TUMOUR_COUNT": {
+      "description": "A count of every tumour assigned to a particular patientid.",
+      "type": ["number", "null"]
+    },
+    "STAGE": {
+      "description": "Best stage derived using T, N, and M Stage",
+      "type": ["string", "null"],
+      "enum": ["0", "0A", "0B", "0C", "0IS", "1", "1C3" ,"1A", "1A1", "1A2", "1A3", "1AE", "1AES", "1AEX", "1AEXS", "1AS", "1AX", "1B", "1B1", "1B2", "1BE", "1BES", "1BEX", "1BS", "1BX", "1C", "1C1", "1C2", "IC3", "1E", "1ES", "1EX", "1S", "1X", "1XS", "2", "2A", "2A1", "2A2", "2AE", "2AES", "2AEX", "2AS", "2AX", "2B", "2BE", "2BEX", "2BS", "2BX", "2C", "2E", "2ES", "2EX", "2S", "2X", "3", "3A", "3A1", "3A1i", "3A1ii", "3A2", "3AE", "3AES", "3AEX", "3AS", "3AX", "3B", "3BE", "3BES", "3BEX", "3BEXS", "3BS", "3BX", "3BXS", "3C", "3C1", "3C2", "3D", "3E", "3ES", "3EX", "3S", "3X", "3XS", "4", "4A", "4AE", "4AES", "4AEX", "4AEXS", "4AS", "4AX", "4AXS", "4B", "4BE", "4BES", "4BEX", "4BEXS", "4BS", "4BX", "4BXS", "4BS", "4BX", "4BXS", "4C", "4E", "4ES", "4EX", "4EXS", "4S", "4X", "A", "B", "C", "5", "6", "?", "U", "X", null],
+      "enumDescriptions": []
+    },
+    "ER_STATUS": {
+      "description": "Oestrogen receptor status of the tumour",
+      "type": ["string", "null"],
+      "enum": ["N", "P", "X", "B", "U", null],
+      "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U:" , "null: Not applicable"]
+    },
+    "ER_SCORE": {
+      "description": "ER Allred score (range 0, 2-8).",
+      "type": ["string", "null"],
+      "enum": ["0", "1", "2", "3", "4", "5", "6", "7", "8", null]
+    },
+    "PR_STATUS": {
+      "description": "Progesterone receptor status of the tumour",
+      "type": ["string", "null"],
+      "enum": ["N", "P", "X", "B", "U", null],
+      "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B : Borderline", "U: ","null: Not applicable"]
+    },
+    "PR_SCORE": {
+      "description": "PR Allred score (range 0, 2-8).",
+      "type": ["string", "null"],
+      "enum": ["0", "1", "2", "3", "4", "5", "6", "7", "8", null]
+    },
+    "HER2_STATUS": {
+      "description": "Human Epidermal Growth Factor Receptor 2 (HER2) status of the tumour ",
+      "type": ["string", "null"],
+      "enum": ["N", "P", "X", "B", "U", null],
+      "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U:", "null: Not applicable"]
+    },
+    "Ki67": {
+      "description": "Ki67 % Positive nuclei as indicated in report",
+      "type": ["number", "null"],
+      "minimum": 1,
+      "maximum": 100
+    },
+    "SCREEN_DETECTED": {
+      "description": "Whether or not the tumour was detected by a screening programme.",
+      "type": ["string", "null"],
+      "enum": ["N", "Y", "8", "9", null],
+      "enumDescriptions": ["N : No", "Y : Yes", "8 : Not applicable", "9 : Not known"]
+    },
+    "LATERALITY": {
+      "description": "Identifies the side of the body for a tumour relating to paired organs within a patient, based on the evidence from a pathological examination. The data field is used to differentiate tumours in paired organs (and define the site of the pathology/cytology specimen).",
+      "type": ["string", "null"],
+      "enum": ["L", "R", "M", "B", "8", "9"],
+      "enumDescriptions": ["L: Left", "R: Right", "M: Midline", "B: Bilateral", "8: Not applicable", "9: Not Known"]
+    },
+    "BILATERAL": {
+      "description": "The tumour is bilateral or not",
+      "type": ["string", "null"],
+      "enum": ["N", "Y", null],
+      "enumDescriptions": ["N: No", "Y: Yes"]
+    },
+    "EXCISIONMARGIN": {
+      "description": "An indication of whether the surgical excision margin finding was clear of the tumour and if so, by how much.",
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "98", "99", null],
+      "enumDescriptions": [
+        "1 : Excision margins are clear (distance from margin not stated)",
+        "2 : Excision margins are clear (tumour >5mm from the margin)",
+        "3 : Excision margins are clear (tumour >1mm but less than or equal to 5mm from the margin",
+        "4 : Tumour is less than or equal to 1mm from excision margin, but does not reach margin",
+        "5 : Tumour reaches excision margin",
+        "6 : Uncertain",
+        "7 : Margin not involved ≥1mm",
+        "8 : Margin not involved <1mm",
+        "9 : Margin not involved 1-5mm",
+        "98 : Not applicable",
+        "99 : Not Known"
+      ]
+    },
+    "T_STAGE": {
+      "description": "Local size of the tumour.",
+      "type": ["string", "null"],
+      "pattern": "(?i)^(NA|[ycp]{1,2}|[ycp]{0,2}T?[0-4]?[a-dA-DcCmi]{0,3}|[ycp]{0,2}T?is|G\\d{1,2}\\s*T[0-4]?[a-dA-D]{0,2}|\\d{1,2}[a-dA-D]?|[ycp]{0,2}T[0-9a-zA-Z`']{0,4}|[ycp]{0,2}T[0-9a-zA-Z]{0,4}[\\s-]*\\([^)]+\\)|[ycp]{0,2}T[0-9a-zA-Z]{0,4}/[ycp]{0,2}T[0-9a-zA-Z]{0,4}|[ycp]{0,2}T[0-9a-zA-Z]{0,4}[\\s`'()\\-]*[a-zA-Z0-9]*)$"
+    },
+    "N_STAGE": {
+      "description": "How far the tumour has grown through local tissues and distant spread of disease with involvement of lymph nodes.",
+      "type": ["string", "null"],
+      "pattern": "(?ix)^(y)?(c|p|L1|pT)?(NX|N[0O]|T[0O]|TN[0O]|N1(?:mi|a|b|c|biv|mic|mc|osna)?(?:/\\d+)?|N2[ab]?|N3[abc]?|NIbiv|N)?\\s*(i\\+)?((?:\\([^)]+(\\)|$))*)((?:\\([^)]+\\))*)[\\w/+±\\-]*$"
+    },
+    "M_STAGE": {
+      "description": "Metastases to other organs.",
+      "type": ["string", "null"],
+      "pattern": "^(c|p)?(MX|M0|M0\\(i\\+\\)|M1)$"
+    },
+    "SOURCE": {
+      "description": "Source of the tumour entry in the table",
+      "type": ["string", "null"]
+    },
+    "DATE_CREATED": {
+      "description": "Date record created in the table",
+      "type": ["string", "null"]
+    }  
+  }
+}

@@ -32,7 +32,7 @@ reverse_rank_map = {v: k for k, v in rank_map.items()}
 #%% convert HERScore to highest available marker
 def getHighestMarker(value):
     '''
-    Returns the highest value in the column
+    Returns the highet value in the column
     
     Parameters:
         value (str): column values passed as parameter
@@ -69,7 +69,7 @@ def getCleanJsonData(df, source):
         df (pandas dataframe): a pandas dataframe as input
         source(str): name of the data source
     Returns:
-        json_data (dict): dictionary to be returned
+        json_data (dist): dictionary to be returned
     '''
     for col in df.columns:
         if col in cf.casum_StudyID:
@@ -198,20 +198,62 @@ for source, raw_schema in cf.casum_data_sources.items():
         # sys.exit('Refer to Invalid rows')
         logger.info('Invalid entry count - ' + source + ': '+ str(len(invalid_rows)))
     else:
-        logger.info("Validation complete. No errors")
+        logger.info("Validation complete. No erros")
 
-#%% combine registered data
-#fl_cancers = all_data['FlaggingCancers']
-#hist_Brca = all_data['Histopath_BrCa_GS_v1']
-#hist_Ovca = all_data['OvCa_Histopath_II']
-#can_reg = all_data['CancerRegistry']
-#deaths = all_data['Deaths_GS']
-#
-#can_reg.rename(columns={'STUDY_ID':'PersonID'}, inplace=True)
-#can_reg = can_reg[['PersonID', 'TUMOURID', '']]
-#fl_cancers = fl_cancers[['StudyID', 'DCancer', 'CancerICD']]
-#hist_Brca = hist_Brca[['StudyID', 'Side', 'DiagDat', 'ReportDat', 'ER_Status', 'PR_Status', 'HER2_Status', 'CK56_Status', 'InvasiveGrade',\
-#                        'DCISGrade', 'Tstage', 'MStage', 'NStage', 'Type', 'AxillaryNodesTotal', 'ScreenDetected']]
-#    
-#hist_Ovca = hist_Ovca[['StudyID','ReportDat', 'DiagDat', 'Primary_Site']]
-#deaths = deaths[['StudyID', 'Source', 'Confirmed_death', 'DOD', 'ReceivedDat', 'Reported_Cause']]
+#%% 
+can_reg = all_data['CancerRegistry']
+fl_cancers = all_data['FlaggingCancers']
+deaths = all_data['Deaths_GS']
+hist_Brca = all_data['Histopath_BrCa_GS_v1']
+hist_Ovca = all_data['OvCa_Histopath_II']
+ca_summary = all_data['casummary_v1']
+
+#%% data pre-processing
+cols_to_update = ['LobularCarcinomaInsitu', 'PleomorphicLCIS', 'PagetsDisease', 'AxillaryNodesPresent', 'OtherNodesPresent']
+condition = hist_Brca[cols_to_update] == 'Y'
+
+hist_Brca[cols_to_update] = hist_Brca[cols_to_update].mask(condition, 'P')
+
+#%% select required columns
+can_reg.rename(columns={'STUDY_ID':'PersonID'}, inplace=True)
+can_reg = can_reg[['PersonID', 'TUMOURID', 'DIAGNOSISDATEBEST', 'SITE_ICD10_O2', 'CODING_SYSTEM', 'CODING_SYSTEM_DESC',\
+                    'MORPH_ICD10_O2', 'BEHAVIOUR_ICD10_O2', 'BEHAVIOUR_CODED_DESC', 'HISTOLOGY_CODED',
+                    'HISTOLOGY_CODED_DESC', 'GRADE', 'TUMOURSIZE', 'NODESEXCISED', 'NODESINVOLVED', 'LATERALITY', \
+                    'MULTIFOCAL', 'ER_STATUS', 'ER_SCORE', 'PR_STATUS', 'PR_SCORE', 'HER2_STATUS', 'NPI', 'DUKES', 'FIGO',\
+                    'BRESLOW', 'CLARKS', 'T_PATH', 'N_PATH', 'M_PATH', 'STAGE_PATH', 'STAGE_PATH_PRETREATED', 'T_IMG',\
+                    'N_IMG', 'M_IMG', 'STAGE_IMG', 'T_BEST', 'N_BEST', 'M_BEST', 'STAGE_BEST', 'SCREENDETECTED',\
+                    'SCREENINGSTATUSCOSD_CODE', 'SCREENINGSTATUSCOSD_NAME', 'SCREENINGSTATUSFULL_CODE', \
+                    'SCREENINGSTATUSFULL_NAME', 'CREG_CODE', 'CREG_NAME', 'DCO', 'EXCISIONMARGIN']].copy()
+
+fl_cancers = fl_cancers[['StudyID', 'DCancer', 'CancerICD', 'Histology', 'TumourID']].copy()
+fl_cancers.rename(columns={'Histology':'HistologyCode'}, inplace=True)
+
+deaths = deaths[['StudyID', 'Source', 'Confirmed_death', 'DOD', 'UCCode', 'Reported_Cause']].copy()
+
+hist_Brca = hist_Brca[['StudyID', 'Side', 'ReportDat', 'ER_Status', 'PR_Status', 'HER2_Status', 'CoreDat',\
+                       'CK56_Status', 'DCISGrade', 'Tstage', 'MStage', 'NStage', 'Type', \
+                       'ScreenDetected', 'ExcisionMargin', 'HER2_FISH', 'Ki67', 'ICDMorphologyCode',\
+                       'Malignant', 'MitoticActivity', 'TumourExtent']].copy()
+
+hist_Ovca = hist_Ovca[['StudyID','CoreDat', 'ReportDat', 'Primary_Site', 'Benign_Tumour', 'Borderline',\
+                       'Epithelium', 'Grade_I_II_III', 'Stage_Best']].copy()
+
+# read Mailing for StudyID
+mailing_conn = connect_DB('Mailing', cf.live_server, logger)
+
+logger.info('Reading People table for StudyID')
+people = read_data('select PersonID, StudyID from People', mailing_conn, logger)
+can_reg = can_reg.merge(people, on=['PersonID'], how='left').drop('PersonID', axis=1)
+
+#%% combining the data sources
+can_reg['dup_index'] = can_reg.groupby('StudyID').cumcount()
+fl_cancers['dup_index'] = fl_cancers.groupby('StudyID').cumcount()
+deaths['dup_index'] = deaths.groupby('StudyID').cumcount()
+hist_Brca['dup_index'] = hist_Brca.groupby('StudyID').cumcount()
+hist_Ovca['dup_index'] = hist_Ovca.groupby('StudyID').cumcount()
+
+reg_with_fl_cancer = pd.merge(can_reg, fl_cancers, on=['StudyID', 'dup_index'], how='outer')
+
+reg_with_flags = pd.merge(reg_with_fl_cancer, deaths, on=['StudyID', 'dup_index'], how='outer').drop('dup_index', axis=1)
+
+hist_all = pd.merge(hist_Brca, hist_Ovca, on=['StudyID', 'dup_index'], how='outer').drop('dup_index', axis=1)

@@ -3,7 +3,7 @@
   "properties": {
     "STUDY_ID": {
       "description": "Project specific ID for each person. In some cases the same person may have multiple patient IDs. Patient IDs will be retained even after two patient records are found to be the same person.",
-      "type": ["integer"]
+      "type": ["number"]
     },
     "TUMOURID": {
       "description": "Project specific ID for each tumour. As someone can have more than one tumour a patient can have multiple unique tumour IDs.",

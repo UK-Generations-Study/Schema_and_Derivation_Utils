@@ -14,7 +14,12 @@
     "incident": {
       "description": "Incident or prevalent cancer based on entry date to study | Based on diagnosis date and recruitment to study (based on entrydate From mailing.General table)",
       "type": ["string"],
-      "maxLength": 3
+      "enum": ["0", "1", "9"],
+      "enumDescriptions" :[
+        "0: prevalent",
+        "1: incident",
+        "9: not known"
+      ]
     },
     "StudyID": {
       "description": "Internal Study ID",
@@ -57,7 +62,14 @@
     "side": {
       "description": "Laterality",
       "type": ["string"],
-      "maxLength": 3
+      "enum": ["1", "2", "3", "4"],
+      "enumDescriptions" :[
+        "1: Left",
+        "2: Right",
+        "3: Both",
+        "4: not known",
+        "null: missing or not applicable"
+      ]
     },
     "regdate": {
       "description": "Registry diagnosis date",
@@ -297,12 +309,25 @@
     "Bilateral_Flag": {
       "description": "BrCa flag of bilaterals in same episode/group (may have slightly different diagdates) | Registry or Participant Confirmed bilaterals. Excluding Questionnaire only response.",
       "type": ["string", "null"],
-      "maxLength": 1
+      "enum":["A", "B", "3", null],
+      "enumDescriptions": [
+          "A: First laterality of bilateral",
+          "B: Second laterality",
+          "3: Bilateral recorded as one event",
+          "null: missing or not applicable"
+          ]
     },
     "Screen_Detected": {
       "description": "Screen detected Brca reported by Histopathology or Registry",
       "type": ["string", "null"],
-      "maxLength": 1
+      "enum":["Y", "N", "X", "U", null],
+      "enumDescriptions": [
+          "Y: Screen detected",
+          "N: Screen not detected",
+          "X: Not applicable",
+          "U: Not known",
+          "null: missing or not applicable"
+          ]
     },
     "First_inv_insitu_Brca": {
       "description": "First Brca diagnosed based on the earliest BrCa grouping, reflecting severity",
