@@ -2,15 +2,15 @@
   "type": "object",
   "properties": {
     "STUDY_ID": {
-      "description": "Project specific ID for each person. In some cases the same person may have multiple patient IDs. Patient IDs will be retained even after two patient records are found to be the same person.",
+      "description": "Generations StudyID",
       "type": ["integer"]
     },
-    "TUMOURID": {
+    "TUMOUR_ID": {
       "description": "Project specific ID for each tumour. As someone can have more than one tumour a patient can have multiple unique tumour IDs.",
       "type": ["number"]
     },
     "DIAGNOSIS_DATE": {
-      "description": "Mid-point between diagnosisdate1 and diagnosisdate2.",
+      "description": "Date of diagnosis",
       "type": ["string", "null"],
       "format": "date"
     },
@@ -26,7 +26,7 @@
       "maxLength": 4
     },
     "ICD_CODE_3CHAR": {
-      "description": "Describes site of origin of the neoplasm.",
+      "description": "£ character that describes site of origin of the neoplasm.",
       "type": ["string", "null"],
       "maxLength": 4
     },
@@ -72,10 +72,6 @@
       "description": "The number of local and regional nodes examined.",
       "type": ["number", "null"]
     },
-    "TUMOUR_COUNT": {
-      "description": "A count of every tumour assigned to a particular patientid.",
-      "type": ["number", "null"]
-    },
     "STAGE": {
       "description": "Best stage derived using T, N, and M Stage",
       "type": ["string", "null"],
@@ -88,21 +84,11 @@
       "enum": ["N", "P", "X", "B", "U", null],
       "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U:" , "null: Not applicable"]
     },
-    "ER_SCORE": {
-      "description": "ER Allred score (range 0, 2-8).",
-      "type": ["string", "null"],
-      "enum": ["0", "1", "2", "3", "4", "5", "6", "7", "8", null]
-    },
     "PR_STATUS": {
       "description": "Progesterone receptor status of the tumour",
       "type": ["string", "null"],
       "enum": ["N", "P", "X", "B", "U", null],
       "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B : Borderline", "U: ","null: Not applicable"]
-    },
-    "PR_SCORE": {
-      "description": "PR Allred score (range 0, 2-8).",
-      "type": ["string", "null"],
-      "enum": ["0", "1", "2", "3", "4", "5", "6", "7", "8", null]
     },
     "HER2_STATUS": {
       "description": "Human Epidermal Growth Factor Receptor 2 (HER2) status of the tumour ",
@@ -129,12 +115,12 @@
       "enumDescriptions": ["L: Left", "R: Right", "M: Midline", "B: Bilateral", "8: Not applicable", "9: Not Known"]
     },
     "BILATERAL": {
-      "description": "The tumour is bilateral or not",
+      "description": "The tumour is bilateral or not. Taken from Cancer Registry but existing cancer summary has different codes",
       "type": ["string", "null"],
       "enum": ["N", "Y", null],
       "enumDescriptions": ["N: No", "Y: Yes"]
     },
-    "EXCISIONMARGIN": {
+    "EXCISION_MARGIN": {
       "description": "An indication of whether the surgical excision margin finding was clear of the tumour and if so, by how much.",
       "type": ["string", "null"],
       "enum": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "98", "99", null],
