@@ -64,11 +64,11 @@
       "description": "Tumour Size in mm.",
       "type": ["number", "null"]
     },
-    "NODES_EXCISED": {
+    "NODES_TOTAL": {
       "description": "The number of local and regional nodes reported as being positive.",
       "type": ["number", "null"]
     },
-    "NODES_INVOLVED": {
+    "NODES_POSITIVE": {
       "description": "The number of local and regional nodes examined.",
       "type": ["number", "null"]
     },
@@ -114,12 +114,6 @@
       "enum": ["L", "R", "M", "B", "8", "9"],
       "enumDescriptions": ["L: Left", "R: Right", "M: Midline", "B: Bilateral", "8: Not applicable", "9: Not Known"]
     },
-    "BILATERAL": {
-      "description": "The tumour is bilateral or not. Taken from Cancer Registry but existing cancer summary has different codes",
-      "type": ["string", "null"],
-      "enum": ["N", "Y", null],
-      "enumDescriptions": ["N: No", "Y: Yes"]
-    },
     "EXCISION_MARGIN": {
       "description": "An indication of whether the surgical excision margin finding was clear of the tumour and if so, by how much.",
       "type": ["string", "null"],
@@ -152,6 +146,9 @@
       "description": "Metastases to other organs.",
       "type": ["string", "null"],
       "pattern": "^(c|p)?(MX|M0|M0\\(i\\+\\)|M1)$"
+    },
+    "OvCa": {
+      "":"Ovarian variables to be included"
     },
     "SOURCE": {
       "description": "Source of the tumour entry in the table",
