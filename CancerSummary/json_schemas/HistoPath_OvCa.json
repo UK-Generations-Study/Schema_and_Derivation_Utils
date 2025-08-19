@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "StudyID": {
-      "description": "Internal Study ID",
+      "description": "Genrations Study ID",
       "type": ["integer"],
       "minimum": 0,
       "maximum": 499994

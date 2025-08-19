@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "ExcisionMargin": {
-      "description": "Surgical margin",
+      "description": "Surgical margin in (mm)",
       "type": ["string", "null"],
       "enum": ["RRM", "NRM", null],
       "enumDescriptions": [
@@ -12,11 +12,11 @@
       ]
     },
     "ClosestRelevantMargin": {
-      "description": "Closest Relevant Margin (mm)",
+      "description": "Closest Relevant Margin in (mm)",
       "type": ["number", "null"]
     },
     "ER_Status": {
-      "description": "ER Receptor Status as indicated in report",
+      "description": "Estrogen Receptor (ER) Status as indicated in report",
       "type": ["string", "null"],
       "enum": ["P", "N", "NP", null],
       "enumDescriptions": [
@@ -27,7 +27,7 @@
       ]
     },
     "ER_Type": {
-      "description": "ER Scoring system used to score estrogen receptor (ER) tumour immunohistochemistry stains)",
+      "description": "ER Scoring system used to immunohistochemistry test score for estrogen receptor (ER)",
       "type": ["string", "null"],
       "enum": ["QS", "IP", "MD", "I", "P", null],
       "enumDescriptions": [
@@ -40,7 +40,7 @@
       ]
     },
     "PR_Status": {
-      "description": "PR Receptor Status as indicated in report",
+      "description": "Progesterone Receptor (PR) Status as indicated in report",
       "type": ["string", "null"],
       "enum": ["P", "N", "NP", null],
       "enumDescriptions": [
@@ -51,7 +51,7 @@
       ]
     },
     "Pr_Type": {
-      "description": "PR Scoring system used to score estrogen receptor (PR) tumour immunohistochemistry stains)",
+      "description": "PR Scoring system used to immunohistochemistry test score for progesterone receptor (PR)",
       "type": ["string", "null"],
       "enum": ["QS", "IP", "MD", "I", "P", null],
       "enumDescriptions": [
@@ -112,7 +112,7 @@
       "maxLength": 6
     },
     "Malignant": {
-      "description": "Malignant Cancer",
+      "description": "status to represent Malignant Cancer",
       "type": ["string", "null"],
       "enum": ["N", "X", "U", "B", "Y", null],
       "enumDescriptions": [
@@ -139,7 +139,7 @@
       "enum": [1,2,3, null]
     },
     "StudyID": {
-      "description": "Internal Study ID",
+      "description": "Generations Study ID",
       "type": ["integer"],
       "minimum": 0,
       "maximum": 499994
@@ -185,7 +185,7 @@
       "maxLength": 23
     },
     "ScreenDetected": {
-      "description": "Screen Detection Report",
+      "description": "Screen Detection Report about tumour/abnormality detection",
       "type": ["string", "null"],
       "enum": ["Y", "N", "NK", null],
       "enumDescriptions": [
@@ -196,7 +196,7 @@
       ]
     },
     "SpecimenType": {
-      "description": "Type of specimen",
+      "description": "Surgical procedure performed to opbtain the main issue specimen described in the report",
       "type": ["string", "null"],
       "enum": ["WBB", "WLE", "M", "NBO", "OB", "Re-ex", "SE", "TMP", "FNA", "LB", null],
       "enumDescriptions": [
@@ -243,7 +243,7 @@
       ]
     },
     "InsituCarcinoma": {
-      "description": "In situ  is present or not in the report",
+      "description": "In situ Carcinoma is present or not in the report",
       "type": ["string", "null"],
       "enum": ["P", "N", null],
       "enumDescriptions":[
@@ -396,7 +396,7 @@
       ]
     },
     "Microinvasion": {
-      "description": "Invasive carcinoma of the breast with no invasive focus measuring more than 1 mm",
+      "description": "Microinvasive breast cancer is present or not in the report",
       "type": ["string", "null"],
       "enum": ["P", "N", null],
       "enumDescriptions":[
@@ -437,7 +437,7 @@
       ]
     },
     "TypeComponent": {
-      "description": "Type of Component",
+      "description": "Type of Component that describes invasive carcinoma type in the report",
       "type": ["string", "null"],
       "enum": ["Lob", "Pap", "Tub", "Crb", "Muc", "Med", "T/C", "Oth", "D/L", "Tul", null],
       "enumDescriptions": [
@@ -455,7 +455,7 @@
       ]
     },
     "InvasiveGrade": {
-      "description": "Invasive Grade",
+      "description": "Invasive Grade assigned for invasive carcinoma in the report",
       "type": ["string", "null"],
       "enum": ["1", "2", "3", "NA",null],
       "enumDescriptions":[
@@ -477,7 +477,7 @@
       "enum": [1, 2, 3, null]
     },
     "TumourExtent": {
-      "description": "Extent of Tumour",
+      "description": "Description of Extent of Tumour in the report",
       "type": ["string", "null"],
       "enum": ["LOC", "MIF", "UNI", null],
       "enumDescriptions": [
@@ -488,7 +488,7 @@
       ]
     },
     "VascularInvasion": {
-      "description": "Presence of Tumour cells within the lumen of blood and / or lymph vessel",
+      "description": "Status of lymphatic or vascular invasion",
       "type": ["string", "null"],
       "enum": ["Pres", "Poss", "NS", null],
       "enumDescriptions": [
@@ -499,7 +499,7 @@
       ]
     },
     "AxillaryNodesPresent": {
-      "description": "Axillary lymph nodes present",
+      "description": "Details on Axillary lymph nodes are present/sampled or not",
       "type": ["string", "null"],
       "enum": ["Y", "N", null],
       "enumDescriptions": [
@@ -517,7 +517,7 @@
       "type": ["integer", "null"]
     },
     "OtherNodesPresent": {
-      "description": "Nodes other than axillary present",
+      "description": "Nodes other than axillary present or not",
       "type": ["string", "null"],
       "enum": ["Y", "N", null],
       "enumDescriptions": [

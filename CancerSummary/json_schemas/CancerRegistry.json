@@ -292,7 +292,7 @@
       ]
     },
     "TUMOURSIZE": {
-      "description": "Tumour Size in mm.",
+      "description": "Size of the largest dimension of the tumour",
       "type": ["number", "null"]
     },
     "NODESEXCISED": {
