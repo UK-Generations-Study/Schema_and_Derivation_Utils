@@ -203,7 +203,7 @@
       "type": ["string", "null"]
     },
     "SITE_CODED_DESC": {
-      "description": "Site of the cancer and text description",
+      "description": "Site code text description",
       "type": ["string", "null"]
     },
     "SITE_CODED_3CHAR": {

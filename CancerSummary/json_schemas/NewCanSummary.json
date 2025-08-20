@@ -3,45 +3,47 @@
   "properties": {
     "STUDY_ID": {
       "description": "Generations StudyID",
-      "type": ["integer"]
+      "type": ["integer"],
+      "minimum": 0,
+      "maximum": 499994
     },
     "TUMOUR_ID": {
-      "description": "Project specific ID for each tumour. As someone can have more than one tumour a patient can have multiple unique tumour IDs.",
+      "description": "Project specific ID for each tumour from Cancer Registry. As someone can have more than one tumour, a patient can have multiple unique tumour IDs. If not available in Cancer Registry consider from Flagging Cancers",
       "type": ["number"]
     },
     "DIAGNOSIS_DATE": {
-      "description": "Date of diagnosis",
+      "description": "Date of diagnosis from Cancer Registry. If not available consider from Flagging Cancers. If both are not available consider HistoPath_BrCa field if available in the order CoreDat, DateSpecimenTaken, DateSpecimenReceived, ReportDat. For Ovarian incidents if considering from HistoPath_OvCa follow the same rule as HistoPath_BrCa",
       "type": ["string", "null"],
       "format": "date"
     },
-    "AGE": {
-      "description": "Age of the patient when they were diagnosed with the tumour in years.",
+    "AGE_AT_DIAGNOSIS": {
+      "description": "Age of the patient when they were diagnosed with the tumour in years from Cancer Registry",
       "type": ["number"],
       "minimum": 0,
       "maximum": 200
     },
     "ICD_CODE": {
-      "description": "Describes site of origin of the neoplasm.",
+      "description": "ICD code to describe the site of origin of the neoplasm from Cancer Registry. If not available consider from Flagging Cancers",
       "type": ["string", "null"],
       "maxLength": 4
     },
     "ICD_CODE_3CHAR": {
-      "description": "£ character that describes site of origin of the neoplasm.",
+      "description": "3 character ICD code that describes site of origin of the neoplasm from Cancer Registry",
       "type": ["string", "null"],
       "maxLength": 4
     },
     "MORPH_CODE": {
-      "description": "Morphology of the cancer, in the ICD-10-O2 system",
+      "description": "Morphology of the cancer, in the ICD-10-O2 system from Cancer Registry. If not available consider from HistoPath_BraCa",
       "type": ["number", "null"],
       "minimum": 8000,
       "maximum": 9999
     },
-    "HISTOLOGY_CODE": {
-      "description": "Histology code - combines the morphology and behaviour codes.",
-      "type": ["number", "null"]
-    },
+   "SITE": {
+      "description": "Site of the cancer derived usign SITE_CODED_DESC from Cancer Registry. For Ovarian cases, consider Primary_Site from HistoPath_OvCa",
+      "type": ["string", "null"]
+   },
     "GRADE": {
-      "description": "Grade of tumour",
+      "description": "Grade of the tumour from Cancer Registry. If not available consider Invasive Grade from HistoPath_BraCa. For Ovarian cases if not available in Cacner Registry, consider Grade_I_II_III from HistoPath_OvCa",
       "type": ["string"],
       "enum": ["GX", "G0", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "GL", "GH", "GI", "G"],
       "enumDescriptions": [
@@ -61,102 +63,88 @@
       ]
     },
     "TUMOUR_SIZE": {
-      "description": "Tumour Size in mm.",
+      "description": "Tumour Size in mm. from Cancer Registry. If not available consider Invasive Size from HistoPath_BrCa if not available consider DCIS size",
       "type": ["number", "null"]
     },
     "NODES_TOTAL": {
-      "description": "The number of local and regional nodes reported as being positive.",
+      "description": "The number of local and regional nodes reported as being positive from Cancer Registry. If not available, consider HistoPath_BrCa by adding fields AxillaryNodesPositive and OtherNodesPositive",
       "type": ["number", "null"]
     },
     "NODES_POSITIVE": {
-      "description": "The number of local and regional nodes examined.",
+      "description": "The number of local and regional nodes examined from Cancer Registry. If not available, consider HistoPath_BrCa by adding fields AxillaryNodesTotal and OtherNodesTotal",
       "type": ["number", "null"]
     },
     "STAGE": {
-      "description": "Best stage derived using T, N, and M Stage",
+      "description": "Best stage at diagnosis of the tumour from Cancer Registry. If not available derive from HistoPath_BrCa using Tstage, Nstage, and Mstage. For Ovarian entries if not from Cancer Registry consider Stage_Best from HistoPath_OvCa",
       "type": ["string", "null"],
       "enum": ["0", "0A", "0B", "0C", "0IS", "1", "1C3" ,"1A", "1A1", "1A2", "1A3", "1AE", "1AES", "1AEX", "1AEXS", "1AS", "1AX", "1B", "1B1", "1B2", "1BE", "1BES", "1BEX", "1BS", "1BX", "1C", "1C1", "1C2", "IC3", "1E", "1ES", "1EX", "1S", "1X", "1XS", "2", "2A", "2A1", "2A2", "2AE", "2AES", "2AEX", "2AS", "2AX", "2B", "2BE", "2BEX", "2BS", "2BX", "2C", "2E", "2ES", "2EX", "2S", "2X", "3", "3A", "3A1", "3A1i", "3A1ii", "3A2", "3AE", "3AES", "3AEX", "3AS", "3AX", "3B", "3BE", "3BES", "3BEX", "3BEXS", "3BS", "3BX", "3BXS", "3C", "3C1", "3C2", "3D", "3E", "3ES", "3EX", "3S", "3X", "3XS", "4", "4A", "4AE", "4AES", "4AEX", "4AEXS", "4AS", "4AX", "4AXS", "4B", "4BE", "4BES", "4BEX", "4BEXS", "4BS", "4BX", "4BXS", "4BS", "4BX", "4BXS", "4C", "4E", "4ES", "4EX", "4EXS", "4S", "4X", "A", "B", "C", "5", "6", "?", "U", "X", null],
       "enumDescriptions": []
     },
     "ER_STATUS": {
-      "description": "Oestrogen receptor status of the tumour",
+      "description": "Oestrogen receptor status of the tumour from Cancer Registry. If not available consider from HistoPath_BrCa",
       "type": ["string", "null"],
       "enum": ["N", "P", "X", "B", "U", null],
       "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U:" , "null: Not applicable"]
     },
     "PR_STATUS": {
-      "description": "Progesterone receptor status of the tumour",
+      "description": "Progesterone receptor status of the tumour from Cancer Registry. If not available consider from HistoPath_BrCa",
       "type": ["string", "null"],
       "enum": ["N", "P", "X", "B", "U", null],
       "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B : Borderline", "U: ","null: Not applicable"]
     },
     "HER2_STATUS": {
-      "description": "Human Epidermal Growth Factor Receptor 2 (HER2) status of the tumour ",
+      "description": "Human Epidermal Growth Factor Receptor 2 (HER2) status of the tumour from Cancer Registry. If not available consider from HistoPath_BrCa",
       "type": ["string", "null"],
       "enum": ["N", "P", "X", "B", "U", null],
       "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U:", "null: Not applicable"]
     },
     "Ki67": {
-      "description": "Ki67 % Positive nuclei as indicated in report",
+      "description": "Ki67 % Positive nuclei as indicated in Cancer Registry. If not available consider from HistoPath_BrCa",
       "type": ["number", "null"],
       "minimum": 1,
       "maximum": 100
     },
     "SCREEN_DETECTED": {
-      "description": "Whether or not the tumour was detected by a screening programme.",
+      "description": "Whether or not the tumour was detected by a screening programme from Cancer Registry. If not available consider from HistoPath_BrCa",
       "type": ["string", "null"],
       "enum": ["N", "Y", "8", "9", null],
       "enumDescriptions": ["N : No", "Y : Yes", "8 : Not applicable", "9 : Not known"]
     },
     "LATERALITY": {
-      "description": "Identifies the side of the body for a tumour relating to paired organs within a patient, based on the evidence from a pathological examination. The data field is used to differentiate tumours in paired organs (and define the site of the pathology/cytology specimen).",
+      "description": "Identifies the side of the body for a tumour as indicated in Cancer Registry. If not available consider from HistoPath_BrCa",
       "type": ["string", "null"],
       "enum": ["L", "R", "M", "B", "8", "9"],
       "enumDescriptions": ["L: Left", "R: Right", "M: Midline", "B: Bilateral", "8: Not applicable", "9: Not Known"]
     },
-    "EXCISION_MARGIN": {
-      "description": "An indication of whether the surgical excision margin finding was clear of the tumour and if so, by how much.",
-      "type": ["string", "null"],
-      "enum": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "98", "99", null],
-      "enumDescriptions": [
-        "1 : Excision margins are clear (distance from margin not stated)",
-        "2 : Excision margins are clear (tumour >5mm from the margin)",
-        "3 : Excision margins are clear (tumour >1mm but less than or equal to 5mm from the margin",
-        "4 : Tumour is less than or equal to 1mm from excision margin, but does not reach margin",
-        "5 : Tumour reaches excision margin",
-        "6 : Uncertain",
-        "7 : Margin not involved ≥1mm",
-        "8 : Margin not involved <1mm",
-        "9 : Margin not involved 1-5mm",
-        "98 : Not applicable",
-        "99 : Not Known"
-      ]
-    },
     "T_STAGE": {
-      "description": "Local size of the tumour.",
+      "description": "The UICC code which classifies the size and extent of the primary tumour as indicated in Cancer Registry. If not available consider Tstage from HistoPath_BrCa",
       "type": ["string", "null"],
       "pattern": "(?i)^(NA|[ycp]{1,2}|[ycp]{0,2}T?[0-4]?[a-dA-DcCmi]{0,3}|[ycp]{0,2}T?is|G\\d{1,2}\\s*T[0-4]?[a-dA-D]{0,2}|\\d{1,2}[a-dA-D]?|[ycp]{0,2}T[0-9a-zA-Z`']{0,4}|[ycp]{0,2}T[0-9a-zA-Z]{0,4}[\\s-]*\\([^)]+\\)|[ycp]{0,2}T[0-9a-zA-Z]{0,4}/[ycp]{0,2}T[0-9a-zA-Z]{0,4}|[ycp]{0,2}T[0-9a-zA-Z]{0,4}[\\s`'()\\-]*[a-zA-Z0-9]*)$"
     },
     "N_STAGE": {
-      "description": "How far the tumour has grown through local tissues and distant spread of disease with involvement of lymph nodes.",
+      "description": "The UICC code which classifies the absence or presence and extent of regional lymph node metastases as indicated in Cancer Registry. If not available consider Nstage from HistoPath_BrCa",
       "type": ["string", "null"],
       "pattern": "(?ix)^(y)?(c|p|L1|pT)?(NX|N[0O]|T[0O]|TN[0O]|N1(?:mi|a|b|c|biv|mic|mc|osna)?(?:/\\d+)?|N2[ab]?|N3[abc]?|NIbiv|N)?\\s*(i\\+)?((?:\\([^)]+(\\)|$))*)((?:\\([^)]+\\))*)[\\w/+±\\-]*$"
     },
     "M_STAGE": {
-      "description": "Metastases to other organs.",
+      "description": "The UICC code which classifies the absence or presence of distant metastases as indicated in Cancer Registry. If not available consider Mstage from HistoPath_BrCa",
       "type": ["string", "null"],
       "pattern": "^(c|p)?(MX|M0|M0\\(i\\+\\)|M1)$"
     },
-    "OvCa": {
-      "":"Ovarian variables to be included"
-    },
     "SOURCE": {
-      "description": "Source of the tumour entry in the table",
+      "description": "Source of the tumour entry in the cancer summary table",
       "type": ["string", "null"]
     },
     "DATE_CREATED": {
-      "description": "Date record created in the table",
+      "description": "Date record created in the cancer summary table",
       "type": ["string", "null"]
-    }  
+    },
+    "COMMENTS":{
+      "description": "Additional notes for the tumour entry",
+      "type": ["string", "null"]
+    },
+    "OvCa_Variables": {
+      "description":"Please check if any other variables are required from HistoPath_OvCa schema"
+    } 
   }
 }
