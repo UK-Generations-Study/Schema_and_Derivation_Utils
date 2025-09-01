@@ -103,17 +103,6 @@
       "HistoPath_BrCa.InvasiveGrade",
       "HistoPath_OvCa.Grade_I_II_III",
       "CancerRegistry.GRADE"
-    ]
-  },
-  "TUMOUR_SIZE": {
-    "type": ["number", "null"],
-    "description": "Largest tumour dimension in millimetres.",
-    "x-description": "Largest tumour dimension in millimetres (harmonised to Cancer Registry coding). Source priority: 1) Pathology: Breast (HistoPath_BrCa.SizeInvasiveTumour; if invasive size missing and DCIS only, use HistoPath_BrCa.SizeDCISOnly). Ovarian (HistoPath_OvCa.TumourSize). 2) CancerRegistry.TUMOURSIZE. Pathology values take precedence when available; record numeric size only, null if text/ambiguous.",
-    "x-sourcePriority": [
-      "HistoPath_BrCa.SizeInvasiveTumour",
-      "HistoPath_BrCa.SizeDCISOnly",
-      "HistoPath_OvCa.TumourSize",
-      "CancerRegistry.TUMOURSIZE"
     ],
     "enum": ["GX", "G0", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "GL", "GH", "GI", "G"],
     "enumDescriptions": [
@@ -130,6 +119,17 @@
       "GH: ",
       "GI: ",
       "G:"
+    ]
+  },
+  "TUMOUR_SIZE": {
+    "type": ["number", "null"],
+    "description": "Largest tumour dimension in millimetres.",
+    "x-description": "Largest tumour dimension in millimetres (harmonised to Cancer Registry coding). Source priority: 1) Pathology: Breast (HistoPath_BrCa.SizeInvasiveTumour; if invasive size missing and DCIS only, use HistoPath_BrCa.SizeDCISOnly). Ovarian (HistoPath_OvCa.TumourSize). 2) CancerRegistry.TUMOURSIZE. Pathology values take precedence when available; record numeric size only, null if text/ambiguous.",
+    "x-sourcePriority": [
+      "HistoPath_BrCa.SizeInvasiveTumour",
+      "HistoPath_BrCa.SizeDCISOnly",
+      "HistoPath_OvCa.TumourSize",
+      "CancerRegistry.TUMOURSIZE"
     ]
   },
   "NODES_TOTAL": {
