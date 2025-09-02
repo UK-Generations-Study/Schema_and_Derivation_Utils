@@ -319,25 +319,25 @@
       "description": "Finalised route to diagnosis (the published route with all datasets types accounted for)",
       "type": ["string"],
       "enum": ["DCO", "Emergency Presentation", "GP Referral", "Screening", "TWW", "Other Outpatient", "Inpatient Elective", "Unknown"],
-      "enumDescriptions": [
-      "0, 0A, 0B, 0C, 0IS = Stage 0.",
-      "1, 1A, 1A1, 1A2, 1A3, 1AE, 1AES, 1AEX, 1AEXS, 1AS, 1AX, 1B, 1B1, 1B2, 1BE, 1BES, 1BEX, 1BS, 1BX, 1C, 1C1, 1C2, IC3, 1E, 1ES, 1EX, 1S, 1X, 1XS = Stage 1",
-      "2, 2A, 2A1, 2A2, 2AE, 2AES, 2AEX, 2AS, 2AX, 2B, 2BE, 2BEX, 2BS, 2BX, 2C, 2E, 2ES, 2EX, 2S, 2X = Stage 2",
-      "3, 3A, 3A1, 3A1i, 3A1ii, 3A2, 3AE, 3AES, 3AEX, 3AS, 3AX, 3B, 3BE, 3BES, 3BEX, 3BEXS, 3BS, 3BX, 3BXS, 3C, 3C1, 3C2, 3D,  3E, 3ES, 3EX, 3S, 3X, 3XS = Stage 3",
-      "4, 4A, 4AE, 4AES, 4AEX, 4AEXS, 4AS, 4AX, 4AXS, 4B, 4BE, 4BES, 4BEX, 4BEXS, 4BS, 4BX, 4BXS, 4BS, 4BX, 4BXS, 4C, 4E, 4ES, 4EX, 4EXS, 4S, 4X = Stage 4",
-      " A, B, C = RaiBinet stage",
-      "5 = Outdated or invalid code",
-      "6 = not stageable",
-      "? = insufficient information.",
-      "U = unstageable",
-      "X = not staged."
-      ]
+      "enumDescriptions": []
     },
     "STAGE_BEST": {
       "description": "Best registry stage at diagnosis of the tumour",
       "type": ["string", "null"],
       "enum": ["0", "0A", "0B", "0C", "0IS", "1", "1C3" ,"1A", "1A1", "1A2", "1A3", "1AE", "1AES", "1AEX", "1AEXS", "1AS", "1AX", "1B", "1B1", "1B2", "1BE", "1BES", "1BEX", "1BS", "1BX", "1C", "1C1", "1C2", "IC3", "1E", "1ES", "1EX", "1S", "1X", "1XS", "2", "2A", "2A1", "2A2", "2AE", "2AES", "2AEX", "2AS", "2AX", "2B", "2BE", "2BEX", "2BS", "2BX", "2C", "2E", "2ES", "2EX", "2S", "2X", "3", "3A", "3A1", "3A1i", "3A1ii", "3A2", "3AE", "3AES", "3AEX", "3AS", "3AX", "3B", "3BE", "3BES", "3BEX", "3BEXS", "3BS", "3BX", "3BXS", "3C", "3C1", "3C2", "3D", "3E", "3ES", "3EX", "3S", "3X", "3XS", "4", "4A", "4AE", "4AES", "4AEX", "4AEXS", "4AS", "4AX", "4AXS", "4B", "4BE", "4BES", "4BEX", "4BEXS", "4BS", "4BX", "4BXS", "4BS", "4BX", "4BXS", "4C", "4E", "4ES", "4EX", "4EXS", "4S", "4X", "A", "B", "C", "5", "6", "?", "U", "X", null],
-      "enumDescriptions": []
+      "enumDescriptions": [
+        "Stage 0: 0, 0A, 0B, 0C, 0IS",
+        "Stage 1: 1, 1A, 1A1, 1A2, 1A3, 1AE, 1AES, 1AEX, 1AEXS, 1AS, 1AX, 1B, 1B1, 1B2, 1BE, 1BES, 1BEX, 1BS, 1BX, 1C, 1C1, 1C2, IC3, 1E, 1ES, 1EX, 1S, 1X, 1XS",
+        "Stage 2: 2, 2A, 2A1, 2A2, 2AE, 2AES, 2AEX, 2AS, 2AX, 2B, 2BE, 2BEX, 2BS, 2BX, 2C, 2E, 2ES, 2EX, 2S, 2X",
+        "Stage 3: 3, 3A, 3A1, 3A1i, 3A1ii, 3A2, 3AE, 3AES, 3AEX, 3AS, 3AX, 3B, 3BE, 3BES, 3BEX, 3BEXS, 3BS, 3BX, 3BXS, 3C, 3C1, 3C2, 3D,  3E, 3ES, 3EX, 3S, 3X, 3XS",
+        "Stage 4: 4, 4A, 4AE, 4AES, 4AEX, 4AEXS, 4AS, 4AX, 4AXS, 4B, 4BE, 4BES, 4BEX, 4BEXS, 4BS, 4BX, 4BXS, 4BS, 4BX, 4BXS, 4C, 4E, 4ES, 4EX, 4EXS, 4S, 4X",
+        "A, B, C: RaiBinet stage",
+        "5: Outdated or invalid code",
+        "6: not stageable",
+        "?: insufficient information",
+        "U: unstageable",
+        "X: not staged"
+      ]
     },
     "T_BEST": {
       "description": "Local size of the tumour.",
