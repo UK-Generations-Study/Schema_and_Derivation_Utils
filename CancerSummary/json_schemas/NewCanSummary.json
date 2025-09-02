@@ -77,7 +77,7 @@
     "minimum": 8000,
     "maximum": 9999
   },
-  "HISTOLOGY_CODED": {
+  "HISTOLOGY_CODE": {
     "type": ["number", "null"],  
     "description": "Histology code - combines the morphology and behaviour codes.",
     "x-description": "ICD-O Histology code describing the combination of morphology and behaviour of the tumour (as provided by the source; may include the behaviour suffix, e.g., \"/2\", \"/3\"). Per tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.HISTOLOGY_CODED (preferred); 2)FlaggingCancers.Histology. Store the code exactly as provided (no recoding).",
