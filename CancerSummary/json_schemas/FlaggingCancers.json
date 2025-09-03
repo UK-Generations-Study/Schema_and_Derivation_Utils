@@ -19,7 +19,7 @@
       "maxLength": 4
     },
     "Histology": {
-      "description": "Histology code",
+      "description": "Histology code for the cancer",
       "type": ["string", "null"],
       "maxLength": 5
     },

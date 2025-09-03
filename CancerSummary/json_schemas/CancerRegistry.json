@@ -6,7 +6,7 @@
       "type": ["integer"]
     },
     "TUMOURID": {
-      "description": "Project specific ID for each tumour. As someone can have more than one tumour a patient can have multiple unique tumour IDs.",
+      "description": "Pseudonymised Project specific ID for each tumour. As someone can have more than one tumour a patient can have multiple unique tumour IDs.",
       "type": ["number"]
     },
     "FORENAME": {
@@ -98,7 +98,7 @@
       "format": "date"
     },
     "DIAGNOSISDATE1YEAR": {
-      "description": "YYYY",
+      "description": "Year of diagnosis taken from DIAGNOSISDATE1",
       "type": ["number", "null"],
       "minimum": 1900,
       "maximum": 2099
@@ -113,7 +113,7 @@
       "format": "date"
     },
     "DIAGNOSISDATE2YEAR": {
-      "description": "YYYY",
+      "description": "Year of diagnosis taken from DIAGNOSISDATE2",
       "type": ["number", "null"],
       "minimum": 1900,
       "maximum": 2099
@@ -168,12 +168,12 @@
       ]
     },
     "SITE_ICD10_O2": {
-      "description": "Describes site of origin of the neoplasm.",
+      "description": "Describes site of origin of the neoplasm. (4-character ICD-10-O2 code)",
       "type": ["string", "null"],
       "maxLength": 4
     },
     "SITE_ICD10_O2_3CHAR": {
-      "description": "Describes site of origin of the neoplasm.",
+      "description": "Describes site of origin of the neoplasm. (3-character ICD-10-O2 code)",
       "type": ["string", "null"],
       "maxLength": 4
     },
@@ -241,7 +241,7 @@
       "type": ["string", "null"]
     },
     "MORPH_CODED": {
-      "description": "Morphology code",
+      "description": "Morphology of the cancer, in the coding system that the tumour was originally coded in.",
       "type": ["number", "null"]
     },
     "BEHAVIOUR_CODED": {
@@ -340,19 +340,19 @@
       ]
     },
     "T_BEST": {
-      "description": "Local size of the tumour.",
+      "description": "Local size of the tumour. T stage flagged by the registry as the ‘best’ T stage",
       "type": ["string", "null"]
     },
     "N_BEST": {
-      "description": "How far the tumour has grown through local tissues and distant spread of disease with involvement of lymph nodes.",
+      "description": "How far the tumour has grown through local tissues and distant spread of disease with involvement of lymph nodes. N stage flagged by the registry as the ‘best’ N stage",
       "type": ["string", "null"]
     },
     "M_BEST": {
-      "description": "Metastases to other organs.",
+      "description": "Metastases to other organs. M stage flagged by the registry as the ‘best’ M stage",
       "type": ["string", "null"]
     },
     "STAGE_BEST_SYSTEM": {
-      "description": "Staging system associated with stage_best.",
+      "description": "System used to record best registry stage at diagnosis",
       "type": ["string", "null"],
       "enum": ["5th", "6th", "7th", "8th", "UICC 5", "UICC 6", "UICC 7", "UICC 8", "AJCC 7", "AJCC 8", "ENETS 2007", "AnnArbor", "Wilms", "FIGO", "ISS", "RaiBinet", "Binet", "Unknown", "X", "U", null],
       "enumDescriptions": [
@@ -478,11 +478,11 @@
       "enumDescriptions": ["Y: Yes", "X: No"]
     },
     "CHRL_TOT_27_03": {
-      "description": "Lookback of 27 to 3 months prior to diagnosis",
+      "description": "Total Charlson co-morbidity score for a 2 year period",
       "type": ["number", "null"]
     },
     "CHRL_TOT_78_06": {
-      "description": "Lookback of 78 to 6 months prior to diagnosis,",
+      "description": "Total Charlson co-morbidity score for a 6 year period",
       "type": ["number", "null"]
     },
     "HES_LINKED": {
@@ -498,7 +498,7 @@
       "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U:" , "null: Not applicable"]
     },
     "ER_SCORE": {
-      "description": "ER Allred score (range 0, 2-8).",
+      "description": "Oestrogen receptor score of the tumour . ER Allred score (range 0, 2-8).",
       "type": ["string", "null"],
       "enum": ["0", "1", "2", "3", "4", "5", "6", "7", "8", null]
     },
@@ -509,7 +509,7 @@
       "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B : Borderline", "U: ","null: Not applicable"]
     },
     "PR_SCORE": {
-      "description": "PR Allred score (range 0, 2-8).",
+      "description": "Progesterone receptor score of the tumour. PR Allred score (range 0, 2-8).",
       "type": ["string", "null"],
       "enum": ["0", "1", "2", "3", "4", "5", "6", "7", "8", null]
     },
@@ -520,7 +520,7 @@
       "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U:", "null: Not applicable"]
     },
     "NPI": {
-      "description": "Calculated from tumour size, grade and lymph node involvement.",
+      "description": "Nottingham Prognostic Index Score. Calculated from tumour size, grade and lymph node involvement.",
       "type": ["number", "null"],
       "minimum": 2,
       "maximum": 20
@@ -546,13 +546,20 @@
       "description": "Staging system for tumours of the female reproductive system.",
       "type": ["string", "null"],
       "enum": ["0", "1", "1a", "1a1", "3a1ii", "IIIA1i", "IC3", "1a2", "3a1", "1b", "1b1", "1b2", "1c", "1c1", "1c2", "1c3", "2", "2a", "2a1", "2a2", "2b", "2c", "3", "3a", "3b", "3c", "3c1", "3c2", "4", "4a", "4b", "I", "IA", "IA1", "IA2", "IB", "IB1", "IB2", "IC", "II", "IIA", "IIA2", "IIB", "IIC", "III", "IIIA", "IIIB", "IIIC", "IIIC1", "IIIC2", "IV", "IVA", "IVB", "3a2", null],
-      "enumDescriptions": []
+      "enumDescriptions": [
+        "Stage 1: Confined",
+        "Stage 2: Local",
+        "Stage 3: Distant",
+        "Stage 4: Involving other organs"
+      ]
     },
     "GLEASON_PRIMARY": {
       "description": "The primary pattern is the grade that comprises most of the tumour volume.",
       "type": ["number", "null"],
       "enum": [2, 3, 4, 5, 8],
-      "enumDescriptions": []
+      "enumDescriptions": [
+        "8: Not applicable"
+      ]
     },
     "GLEASON_SECONDARY": {
       "description": "If additional grades are present, what is the highest grade (biopsy) or the second most extensive grade (TURP and radicals). If no additional grades are present, primary and secondary grades are the same.",
@@ -573,7 +580,7 @@
       "enumDescriptions": []
     },
     "SCREENDETECTED": {
-      "description": "Whether or not the tumour was detected by a screening programme.",
+      "description": "Screen detected cancer. Whether or not the tumour was detected by a screening programme.",
       "type": ["string", "null"],
       "enum": ["N", "Y", "8", "9", null],
       "enumDescriptions": ["N : No", "Y : Yes", "8 : Not applicable", "9 : Not known"]
@@ -612,7 +619,7 @@
       "enumDescriptions": ["L: Left", "R: Right", "M: Midline", "B: Bilateral", "8: Not applicable", "9: Not Known"]
     },
     "DCO": {
-      "description": "Whether the tumour was registered from a death certificate only.",
+      "description": "Diagnosis death certificate only. Whether the tumour was registered from a death certificate only.",
       "type": ["string", "null"],
       "enum": ["Y", "N"],
       "enumDescriptions": ["Y: Yes", "N: No"]
@@ -725,11 +732,11 @@
       "enumDescriptions": ["Y: Yes", "N: No", "8: N/A", "9: Unknown"]
     },
     "DIAG_HOSP": {
-      "description": "Valid hospital code as described",
+      "description": "Diagnosis hospital code. Valid hospital code as described",
       "type": ["string", "null"]
     },
     "DIAG_HOSP_NAME": {
-      "description": "Diagnosis hospital name",
+      "description": "Diagnosis hospital name. Diagnosis hospital name",
       "type": ["string", "null"]
     },
     "DIAG_HOSP (Pseudonymised)": {
@@ -758,7 +765,7 @@
       "type": ["number", "null"]
     },
     "DIAG_TRUST": {
-      "description": "Valid trust code",
+      "description": "Diagnosis trust code",
       "type": ["string", "null"]
     },
     "DIAG_TRUST_NAME": {
@@ -802,7 +809,7 @@
       "type": ["string", "null"]
     },
     "LSOA11_CODE": {
-      "description": "2011 LSOA the patient was resident in when the tumour was diagnosed.",
+      "description": "2011 Lower Super Output Area (LSOA) the patient was resident in when the tumour was diagnosed.",
       "type": ["string", "null"]
     },
     "LSOA11_CODE (Pseudonymised)": {
