@@ -27,18 +27,13 @@
       "type": ["string", "null"],
       "format": "date",
       "description": "Best estimate of tumour diagnosis date (per tumour).",
-      "x-description": "Best estimate of the tumour diagnosis date (YYYY-MM-DD). Each participant may have multiple diagnosis dates, one per distinct tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.DIAGNOSISDATEBEST; 2) Pathology reports — for breast use HistoPath_BrCa in this order: Coredat, DateSpecimenTaken, DateSpecimenReceived, ReportDat; for ovarian use HistoPath_OvCa in the same order: Coredat, DateSpecimenTaken, DateSpecimenReceived, ReportDat; 3) FlaggingCancers.DCancer; ",
+      "x-description": "Best estimate of the tumour diagnosis date (YYYY-MM-DD). Each participant may have multiple diagnosis dates, one per distinct tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.DIAGNOSISDATEBEST; 2) Pathology reports — for breast use HistoPath_BrCa in this order: DateSpecimenTaken, DateSpecimenReceived; for ovarian use HistoPath_OvCa in the same order: DateSpecimenTaken, DateSpecimenReceived",
       "x-sourcePriority": [
         "CancerRegistry.DIAGNOSISDATEBEST",
-        "HistoPath_BrCa.CoreDat",
         "HistoPath_BrCa.DateSpecimenTaken",
         "HistoPath_BrCa.DateSpecimenReceived",
-        "HistoPath_BrCa.ReportDat",
-        "HistoPath_OvCa.CoreDat",
         "HistoPath_OvCa.DateSpecimenTaken",
-        "HistoPath_OvCa.DateSpecimenReceived",
-        "HistoPath_OvCa.ReportDat",
-        "FlaggingCancers.DCancer"
+        "HistoPath_OvCa.DateSpecimenReceived"
       ]
     },
     "AGE_AT_DIAGNOSIS": {
@@ -160,14 +155,13 @@
     "STAGE": {
       "type": ["string", "null"],
       "description": "Best overall tumour stage.",
-      "x-description": "Best tumour stage at diagnosis (harmonised to Cancer Registry coding). Source priority: 1) CancerRegistry.STAGE_BEST. Pathology-derived staging takes precedence when available; all values must be expressed in the Cancer Registry coding system.; 2) Pathology staging (Breast: HistoPath_BrCa.Tstage, HistoPath_BrCa.NStage, HistoPath_BrCa.Mstage; Ovarian: HistoPath_OvCa.Stage_Best or FIGO if available), mapped to Cancer Registry stage format; ",
+      "x-description": "Best tumour stage at diagnosis (harmonised to Cancer Registry coding). Source priority: 1) Pathology staging (Breast: HistoPath_BrCa.Tstage, HistoPath_BrCa.NStage, HistoPath_BrCa.Mstage; Ovarian: HistoPath_OvCa.Stage_Best or FIGO if available), mapped to Cancer Registry stage format; 2) CancerRegistry.STAGE_BEST. Pathology-derived staging takes precedence when available; all values must be expressed in the Cancer Registry coding system.; ",
       "x-sourcePriority": [
-        "CancerRegistry.STAGE_BEST",
-        "HistoPath_OvCa.Stage_Best",
-        "HistoPath_OvCa.Stage_FIGO",
         "HistoPath_BrCa.Tstage",
         "HistoPath_BrCa.NStage",
-        "HistoPath_BrCa.Mstage"        
+        "HistoPath_BrCa.Mstage",
+        "CancerRegistry.STAGE_BEST",
+        "HistoPath_OvCa.Stage_Best"
       ],
       "enum": ["0", "0A", "0B", "0C", "0IS", "1", "1C3", "1A", "1A1", "1A2", "1A3", "1AE", "1AES", "1AEX", "1AEXS", "1AS", "1AX", "1B", "1B1", "1B2", "1BE", "1BES", "1BEX", "1BS", "1BX", "1C", "1C1", "1C2", "IC3", "1E", "1ES", "1EX", "1S", "1X", "1XS", "2", "2A", "2A1", "2A2", "2AE", "2AES", "2AEX", "2AS", "2AX", "2B", "2BE", "2BEX", "2BS", "2BX", "2C", "2E", "2ES", "2EX", "2S", "2X", "3", "3A", "3A1", "3A1i", "3A1ii", "3A2", "3AE", "3AES", "3AEX", "3AS", "3AX", "3B", "3BE", "3BES", "3BEX", "3BEXS", "3BS", "3BX", "3BXS", "3C", "3C1", "3C2", "3D", "3E", "3ES", "3EX", "3S", "3X", "3XS", "4", "4A", "4AE", "4AES", "4AEX", "4AEXS", "4AS", "4AX", "4AXS", "4B", "4BE", "4BES", "4BEX", "4BEXS", "4BS", "4BX", "4BXS", "4BS", "4BX", "4BXS", "4C", "4E", "4ES", "4EX", "4EXS", "4S", "4X", "A", "B", "C", "5", "6", "?", "U", "X", null],
       "enumDescriptions": [
@@ -189,8 +183,9 @@
       "description": "Oestrogen receptor status (breast tumours only).",
       "x-description": "Oestrogen receptor (ER) status (harmonised to Cancer Registry coding). Source priority: 1) HistoPath_BrCa.ER_Status (map NP → X; retain P/N; map borderline if present to B); 2) CancerRegistry.ER_STATUS (retain registry codes: P/N/B/X/U). Pathology values take precedence when available; all values must be expressed in the Cancer Registry coding system.",
       "x-sourcePriority": [
-        "CancerRegistry.ER_STATUS",
-        "HistoPath_BrCa.ER_Status"
+        "HistoPath_BrCa.ER_Status",
+        "CancerRegistry.ER_STATUS"
+
       ],
       "enum": ["N", "P", "X", "B", "U", null],
       "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U:", "null: Not applicable"]
@@ -211,8 +206,9 @@
       "description": "HER2 receptor status (breast tumours only).",
       "x-description": "HER2 receptor status (harmonised to Cancer Registry coding). Source priority: 1) HistoPath_BrCa.HER2_Status (map NP → X; retain P/N/B); 2) CancerRegistry.HER2_STATUS (retain registry codes: P/N/B/X/U). If both IHC and FISH are available in pathology, use the definitive integrated result; pathology values take precedence when available; all values must be expressed in the Cancer Registry coding system.",
       "x-sourcePriority": [
-        "CancerRegistry.HER2_STATUS",
-        "HistoPath_BrCa.HER2_Status"
+        "HistoPath_BrCa.HER2_Status",
+        "CancerRegistry.HER2_STATUS"
+        
       ],
       "enum": ["N", "P", "X", "B", "U", null],
       "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U:", "null: Not applicable"]
@@ -230,9 +226,9 @@
     "SCREEN_DETECTED": {
       "type": ["string", "null"],
       "description": "Whether tumour was screen-detected (Y/N/8/9).",
-      "x-description": "Whether the tumour was detected via a screening programme. Source priority: 1) CancerRegistry.FINAL_ROUTE — set 'Y' if FINAL_ROUTE = 'Screening'; set 'N' if FINAL_ROUTE = any non-screening route; set '9' if unknown. 2) HistoPath_BrCa.ScreenDetected (Y/N/NK → map NK to '9'). Allowed values: 'Y' (Yes), 'N' (No), '8' (Not applicable), '9' (Not known).",
+      "x-description": "Whether the tumour was detected via a screening programme. Source priority: 1) CancerRegistry.SCREENDETECTED. 2) HistoPath_BrCa.ScreenDetected (Y/N/NK → map NK to '9'). Allowed values: 'Y' (Yes), 'N' (No), '8' (Not applicable), '9' (Not known).",
       "x-sourcePriority": [
-        "CancerRegistry.FINAL_ROUTE",
+        "CancerRegistry.SCREENDETECTED",
         "HistoPath_BrCa.ScreenDetected"
       ],
       "enum": ["N", "Y", "8", "9", null],
@@ -243,8 +239,9 @@
       "description": "Side of body affected (left, right, bilateral, unknown).",
       "x-description": "Laterality of the tumour (per tumour, TUMOUR_ID). Source priority: 1) HistoPath_BrCa.Side (map L/R as-is, U → '9'); 2) CancerRegistry.LATERALITY (retain registry codes: L, R, M, B, 8, 9). Pathology values take precedence when available; harmonise all values to registry coding.",
       "x-sourcePriority": [
-        "CancerRegistry.LATERALITY",
-        "HistoPath_BrCa.Side"        
+        "HistoPath_BrCa.Side",
+        "CancerRegistry.LATERALITY"
+                
       ],
       "enum": ["L", "R", "M", "B", "8", "9"],
       "enumDescriptions": ["L: Left", "R: Right", "M: Midline", "B: Bilateral", "8: Not applicable", "9: Not Known"]
