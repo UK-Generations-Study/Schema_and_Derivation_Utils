@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://www.breakthroughgenerations.org.uk/schemas/bgs-r0-combined-row.json",
-  "title": "Generations Study Participant Record",
-  "description": "Complete participant record combining general information, physical development, pregnancies, birth details, and derived variables.",
+  "title": "Generations Study - R0 Questionnaire - Participant Record",
+  "description": "Complete participant record combining R0 questionnaire variables from General Information, physical development, pregnancies, birth details, and derived variables",
   "type": "object",
   "allOf": [
     { "$ref": "GeneralInformation.json" },
