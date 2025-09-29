@@ -457,7 +457,7 @@
     "InvasiveGrade": {
       "description": "Invasive Grade assigned for invasive carcinoma in the report",
       "type": ["string", "null"],
-      "enum": ["1", "2", "3", "NA", null],
+      "enum": ["1", "2", "3", "NA",null],
       "enumDescriptions":[
         "1: Grade 1 or well differentiated", 
         "2: Grade 2 or moderately differentiated", 

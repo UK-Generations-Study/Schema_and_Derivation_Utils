@@ -3,7 +3,7 @@
   "properties": {
     "firstatsite": {
       "description": "First ever diagnosis by site | First (earliest) diagnosis for each 'site_text'. An individual may have multipe firstatsite=1 (e.g. one for breast, one for skin, etc)",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 3
     },
     "confirmed": {
@@ -61,8 +61,8 @@
     },
     "side": {
       "description": "Laterality",
-      "type": ["string"],
-      "enum": ["1", "2", "3", "4", "9"],
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "4", "9", null],
       "enumDescriptions" :[
         "1: Left",
         "2: Right",
@@ -86,27 +86,27 @@
     },
     "S_repdate": {
       "description": "Full unique Participant Reported source of diagnosis",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 100
     },
     "rep_source": {
       "description": "Questionnaire source of diagnosis | if 'source' from Registry then linked Participant Source otherwise same as 'source'",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 100
     },
     "ICDt": {
       "description": "International classification of disease (C..., D...). Diagnostic and procedure coding system | Includes local coding: 4th character 'Z' means no information to determine 4th character. Where source is Histopathology Report code is derived",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 5
     },
     "ICDt_v": {
       "description": "Intl classification of disease - version",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 15
     },
     "ICDm": {
       "description": "5 digit morphology code. First 4 digits indicate specific histological term, 5th digit behaviour code (malignant,in situ, etc) | Where source is Histopathology Report code is derived",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 5
     },
     "er_Status": {
@@ -201,17 +201,17 @@
     },
     "S_side": {
       "description": "Unique Source of Side",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 150
     },
     "S_ICDt": {
       "description": "Unique Source of ICDt code",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 150
     },
     "S_ICDm": {
       "description": "Unique Source of ICDm",
-      "type": ["string"],
+      "type": ["string", "null"],
       "maxLength": 150
     },
     "S_opcs_num": {
@@ -298,7 +298,7 @@
     },
     "ino": {
       "description": "Count of episodes",
-      "type": ["integer"],
+      "type": ["integer", "null"],
       "maxLength": 4
     },
     "update": {
@@ -348,27 +348,27 @@
     },
     "diagyear": {
       "description": "Year of Diagdate. Year = 9999 is unknown. Year = null Death registration only.",
-      "type": ["number"],
+      "type": ["number", "null"],
       "maxLength": 3
     },
     "diagage": {
       "description": "Age at Diagnosis",
-      "type": ["number"],
+      "type": ["number", "null"],
       "maxLength": 4
     },
     "diagintyr": {
       "description": "Interval of years between Entry and Diagnosis | Negative figures = prevalent",
-      "type": ["number"],
+      "type": ["number", "null"],
       "maxLength": 3
     },
     "daterank": {
       "description": "Order of Episodes",
-      "type": ["number"],
+      "type": ["number", "null"],
       "maxLength": 2
     },
     "breast": {
       "description": "Flag of Brca",
-      "type": ["number"],
+      "type": ["number", "null"],
       "maxLength": 1
     }
   }

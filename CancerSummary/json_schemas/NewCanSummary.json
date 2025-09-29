@@ -4,15 +4,20 @@
     "STUDY_ID": {
       "type": ["integer"],
       "description": "Unique participant identifier",
-      "x-description": "Unique participant identifier in the Generations Study. Present in all source datasets as CancerRegistry.STUDY_ID, FlaggingCancers.StudyID, HistoPath_BrCa.StudyID, and HistoPath_OvCa.StudyID. Values are identical across sources and serve as the primary key to link records between datasets. No transformation or source prioritisation required.",
+      "x-description": "Unique participant identifier in the Generations Study. Present in all source datasets as CancerRegistry.STUDY_ID, FlaggingCancers.STUDY_ID, HistoPath_BrCa.STUDY_ID, and HistoPath_OvCa.STUDY_ID. Values are identical across sources and serve as the primary key to link records between datasets. No transformation or source prioritisation required.",
       "x-sourcePriority": [
         "CancerRegistry.STUDY_ID",
-        "FlaggingCancers.StudyID",
-        "HistoPath_BrCa.StudyID",
-        "HistoPath_OvCa.StudyID"
+        "FlaggingCancers.STUDY_ID",
+        "HistoPath_BrCa.STUDY_ID",
+        "HistoPath_OvCa.STUDY_ID",
+        "FlaggingDeaths.STUDY_ID"
       ],
       "minimum": 0,
       "maximum": 499994
+    },
+    "S_STUDY_ID": {
+      "type": ["string"],
+      "description": "Source from which the Study ID is selected in the target dataset. It will be one of the sources from x-sourcePriority for STUDY_ID."
     },
     "TUMOUR_ID": {
       "type": ["number"],
@@ -31,19 +36,13 @@
       "type": ["string", "null"],
       "format": "date",
       "description": "Best estimate of tumour diagnosis date (per tumour).",
-      "x-description": "Best estimate of the tumour diagnosis date (YYYY-MM-DD). Each participant may have multiple diagnosis dates, one per distinct tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.DIAGNOSISDATEBEST; 2) Pathology reports — for breast use HistoPath_BrCa in this order: CoreDat, DateSpecimenTaken, DateSpecimenReceived, ReportDat; for ovarian use HistoPath_OvCa in the same order: CoreDat, DateSpecimenTaken, DateSpecimenReceived, ReportDat; 3)Flagging Cancers - use DCancer; 4) Flagging Deaths - use DDeaths",
+      "x-description": "Best estimate of the tumour diagnosis date (YYYY-MM-DD). Each participant may have multiple diagnosis dates, one per distinct tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.DIAGNOSIS_DATE; 2) Pathology reports — for breast use HistoPath_BrCa.DIAGNOSIS_DATE ; for ovarian use HistoPath_OvCa.DIAGNOSIS_DATE ; 3)Flagging Cancers - use DIAGNOSIS_DATE; 4) Flagging Deaths - use DIAGNOSIS_DATE",
       "x-sourcePriority": [
-        "CancerRegistry.DIAGNOSISDATEBEST",
-        "HistoPath_BrCa.CoreDat",
-        "HistoPath_BrCa.DateSpecimenTaken",
-        "HistoPath_BrCa.DateSpecimenReceived",
-        "HistoPath_BrCa.ReportDat",
-        "HistoPath_OvCa.CoreDat",
-        "HistoPath_OvCa.DateSpecimenTaken",
-        "HistoPath_OvCa.DateSpecimenReceived",
-        "HistoPath_OvCa.ReportDat",
-        "FlaggingCancers.DCancer",
-        "FlaggingDeaths.DDeath"
+        "CancerRegistry.DIAGNOSIS_DATE",
+        "HistoPath_BrCa.DIAGNOSIS_DATE",
+        "HistoPath_OvCa.DIAGNOSIS_DATE",
+        "FlaggingCancers.DIAGNOSIS_DATE",
+        "FlaggingDeaths.DIAGNOSIS_DATE"
       ]
     },
     "S_DIAGNOSIS_DATE": {
@@ -63,7 +62,8 @@
       "x-description": "Primary ICD-10-O2 site code (4-character) describing the site of origin of the neoplasm. Source priority: 1) CancerRegistry.SITE_ICD10_O2 (\"Describes site of origin of the neoplasm\"); 2) FlaggingCancers.CancerICD (\"Cancer ICD code\"). Use the code as provided by the source without recoding. This field is per tumour (TUMOUR_ID).",
       "x-sourcePriority": [
         "CancerRegistry.SITE_ICD10_O2",
-        "FlaggingCancers.CancerICD"
+        "FlaggingCancers.CancerICD",
+        "FlaggingDeaths.UCCode"
       ],
       "maxLength": 4
     },
@@ -74,11 +74,11 @@
     "MORPH_CODE": {
       "type": ["number", "null"],
       "description": "ICD-O morphology code (tumour histology/behaviour).",
-      "x-description": "ICD-O morphology code describing the histological type/behaviour of the tumour (as provided by the source; may include the behaviour suffix, e.g., \"/2\", \"/3\"). Per tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.MORPH_ICD10_O2 (preferred); 2) CancerRegistry.MORPH_CODED (fallback); 3) HistoPath_BrCa.ICDMorphologyCode. Store the code exactly as provided (no recoding).",
+      "x-description": "ICD-O morphology code describing the histological type/behaviour of the tumour (as provided by the source; may include the behaviour suffix, e.g., \"/2\", \"/3\"). Per tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.MORPH_ICD10_O2 (preferred); 2) CancerRegistry.MORPH_CODE (fallback); 3) HistoPath_BrCa.MORPH_CODE. Store the code exactly as provided (no recoding).",
       "x-sourcePriority": [
-        "CancerRegistry.MORPH_ICD10_O2",
-        "CancerRegistry.MORPH_CODED",
-        "HistoPath_BrCa.ICDMorphologyCode"
+        "CancerRegistry.MORPH_CODE",
+        "HistoPath_BrCa.MORPH_CODE",
+        "HistoPath_OvCa.MORPH_CODE"
       ],
       "minimum": 8000,
       "maximum": 9999
@@ -86,19 +86,6 @@
     "S_MORPH_CODE": {
       "type": ["string"],
       "description": "Source from which ICD Morph Code is selected in the target dataset. It will be one of the sources from x-sourcePriority for MORPH_CODE."
-    },
-    "HISTOLOGY_CODE": {
-      "type": ["number", "null"],  
-      "description": "Histology code - combines the morphology and behaviour codes.",
-      "x-description": "ICD-O Histology code describing the combination of morphology and behaviour of the tumour (as provided by the source; may include the behaviour suffix, e.g., \"/2\", \"/3\"). Per tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.HISTOLOGY_CODED (preferred); 2)FlaggingCancers.Histology. Store the code exactly as provided (no recoding).",
-      "x-sourcePriority": [
-        "CancerRegistry.HISTOLOGY_CODED",
-        "FlaggingCancers.Histology"
-      ]
-    },
-    "S_HISTOLOGY_CODE": {
-      "type": ["string"],
-      "description": "Source from which ICD Histology Code is selected in the target dataset. It will be one of the sources from x-sourcePriority for HISTOLOGY_CODE."
     },
     "SITE": {
       "type": ["string", "null"],
@@ -186,7 +173,7 @@
         "HistoPath_BrCa.Stage",
         "HistoPath_OvCa.Stage_FIGO"
       ],
-      "enum": ["0", "0A", "0B", "0C", "0IS", "1", "1C3", "1A", "1A1", "1A2", "1A3", "1AE", "1AES", "1AEX", "1AEXS", "1AS", "1AX", "1B", "1B1", "1B2", "1BE", "1BES", "1BEX", "1BS", "1BX", "1C", "1C1", "1C2", "IC3", "1E", "1ES", "1EX", "1S", "1X", "1XS", "2", "2A", "2A1", "2A2", "2AE", "2AES", "2AEX", "2AS", "2AX", "2B", "2BE", "2BEX", "2BS", "2BX", "2C", "2E", "2ES", "2EX", "2S", "2X", "3", "3A", "3A1", "3A1i", "3A1ii", "3A2", "3AE", "3AES", "3AEX", "3AS", "3AX", "3B", "3BE", "3BES", "3BEX", "3BEXS", "3BS", "3BX", "3BXS", "3C", "3C1", "3C2", "3D", "3E", "3ES", "3EX", "3S", "3X", "3XS", "4", "4A", "4AE", "4AES", "4AEX", "4AEXS", "4AS", "4AX", "4AXS", "4B", "4BE", "4BES", "4BEX", "4BEXS", "4BS", "4BX", "4BXS", "4BS", "4BX", "4BXS", "4C", "4E", "4ES", "4EX", "4EXS", "4S", "4X", "A", "B", "C", "5", "6", "?", "U", "X", null],
+      "enum": ["0", "0A", "0B", "0C", "0IS", "1", "1C3", "1A", "1A1", "1A2", "1A3", "1AE", "1AES", "1AEX", "1AEXS", "1AS", "1AX", "1B", "1B1", "1B2", "1BE", "1BES", "1BEX", "1BS", "1BX", "1C", "1C1", "1C2", "IC3", "1E", "1ES", "1EX", "1S", "1X", "1XS", "2", "2A", "2A1", "2A2", "2AE", "2AES", "2AEX", "2AS", "2AX", "2B", "2BE", "2BEX", "2BS", "2BX", "2C", "2E", "2ES", "2EX", "2S", "2X", "3", "3A", "3A1", "3A1i", "3A1ii", "3A2", "3AE", "3AES", "3AEX", "3AS", "3AX", "3B", "3BE", "3BES", "3BEX", "3BEXS", "3BS", "3BX", "3BXS", "3C", "3C1", "3C2", "3D", "3E", "3ES", "3EX", "3S", "3X", "3XS", "4", "4A", "4AE", "4AES", "4AEX", "4AEXS", "4AS", "4AX", "4AXS", "4B", "4BE", "4BES", "4BEX", "4BEXS", "4BS", "4BX", "4BXS", "4BS", "4BX", "4BXS", "4C", "4E", "4ES", "4EX", "4EXS", "4S", "4X", "A", "B", "C", "5", "6", "NA", "?", "U", "X", null],
       "enumDescriptions": [
         "Stage 0: 0, 0A, 0B, 0C, 0IS",
         "Stage 1: 1, 1A, 1A1, 1A2, 1A3, 1AE, 1AES, 1AEX, 1AEXS, 1AS, 1AX, 1B, 1B1, 1B2, 1BE, 1BES, 1BEX, 1BS, 1BX, 1C, 1C1, 1C2, IC3, 1E, 1ES, 1EX, 1S, 1X, 1XS",
@@ -196,7 +183,7 @@
         "A, B, C: RaiBinet stage",
         "5: Outdated or invalid code",
         "6: not stageable",
-        "?: insufficient information",
+        "NA/?: insufficient information",
         "U: unstageable",
         "X: not staged"
       ]
@@ -288,13 +275,28 @@
       "type": ["string"],
       "description": "Source from which screen detection value is selected in the target dataset. It will be one of the sources from x-sourcePriority for SCREEN_DETECTED."
     },
+    "SCREENINGSTATUSCOSD_CODE": {
+      "description": "Screening status code of the tumour from Cancer Registry",
+      "type": ["string", "null"],
+      "enum": ["1", "2", "4", "5", "6", "7", "9", "NM", null],
+      "enumDescriptions": [
+        "1 : Screen-detected",
+        "2 : Interval Cancer",
+        "4 : Lapsed Attender",
+        "5 : Never Attended",
+        "6 : Never Invited",
+        "7 : Other",
+        "9 : Not Known",
+        "NM : Not Mapped"
+      ]
+    },
     "LATERALITY": {
       "type": ["string", "null"],
       "description": "Side of body affected (left, right, bilateral, unknown).",
-      "x-description": "Laterality of the tumour (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.LATERALITY (retain registry codes: L, R, M, B, 8, 9). Cancer Registry values take precedence when available; harmonise all values to registry coding. 2) HistoPath_BrCa.Side (map L/R as-is, U → '9');",
+      "x-description": "Laterality of the tumour (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.LATERALITY (retain registry codes: L, R, M, B, 8, 9). Cancer Registry values take precedence when available; harmonise all values to registry coding. 2) HistoPath_BrCa.LATERALITY (map L/R as-is, U → '9');",
       "x-sourcePriority": [
         "CancerRegistry.LATERALITY",
-        "HistoPath_BrCa.Side"        
+        "HistoPath_BrCa.LATERALITY"        
       ],
       "enum": ["L", "R", "M", "B", "8", "9"],
       "enumDescriptions": ["L: Left", "R: Right", "M: Midline", "B: Bilateral", "8: Not applicable", "9: Not Known"]
@@ -335,7 +337,7 @@
       "x-description": "Tumour TNM M stage (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.M_BEST. 2) HistoPath_BrCa.Mstage; Cancer Registry values take precedence when available; harmonise to Cancer Registry coding. For ovarian cancers, use STAGE rather than TNM.",
       "x-sourcePriority": [
         "CancerRegistry.M_BEST",
-        "HistoPath_BrCa.Mstage"        
+        "HistoPath_BrCa.MStage"        
       ]
     },
     "S_M_STAGE": {
