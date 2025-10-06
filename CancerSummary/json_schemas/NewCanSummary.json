@@ -36,12 +36,12 @@
       "type": ["string", "null"],
       "format": "date",
       "description": "Best estimate of tumour diagnosis date (per tumour).",
-      "x-description": "Best estimate of the tumour diagnosis date (YYYY-MM-DD). Each participant may have multiple diagnosis dates, one per distinct tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.DIAGNOSIS_DATE; 2) Pathology reports — for breast use HistoPath_BrCa.DIAGNOSIS_DATE ; for ovarian use HistoPath_OvCa.DIAGNOSIS_DATE ; 3)Flagging Cancers - use DIAGNOSIS_DATE; 4) Flagging Deaths - use DIAGNOSIS_DATE",
+      "x-description": "Best estimate of the tumour diagnosis date (YYYY-MM-DD). Each participant may have multiple diagnosis dates, one per distinct tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.DIAGNOSIS_DATE; 2)Flagging Cancers - use DIAGNOSIS_DATE; 3) Pathology reports — for breast use HistoPath_BrCa.DIAGNOSIS_DATE ; for ovarian use HistoPath_OvCa.DIAGNOSIS_DATE ; 4) Flagging Deaths - use DIAGNOSIS_DATE",
       "x-sourcePriority": [
         "CancerRegistry.DIAGNOSIS_DATE",
+        "FlaggingCancers.DIAGNOSIS_DATE",
         "HistoPath_BrCa.DIAGNOSIS_DATE",
         "HistoPath_OvCa.DIAGNOSIS_DATE",
-        "FlaggingCancers.DIAGNOSIS_DATE",
         "FlaggingDeaths.DIAGNOSIS_DATE"
       ]
     },
@@ -77,6 +77,7 @@
       "x-description": "ICD-O morphology code describing the histological type/behaviour of the tumour (as provided by the source; may include the behaviour suffix, e.g., \"/2\", \"/3\"). Per tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.MORPH_ICD10_O2 (preferred); 2) CancerRegistry.MORPH_CODE (fallback); 3) HistoPath_BrCa.MORPH_CODE. Store the code exactly as provided (no recoding).",
       "x-sourcePriority": [
         "CancerRegistry.MORPH_CODE",
+        "FlaggingCancers.MORPH_CODE",
         "HistoPath_BrCa.MORPH_CODE",
         "HistoPath_OvCa.MORPH_CODE"
       ],
@@ -89,7 +90,11 @@
     },
     "SITE": {
       "type": ["string", "null"],
-      "description": "Text description of anatomical site from CancerRegistry.SITE_CODED_DESC else null."
+      "description": "Text description of anatomical site",
+      "x-description": "Text description of anatomical site from CancerRegistry.SITE_CODED_DESC else null.",
+      "x-sourcePriority": [
+        "CancerRegistry.SITE_CODED_DESC"
+      ]
     },
     "GRADE": {
       "type": ["string"],
@@ -139,11 +144,10 @@
     "NODES_TOTAL": {
       "type": ["number", "null"],
       "description": "Number of lymph nodes examined.",
-      "x-description": "Total number of local/regional lymph nodes examined (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.NODESINVOLVED — described in the registry schema as the \"number of local and regional nodes examined.\" Ovarian pathology does not provide node counts. Store as an integer; null if unavailable. 2) Breast pathology: HistoPath_BrCa.AxillaryNodesTotal + HistoPath_BrCa.OtherNodesTotal (sum; treat nulls as 0 only if at least one component is non-null);",
+      "x-description": "Total number of local/regional lymph nodes examined (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.NODESINVOLVED — described in the registry schema as the \"number of local and regional nodes examined.\" Ovarian pathology does not provide node counts. Store as an integer; null if unavailable. 2) Breast pathology: NodesTotal = HistoPath_BrCa.AxillaryNodesTotal + HistoPath_BrCa.OtherNodesTotal (sum; treat nulls as 0 only if at least one component is non-null);",
       "x-sourcePriority": [
         "CancerRegistry.NODESINVOLVED",
-        "HistoPath_BrCa.AxillaryNodesTotal",
-        "HistoPath_BrCa.OtherNodesTotal"
+        "HistoPath_BrCa.NodesTotal"
         ]
     },
     "S_NODES_TOTAL": {
@@ -153,11 +157,10 @@
     "NODES_POSITIVE": {
       "type": ["number", "null"],
       "description": "Number of lymph nodes positive for metastasis.",
-      "x-description": "Number of local/regional lymph nodes positive for metastasis (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.NODESEXCISED — described in the registry schema as the \"number of local and regional nodes reported as being positive.\" Ovarian pathology does not provide node counts. Store as an integer; null if unavailable. 2) Breast pathology: HistoPath_BrCa.AxillaryNodesPositive + HistoPath_BrCa.OtherNodesPositive (sum; treat nulls as 0 only if at least one component is non-null);",
+      "x-description": "Number of local/regional lymph nodes positive for metastasis (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.NODESEXCISED — described in the registry schema as the \"number of local and regional nodes reported as being positive.\" Ovarian pathology does not provide node counts. Store as an integer; null if unavailable. 2) Breast pathology: NodesPositive = HistoPath_BrCa.AxillaryNodesPositive + HistoPath_BrCa.OtherNodesPositive (sum; treat nulls as 0 only if at least one component is non-null);",
       "x-sourcePriority": [
         "CancerRegistry.NODESEXCISED",
-        "HistoPath_BrCa.AxillaryNodesPositive",
-        "HistoPath_BrCa.OtherNodesPositive"        
+        "HistoPath_BrCa.NodesPositive"       
       ]
     },
     "S_NODES_POSITIVE": {
@@ -240,6 +243,10 @@
     "HER2_FISH": {
       "description": "Fluorescence in situ hybridisation test for HER2 as reported in Histopathology report",
       "type": ["string", "null"],
+      "x-description": "Fluorescence in situ hybridisation test for HER2 as reported in Histopathology report. Take the value from path report for Breast cancer using HER_FISH",
+      "x-sourcePriority": [
+        "HistoPath_BrCa.HER2_FISH"
+      ],
       "enum": ["A", "N", "POS", "NEG", "NP", null],
       "enumDescriptions": [
         "A: if the HER2 FISH/ISH test result/significance is described as Amplified in the report.",
@@ -276,8 +283,12 @@
       "description": "Source from which screen detection value is selected in the target dataset. It will be one of the sources from x-sourcePriority for SCREEN_DETECTED."
     },
     "SCREENINGSTATUSCOSD_CODE": {
-      "description": "Screening status code of the tumour from Cancer Registry",
+      "description": "Screening status code of the tumour",
       "type": ["string", "null"],
+      "x-description": "Screening status code of the tumour from Cancer Registry using SCREENINGSTATUSCOSD_CODE",
+      "x-sourcePriority": [
+        "CancerRegistry.SCREENINGSTATUSCOSD_CODE"
+      ],
       "enum": ["1", "2", "4", "5", "6", "7", "9", "NM", null],
       "enumDescriptions": [
         "1 : Screen-detected",
@@ -344,10 +355,10 @@
       "type": ["string"],
       "description": "Source from which M Stage of the tumour is selected in the target dataset. It will be one of the sources from x-sourcePriority for M_STAGE."
     },
-    "DATE_CREATED": {
+    "CREATED_TIME": {
       "type": ["string", "null"],
       "format": "date",
-      "description": "Date the cancer summary record was created.",
+      "description": "Time when cancer summary record was created.",
       "x-description": "Timestamp (YYYY-MM-DD or date-time) when this cancer summary record was created. Set by the integration process; not sourced from clinical data.",
       "x-sourcePriority": []
     },
