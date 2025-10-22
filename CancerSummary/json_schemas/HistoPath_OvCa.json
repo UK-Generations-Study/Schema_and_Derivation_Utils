@@ -37,6 +37,12 @@
       "format": "date-time",
       "maxLength": 23
     },
+    "DiagDat": {
+      "description": "Date of diagnosis derived in the order: 1. CoreDat; 2. DateSpecimenTaken; 3.DateSpecimenReceived; 4.ReportDat",
+      "type": ["string", "null"],
+      "format": "date-time",
+      "maxLength": 23
+    },
     "DateSpecimenTaken": {
       "description": "Specimen taken date. Missing is coded as null (blank)",
       "type": ["string", "null"],
@@ -57,50 +63,51 @@
     },
     "Stage_FIGO": {
       "description": "FIGO tumour stage (any edition). Missing is coded as null (blank).",
-      "type": ["string"],
-      "enum": ["1", "2", "3", "4", "N"],
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "4", null],
       "enumDescriptions": [
         "1: Stage 1",
         "2: Stage 2",
         "3: Stage 3",
         "4: Stage 4",
-        "N: Not reported"
+        "null: Missing or not applicable"
       ]
     },
     "Stage_UICC": {
       "description": "UICC tumour stage (any edition). Missing is coded as null (blank)",
-      "type": ["string"],
-      "enum": ["1", "2", "3", "4", "N"],
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "4", null],
       "enumDescriptions": [
         "1: Stage 1",
         "2: Stage 2",
         "3: Stage 3",
         "4: Stage 4",
-        "N: Not reported"
+        "null: Missing or not applicable"
       ]
     },
     "Stage_Other_Not_Reported": {
       "description": "Tumour stage where system is not reported or is other",
-      "type": ["string"],
-      "enum": ["1", "2", "3", "4", "N"],
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "4", "N", null],
       "enumDescriptions": [
         "1: Stage 1",
         "2: Stage 2",
         "3: Stage 3",
         "4: Stage 4",
-        "N: Not reported"
+        "N: Not reported",
+        "null: Missing or not applicable"
       ]
     },
     "Stage_Best": {
       "description": "Tumour stage to be used in analysis. Where multiple stage systems reported, FIGO to be prioritised. Missing is coded as null (blank)",
-      "type": ["string"],
-      "enum": ["1", "2", "3", "4", "N"],
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "4", null],
       "enumDescriptions": [
         "1: Stage 1",
         "2: Stage 2",
         "3: Stage 3",
         "4: Stage 4",
-        "N: Not reported"
+        "null: Missing or not applicable"
       ]
     },
     "Benign_Tumour": {
@@ -133,23 +140,25 @@
     },
     "Grade_HL": {
       "description": "Grade differentiation. Missing is coded as null (blank)",
-      "type": ["string"],
-      "enum": ["H", "L", "N"],
+      "type": ["string", "null"],
+      "enum": ["H", "L", "N", null],
       "enumDescriptions": [
         "H: High Grade",
         "L: Low Grade",
-        "N: Not Given"
+        "N: Not Given",
+        "null: Missing in the report"
       ]
     },
     "Grade_I_II_III": {
       "description": "Tumour Grade",
-      "type": ["string"],
-      "enum": ["1", "2", "3", "N"],
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "N", null],
       "enumDescriptions": [
         "1: Low Grade (well differentiated)",
         "2: Moderate Grade (moderately differentiated)",
         "3: High Grade (poorly differentiated)",
-        "N: Not Given"
+        "N: Not Given",
+        "null: Missing in the report"
       ]
     },
     "Primary_Germ_Cells": {

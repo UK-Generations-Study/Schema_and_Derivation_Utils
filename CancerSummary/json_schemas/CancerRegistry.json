@@ -336,7 +336,8 @@
         "6: not stageable",
         "?: insufficient information",
         "U: unstageable",
-        "X: not staged"
+        "X: not staged",
+        "null: Missing or not applicable"
       ]
     },
     "T_BEST": {
@@ -614,7 +615,7 @@
     },
     "LATERALITY": {
       "description": "Identifies the side of the body for a tumour relating to paired organs within a patient, based on the evidence from a pathological examination. The data field is used to differentiate tumours in paired organs (and define the site of the pathology/cytology specimen).",
-      "type": ["string", "null"],
+      "type": ["string"],
       "enum": ["L", "R", "M", "B", "8", "9"],
       "enumDescriptions": ["L: Left", "R: Right", "M: Midline", "B: Bilateral", "8: Not applicable", "9: Not Known"]
     },

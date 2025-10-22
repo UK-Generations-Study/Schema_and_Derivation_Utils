@@ -20,7 +20,7 @@
       "description": "Source from which the Study ID is selected in the target dataset. It will be one of the sources from x-sourcePriority for STUDY_ID."
     },
     "TUMOUR_ID": {
-      "type": ["number"],
+      "type": ["number", "null"],
       "description": "Unique identifier for each tumour (one participant may have several).",
       "x-description": "Tumour-specific identifier. A participant may have multiple tumours, each with its own TUMOUR_ID. Provided directly in CancerRegistry.TUMOURID or FlaggingCancers.TumourID. Pathology datasets (HistoPath_BrCa, HistoPath_OvCa) do not include a universal tumour ID, only tumour-level details (e.g., count, site, laterality, size, grade, stage). When integrating, use CancerRegistry.TUMOURID (or FlaggingCancers.TumourID if registry ID is unavailable) as the primary source. Link pathology tumours to registry/flagging tumours when the pathology DATEKEY (best pathology date: DateSpecimenTaken → DateSpecimenReceived) is within ±90 days of the registry diagnosis date (DIAGNOSISDATEBEST) or flagging diagnosis date, and site/laterality/morphology are compatible. If pathology tumours cannot be linked, generate a synthetic ID in the format SYN-{STUDY_ID}-{DATEKEY}-{SITE3}-{LAT}-{SEQ}, where SITE3 is ICD-10 3-char (or UNK), LAT is laterality (L|R|M|B|U), and SEQ is a 2-digit sequence per participant/date/site/side. Group pathology records into one tumour if within 90 days, same site/laterality, and morphology-compatible. If an official ID later becomes available, replace the synthetic ID and maintain a lookup table that records the relationship between the two identifyers .",
       "x-sourcePriority": [
@@ -29,12 +29,12 @@
       ]
     },
     "S_TUMOUR_ID": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which the Tumour ID is selected in the target dataset. It will be one of the sources from x-sourcePriority for TUMOUR_ID."
     },
     "DIAGNOSIS_DATE": {
-      "type": ["string", "null"],
-      "format": "date",
+      "type": ["string"],
+      "format": "date-time",
       "description": "Best estimate of tumour diagnosis date (per tumour).",
       "x-description": "Best estimate of the tumour diagnosis date (YYYY-MM-DD). Each participant may have multiple diagnosis dates, one per distinct tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.DIAGNOSIS_DATE; 2)Flagging Cancers - use DIAGNOSIS_DATE; 3) Pathology reports — for breast use HistoPath_BrCa.DIAGNOSIS_DATE ; for ovarian use HistoPath_OvCa.DIAGNOSIS_DATE ; 4) Flagging Deaths - use DIAGNOSIS_DATE",
       "x-sourcePriority": [
@@ -68,7 +68,7 @@
       "maxLength": 4
     },
     "S_ICD_CODE": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which ICD Code is selected in the target dataset. It will be one of the sources from x-sourcePriority for ICD_CODE."
     },
     "MORPH_CODE": {
@@ -82,22 +82,19 @@
         "HistoPath_OvCa.MORPH_CODE"
       ],
       "minimum": 8000,
-      "maximum": 9999
+      "maximum": 99999
     },
     "S_MORPH_CODE": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which ICD Morph Code is selected in the target dataset. It will be one of the sources from x-sourcePriority for MORPH_CODE."
     },
-    "SITE": {
+    "CANCER_SITE": {
       "type": ["string", "null"],
       "description": "Text description of anatomical site",
-      "x-description": "Text description of anatomical site from CancerRegistry.SITE_CODED_DESC else null.",
-      "x-sourcePriority": [
-        "CancerRegistry.SITE_CODED_DESC"
-      ]
+      "x-description": "Text description of anatomical site derived using ICD_CODE as per the IARC standards. The ICD codes are grouped into SITE (e.g., breast and ovarian) "
     },
     "GRADE": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Tumour histological grade (harmonised, per registry coding).",
       "x-description": "Tumour histological grade (harmonised to Cancer Registry coding). Source priority: 1) CancerRegistry.GRADE (retain registry codes exactly: GX, G0–G7, GL/GH/GI/G) 2) For breast: HistoPath_BrCa.InvasiveGrade, mapped to Cancer Registry format (InvasiveGrade 1→G1, 2→G2, 3→G3). If InvasiveGrade is null then take DCISGrade (in situ Low, Intermediate and High to be mapped to GL, GI and GH); 3) For ovarian: HistoPath_OvCa.Grade_I_II_III, mapped to Cancer Registry format (I→G1, II→G2, III→G3); All pathology- and registry-derived values must be harmonised into the Cancer Registry coding system; Cancer Registry values take precedence when present.",
       "x-sourcePriority": [
@@ -106,7 +103,7 @@
         "HistoPath_BrCa.DCISGrade",
         "HistoPath_OvCa.Grade_I_II_III"        
       ],
-      "enum": ["GX", "G0", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "GL", "GH", "GI", "G"],
+      "enum": ["GX", "G0", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "GL", "GH", "GI", "G", null],
       "enumDescriptions": [
         "GX: Grade of differentiation is not appropriate or cannot be assessed",
         "G0: Borderline malignancy",
@@ -120,11 +117,12 @@
         "GL: Low",
         "GH: High",
         "GI: Intermediate",
-        "G:"
+        "G:",
+        "null: Missing in the report"
       ]
     },
     "S_GRADE": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which Grade is selected in the target dataset. It will be one of the sources from x-sourcePriority for GRADE."
     },
     "TUMOUR_SIZE": {
@@ -138,7 +136,7 @@
       ]
     },
     "S_TUMOUR_SIZE": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which size of the tumour is selected in the target dataset. It will be one of the sources from x-sourcePriority for TUMOUR_SIZE."
     },
     "NODES_TOTAL": {
@@ -151,7 +149,7 @@
         ]
     },
     "S_NODES_TOTAL": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which total nodes are selected in the target dataset. It will be one of the sources from x-sourcePriority for NODES_TOTAL."
     },
     "NODES_POSITIVE": {
@@ -164,7 +162,7 @@
       ]
     },
     "S_NODES_POSITIVE": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which positive nodes are selected in the target dataset. It will be one of the sources from x-sourcePriority for NODES_POSITIVE."
     },
     "STAGE": {
@@ -188,11 +186,12 @@
         "6: not stageable",
         "NA/?: insufficient information",
         "U: unstageable",
-        "X: not staged"
+        "X: not staged",
+        "null: Missing in the report"
       ]
     },
     "S_STAGE": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which Stage is selected in the target dataset. It will be one of the sources from x-sourcePriority for STAGE."
     },
     "ER_STATUS": {
@@ -207,7 +206,7 @@
       "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U:", "null: Not applicable"]
     },
     "S_ER_STATUS": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which ER Status is selected in the target dataset. It will be one of the sources from x-sourcePriority for ER_STATUS."
     },
     "PR_STATUS": {
@@ -222,7 +221,7 @@
       "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B : Borderline", "U: ", "null: Not applicable"]
     },
     "S_PR_STATUS": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which PR Status is selected in the target dataset. It will be one of the sources from x-sourcePriority for PR_STATUS."
     },
     "HER2_STATUS": {
@@ -237,7 +236,7 @@
       "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U:", "null: Not applicable"]
     },
     "S_HER2_STATUS": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which HER2 Status is selected in the target dataset. It will be one of the sources from x-sourcePriority for HER2_STATUS."
     },
     "HER2_FISH": {
@@ -279,7 +278,7 @@
       "enumDescriptions": ["N : No", "Y : Yes", "8 : Not applicable", "9 : Not known"]
     },
     "S_SCREEN_DETECTED": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which screen detection value is selected in the target dataset. It will be one of the sources from x-sourcePriority for SCREEN_DETECTED."
     },
     "SCREENINGSTATUSCOSD_CODE": {
@@ -309,11 +308,11 @@
         "CancerRegistry.LATERALITY",
         "HistoPath_BrCa.LATERALITY"        
       ],
-      "enum": ["L", "R", "M", "B", "8", "9"],
-      "enumDescriptions": ["L: Left", "R: Right", "M: Midline", "B: Bilateral", "8: Not applicable", "9: Not Known"]
+      "enum": ["L", "R", "M", "B", "8", "9", null],
+      "enumDescriptions": ["L: Left", "R: Right", "M: Midline", "B: Bilateral", "8: Not applicable", "9: Not Known", "null: Missing"]
     },
     "S_LATERALITY": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which laterality of the tumour is selected in the target dataset. It will be one of the sources from x-sourcePriority for LATERALITY."
     },
     "T_STAGE": {
@@ -326,7 +325,7 @@
       ]
     },
     "S_T_STAGE": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which T Stage of the tumour is selected in the target dataset. It will be one of the sources from x-sourcePriority for T_STAGE."
     },
     "N_STAGE": {
@@ -339,7 +338,7 @@
       ]
     },
     "S_N_STAGE": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which N Stage of the tumour is selected in the target dataset. It will be one of the sources from x-sourcePriority for N_STAGE."
     },
     "M_STAGE": {
@@ -352,12 +351,12 @@
       ]
     },
     "S_M_STAGE": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "description": "Source from which M Stage of the tumour is selected in the target dataset. It will be one of the sources from x-sourcePriority for M_STAGE."
     },
     "CREATED_TIME": {
-      "type": ["string", "null"],
-      "format": "date",
+      "type": ["string"],
+      "format": "date-time",
       "description": "Time when cancer summary record was created.",
       "x-description": "Timestamp (YYYY-MM-DD or date-time) when this cancer summary record was created. Set by the integration process; not sourced from clinical data.",
       "x-sourcePriority": []

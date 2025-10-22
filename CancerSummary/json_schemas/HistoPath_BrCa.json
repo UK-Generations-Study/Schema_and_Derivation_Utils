@@ -172,6 +172,12 @@
       "format": "date-time",
       "maxLength": 23
     },
+    "DiagDat": {
+      "description": "Date of diagnosis derived in the order: 1. CoreDat; 2. DateSpecimenTaken; 3.DateSpecimenReceived; 4.ReportDat",
+      "type": ["string", "null"],
+      "format": "date-time",
+      "maxLength": 23
+    },
     "DateSpecimenTaken": {
       "description": "Specimen taken date. Missing is coded as null (blank)",
       "type": ["string", "null"],
@@ -457,7 +463,7 @@
     "InvasiveGrade": {
       "description": "Invasive Grade assigned for invasive carcinoma in the report",
       "type": ["string", "null"],
-      "enum": ["1", "2", "3", "NA",null],
+      "enum": ["1", "2", "3", "NA", null],
       "enumDescriptions":[
         "1: Grade 1 or well differentiated", 
         "2: Grade 2 or moderately differentiated", 

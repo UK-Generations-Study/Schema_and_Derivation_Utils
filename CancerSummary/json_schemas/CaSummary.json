@@ -68,7 +68,7 @@
         "2: Right",
         "3: Both",
         "4: Non breast cancers",
-        "9: not known",
+        "9: Not known",
         "null: missing or not applicable"
       ]
     },
@@ -112,16 +112,19 @@
     "er_Status": {
       "description": "ER Receptor Status",
       "type": ["string", "null"],
+      "enum": ["Positive", "Negative", null],
       "maxLength": 10
     },
     "pr_Status": {
       "description": "PR Receptor Status",
       "type": ["string", "null"],
+      "enum": ["Positive", "Negative", null],
       "maxLength": 10
     },
     "her2_Status": {
       "description": "HER2 Receptor Status",
       "type": ["string", "null"],
+      "enum": ["Positive", "Negative", "Borderline", null],
       "maxLength": 10
     },
     "ck56_Status": {
