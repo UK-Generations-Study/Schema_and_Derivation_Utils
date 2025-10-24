@@ -1,0 +1,676 @@
+{
+    "$id": "https://www.breakthroughgenerations.org.uk/schemas/PhysicalDevelopment.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "PhysicalDevelopment",
+    "type": "object",
+    "properties": {
+        "R0_StudyID": {
+            "name": "StudyID",
+            "description": "Unique 6-digit identifier for each participant in the study.",
+            "type": ["number"],
+            "minLength": 6,
+            "maxLength": 6
+        },
+        "R0_WghtComp_7": {
+            "questionID": 101,
+            "name": "Q3_1_1",
+            "question": "At age 7, were you thinner, about the same, or heavier than other girls of your age?",
+            "description": "Participant's weight comparison to peers at age 7.",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, 3, 4, 5, 6, null],
+            "enumDescriptions": [
+                "0: More than one option chosen.",
+                "1: Much thinner.",
+                "2: A little thinner.",
+                "3: About the same.",
+                "4: Much heavier.",
+                "5: A little heavier.",
+                "6: Don't remember.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [10, 201, 202, 203, 204, 205, 5]
+        },
+        "R0_WghtComp_11": {
+            "questionID": 101,
+            "name": "Q3_2_1",
+            "question": "At age 11, were you thinner, about the same, or heavier than other girls of your age?",
+            "description": "Participant's weight comparison to peers at age 11.",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, 3, 4, 5, 6, null],
+            "enumDescriptions": [
+                "0: More than one option chosen.",
+                "1: Much thinner.",
+                "2: A little thinner.",
+                "3: About the same.",
+                "4: Much heavier.",
+                "5: A little heavier.",
+                "6: Don't remember.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [10, 201, 202, 203, 204, 205, 5]
+        },
+        "RecordedWeights": {
+            "name": "RecordedWeights",
+            "description": "An array of recorded height entries (up to 4).",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 4,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "R0_RecWght_Num":{
+                        "name": "R0_RecWght_Num",
+                        "description": "Recorded weight array number.",
+                        "type": ["string", "null"],
+                        "enum": ["Cur", "20", "40", "60"]
+                    },
+                    "R0_WghtAge_St": {
+                        "questionID": 103,
+                        "name": "R0_WghtAge_St",
+                        "question": "What was your non-pregnant weight? - Stones",
+                        "description": "Participant's non-pregnant weight in stones at either age 20, 40, or 60.",
+                        "type": ["integer", "null"],
+                        "minimum": 0
+                    },
+                    "R0_WghtAge_Lbs": {
+                        "questionID": 104,
+                        "name": "R0_WghtAge_St",
+                        "question": "What was your non-pregnant weight? - Lbs",
+                        "description": "Participant's non-pregnant weight in pounds at either age 20, 40, or 60.",
+                        "type": ["integer", "null"],
+                        "minimum": 0
+                    },
+                    "R0_WghtAge_Kg": {
+                        "questionID": 105,
+                        "name": "R0_WghtAge_St",
+                        "question": "What was your non-pregnant weight? - Kilograms",
+                        "description": "Participant's non-pregnant weight in kilograms at either age 20, 40, or 60.",
+                        "type": ["integer", "null"],
+                        "minimum": 0
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "R0_LowestWght_St": {
+            "questionID": 112,
+            "name": "Q3_6_stones",
+            "question": "What is the lowest weight you have had since age 18? - stones",
+            "description": "Participant's lowest weight in stones since age 18.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_LowestWght_Lbs": {
+            "questionID": 113,
+            "name": "Q3_6_lbs",
+            "question": "What is the lowest weight you have had since age 18? - Lbs",
+            "description": "Participant's lowest weight in pounds since age 18.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_LowestWght_Kg": {
+            "questionID": 114,
+            "name": "Q3_6_kgs",
+            "question": "What is the lowest weight you have had since age 18? - Kilograms",
+            "description": "Participant's lowest weight in kilograms since age 18.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_LowestWght_Age": {
+            "questionID": 115,
+            "name": "Q3_6_age",
+            "question": "At what age you weighed lowest?",
+            "description": "Age when participant weighed the lowest.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_HighestWght_St": {
+            "questionID": 116,
+            "name": "Q3_7_stones",
+            "question": "What is the greatest weight (non-pregnant) you have had since age 18? - stones",
+            "description": "Participant's highest non-pregnant weight in stones since age 18.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_HighestWght_Lbs": {
+            "questionID": 117,
+            "name": "Q3_7_lbs",
+            "question": "What is the greatest weight (non-pregnant) you have had since age 18? - lbs",
+            "description": "Participant's highest non-pregnant weight in pounds since age 18.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_HighestWght_Kg": {
+            "questionID": 118,
+            "name": "Q3_7_kgs",
+            "question": "What is the greatest weight (non-pregnant) you have had since age 18? - kilograms",
+            "description": "Participant's highest non-pregnant weight in kilograms since age 18.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_HighestWght_Age": {
+            "questionID": 119,
+            "name": "Q3_7_age",
+            "question": "At what age you weighed highest?",
+            "description": "Age when participant weighed the highest.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_CurrentWght_When": {
+            "questionID": 123,
+            "name": "Q3_8_when_1",
+            "question": "When was your current weight measured?",
+            "description": "Timing of current weight measurement.",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, 3, null],
+            "enumDescriptions": [
+                "0: More than one option chosen.",
+                "1: Today.",
+                "2: In the last few months.",
+                "3: Not measured, it is an estimate.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [10, 211, 212, 213]
+        },
+        "R0_HghtComp_7": {
+            "questionID": 124,
+            "name": "Q3_9_1",
+            "question": "At age 7, were you shorter, about the same height, or taller than other girls of your age?",
+            "description": "Participant's height comparison to peers at age 7.",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, 3, 4, 5, 6, null],
+            "enumDescriptions": [
+                "0: More than one option chosen.",
+                "1: Much shorter.",
+                "2: A little shorter.",
+                "3: About the same.",
+                "4: Much taller.",
+                "5: A little taller.",
+                "6: Don't remember.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [10, 214, 215, 203, 217, 218, 5]
+        },
+        "R0_HghtComp_11": {
+            "questionID": 124,
+            "name": "Q3_10_1",
+            "question": "At age 11, were you shorter, about the same height, or taller than other girls of your age?",
+            "description": "Participant's height comparison to peers at age 11.",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, 3, 4, 5, 6, null],
+            "enumDescriptions": [
+                "0: More than one option chosen.",
+                "1: Much shorter.",
+                "2: A little shorter.",
+                "3: About the same.",
+                "4: Much taller.",
+                "5: A little taller.",
+                "6: Don't remember.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [10, 214, 215, 203, 217, 218, 5]
+        },
+        "R0_GrowthStopped_Age": {
+            "questionID": 126,
+            "name": "Q3_11",
+            "question": "At what age did you stop growing taller?",
+            "description": "Age when participant stopped growing taller.",
+            "type": ["integer", "null"],
+            "minimum": 0, "maximum": 120
+        },
+        "R0_GrowthStopped_Unkn": {
+            "questionID": 127,
+            "name": "Q3_11_dn",
+            "question": "do not remember when you stopped growing taller?",
+            "description": "Participant does not remember when growth stopped.",
+            "type": ["integer", "null"],
+            "enum": [1, null],
+            "enumDescriptions": [
+                "1: Checked.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [5]
+        },
+        "R0_HghtAge20_Ft": {
+            "questionID": 128,
+            "name": "Q3_12_feet",
+            "question": "If older than 20, what was your height at age 20? - Feet",
+            "description": "Participant's height in feet at age 20.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_HghtAge20_In": {
+            "questionID": 129,
+            "name": "Q3_12_inch",
+            "question": "If older than 20, what was your height at age 20? - inch",
+            "description": "Participant's height in inches at age 20.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_HghtAge20_Cm": {
+            "questionID": 130,
+            "name": "Q3_12_cm",
+            "question": "If older than 20, what was your height at age 20? - cm",
+            "description": "Participant's height in centimeters at age 20.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_CurrentHght_Ft": {
+            "questionID": 128,
+            "name": "Q3_13_feet",
+            "question": "What is your current height? - Feet",
+            "description": "Participant's current height in feet.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_CurrentHght_In": {
+            "questionID": 129,
+            "name": "Q3_13_inch",
+            "question": "What is your current height? - inch",
+            "description": "Participant's current height in inches.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_CurrentHght_Cm": {
+            "questionID": 130,
+            "name": "Q3_13_cm",
+            "question": "What is your current height? - cm",
+            "description": "Participant's current height in centimeters.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_ChildhoodHghtRec": {
+            "questionID": 134,
+            "name": "Q3_14_1",
+            "question": "Do you have any records of your measured height at any point in your childhood? (For instance some people have kept wall charts, or records their mother kept)",
+            "description": "Existence of childhood height records.",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, null],
+            "enumDescriptions": [
+                "0: More than one option chosen.",
+                "1: Yes.",
+                "2: No.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [10, 1, 2]
+        },
+        "RecordedHeights": {
+            "name": "RecordedHeights",
+            "description": "An array of recorded height entries (up to 3).",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 3,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "R0_RecHeight_Num":{
+                        "name": "R0_RecHeight_Num",
+                        "description": "Recorded height array number. Used to differentiate height instances into correct variable naming conventions in post processing of this array.",
+                        "type": ["integer", "null"],
+                        "enum": [1, 2, 3]
+                    },
+                    "R0_RecHght_Day": {
+                        "questionID": 135,
+                        "name": "R0_RecHght_Day",
+                        "question": "list any recorded height you know under age 16 - day",
+                        "description": "Day of the recorded height measurement.",
+                        "type": ["integer", "null"],
+                        "minimum": 1, "maximum": 31
+                    },
+                    "R0_RecHght_Mnth": {
+                        "questionID": 136,
+                        "name": "R0_RecHght_Mnth",
+                        "question": "list any recorded height you know under age 16 - month",
+                        "description": "Month of the recorded height measurement.",
+                        "type": ["integer", "null"],
+                        "minimum": 1, "maximum": 12
+                    },
+                    "R0_RecHght_Yr": {
+                        "questionID": 137,
+                        "name": "R0_RecHght_Yr",
+                        "question": "list any recorded height you know under age 16 - year",
+                        "description": "Year of the recorded height measurement.",
+                        "type": ["integer", "null"],
+                        "minimum": 0
+                    },
+                    "R0_RecHght_AgeYr": {
+                        "questionID": 138,
+                        "name": "R0_RecHght_AgeYr",
+                        "question": "list any recorded height you know at - age year",
+                        "description": "Age in years when height was recorded.",
+                        "type": ["integer", "null"],
+                        "minimum": 0
+                    },
+                    "R0_RecHght_AgeMnth": {
+                        "questionID": 139,
+                        "name": "R0_RecHght_AgeMnth",
+                        "question": "list any recorded height you know at - age month",
+                        "description": "Age in months when height was recorded.",
+                        "type": ["integer", "null"],
+                        "minimum": 0
+                    },
+                    "R0_RecHght_Ft": {
+                        "questionID": 140,
+                        "name": "R0_RecHght_Ft",
+                        "question": "list any recorded height you know under the age 16 - feet",
+                        "description": "Height in feet.",
+                        "type": ["integer", "null"],
+                        "minimum": 0
+                    },
+                    "R0_RecHght_In": {
+                        "questionID": 141,
+                        "name": "R0_RecHght_In",
+                        "question": "list any recorded height you know under the age 16 - inch",
+                        "description": "Height in inches.",
+                        "type": ["integer", "null"],
+                        "minimum": 0
+                    },
+                    "R0_RecHght_Cm": {
+                        "questionID": 142,
+                        "name": "R0_RecHght_Cm",
+                        "question": "list any recorded height you know under the age 16 - cm",
+                        "description": "Height in centimeters.",
+                        "type": ["integer", "null"],
+                        "minimum": 0
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "R0_RecHght_Institution": {
+            "questionID": 159,
+            "name": "Q3_15_1",
+            "question": "Are there any institutions that may have records of your height in childhood for instance, a school or, if you were ill, a hospital?",
+            "description": "Existence of institutions with childhood height records.",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, null],
+            "enumDescriptions": [
+                "0: More than one option chosen.",
+                "1: Yes.",
+                "2: No.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [10, 1, 2]
+        },
+        "Institutions": {
+            "name": "Institutions",
+            "description": "An array of institution entries (up to 2).",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 2,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "R0_Inst_Num":{
+                        "name": "R0_Inst_Num",
+                        "description": "Recorded institution number. Used to differentiate institution instances into correct variable naming conventions in post processing of this array.",
+                        "type": ["integer", "null"],
+                        "enum": [1, 2]
+                    },
+                    "R0_InstitutionName": {
+                        "questionID": 160,
+                        "name": "R0_InstitutionName",
+                        "question": "If yes, Name of the institution that recorded your height (1)",
+                        "description": "Name of the institution with height records.",
+                        "type": ["string", "null"]
+                    },
+                    "R0_InstitutionTown": {
+                        "questionID": 161,
+                        "name": "R0_InstitutionTown",
+                        "question": "Town of the institution that recorded your height (1)",
+                        "description": "Town of the institution with height records.",
+                        "type": ["string", "null"]
+                    },
+                    "R0_AgeMeas": {
+                        "questionID": 162,
+                        "name": "R0_AgeMeas",
+                        "question": "Age they measured you (1)",
+                        "description": "Age when measured by the institution.",
+                        "type": ["integer", "null"],
+                        "minimum": 0
+                    },
+                    "R0_AgeMeas_From": {
+                        "questionID": 163,
+                        "name": "R0_AgeMeas_From",
+                        "question": "age height measured from (1)",
+                        "description": "Starting age range for measurements.",
+                        "type": ["integer", "null"],
+                        "minimum": 0
+                    },
+                    "R0_AgeMeas_To": {
+                        "questionID": 164,
+                        "name": "R0_AgeMeas_To",
+                        "question": "age height measured to (1)",
+                        "description": "Ending age range for measurements.",
+                        "type": ["integer", "null"],
+                        "minimum": 0
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "R0_AgeBreastDev": {
+            "questionID": 170,
+            "name": "Q3_16",
+            "question": "How old were you when you first started to develop breasts?",
+            "description": "Age when participant's breast development began.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_AgeBreastDev_Unkn": {
+            "questionID": 171,
+            "name": "Q3_16dn",
+            "question": "Do not remember the age when breasts developed",
+            "description": "Participant does not remember age of breast development.",
+            "type": ["integer", "null"],
+            "enum": [1, null],
+            "enumDescriptions": [
+                "1: Checked.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [5]
+        },
+        "R0_BraCupSize": {
+            "questionID": 172,
+            "name": "Q3_17_1",
+            "question": "What is your current bra cup size?",
+            "description": "Participant's current bra cup size.",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, null],
+            "enumDescriptions": [
+                "0: More than one option chosen.",
+                "1: AA.",
+                "2: A.",
+                "3: B.",
+                "4: C.",
+                "5: D.",
+                "6: DD.",
+                "7: E.",
+                "8: EE.",
+                "9: F.",
+                "10: FF.",
+                "11: G.",
+                "12: H.",
+                "13: J.",
+                "14: Other.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [10, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 13]
+        },
+        "R0_BraCupSize_Other": {
+            "questionID": 173,
+            "name": "Q3_17other",
+            "question": "Other cup size",
+            "description": "Participant's specified other bra cup size.",
+            "type": ["string", "null"]
+        },
+        "R0_BraCupSize_20": {
+            "questionID": 172,
+            "name": "Q3_18_1",
+            "question": "If over age 20, what was your bra cup size at age 20?",
+            "description": "Participant's bra cup size at age 20.",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, null],
+            "enumDescriptions": [
+                "0: More than one option chosen.",
+                "1: AA.",
+                "2: A.",
+                "3: B.",
+                "4: C.",
+                "5: D.",
+                "6: DD.",
+                "7: E.",
+                "8: EE.",
+                "9: F.",
+                "10: FF.",
+                "11: G.",
+                "12: H.",
+                "13: J.",
+                "14: Other.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [10, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 13]
+        },
+        "R0_BraCupSize_20Other": {
+            "questionID": 173,
+            "name": "Q3_18other",
+            "question": "over age 20, other cup size",
+            "description": "Participant's specified other bra cup size at age 20.",
+            "type": ["string", "null"]
+        },
+        "R0_Dif_LeftRight_Breast": {
+            "questionID": 176,
+            "name": "Q3_19_1_1",
+            "question": "Is there a size difference between your left and right breasts?",
+            "description": "Presence of breast size difference.",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, 3, 4, null],
+            "enumDescriptions": [
+                "0: More than one option chosen.",
+                "1: Yes left larger.",
+                "2: Yes right larger.",
+                "3: Not applicable.",
+                "4: No.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [10, 252, 253, 6, 2]
+        },
+        "R0_BreastDif_Size": {
+            "questionID": 177,
+            "name": "Q3_19_2_1",
+            "question": "If yes, about how large is the difference between your left and right breasts?",
+            "description": "Magnitude of breast size difference.",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, null],
+            "enumDescriptions": [
+                "0: More than one option chosen.",
+                "1: Less than 1 cup size.",
+                "2: About 1 cup size or more.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [10, 254, 255]
+        },
+        "R0_WaistCircum_In": {
+            "questionID": 178,
+            "name": "Q3_20inches",
+            "question": "What is your waist circumference? - inches",
+            "description": "Participant's waist circumference in inches.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_WaistCircum_Cm": {
+            "questionID": 179,
+            "name": "Q3_20cm",
+            "question": "What is your waist circumference? - centimetres",
+            "description": "Participant's waist circumference in centimeters.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_WaistCircum_When": {
+            "questionID": 180,
+            "name": "Q3_20when_1",
+            "question": "When was waist circumference measured?",
+            "description": "Timing of waist circumference measurement.",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, 3, null],
+            "enumDescriptions": [
+                "0: More than one option chosen.",
+                "1: Today.",
+                "2: Last few months.",
+                "3: Not measured, it is an estimate.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [10, 211, 212, 213]
+        },
+        "R0_HipCircum_In": {
+            "questionID": 181,
+            "name": "Q3_21inches",
+            "question": "What is your hip circumference? - inches",
+            "description": "Participant's hip circumference in inches.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_HipCircum_Cm": {
+            "questionID": 182,
+            "name": "Q3_21cm",
+            "question": "What is your hip circumference? - centimetres",
+            "description": "Participant's hip circumference in centimeters.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_HipCircum_When": {
+            "questionID": 183,
+            "name": "Q3_21when_1",
+            "question": "When was hip circumference measured?",
+            "description": "Timing of hip circumference measurement.",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, 3, null],
+            "enumDescriptions": [
+                "0: More than one option chosen.",
+                "1: Today.",
+                "2: Last few months.",
+                "3: Not measured, it is an estimate.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [10, 211, 212, 213]
+        },
+        "R0_ArmSpan_Ft": {
+            "questionID": 184,
+            "name": "Q3_22feet",
+            "question": "What is your arm span? - Feet",
+            "description": "Participant's arm span in feet.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_ArmSpan_In": {
+            "questionID": 185,
+            "name": "Q3_22inches",
+            "question": "What is your arm span? - inches",
+            "description": "Participant's arm span in inches.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_ArmSpan_Cm": {
+            "questionID": 186,
+            "name": "Q3_22cm",
+            "question": "What is your arm span? - centimetres",
+            "description": "Participant's arm span in centimeters.",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_ArmSpan_NotPractical": {
+            "questionID": 187,
+            "name": "Q3_22na",
+            "question": "What is your arm span? - Not practical",
+            "description": "Arm span measurement is not practical.",
+            "type": ["integer", "null"],
+            "enum": [1, null],
+            "enumDescriptions": [
+                "1: Checked.",
+                "null: Unknown or invalid."
+            ],
+            "answerID": [264]
+        }
+    },
+    "additionalProperties": false
+}
