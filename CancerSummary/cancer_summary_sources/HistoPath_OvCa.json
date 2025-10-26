@@ -1,0 +1,185 @@
+{
+  "type": "object",
+  "properties": {
+    "StudyID": {
+      "description": "Genrations Study ID",
+      "type": ["integer"],
+      "minimum": 0,
+      "maximum": 499994
+    },
+    "TumourCount": {
+      "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour.",
+      "type": ["integer"],
+      "minimum": 1, 
+      "maximum": 8
+    },
+    "ReportCount": {
+      "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual",
+      "type": ["integer"],
+      "minimum": 1, 
+      "maximum": 8
+    },
+    "Edat": {
+      "description": "Date Data Entered by coder extracting data from the pathology report.",
+      "type": ["string"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "ReportDat": {
+      "description": "Date of Report. Missing information is null (blank)",
+      "type": ["string", "null"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "CoreDat": {
+      "description": "Date of Core biopsy. Missing information is null (blank)",
+      "type": ["string", "null"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "DiagDat": {
+      "description": "Date of diagnosis derived in the order: 1. CoreDat; 2. DateSpecimenTaken; 3.DateSpecimenReceived; 4.ReportDat",
+      "type": ["string", "null"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "DateSpecimenTaken": {
+      "description": "Specimen taken date. Missing is coded as null (blank)",
+      "type": ["string", "null"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "DateSpecimenReceived": {
+      "description": "Specimen received in hospital laboratory. Missing is coded as null (blank)",
+      "type": ["string", "null"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "Primary_Site": {
+      "description": "Primary site of the cancer. Missing or not applicable is coded as null",
+      "type": ["string", "null"],
+      "enum": ["Ovary", "Tubo-Ovarian", "Fallopian", "Uterus", "Omentum", "Peritoneal", "Breast", "Gynae origin - NOS",
+               "Ovarian, fallopian, peritoneal", null]
+    },
+    "Stage_FIGO": {
+      "description": "FIGO tumour stage (any edition). Missing is coded as null (blank).",
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "4", null],
+      "enumDescriptions": [
+        "1: Stage 1",
+        "2: Stage 2",
+        "3: Stage 3",
+        "4: Stage 4",
+        "null: Missing or not applicable"
+      ]
+    },
+    "Stage_UICC": {
+      "description": "UICC tumour stage (any edition). Missing is coded as null (blank)",
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "4", null],
+      "enumDescriptions": [
+        "1: Stage 1",
+        "2: Stage 2",
+        "3: Stage 3",
+        "4: Stage 4",
+        "null: Missing or not applicable"
+      ]
+    },
+    "Stage_Other_Not_Reported": {
+      "description": "Tumour stage where system is not reported or is other",
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "4", "N", null],
+      "enumDescriptions": [
+        "1: Stage 1",
+        "2: Stage 2",
+        "3: Stage 3",
+        "4: Stage 4",
+        "N: Not reported",
+        "null: Missing or not applicable"
+      ]
+    },
+    "Stage_Best": {
+      "description": "Tumour stage to be used in analysis. Where multiple stage systems reported, FIGO to be prioritised. Missing is coded as null (blank)",
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "4", null],
+      "enumDescriptions": [
+        "1: Stage 1",
+        "2: Stage 2",
+        "3: Stage 3",
+        "4: Stage 4",
+        "null: Missing or not applicable"
+      ]
+    },
+    "Benign_Tumour": {
+      "description": "Type of benign ovarian tumour. Missing or not applicable is coded as null (blank)",
+      "type": ["string", "null"],
+      "enum": ["Serous", "Mucinous", "Other", null]
+    },
+    "Borderline": {
+      "description": "Type of borderline ovarian tumour. Missing or not applicable is coded as null (blank)",
+      "type": ["string", "null"],
+      "enum": ["Absent", "Serous", "Low Grade Mucinous", "Mucinous", "Endometrial", "Clear cell adenofibroma", "Other", "Clear Cell Adenofibroma", null]
+    },
+    "Invasive": {
+      "description": "Invasive. Missing is coded as null (blank)",
+      "type": ["string", "null"],
+      "enum": ["P", "N", null],
+      "enumDescriptions": [
+        "P: Present",
+        "N: Not Present",
+        "null: Missing or not applicable" 
+      ]
+    },
+    "Epithelium": {
+      "description": "Type of epithelial tumour. Missing or not applicable is coded as null (blank)Type",
+      "type": ["string", "null"],
+      "enum": ["Carcinosarcoma", "Serous High", "Serous Low", "Clear Cell (automatically Grade 3)", 
+                "Undifferentiated (automatically Grade 3)", "Endometrioid", "Mucinous", "Transitional", 
+                "Mixed Epithelial Types", "Endometroid, Mucinous, Clear Cell", "Mixed Endometroid, Serous", 
+                "Adenocarcinoma - NOS", "Mixed Endometrioid, Serous", "Endometrioid, Clear Cell", "Pseudomyxoma peritoneii", "Serous - NOS", "Other", null]
+    },
+    "Grade_HL": {
+      "description": "Grade differentiation. Missing is coded as null (blank)",
+      "type": ["string", "null"],
+      "enum": ["H", "L", "N", null],
+      "enumDescriptions": [
+        "H: High Grade",
+        "L: Low Grade",
+        "N: Not Given",
+        "null: Missing in the report"
+      ]
+    },
+    "Grade_I_II_III": {
+      "description": "Tumour Grade",
+      "type": ["string", "null"],
+      "enum": ["1", "2", "3", "N", null],
+      "enumDescriptions": [
+        "1: Low Grade (well differentiated)",
+        "2: Moderate Grade (moderately differentiated)",
+        "3: High Grade (poorly differentiated)",
+        "N: Not Given",
+        "null: Missing in the report"
+      ]
+    },
+    "Primary_Germ_Cells": {
+      "description": "Type of Germ (Egg) Cell Tumour. Missing or not applicable is coded as null (blank)",
+      "type": ["string", "null"],
+      "enum": ["Choriocarcinoma", "Dysgerminomas", "Embryonal Carcinomas", "Immature Teratomas", "Polyembryoma", "Mature Teratoma", null]
+    },
+    "Sex_Cord_Stromal_Cells": {
+      "description": "Type of Ovary sex Cord Stromal Tumour Cells (SCSTs). Missing or not applicable is coded as null (blank)",
+      "type": ["string", "null"],
+      "enum": ["Granulosa-theca cell tumours", "Sertoli-Leydig cell tumours", null]
+    },
+    "PostNeoadjuvantChemo": {
+      "description": "Specimen taken after treatment (Chemotherapy)",
+      "type": ["string", "null"],
+      "enum": ["C", "PC", null],
+      "enumDescriptions": [
+        "C: Chemotherapy",
+        "PC: Possible Chemotherapy",
+        "null: Missing or not applicable"
+      ]
+    }
+  }
+}

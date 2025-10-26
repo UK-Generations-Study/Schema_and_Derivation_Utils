@@ -1,0 +1,10 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://raw.githubusercontent.com/UK-Generations-Study/Schema_and_Derivation_Utils/refs/heads/CaSummary_schema/CancerSummary/generations_study/json_schemas/NewCanSummary-dataset.json",
+	"title": "Generations Study - Cancer Summary",
+	"description": "Schema for the Generations Study - Cancer Summary",
+	"type": "array",
+	"items": {
+		"$ref": "NewCanSummary.json"
+	}
+}
