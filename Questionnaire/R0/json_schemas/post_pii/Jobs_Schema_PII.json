@@ -1,0 +1,272 @@
+{
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/BreastDisease.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BreastDisease",
+  "roundID": 1,
+  "type": "object",
+  "properties": {
+    "R0_TCode": {
+      "name": "TCode",
+      "description": "Pseudo-anonymized 8-character study identifier.",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "R0_IonizingRadiationJob": {
+      "questionID": 2050,
+      "name": "Q10_1_1_1",
+      "question": "Have you ever had any jobs that involved working with ionising radiation?",
+      "description": "Participant's history of jobs involving ionizing radiation",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple options chosen",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_RadJobStartYear": {
+      "name": "R0_RadJobStartYear",
+      "description": "Derived date field - either a valid date or null for unknown",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-derivedFrom": [
+        "R0_RadJobStartYr1"
+      ]
+    },
+    "R0_RadJobEndYear": {
+      "name": "R0_RadJobEndYear",
+      "description": "Derived date field - either a valid date or null for unknown",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-derivedFrom": [
+        "R0_RadJobEndYr1"
+      ]
+    },
+    "R0_RadJobDosimeterUse": {
+      "questionID": 2053,
+      "name": "Q10_1_4_1",
+      "question": "Did you wear a dosimeter (dosage badge) for this job?",
+      "description": "Participant's use of dosimeter in radiation job",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_RadJobWeeklyHrs": {
+      "questionID": 2054,
+      "name": "Q10_1_5",
+      "question": "Average time per week working around ionising radiation (hours)",
+      "description": "Weekly hours spent around radiation",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_RadJobWeeklyMins": {
+      "questionID": 2055,
+      "name": "Q10_1_6",
+      "question": "Average time per week working around ionising radiation (minutes)",
+      "description": "Weekly minutes spent around radiation",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_RadJobMore": {
+      "questionID": 2058,
+      "name": "Q10_1_9",
+      "question": "Cross here if you had more jobs involving ionising radiation",
+      "description": "Flag for additional radiation jobs",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Flagged",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        2106
+      ]
+    },
+    "R0_NightWorkRecentTenYrs": {
+      "questionID": 2059,
+      "name": "Q10_2_1",
+      "question": "Over the last ten years, have you had any jobs involving late evening or night work?",
+      "description": "Participant's history of night work",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "NightWork": {
+      "name": "NightWork",
+      "description": "Details of night work episodes",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_NightWork_Num": {
+            "name": "R0_NightWork_Num",
+            "description": "Sequential number of night work.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ]
+          },
+          "R0_NightWorkStart": {
+            "name": "R0_NightWorkStart",
+            "description": "Derived date field - either a valid date or null for unknown",
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date",
+            "x-derivedFrom": [
+              "R0_NightWorkStartYr"
+            ]
+          },
+          "R0_NightWorkEnd": {
+            "name": "R0_NightWorkEnd",
+            "description": "Derived date field - either a valid date or null for unknown",
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date",
+            "x-derivedFrom": [
+              "R0_NightWorkEndYr"
+            ]
+          },
+          "R0_NightWorkDaysWeek": {
+            "questionID": 2063,
+            "name": "R0_NightWorkDaysWeek",
+            "question": "[ordinal] - Average number of days per week working at night",
+            "description": "Weekly frequency of night work",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_NightWorkHrsWeek": {
+            "questionID": 2064,
+            "name": "R0_NightWorkHrsWeek",
+            "question": "[ordinal] - Average number of hours worked between 10pm and 7am on these days",
+            "description": "Duration of nightly work hours",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_NightWorkMore": {
+      "questionID": 2070,
+      "name": "Q10_2more",
+      "question": "Cross here is you had more jobs involving night work",
+      "description": "Flag for additional night work episodes",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Flagged",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        2112
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "R0_TCode"
+  ],
+  "$defs": {
+    "Jobs": {
+      "$ref": "../raw/Jobs_JSON.json"
+    }
+  }
+}
