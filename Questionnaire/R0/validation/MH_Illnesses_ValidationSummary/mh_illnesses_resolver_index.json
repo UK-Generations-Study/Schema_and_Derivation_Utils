@@ -1,0 +1,629 @@
+{
+  "R0_StudyID": {
+    "all": [
+      "StudyID"
+    ]
+  },
+  "R0_ED_GainLoss": {
+    "all": [
+      "Q8_10_1"
+    ],
+    "1": [
+      "Q8_10_1"
+    ]
+  },
+  "R0_ED_LowWeight_kg": {
+    "all": [
+      "Q8_10_K_1",
+      "eatingdis_lostkg2"
+    ],
+    "1": [
+      "Q8_10_K_1"
+    ],
+    "2": [
+      "eatingdis_lostkg2"
+    ]
+  },
+  "R0_ED_HighWeight_kg": {
+    "all": [
+      "Q8_10_K_2",
+      "eatingdis_gainkg2",
+      "eatingdis_gainkg3"
+    ],
+    "1": [
+      "Q8_10_K_2"
+    ],
+    "2": [
+      "eatingdis_gainkg2"
+    ],
+    "3": [
+      "eatingdis_gainkg3"
+    ]
+  },
+  "R0_ED_LowWeight_lb": {
+    "all": [
+      "Q8_10_L_1",
+      "eatingdis_lostlb2",
+      "eatingdis_lostlb3"
+    ],
+    "1": [
+      "Q8_10_L_1"
+    ],
+    "2": [
+      "eatingdis_lostlb2"
+    ],
+    "3": [
+      "eatingdis_lostlb3"
+    ]
+  },
+  "R0_ED_HighWeight_lb": {
+    "all": [
+      "Q8_10_L_2",
+      "eatingdis_gainlb2",
+      "eatingdis_gainlb3"
+    ],
+    "1": [
+      "Q8_10_L_2"
+    ],
+    "2": [
+      "eatingdis_gainlb2"
+    ],
+    "3": [
+      "eatingdis_gainlb3"
+    ]
+  },
+  "R0_ED_LowWeight_st": {
+    "all": [
+      "Q8_10_S_1",
+      "eatingdis_lostst2",
+      "eatingdis_lostst3"
+    ],
+    "1": [
+      "Q8_10_S_1"
+    ],
+    "2": [
+      "eatingdis_lostst2"
+    ],
+    "3": [
+      "eatingdis_lostst3"
+    ]
+  },
+  "R0_ED_HighWeight_st": {
+    "all": [
+      "Q8_10_S_2",
+      "eatingdis_gainst2",
+      "eatingdis_gainst3"
+    ],
+    "1": [
+      "Q8_10_S_2"
+    ],
+    "2": [
+      "eatingdis_gainst2"
+    ],
+    "3": [
+      "eatingdis_gainst3"
+    ]
+  },
+  "R0_ED_MoreEpisodes": {
+    "all": [
+      "Q8_10_more"
+    ]
+  },
+  "R0_Diabetes": {
+    "all": [
+      "Q8_2_1_1"
+    ]
+  },
+  "R0_DiabetesAge": {
+    "all": [
+      "Q8_2_2"
+    ]
+  },
+  "R0_TreatedWithInsulin": {
+    "all": [
+      "Q8_2_3_1"
+    ]
+  },
+  "R0_ThyroidDisease": {
+    "all": [
+      "Q8_3_1"
+    ]
+  },
+  "R0_ThyroidDisease_Med": {
+    "all": [
+      "Q8_3_1_1",
+      "Q8_3_2_1"
+    ],
+    "1": [
+      "Q8_3_1_1"
+    ],
+    "2": [
+      "Q8_3_2_1"
+    ]
+  },
+  "R0_ThyroidTreatment_Age": {
+    "all": [
+      "Q8_3_1_2",
+      "Q8_3_2_2"
+    ],
+    "1": [
+      "Q8_3_1_2"
+    ],
+    "2": [
+      "Q8_3_2_2"
+    ]
+  },
+  "R0_ThyroidTreatment_Yrs": {
+    "all": [
+      "Q8_3_1_3",
+      "Q8_3_2_3"
+    ],
+    "1": [
+      "Q8_3_1_3"
+    ],
+    "2": [
+      "Q8_3_2_3"
+    ]
+  },
+  "R0_ThyroidTreatment_Mnths": {
+    "all": [
+      "Q8_3_1_4",
+      "Q8_3_2_4"
+    ],
+    "1": [
+      "Q8_3_1_4"
+    ],
+    "2": [
+      "Q8_3_2_4"
+    ]
+  },
+  "R0_ThyroidTreatment_Still": {
+    "all": [
+      "Q8_3_1_5",
+      "Q8_3_2_5"
+    ],
+    "1": [
+      "Q8_3_1_5"
+    ],
+    "2": [
+      "Q8_3_2_5"
+    ]
+  },
+  "R0_ThyroidDiseaseType": {
+    "all": [
+      "Q8_3_Yes_1"
+    ]
+  },
+  "R0_ThyroidTreatment_MoreTwo": {
+    "all": [
+      "Q8_3_more"
+    ]
+  },
+  "R0_ThyroidDiseaseOther": {
+    "all": [
+      "Q8_3_other"
+    ]
+  },
+  "R0_Blind": {
+    "all": [
+      "Q8_4_1"
+    ]
+  },
+  "R0_Gallstones": {
+    "all": [
+      "Q8_5_1_1"
+    ]
+  },
+  "R0_Gallstones_Age": {
+    "all": [
+      "Q8_5_2"
+    ]
+  },
+  "R0_Cholecystectomy": {
+    "all": [
+      "Q8_6_1_1"
+    ]
+  },
+  "R0_Cholecystectomy_Age": {
+    "all": [
+      "Q8_6_2"
+    ]
+  },
+  "R0_BrokenHip": {
+    "all": [
+      "Q8_7_1_1"
+    ]
+  },
+  "R0_BrokenHip_Yr": {
+    "all": [
+      "Q8_7_2"
+    ]
+  },
+  "R0_BrokenHip_Age": {
+    "all": [
+      "Q8_7_3"
+    ]
+  },
+  "R0_EatingDisorder": {
+    "all": [
+      "Q8_8_1_1"
+    ]
+  },
+  "R0_ED_Type": {
+    "all": [
+      "Q8_8_2",
+      "eatingdis_type2",
+      "eatingdis_type3"
+    ],
+    "1": [
+      "Q8_8_2"
+    ],
+    "2": [
+      "eatingdis_type2"
+    ],
+    "3": [
+      "eatingdis_type3"
+    ]
+  },
+  "R0_ED_DrAge": {
+    "all": [
+      "Q8_8_3",
+      "eatingdis_drage2"
+    ],
+    "1": [
+      "Q8_8_3"
+    ],
+    "2": [
+      "eatingdis_drage2"
+    ]
+  },
+  "R0_ED_DrAgeNA": {
+    "all": [
+      "Q8_8_4"
+    ],
+    "1": [
+      "Q8_8_4"
+    ]
+  },
+  "R0_ED_LostPeriods_Age": {
+    "all": [
+      "Q8_8_5",
+      "eatingdis_periodsage2",
+      "eatingdis_periodsage3"
+    ],
+    "1": [
+      "Q8_8_5"
+    ],
+    "2": [
+      "eatingdis_periodsage2"
+    ],
+    "3": [
+      "eatingdis_periodsage3"
+    ]
+  },
+  "R0_ED_LostPeriods_AgeNA": {
+    "all": [
+      "Q8_8_6",
+      "eatingdis_periodsageNA2"
+    ],
+    "1": [
+      "Q8_8_6"
+    ],
+    "2": [
+      "eatingdis_periodsageNA2"
+    ]
+  },
+  "R0_ED_LostPeriods_Yrs": {
+    "all": [
+      "Q8_8_7",
+      "eatingdis_periodsyrs2"
+    ],
+    "1": [
+      "Q8_8_7"
+    ],
+    "2": [
+      "eatingdis_periodsyrs2"
+    ]
+  },
+  "R0_ED_LengthLostPeriod_Mnths": {
+    "all": [
+      "Q8_8_8",
+      "eatingdis_periodsmths2",
+      "eatingdis_periodsmths3"
+    ],
+    "1": [
+      "Q8_8_8"
+    ],
+    "2": [
+      "eatingdis_periodsmths2"
+    ],
+    "3": [
+      "eatingdis_periodsmths3"
+    ]
+  },
+  "R0_ED_PreWeight_st": {
+    "all": [
+      "Q8_9_1",
+      "eatingdis_beforest2",
+      "eatingdis_beforest3"
+    ],
+    "1": [
+      "Q8_9_1"
+    ],
+    "2": [
+      "eatingdis_beforest2"
+    ],
+    "3": [
+      "eatingdis_beforest3"
+    ]
+  },
+  "R0_ED_PreWeight_lb": {
+    "all": [
+      "Q8_9_2",
+      "eatingdis_beforelb2",
+      "eatingdis_beforelb3"
+    ],
+    "1": [
+      "Q8_9_2"
+    ],
+    "2": [
+      "eatingdis_beforelb2"
+    ],
+    "3": [
+      "eatingdis_beforelb3"
+    ]
+  },
+  "R0_ED_PreWeight_kg": {
+    "all": [
+      "Q8_9_3",
+      "eatingdis_beforekg2"
+    ],
+    "1": [
+      "Q8_9_3"
+    ],
+    "2": [
+      "eatingdis_beforekg2"
+    ]
+  },
+  "R0_ED_Age": {
+    "all": [
+      "eatingdis_age2",
+      "eatingdis_age3"
+    ],
+    "2": [
+      "eatingdis_age2"
+    ],
+    "3": [
+      "eatingdis_age3"
+    ]
+  },
+  "R0_ED_DrStartMth": {
+    "all": [
+      "eatingdis_drmth2"
+    ],
+    "2": [
+      "eatingdis_drmth2"
+    ]
+  },
+  "R0_ED_DrStartYr": {
+    "all": [
+      "eatingdis_dryr2"
+    ],
+    "2": [
+      "eatingdis_dryr2"
+    ]
+  },
+  "R0_ED_FromAge": {
+    "all": [
+      "eatingdis_fromage2",
+      "eatingdis_fromage3"
+    ],
+    "2": [
+      "eatingdis_fromage2"
+    ],
+    "3": [
+      "eatingdis_fromage3"
+    ]
+  },
+  "R0_ED_FromMth": {
+    "all": [
+      "eatingdis_frommth2",
+      "eatingdis_frommth3"
+    ],
+    "2": [
+      "eatingdis_frommth2"
+    ],
+    "3": [
+      "eatingdis_frommth3"
+    ]
+  },
+  "R0_ED_FromYr": {
+    "all": [
+      "eatingdis_fromyr2",
+      "eatingdis_fromyr3"
+    ],
+    "2": [
+      "eatingdis_fromyr2"
+    ],
+    "3": [
+      "eatingdis_fromyr3"
+    ]
+  },
+  "R0_ED_MoreThanThree": {
+    "all": [
+      "eatingdis_morethan"
+    ]
+  },
+  "R0_ED_StartMth": {
+    "all": [
+      "eatingdis_mth2"
+    ],
+    "2": [
+      "eatingdis_mth2"
+    ]
+  },
+  "R0_ED_PeriodsMth": {
+    "all": [
+      "eatingdis_periodsmth2"
+    ],
+    "2": [
+      "eatingdis_periodsmth2"
+    ]
+  },
+  "R0_ED_PeriodsYr": {
+    "all": [
+      "eatingdis_periodsyr2"
+    ],
+    "2": [
+      "eatingdis_periodsyr2"
+    ]
+  },
+  "R0_ED_Ongoing": {
+    "all": [
+      "eatingdis_still2",
+      "eatingdis_still3"
+    ],
+    "2": [
+      "eatingdis_still2"
+    ],
+    "3": [
+      "eatingdis_still3"
+    ]
+  },
+  "R0_ED_ToAge": {
+    "all": [
+      "eatingdis_toage2",
+      "eatingdis_toage3"
+    ],
+    "2": [
+      "eatingdis_toage2"
+    ],
+    "3": [
+      "eatingdis_toage3"
+    ]
+  },
+  "R0_ED_ToMth": {
+    "all": [
+      "eatingdis_tomth2"
+    ],
+    "2": [
+      "eatingdis_tomth2"
+    ]
+  },
+  "R0_ED_ToYr": {
+    "all": [
+      "eatingdis_toyr2",
+      "eatingdis_toyr3"
+    ],
+    "2": [
+      "eatingdis_toyr2"
+    ],
+    "3": [
+      "eatingdis_toyr3"
+    ]
+  },
+  "R0_ED_WeightGain": {
+    "all": [
+      "eatingdis_wtgain2",
+      "eatingdis_wtgain3"
+    ],
+    "2": [
+      "eatingdis_wtgain2"
+    ],
+    "3": [
+      "eatingdis_wtgain3"
+    ]
+  },
+  "R0_ED_WeightFluctuate": {
+    "all": [
+      "eatingdis_wtgainlost2",
+      "eatingdis_wtgainlost3"
+    ],
+    "2": [
+      "eatingdis_wtgainlost2"
+    ],
+    "3": [
+      "eatingdis_wtgainlost3"
+    ]
+  },
+  "R0_ED_WeightLoss": {
+    "all": [
+      "eatingdis_wtlost2",
+      "eatingdis_wtlost3"
+    ],
+    "2": [
+      "eatingdis_wtlost2"
+    ],
+    "3": [
+      "eatingdis_wtlost3"
+    ]
+  },
+  "R0_ED_WeightSame": {
+    "all": [
+      "eatingdis_wtsame2",
+      "eatingdis_wtsame3"
+    ],
+    "2": [
+      "eatingdis_wtsame2"
+    ],
+    "3": [
+      "eatingdis_wtsame3"
+    ]
+  },
+  "R0_ED_StartYr": {
+    "all": [
+      "eatingdis_yr2"
+    ],
+    "2": [
+      "eatingdis_yr2"
+    ]
+  },
+  "R0_ED_General": {
+    "all": [
+      "yes2",
+      "yes3"
+    ],
+    "2": [
+      "yes2"
+    ],
+    "3": [
+      "yes3"
+    ]
+  },
+  "R0_ED_ConsultDrPeriods": {
+    "all": [
+      "yesboth2",
+      "yesboth3"
+    ],
+    "2": [
+      "yesboth2"
+    ],
+    "3": [
+      "yesboth3"
+    ]
+  },
+  "R0_ED_ConsultDr": {
+    "all": [
+      "yesdoc2",
+      "yesdoc3"
+    ],
+    "2": [
+      "yesdoc2"
+    ],
+    "3": [
+      "yesdoc3"
+    ]
+  },
+  "R0_ED_LostPeriods": {
+    "all": [
+      "yesperiods2",
+      "yesperiods3"
+    ],
+    "2": [
+      "yesperiods2"
+    ],
+    "3": [
+      "yesperiods3"
+    ]
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "R0_StudyID": {
+    "all": [
+      "StudyID"
+    ]
+  },
+  "R0_AircrewTravelHistory": {
+    "all": [
+      "Q13_10_1"
+    ]
+  },
+  "R0_AircrewTravelStartYear": {
+    "all": [
+      "Q13_10from"
+    ]
+  },
+  "R0_AircrewTravelCurrent": {
+    "all": [
+      "Q13_10still"
+    ]
+  },
+  "R0_AircrewTravelEndYear": {
+    "all": [
+      "Q13_10to"
+    ]
+  },
+  "R0_AirborneHoursMonth": {
+    "all": [
+      "Q13_11month"
+    ]
+  },
+  "R0_AirborneHoursWeek": {
+    "all": [
+      "Q13_11wk"
+    ]
+  },
+  "R0_MediumFlightsMonth": {
+    "all": [
+      "Q13_12_1"
+    ]
+  },
+  "R0_LongFlightsMonth": {
+    "all": [
+      "Q13_12_2"
+    ]
+  },
+  "R0_FlightsCrossEquatorMonth": {
+    "all": [
+      "Q13_13_1"
+    ]
+  },
+  "R0_TransAtlanticFlightsMonthly": {
+    "all": [
+      "Q13_13_2"
+    ]
+  },
+  "R0_TransPacificFlightsMonthly": {
+    "all": [
+      "Q13_13_3"
+    ]
+  },
+  "R0_MediumTimeDiffFlights": {
+    "all": [
+      "Q13_14_1"
+    ]
+  },
+  "R0_LargeTimeDiffFlights": {
+    "all": [
+      "Q13_14_2"
+    ]
+  },
+  "R0_AntiperspirantDeodorantUse": {
+    "all": [
+      "Q13_15_1"
+    ]
+  },
+  "R0_AntiperspirantOnlyUse": {
+    "all": [
+      "Q13_15_2"
+    ]
+  },
+  "R0_DeodorantOnlyUse": {
+    "all": [
+      "Q13_15_3"
+    ]
+  },
+  "R0_TalcUse": {
+    "all": [
+      "Q13_15_4"
+    ]
+  },
+  "R0_SleepTimeWeekdayHour": {
+    "all": [
+      "Q13_1_H"
+    ]
+  },
+  "R0_SleepTimeWeekdayMinute": {
+    "all": [
+      "Q13_1_M"
+    ]
+  },
+  "R0_SleepTimeAMPM": {
+    "all": [
+      "Q13_1_ampm_1"
+    ]
+  },
+  "R0_WakeTimeHour": {
+    "all": [
+      "Q13_2_H"
+    ]
+  },
+  "R0_WakeTimeMinute": {
+    "all": [
+      "Q13_2_M"
+    ]
+  },
+  "R0_WakeTimeAMPM": {
+    "all": [
+      "Q13_2_ampm_1"
+    ]
+  },
+  "R0_SleepDurationHours": {
+    "all": [
+      "Q13_3_H"
+    ]
+  },
+  "R0_SleepDurationMinutes": {
+    "all": [
+      "Q13_3_M"
+    ]
+  },
+  "R0_RoomDarkness": {
+    "all": [
+      "Q13_4_1"
+    ]
+  },
+  "R0_RoomDarknessAge20": {
+    "all": [
+      "Q13_5_1"
+    ]
+  },
+  "R0_NightWakeups": {
+    "all": [
+      "Q13_6",
+      "Q13_7"
+    ],
+    "Rec": [
+      "Q13_6"
+    ],
+    "20": [
+      "Q13_7"
+    ]
+  },
+  "R0_PerceivedStress": {
+    "all": [
+      "Q13_8_1"
+    ]
+  },
+  "R0_StressEventDeathPartner": {
+    "all": [
+      "Q13_9_1"
+    ]
+  },
+  "R0_StressEventPersonalIllness": {
+    "all": [
+      "Q13_9_2"
+    ]
+  },
+  "R0_StressEventDeathRelative": {
+    "all": [
+      "Q13_9_3"
+    ]
+  },
+  "R0_StressEventJobLoss": {
+    "all": [
+      "Q13_9_4"
+    ]
+  },
+  "R0_StressEventDivorce": {
+    "all": [
+      "Q13_9_5"
+    ]
+  },
+  "R0_StressEventOther": {
+    "all": [
+      "Q13_9_6"
+    ]
+  },
+  "R0_StressEventDeathFriend": {
+    "all": [
+      "Q13_9_7"
+    ]
+  }
+}
