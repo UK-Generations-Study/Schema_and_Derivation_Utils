@@ -1,0 +1,212 @@
+{
+  "R0_StudyID": {
+    "all": [
+      "StudyID"
+    ]
+  },
+  "R0_TownRegBorn": {
+    "all": [
+      "BirthPlace"
+    ]
+  },
+  "R0_CountryBornNonUK": {
+    "all": [
+      "CountryOthe"
+    ]
+  },
+  "R0_CountryBorn": {
+    "all": [
+      "Country_1"
+    ]
+  },
+  "R0_DOB_Mnth": {
+    "all": [
+      "DOB_Month"
+    ]
+  },
+  "R0_DOB_Yr": {
+    "all": [
+      "DOB_Year"
+    ]
+  },
+  "R0_DOB_Day": {
+    "all": [
+      "DOB_day"
+    ]
+  },
+  "R0_G_BirthWght": {
+    "all": [
+      "Q2_10_grams"
+    ]
+  },
+  "R0_Lbs_BirthWght": {
+    "all": [
+      "Q2_10_lbs"
+    ]
+  },
+  "R0_Oz_BirthWght": {
+    "all": [
+      "Q2_10_oz"
+    ]
+  },
+  "R0_BirthWght_Cat": {
+    "all": [
+      "Q2_10_told_1"
+    ]
+  },
+  "R0_MatPrevPreg_Unkn": {
+    "all": [
+      "Q2_11_dn"
+    ]
+  },
+  "R0_MatPrevPreg": {
+    "all": [
+      "Q2_11_preg"
+    ]
+  },
+  "R0_Delivery_Caesarean": {
+    "all": [
+      "Q2_12_1_1"
+    ]
+  },
+  "R0_Caesarean_Reason": {
+    "all": [
+      "Q2_12_2"
+    ]
+  },
+  "R0_Mother_PreEclampsia": {
+    "all": [
+      "Q2_13_1"
+    ]
+  },
+  "R0_Mother_PregComp": {
+    "all": [
+      "Q2_14_1_1"
+    ]
+  },
+  "R0_PregComp_Details": {
+    "all": [
+      "Q2_14_2"
+    ]
+  },
+  "R0_Postnatal_Incubator": {
+    "all": [
+      "Q2_15_1"
+    ]
+  },
+  "R0_Birth_MedAbnorm": {
+    "all": [
+      "Q2_16_1_1"
+    ]
+  },
+  "R0_MedAbnorm_Dets": {
+    "all": [
+      "Q2_16_2"
+    ]
+  },
+  "R0_BornHosp_Other": {
+    "all": [
+      "Q2_4_1_1"
+    ]
+  },
+  "R0_HospName": {
+    "all": [
+      "Q2_4_2"
+    ]
+  },
+  "R0_BirthPlace_Other": {
+    "all": [
+      "Q2_4_3"
+    ]
+  },
+  "R0_Single_Twin": {
+    "all": [
+      "Q2_5_1"
+    ]
+  },
+  "R0_TwinFemale": {
+    "all": [
+      "Q2_6_1_1"
+    ]
+  },
+  "R0_TwinType": {
+    "all": [
+      "Q2_6_2_1"
+    ]
+  },
+  "R0_TwinType_Parents": {
+    "all": [
+      "Q2_6_3_1"
+    ]
+  },
+  "R0_TwinType_Doctor": {
+    "all": [
+      "Q2_6_4_1"
+    ]
+  },
+  "R0_TwinType_Blood": {
+    "all": [
+      "Q2_6_5_1"
+    ]
+  },
+  "R0_TwinType_AppSim": {
+    "all": [
+      "Q2_6_6_1"
+    ]
+  },
+  "R0_TwinType_AppDif": {
+    "all": [
+      "Q2_6_7_1"
+    ]
+  },
+  "R0_TwinType_Other": {
+    "all": [
+      "Q2_6_8_1"
+    ]
+  },
+  "R0_TwinMist_Parents": {
+    "all": [
+      "Q2_7_1_1"
+    ]
+  },
+  "R0_TwinMist_Siblings": {
+    "all": [
+      "Q2_7_2_1"
+    ]
+  },
+  "R0_TwinMist_ClseFrnds": {
+    "all": [
+      "Q2_7_3_1"
+    ]
+  },
+  "R0_TwinMist_CasFrnds": {
+    "all": [
+      "Q2_7_4_1"
+    ]
+  },
+  "R0_TwinMist_Clssmts": {
+    "all": [
+      "Q2_7_5_1"
+    ]
+  },
+  "R0_TwinSimilarity": {
+    "all": [
+      "Q2_8_1"
+    ]
+  },
+  "R0_MatPregWks": {
+    "all": [
+      "Q2_9_1"
+    ]
+  },
+  "R0_MatPregWks_Unkn": {
+    "all": [
+      "Q2_9_2"
+    ]
+  },
+  "R0_BirthExpEarlyLate": {
+    "all": [
+      "Q2_9_3_1"
+    ]
+  }
+}

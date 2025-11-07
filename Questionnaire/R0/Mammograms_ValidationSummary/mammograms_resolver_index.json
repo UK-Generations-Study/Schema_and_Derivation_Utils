@@ -1,0 +1,53 @@
+{
+  "R0_StudyID": {
+    "all": [
+      "StudyID"
+    ]
+  },
+  "R0_Mammogram": {
+    "all": [
+      "Q7_1_1_1"
+    ]
+  },
+  "R0_Mammogram_Number": {
+    "all": [
+      "Q7_1_2"
+    ]
+  },
+  "R0_Mammogram_Age1": {
+    "all": [
+      "Q7_1_3"
+    ]
+  },
+  "R0_Mammogram_Details": {
+    "all": [
+      "Q7_2_1_1"
+    ]
+  },
+  "R0_Mammogram_WhereL1": {
+    "all": [
+      "Q7_2_2",
+      "Q7_2_3"
+    ]
+  },
+  "R0_Mammogram_Yr": {
+    "all": [
+      "Q7_2_4"
+    ]
+  },
+  "R0_Mammogram_Abnormal": {
+    "all": [
+      "Q7_3_1_1"
+    ]
+  },
+  "R0_Mammogram_AbnormalAge": {
+    "all": [
+      "Q7_3_2"
+    ]
+  },
+  "R0_Mammogram_AbnormalDesc": {
+    "all": [
+      "Q7_3_3"
+    ]
+  }
+}
