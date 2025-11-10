@@ -1,3 +1,17 @@
+"""
+Cleaning utilities for questionnaire ETL.
+
+This module provides:
+- `newValMap`: hard-coded mappings from raw codes to cleaned numeric values
+  for a small set of questionnaire variables.
+- `rules`: a generic cleaner that applies type conversion and min/max bounds
+  based on JSON schema expectations.
+- `convert_to_date`: a thin wrapper around `pd.to_datetime` for date conversion.
+
+These helpers are used by higher-level ETL scripts (e.g. `common_utils`) to
+standardise raw database values into consistent, analysable forms.
+"""
+
 import re
 import pandas as pd
 
@@ -53,7 +67,7 @@ def rules(value, expected_type, min_val=None, max_val=None):
     return value  # Default return for non-integer types
 
 def convert_to_date(value):
-    """Convert cleaned values to datetime objects"""
+    """Convert cleaned values to pandas datetime objects"""
     if value is None:
         return None
     try:

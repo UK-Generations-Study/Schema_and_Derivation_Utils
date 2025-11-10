@@ -213,5 +213,4 @@ if __name__ == "__main__":
         try:
             run_section(q_sect)
         except Exception as exc:
-            # basic fail-soft behaviour – log & continue
             print(f"[ERROR] Section {q_sect} failed: {exc}", file=sys.stderr)

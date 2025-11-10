@@ -1,15 +1,14 @@
-
 """
-qc_etl.py
----------
-Reusable QC utilities for ETL sections with nested JSON output.
+Quality control utilities for questionnaire ETL.
 
-Main entry points (callable from your load script):
-- qc_check_variables(...)
-- reconcile_value_frequencies(...)
-- generate_histogram_pdf(...)
+This module provides tools to:
+- Compare value distributions before and after cleaning/pseudo-anonymisation.
+- Reconcile differences using the change-tracking logs from processing.
+- Generate simple histogram PDFs for manual inspection.
+- Check coverage of variables between raw input and final JSON output.
 
-Author: ChatGPT
+It is intended to be used from the `*_Load.ipynb` notebooks to verify
+that the ETL behaves as expected for each questionnaire section.
 """
 
 from __future__ import annotations
@@ -22,24 +21,20 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# ---- Optional utilities from your repo (import guarded) ----
-try:
-    from nested_utils import rename_variable  # resolver (raw → schema/array placement)
-except Exception:
-    rename_variable = None
+from nested_utils import rename_variable
+from pseudo_anon_utils import dateDict as PSEUDO_DATECFG
 
-try:
-    from pseudo_anon_utils import dateDict as PSEUDO_DATECFG
-except Exception:
-    PSEUDO_DATECFG = {}
-
-# ------------------------------
 # Generic helpers
-# ------------------------------
 
 _NULL_TOKENS = {"", "NA", "N/A", "NULL", "null", "??", "NK"}
 
 def _canon_val(x):
+    """
+    Canonicalise a value for comparison purposes.
+
+    E.g. normalises whitespace and case for strings so that frequency
+    comparisons are robust to tiny formatting changes.
+    """
     if x is None:
         return None
     try:
@@ -61,6 +56,12 @@ def _canon_val(x):
     return s
 
 def _value_counts_canon(series: pd.Series) -> Dict[Any, int]:
+    """
+    Compute value counts on a canonicalised version of a Series.
+
+    Used to compare frequencies before/after cleaning without being
+    overly sensitive to harmless string formatting differences.
+    """
     ser = series.map(_canon_val)
     vc = ser.value_counts(dropna=False)
     out = {}
@@ -210,7 +211,7 @@ def _resolver_pairs_from_index(resolver_index: dict) -> Dict[str, List[Tuple[str
         ...
       }
 
-    We MUST include the 'all' bucket (label=None) so flat mappings aren't dropped.
+    MUST include the 'all' bucket (label=None) so flat mappings aren't dropped.
     """
     out: Dict[str, List[Tuple[str, Optional[str]]]] = defaultdict(list)
     for r0, buckets in (resolver_index or {}).items():
@@ -294,9 +295,7 @@ def _ensure_validation_dir(base_dir: str) -> str:
     return out
 
 
-# ------------------------------
-# 1) Variable presence + accounting
-# ------------------------------
+# Variable presence + accounting
 
 def qc_check_variables(
     raw_pivot_df: pd.DataFrame,
@@ -309,17 +308,16 @@ def qc_check_variables(
     save_to: Optional[str] = None,
 ) -> dict:
     """
-    Validate that the right variables are present and accounted for.
+    High-level QC entry point for a section.
 
-    Steps:
-      a) list raw fields (pivot columns)
-      b) list processed schema leaves (deep walk of anon list[dict])
-      c) match via resolver index
-      d) non-matching grouped into:
-           - accounted_pii (present in PII list but removed)
-           - accounted_dates (in pseudo_anon date dict but rolled-up)
-           - unaccounted (validation warning)
-    Returns a report dict with details.
+    Compares:
+    - Raw pivoted values vs. values present in the final JSON.
+    - Counts of non-null values for each variable.
+    - Mapping of raw variable names to schema fields via nested_utils.
+
+    Uses the change-tracking information to explain differences and
+    highlights variables where the ETL may have dropped or altered
+    values unexpectedly.
     """
     if isinstance(resolver_index, (str, os.PathLike)):
         resolver_index = _load_json(resolver_index)
@@ -343,12 +341,12 @@ def qc_check_variables(
         else:
             unmatched_raw.add(raw)
 
-    # --- Account for PII, aggregated dates, and StudyID→TCode replacement ---
+    #  Account for PII, aggregated dates, and StudyID→TCode replacement 
 
     # Build resolver pairs once: {processed_r0: [(raw_name, label_or_None), ...]}
     pairs = _resolver_pairs_from_index(resolver_index)
 
-    # ---------- 1) PII accounting (resolver-aware) ----------
+    # PII accounting (resolver-aware)
     # Collect names from dfPII (strings or dicts). These may be raw or processed.
     pii_names = _collect_pii_vars(dfPII)
 
@@ -365,11 +363,11 @@ def qc_check_variables(
 
     accounted_pii = sorted([r for r in unmatched_raw if r in pii_raw])
 
-    # ---------- 2) Aggregated date components accounting (resolver-aware) ----------
+    # Aggregated date components accounting (resolver-aware)
     # Pull the per-section date dict from pseudo_anon_utils.dateDict
     # Keys are processed derived fields; values are lists of components (raw or processed).
     datecfg = datecfg or PSEUDO_DATECFG or {}
-    section_dates = (datecfg.get(section_name) or {}).get("dateDict", {})  # {derived_proc: [components...]}
+    section_dates = (datecfg.get(section_name) or {}).get("dateDict", {})
 
     # Only account components if the aggregated processed field actually exists
     processed_leaves = sorted(_deep_collect_schema_leaves(processed_json))
@@ -386,14 +384,13 @@ def qc_check_variables(
 
     accounted_dates = sorted([r for r in unmatched_raw if r in accounted_dates_raw])
 
-    # ---------- 3) StudyID is accounted if TCode present ----------
+    # StudyID is accounted if TCode present
     # If the processed JSON contains R0_TCode, then any raw "StudyID" should be treated as accounted.
-    # (Your pseudo-anon step replaces StudyID with R0_TCode at the top level.)
     accounted_ids: set[str] = set()
     if "R0_TCode" in processed_leaves and "StudyID" in unmatched_raw:
         accounted_ids.add("StudyID")
 
-    # ---------- Final unaccounted ----------
+    # Final unaccounted
     unaccounted = sorted([
         r for r in unmatched_raw
         if r not in pii_raw and r not in accounted_dates_raw and r not in accounted_ids
@@ -556,6 +553,9 @@ def _collect_breastcancer_drug_ongoing_values(
 
     Returns one value per participant (including NULL when the specific
     BC/drug episode does not exist).
+
+    Need this bespoke functoin as breast cancers is the only true nested json file
+    with multiple drug regimen instances occuring for each cancer instance.
     """
     def _coerce(label):
         try:
@@ -613,7 +613,7 @@ def _find_array_container_and_discriminator(schema: dict, base_leaf: str) -> Opt
     (e.g., ('HeightComparison', 'R0_HghtComp_Num', int) or
            ('XrayEvents', 'R0_Xray_Num', int)).
 
-    Now also supports leaves that live inside a nested array
+    Also supports leaves that live inside a nested array
     under the array item (e.g. XrayEvents → XrayEventsExtra → R0_XrayAge).
     Returns None if the leaf is not inside an array.
     """
@@ -686,7 +686,6 @@ def _coerce_instance_label(label: str, example_value: Any) -> Any:
             return int(label)
         except Exception:
             return example_value
-    # leave as-is (string) otherwise
     return label
 
 
@@ -872,18 +871,19 @@ def reconcile_value_frequencies(
     verbose: bool = False,
 ) -> dict:
     """
-    Compare raw vs processed *value frequencies* per variable and reconcile using
-    the resolver index and the section's change-tracking.
+    Attempt to explain differences in value frequencies using change-tracking.
 
-    Instance-aware: if a resolver entry has instance buckets (keys other than 'all'),
-    we create separate processed leaves like `R0_HghtComp_11` and `R0_HghtComp_7` and
-    reconcile each against its own mapped raw fields.
+    For a given field:
+    - Canonicalise both original and final values.
+    - Apply the recorded changes (old -> new) to reconstruct how many
+      times each original value was transformed.
+    - Identify residual discrepancies that cannot be explained by the
+      documented changes.
 
-    Excludes StudyID/TCode everywhere. Can skip variables accounted for by PII removal
-    or date aggregation, using variable_check.accounted_pii/accounted_dates (raw names).
+    This helps catch unintended transformations or dropped values.
     """
 
-    # --- Load inputs
+    # Load inputs
     if isinstance(resolver_index, (str, os.PathLike)):
         with open(resolver_index, "r", encoding="utf-8") as f:
             resolver_index = json.load(f)
@@ -920,7 +920,7 @@ def reconcile_value_frequencies(
     # Determine processed leaves directly from resolver (so arrays split into suffixed leaves)
     processed_leaves: Set[str] = set(pairs.keys())
 
-    # --- Build skip lists based on variable_check accounted lists ---
+    #  Build skip lists based on variable_check accounted lists 
     accounted_pii_raw: Set[str] = set()
     accounted_dates_raw: Set[str] = set()
     if isinstance(variable_check, (str, os.PathLike)):
@@ -930,7 +930,6 @@ def reconcile_value_frequencies(
         except Exception:
             variable_check = {}
     if isinstance(variable_check, dict):
-        # be forgiving about nesting; look at top level or under a known stage
         accounted_pii_raw.update(variable_check.get("accounted_pii", []) or [])
         accounted_dates_raw.update(variable_check.get("accounted_dates", []) or [])
         # Also check common nesting like {"VariablesCheck": {"accounted_pii": [...]}}
@@ -989,7 +988,7 @@ def reconcile_value_frequencies(
     mismatched: List[str] = []
     perfect: List[str] = []
 
-    # === Main loop ===
+    # Main loop
     for r0_leaf in sorted(proc for proc in processed_leaves if proc not in skip_proc):
         if r0_leaf in skip_processed:
             if verbose:
@@ -1048,7 +1047,7 @@ def reconcile_value_frequencies(
             "perfect_match": is_perfect,
         }
 
-    # --- BreastCancer-specific refinement for R0_BCDrugRegimenOngoing ---
+    #  BreastCancer-specific refinement for R0_BCDrugRegimenOngoing 
     if section_name == "BreastCancer":
         try:
             # 1) Drop the aggregated BC-level Ongoing leaves if present
@@ -1132,120 +1131,3 @@ def reconcile_value_frequencies(
             stage["written_to"] = out_path
 
     return {stage_name: stage}
-
-
-# ==============================
-# PDF visual validation from Value Reconciliation JSON
-# ==============================
-from pathlib import Path
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
-
-
-def _natural_key(s: str):
-    """Sort helper: numeric first where possible, then alpha; 'null' last."""
-    if s == "null":
-        return (1, float('inf'), s)
-    try:
-        return (0, float(s), s)
-    except Exception:
-        return (0, s.lower(), s)
-
-
-def _bar_from_freq(ax, freq_map: Dict[str, int], title: str):
-    """Render a categorical bar chart from a frequency map.
-    Robust to mixed-type keys (str/int/float/None). Coerces to strings with 'null' for missing.
-    """
-    if not freq_map:
-        ax.text(0.5, 0.5, 'No data', ha='center', va='center')
-        ax.set_title(title)
-        ax.set_xticks([])
-        ax.set_yticks([])
-        return
-
-
-    # Coerce keys to strings consistently (use 'null' for None/NaN)
-    coerced = {}
-    for k, v in freq_map.items():
-        if k is None or (isinstance(k, float) and math.isnan(k)):
-            key_str = 'null'
-        else:
-            key_str = str(k)
-        coerced[key_str] = int(v)
-
-    keys = sorted(coerced.keys(), key=_natural_key)
-    vals = [coerced[k] for k in keys]
-
-    ax.bar(range(len(keys)), vals)
-    ax.set_title(title)
-    ax.set_xticks(range(len(keys)))
-    ax.set_xticklabels(keys, rotation=45, ha='right')
-    ax.set_ylabel('Count')
-
-
-def generate_histogram_pdf_from_value_reconciliation(
-    value_reconciliation: Union[str, dict],
-    output_pdf_path: str,
-    *,
-    section_name: str = None,
-    include: str = "all",  # 'all' | 'mismatched' | 'perfect'
-    max_pages: int = 300,
-) -> str:
-    """
-    Render side-by-side bar charts (categorical histograms) from the *Value Reconciliation* JSON
-    produced by `reconcile_value_frequencies`. Left = RAW (original_frequencies),
-    Right = PROCESSED (actual_frequencies). Uses the JSON *as-is* (no recomputation).
-    """
-    # Load JSON if a path
-    if isinstance(value_reconciliation, (str, os.PathLike)):
-        with open(value_reconciliation, 'r', encoding='utf-8') as f:
-            value_reconciliation = json.load(f)
-
-    # Resolve section key
-    if section_name is None:
-        if isinstance(value_reconciliation, dict) and len(value_reconciliation) == 1:
-            section_name = next(iter(value_reconciliation.keys()))
-        else:
-            for k in (value_reconciliation or {}):
-                if str(k).endswith('_ValueReconciliation'):
-                    section_name = k
-                    break
-            if section_name is None:
-                raise ValueError("Could not determine ValueReconciliation section name from JSON.")
-
-    section = value_reconciliation.get(section_name, {})
-    details = section.get('reconciliation_details', {})
-
-    # Determine which variables to include
-    mismatched_vars = set(section.get('mismatched_variables', []) or [])
-    perfect_vars = set(section.get('perfect_match_variables', []) or [])
-    var_names = list(details.keys())
-    if include == 'mismatched':
-        var_names = sorted([v for v in var_names if v in mismatched_vars])
-    elif include == 'perfect':
-        var_names = sorted([v for v in var_names if v in perfect_vars])
-    else:
-        var_names = sorted(var_names)
-
-    Path(os.path.dirname(output_pdf_path)).mkdir(parents=True, exist_ok=True)
-
-    pages = 0
-    with PdfPages(output_pdf_path) as pdf:
-        for r0 in var_names:
-            if pages >= max_pages:
-                break
-            info = details.get(r0, {})
-            raw_freq  = info.get('original_frequencies', {}) or {}
-            proc_freq = info.get('actual_frequencies', {}) or {}
-
-            fig = plt.figure(figsize=(11.69, 8.27))  # A4 landscape
-            ax1 = fig.add_subplot(1, 2, 1)
-            _bar_from_freq(ax1, raw_freq, f"Raw (original): {r0}")
-            ax2 = fig.add_subplot(1, 2, 2)
-            _bar_from_freq(ax2, proc_freq, f"Processed (actual): {r0}")
-            fig.suptitle(f"{r0} — Raw vs Processed", fontsize=12)
-            pdf.savefig(fig, bbox_inches='tight')
-            plt.close(fig)
-            pages += 1
-
-    return output_pdf_path

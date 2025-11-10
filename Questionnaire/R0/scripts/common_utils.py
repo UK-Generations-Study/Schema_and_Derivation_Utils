@@ -1,3 +1,20 @@
+"""
+Core utilities for questionnaire ETL.
+
+This module is the main "glue" of the pipeline. It handles:
+- Loading configuration and paths from a JSON config file.
+- Pulling raw questionnaire responses from SQL and pivoting them to
+  a StudyID x VariableName wide format.
+- Loading JSON Schemas (including resolving $ref references).
+- Cleaning and transforming raw values using schema constraints.
+- Assembling flat or nested records ready for restructuring.
+- Validating final JSON documents against their schemas.
+- Saving output JSON and change-tracking artefacts to disk.
+
+All section-specific ETL notebooks (`*_Load.ipynb`) use functions in
+this module to perform the heavy lifting.
+"""
+
 import os
 import sys
 import json
@@ -20,8 +37,15 @@ sys.path.append(os.path.abspath("N:\\CancerEpidem\\BrBreakthrough\\DeliveryProce
 from utilities import connect_DB, createLogger, read_data
 from config import r0_json_path, r0_json_path_pii, ct_path 
 
-# Shared configuration
 def get_config():
+    """
+    Load ETL configuration from a JSON file.
+
+    The config typically contains:
+    - database connection parameters
+    - base paths for schemas, outputs, and validation artefacts
+    - any section-specific settings required by the notebooks.
+    """
     return {
         'Delivery_log_path': 'N:\CancerEpidem\BrBreakthrough\DeliveryProcess\Logs',
         'test_server': 'DoverVTest',
@@ -29,8 +53,33 @@ def get_config():
         'out_json_path': 'N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Data_Output_Testing'
     }
 
-# Data loading and pivoting
 def load_and_pivot_data(question_range, logger):
+    """
+    Load raw questionnaire responses for a given question range and pivot wide.
+
+    This function:
+    - Builds a SQL query that pulls the appropriate combination of
+      GeneralResponses and any nested tables (Pregnancies, Relatives, etc.)
+      based on the supplied `question_range`.
+    - Executes the query against QuestTransformed.
+    - Joins in question metadata and VarFlagging PII flags.
+    - Pivots the long format (StudyID, VariableName, ResponseText)
+      into a wide DataFrame indexed by StudyID.
+
+    Parameters
+    ----------
+    question_range : str
+        SQL fragment for the QuestionID filter (e.g. 'BETWEEN 2150 AND 2260').
+    logger :
+        Logger instance for progress / debug messages.
+
+    Returns
+    -------
+    (pd.DataFrame, pd.DataFrame, pd.DataFrame)
+        - Wide pivoted DataFrame of responses.
+        - Questions metadata.
+        - VarFlagging (dfPII) metadata.
+    """
     config = get_config()
     dm_conn = connect_DB('QuestTransformed', config['test_server'], logger)
     
@@ -152,9 +201,22 @@ def load_and_pivot_data(question_range, logger):
     pivoted = pd.pivot(merged, index='StudyID', columns='VariableName', values='ResponseText').fillna('')
     return pivoted, dfPII
 
-# Schema handling
 def load_schema(schema_path, schema_name):
-    """Load schema with reference resolution"""
+    """
+    Load a JSON Schema file and resolve any $ref references.
+
+    Parameters
+    ----------
+    schema_path : str
+        Path to the root schema JSON file.
+    schema_name : str, optional
+        Optional name for logging or internal reference.
+
+    Returns
+    -------
+    dict
+        Fully-resolved JSON Schema ready for validation and traversal.
+    """
     path = os.path.join(schema_path, f'{schema_name}.json')
     with open(path, 'r') as f:
         schema = json.load(f)
@@ -165,7 +227,13 @@ def load_schema(schema_path, schema_name):
     return schema
 
 def resolve_references(schema, base_path):
-    """Recursively resolve references"""
+    """
+    Recursively resolve JSON Schema $ref references.
+
+    This uses jsonschema's RefResolver to replace $ref nodes with their
+    target definitions so downstream code can traverse the schema without
+    having to handle references manually.
+    """
     resolver = RefResolver(
         base_uri=f"file://{base_path}/",
         referrer=schema,
@@ -185,12 +253,21 @@ def resolve_references(schema, base_path):
     
     return _resolve(schema)
 
-# Value cleaning
 def clean_flat_value(value, var_name, field_name, constraints, expected_type):
+    """
+    Clean a simple (non-nested) value according to schema constraints.
+
+    This applies:
+    - Any hard-coded recodes from `newValMap` (via `get_newvalmap_value`).
+    - Generic cleaning rules from `cleaning_utils.rules` for numeric types.
+    - Basic null / missing handling.
+
+    Returns a value suitable for direct inclusion in the JSON payload.
+    """
     # Apply newValMap conversions
     mapped_value = get_newvalmap_value(var_name, value, field_name)
     if mapped_value is not None:
-        value = mapped_value  # Use mapped value for further processing
+        value = mapped_value
 
     # Handle empty values
     if value is None or (isinstance(value, str) and value.strip() in ('', 'null')):
@@ -201,7 +278,7 @@ def clean_flat_value(value, var_name, field_name, constraints, expected_type):
     max_val = constraints.get('max')
     cleaned_value = cr.rules(value, expected_type, min_val, max_val)
     
-    # NEW: Handle enum constraints
+    # Handle enum constraints
     enum_vals = constraints.get('enum')
     if enum_vals is not None and cleaned_value is not None:
         # Convert to same type for comparison
@@ -216,35 +293,37 @@ def clean_flat_value(value, var_name, field_name, constraints, expected_type):
 
     return cleaned_value
 
-# processing_utils.py (updated)
 def convert_nested_value(value, var_name, field_name, var_type_map, constraint_map, newValMap):
     """
-    Enhanced conversion with proper type handling
-    """
-    # 1. SPECIAL CASE: Bra cup size other
-    if field_name in ["R0_BraCupSize_Other", "R0_BraCupSize_20Other"]:
-        if value is None or (isinstance(value, str) and value.strip() == ""):
-            return None
-        cleaned = str(value).strip().upper()
-        pat_digits_then_letters = r"^\d{2}[A-Z]{1,2}$"
-        pat_letters_only = r"^[A-Z]{1,3}$"
-        if re.fullmatch(pat_digits_then_letters, cleaned) or re.fullmatch(pat_letters_only, cleaned):
-            return cleaned
-        return "Unknown - Invalid Entry"
+    Convert a value that will ultimately sit inside a nested structure.
 
-    # 2. newValMap lookup
+    This mirrors `clean_flat_value` but is used when the same raw variable
+    may appear multiple times inside arrays (e.g. pregnancy episodes).
+    """
+    # # 1. SPECIAL CASE: Bra cup size other
+    # if field_name in ["R0_BraCupSize_Other", "R0_BraCupSize_20Other"]:
+    #     if value is None or (isinstance(value, str) and value.strip() == ""):
+    #         return None
+    #     cleaned = str(value).strip().upper()
+    #     pat_digits_then_letters = r"^\d{2}[A-Z]{1,2}$"
+    #     pat_letters_only = r"^[A-Z]{1,3}$"
+    #     if re.fullmatch(pat_digits_then_letters, cleaned) or re.fullmatch(pat_letters_only, cleaned):
+    #         return cleaned
+    #     return "Unknown - Invalid Entry"
+
+    # newValMap lookup
     mapped_value = get_newvalmap_value(var_name, value, field_name)
     if mapped_value is not None:
         return mapped_value
     
-    # 3. Get expected type
+    # Get expected type
     expected_type = 'string'  # Default
     if field_name and field_name in var_type_map:
         expected_type = var_type_map[field_name]
     elif var_name in var_type_map:
         expected_type = var_type_map[var_name]
     
-    # 4. Get min/max constraints
+    # Get min/max constraints
     min_val, max_val = None, None
     if field_name and field_name in constraint_map:
         min_val = constraint_map[field_name]["min"]
@@ -253,7 +332,7 @@ def convert_nested_value(value, var_name, field_name, var_type_map, constraint_m
         min_val = constraint_map[var_name]["min"]
         max_val = constraint_map[var_name]["max"]
     
-    # 5. Use CleaningRules
+    # Use CleaningRules
     cleaned_value = rules(value, expected_type, min_val, max_val)
 
     # Get enum if available
@@ -295,81 +374,103 @@ def convert_nested_value(value, var_name, field_name, var_type_map, constraint_m
 
     return cleaned_value
 
-# Data processing core
-def process_flat_data(raw_data, schema, section_registry=None):
-    variable_mapping = {
-        prop["name"]: key
-        for key, prop in schema["properties"].items()
-        if "name" in prop
-    }
+# def process_flat_data(raw_data, schema, section_registry=None):
+#     """
+#     Process flat section data according to its JSON Schema.
+
+#     Steps:
+#     - Build a mapping from schema field names to raw variable names.
+#     - For each StudyID, apply `clean_flat_value` to each raw variable.
+#     - Track changes (old -> new) in a change_tracking structure for QC.
+
+#     Parameters
+#     ----------
+#     raw_data : dict
+#         {StudyID: {raw_var_name: value}}
+#     schema : dict
+#         JSON Schema for this section.
+#     section_registry :
+#         Optional registry from `nested_utils` for resolving variable names.
+#     logger :
+#         Optional logger for debug output.
+
+#     Returns
+#     -------
+#     (list[dict], dict)
+#         - List of cleaned records, ready to be passed to restructuring.
+#         - Nested change_tracking dict used by qc_utils.
+#     """
+#     variable_mapping = {
+#         prop["name"]: key
+#         for key, prop in schema["properties"].items()
+#         if "name" in prop
+#     }
     
-    # Extract constraints
-    constraint_map, var_type_map = extract_schema_constraints(schema)
+#     # Extract constraints
+#     constraint_map, var_type_map = extract_schema_constraints(schema)
     
-    processed = []  # Changed to list
-    change_tracking = defaultdict(lambda: defaultdict(lambda: {'count': 0, 'new_value': None}))
+#     processed = []  # Changed to list
+#     change_tracking = defaultdict(lambda: defaultdict(lambda: {'count': 0, 'new_value': None}))
     
-    for study_id, responses in raw_data.items():
-        record = {'R0_StudyID': study_id}  # Create record dictionary
-        for var_name, value in responses.items():
-            # Handle nested variables
-            if section_registry:
-                meta = section_registry.rename_variable(var_name)
-                field_name = meta['schema_field'] if meta else variable_mapping.get(var_name)
-            else:
-                field_name = variable_mapping.get(var_name)
+#     for study_id, responses in raw_data.items():
+#         record = {'R0_StudyID': study_id}
+#         for var_name, value in responses.items():
+#             # Handle nested variables
+#             if section_registry:
+#                 meta = section_registry.rename_variable(var_name)
+#                 field_name = meta['schema_field'] if meta else variable_mapping.get(var_name)
+#             else:
+#                 field_name = variable_mapping.get(var_name)
             
-            # Skip unmapped variables
-            if not field_name:
-                continue
+#             # Skip unmapped variables
+#             if not field_name:
+#                 continue
             
-            # Apply cleaning rules
-            cleaned_value = clean_flat_value(
-                value, 
-                var_name, 
-                field_name,
-                constraint_map.get(field_name, {}),
-                var_type_map.get(field_name)
-            )
+#             # Apply cleaning rules
+#             cleaned_value = clean_flat_value(
+#                 value, 
+#                 var_name, 
+#                 field_name,
+#                 constraint_map.get(field_name, {}),
+#                 var_type_map.get(field_name)
+#             )
             
-            # Track changes
-            if str(value) != str(cleaned_value):
-                change_tracking[var_name][value]['new_value'] = cleaned_value
-                change_tracking[var_name][value]['count'] += 1
+#             # Track changes
+#             if str(value) != str(cleaned_value):
+#                 change_tracking[var_name][value]['new_value'] = cleaned_value
+#                 change_tracking[var_name][value]['count'] += 1
             
-            record[field_name] = cleaned_value
+#             record[field_name] = cleaned_value
         
-        processed.append(record)  # Append record to list
+#         processed.append(record)  # Append record to list
     
-    print(f"Processed {len(processed)} participants")
-    return processed, change_tracking
+#     print(f"Processed {len(processed)} participants")
+#     return processed, change_tracking
 
 def process_nested_data(raw_data, variable_mapping, var_type_map, constraint_map, newValMap, keep_raw_keys=True):
     """
-    Fast processing for mixed (flat + nested) sections.
+    Process section data that contains nested arrays.
 
-    - Resolve each unique raw variable ONCE via nested_utils.rename_variable
-    - Preserve raw keys for array placement downstream
-    - ALSO write top-level (non-array) fields directly to their final R0_* leaf keys
-      so flat fields "come through" immediately.
-    - Change tracking unchanged.
+    This function:
+    - Pre-resolves the mapping from raw variable names to schema fields
+      and array locations using `nested_utils.rename_variable`.
+    - Cleans values using `convert_nested_value`.
+    - Builds intermediate records that still carry enough information
+      to be turned into fully nested JSON by `restructure_utils`.
 
-    Returns:
-        processed_data: list[dict]
-        change_tracking: dict
+    It also produces change-tracking information for later QC.
     """
-    from nested_utils import rename_variable
 
     processed_data = []
     change_tracking = {}
 
-    # 1) Collect the unique raw variable names
+    # Collect the unique raw variable names
     unique_raw_vars = set()
     for _pid, responses in raw_data.items():
         unique_raw_vars.update(responses.keys())
 
-    # 2) Resolve unique raw vars ONCE
-    #    Store meta: { raw -> (schema_field, array_path_len) }
+    # Resolve unique raw vars ONCE
+    # Store meta: { raw -> (schema_field, array_path_len) }
     resolved_info = {}
     for var_name in unique_raw_vars:
         schema_field = None
@@ -391,28 +492,28 @@ def process_nested_data(raw_data, variable_mapping, var_type_map, constraint_map
                 if meta.get("array_path"):
                     array_path_len = len(meta["array_path"])
                 elif meta.get("array_name") is not None:
-                    array_path_len = 1  # old-style single array hint
+                    array_path_len = 1
 
         resolved_info[var_name] = (schema_field, array_path_len)
 
-    # 3) Process each participant without additional resolver calls
+    # Process each participant without additional resolver calls
     for participant_id, responses in raw_data.items():
         participant_data = {"R0_StudyID": participant_id}
 
         for var_name, raw_value in responses.items():
             schema_field, array_path_len = resolved_info.get(var_name, (None, 0))
 
-            # Clean/convert using your existing conversion (uses field_name for types/ranges)
+            # Clean/convert using existing conversion (uses field_name for types/ranges)
             cleaned_value = convert_nested_value(
                 raw_value,
                 var_name,
-                schema_field,      # <-- important for type/constraint lookup
+                schema_field,
                 var_type_map,
                 constraint_map,
                 newValMap
             )
 
-            # Change tracking (unchanged)
+            # Change tracking
             if str(raw_value) != str(cleaned_value):
                 ct_var = change_tracking.setdefault(var_name, {})
                 entry = ct_var.setdefault(raw_value, {"new_value": cleaned_value, "count": 0})
@@ -422,13 +523,12 @@ def process_nested_data(raw_data, variable_mapping, var_type_map, constraint_map
             if keep_raw_keys:
                 participant_data[var_name] = cleaned_value
 
-            # ALSO: if this maps to a top-level (non-array) schema leaf, write to final key now
+            # If this maps to a top-level (non-array) schema leaf, write to final key now
             if schema_field and array_path_len == 0:
                 # (top-level scalar; promote to final R0_* name)
                 participant_data[schema_field] = cleaned_value
 
-            # For array-mapped fields, we do NOT promote here; restructure will place them
-            # into the correct array/indices using the raw key mapping.
+            # For array-mapped fields, do NOT promote here; restructure will place them into the correct array/indices using the raw key mapping.
 
         processed_data.append(participant_data)
 
@@ -438,9 +538,11 @@ def process_nested_data(raw_data, variable_mapping, var_type_map, constraint_map
 
 def extract_schema_constraints(schema):
     """
-    Build (constraint_map, var_type_map) for ALL fields (top-level and arbitrarily
-    nested inside objects/arrays). Keys are the actual leaf field names used in
-    your processing (e.g., 'R0_XrayFromYr').
+    Extract min/max/enum constraints and type information from a schema.
+
+    Returns a pair of dicts:
+    - constraint_map: {field_name: {"minimum": ..., "maximum": ..., "enum": ...}}
+    - var_type_map: {field_name: json_type}
     """
     constraint_map = {}
     var_type_map = {}
@@ -475,9 +577,9 @@ def extract_schema_constraints(schema):
         if not isinstance(node, dict):
             return
 
-        # If this node itself looks like a leaf field (has a concrete type), we don't
+        # If this node itself looks like a leaf field (has a concrete type), don't
         # know its field-name here; the field-name is provided by the parent props loop,
-        # so we only 'record_field' from within the props iteration below.
+        # so only 'record_field' from within the props iteration below.
 
         # Walk object properties
         props = node.get('properties')
@@ -499,9 +601,13 @@ def extract_schema_constraints(schema):
 
 def clean_value(value, var_name, field_name, constraints, expected_type, newValMap=None):
     """
-    Unified value cleaning with enhanced handling
+    High-level cleaner used by nested processing.
+
+    This wraps `clean_flat_value`/`convert_nested_value`, looking up
+    the expected type and constraints for `field_name` from the maps
+    produced by `extract_schema_constraints`.
     """
-    # Handle empty values - FIXED: Properly handle numeric 0
+    # Handle empty values
     if value is None:
         return None
     if isinstance(value, str) and value.strip() in ['', 'null']:
@@ -525,7 +631,6 @@ def clean_value(value, var_name, field_name, constraints, expected_type, newValM
     
     # Only enforce enum constraints if they exist
     if enum_vals is not None and cleaned_value is not None:
-        # For integers, ensure we're comparing integers
         try:
             if expected_type == "integer":
                 cleaned_value = int(cleaned_value)
@@ -539,6 +644,12 @@ def clean_value(value, var_name, field_name, constraints, expected_type, newValM
 
 # Value mapping
 def get_newvalmap_value(var_name, value, field_name):
+    """
+    Look up a recoded value from the global `newValMap`.
+
+    Either the raw variable name or the schema field name can be used
+    as the key. If no mapping exists for the value, the original is returned.
+    """
     # Check field-specific mappings
     if field_name in cr.newValMap and value in cr.newValMap[field_name]:
         return cr.newValMap[field_name][value]
@@ -550,10 +661,33 @@ def get_newvalmap_value(var_name, value, field_name):
     return None
 
 def validate_data(data, schema, schema_path=None):
-    """Efficient validation with reference resolution"""
+    """
+    Validate a list of JSON-like records against a JSON Schema.
+
+    Uses jsonschema's `validator_for` to build an appropriate validator,
+    then iterates over each record and collects validation errors.
+
+    Parameters
+    ----------
+    data : list[dict]
+        Records to validate.
+    schema : dict
+        JSON Schema.
+    schema_path : str, optional
+        Path used only for clearer error messages.
+    logger :
+        Optional logger for progress.
+    max_errors : int
+        Maximum number of errors to collect before stopping.
+
+    Returns
+    -------
+    list[jsonschema.ValidationError]
+        List of validation errors (possibly truncated).
+    """
     start_time = time.time()
     
-    # Create resolver if we have a schema path
+    # Create resolver
     resolver = None
     if schema_path:
         # Handle Windows paths by converting to absolute and URI format
@@ -565,7 +699,7 @@ def validate_data(data, schema, schema_path=None):
     ValidatorClass = validator_for(schema)
     validator = ValidatorClass(
         schema, 
-        resolver=resolver,  # Pass resolver here
+        resolver=resolver,
         format_checker=FormatChecker()
     )
     
@@ -585,7 +719,6 @@ def validate_data(data, schema, schema_path=None):
             if errors:
                 error_count += 1
                 if error_count <= 5:
-                    # MODIFIED: Added detailed error information
                     error_fields = set()
                     for error in errors:
                         # Extract field path from validation error
@@ -669,7 +802,7 @@ def _collect_pii_schema_fields(dfPII, schema):
 
     pii_schema_fields = set()
     for var in pii_vars:
-        meta = rename_variable(var)  # handles nested arrays & extras
+        meta = rename_variable(var)
         if meta and meta.get('schema_field'):
             pii_schema_fields.add(meta['schema_field'])
         elif var in name_to_key_map:
@@ -690,7 +823,7 @@ def _collect_pii_schema_fields(dfPII, schema):
     return expanded, pii_vars
 
 
-# --- NEW helper: recursive in-place remover ---
+# Recursive in-place remover
 def _remove_pii_inplace(node, pii_keys):
     """
     Recursively delete any dict keys that are in pii_keys, at any depth.
@@ -707,7 +840,7 @@ def _remove_pii_inplace(node, pii_keys):
             _remove_pii_inplace(item, pii_keys)
 
 
-# --- REPLACEMENT: recursive PII masking that reaches nested arrays/objects ---
+# Recursive PII masking that reaches nested arrays/objects
 def mask_pii(data, dfPII, schema):
     """
     Remove PII fields from the entire data structure (top-level and nested).
@@ -734,21 +867,21 @@ def apply_pseudo_anonymization(data, server, logger, schema=None, date_dict=None
 
     # Ensure we have schema + dateDict
     if schema is None:
-        # Load section schemas as your pipeline currently does
+        # Load section schemas as pipeline currently does
         # e.g., schema = load_schema(config['r0_json_path'], 'BreastCancer') for the BC section
         pass
     if date_dict is None:
         from pseudo_anon_utils import dateDict as DATECFG
         date_dict = DATECFG
 
-    # >>> THE CRITICAL LINE: operate on list[dict], not a DataFrame
+    # Operate on list[dict], not a DataFrame
     processed_with_dates = process_dates(data, sid_df, schema, logger, date_dict)
 
     # Finally pseudo-anonymize StudyIDs
     return pseudo_anonymize_studyid(processed_with_dates, sid_df)
 
 
-# --- NEW: bridge VariableFlagging (SQL) → nested_utils resolver ---
+# Bridge VariableFlagging (SQL) → nested_utils resolver
 def init_varresolver_from_dfPII(dfPII, schema, section_name):
     """
     Wire nested_utils to the VariableFlagging rows already loaded from SQL (dfPII)

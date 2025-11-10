@@ -1,12 +1,29 @@
-# nested_utils.py
+"""
+Variable-renaming and section-specific resolution utilities.
+
+This module is responsible for mapping raw questionnaire variable names
+(coming directly from the database) to their corresponding JSON Schema
+fields and array positions.
+
+It provides:
+- Section slug helpers and regular expressions to recognise different
+  questionnaire sections (Pregnancies, AlcoholSmokingDiet, XRays, etc.).
+- A registry that indexes schema leaf fields by tokens, enabling fuzzy
+  matching of raw variable names.
+- `rename_variable`, which returns detailed information about where a
+  raw variable should live in the nested JSON (top-level field, array
+  item, index field, etc.).
+
+Other modules (e.g. `common_utils`, `restructure_utils`, `pseudo_anon_utils`,
+`qc_utils`) rely on this logic to consistently interpret raw variable names.
+"""
+
 from __future__ import annotations
 import json, os, re
 from typing import Dict, List, Optional, Tuple
 import pandas as pd
 
-# ------------------------------
 # Globals
-# ------------------------------
 _VARFLAG: Dict[str, str] = {}
 _SCHEMA_INDEX: Dict[str, dict] = {}
 _TOKEN_TO_LEAF: Dict[str, dict] = {}
@@ -40,8 +57,21 @@ _SECTION_SLUGS = {
 _ALPHA_MAP = {c: i+1 for i, c in enumerate("ABCDEFGHIJKLMNOPQRSTUVWXYZ")}
 
 def _norm_section(s: str) -> str:
+    """
+    Normalise a raw section label (from Questions table) into a canonical form.
+
+    This helps downstream code reliably determine which section-specific
+    rules to apply, even if there are small spelling/capitalisation variations due to human error.
+    """
     return (s or "").replace("_", "").lower()
 
+
+
+"""
+Return True if the slug corresponds to a section.
+
+This is used to route variables to the correct alternative resolver logic.
+"""
 def _is_preg_section(s: str) -> bool: return _norm_section(s) in ("pregnancies", "pregnancy")
 def _is_asd_section(s: str) -> bool:  return _norm_section(s) in ("alcoholsmokingdiet", "asd")
 def _is_xray_section(s: str) -> bool: return _norm_section(s) in ("xrays", "xray")
@@ -50,10 +80,7 @@ def _is_pa_section(s: str) -> bool: return _norm_section(s) in ("physicalactivit
 def _is_pd_section(s: str) -> bool: return _norm_section(s) in ("physicaldevelopment", "physicaldev")
 def _is_olf_section(s: str) -> bool: return _norm_section(s) in ("other_lifestyle_factors")
 
-# ------------------------------
-# Public setup helpers
-# ------------------------------
-
+# General setup helpers
 def load_schemas_from_paths(paths: dict) -> Dict[str, dict]:
     out = {}
     for sec, p in paths.items():
@@ -67,35 +94,48 @@ def load_schemas_from_paths(paths: dict) -> Dict[str, dict]:
             pass
     return out
 
-def load_varflag_from_excel(path: str, var_col="VariableName", desc_col="VarDesc") -> Dict[str, str]:
-    if path.lower().endswith((".xlsx", ".xls")):
-        df = pd.read_excel(path)
-    else:
-        df = pd.read_csv(path)
-    candidates_var = [var_col, "VarName", "Variable", "Variable_Name"]
-    candidates_desc = [desc_col, "Var_Desc", "Var Description", "VarDesciption", "Desc"]
-    vcol = next((c for c in candidates_var if c in df.columns), None)
-    dcol = next((c for c in candidates_desc if c in df.columns), None)
-    if not vcol or not dcol:
-        raise ValueError(f"Could not find variable/desc columns in {path}. Columns = {list(df.columns)}")
-    m = {}
-    for _, r in df[[vcol, dcol]].dropna(subset=[vcol]).iterrows():
-        rv = str(r[vcol]).strip()
-        vd = str(r[dcol]).strip() if pd.notna(r[dcol]) else ""
-        if rv and vd: m[rv] = vd
-    return m
+# def load_varflag_from_excel(path: str, var_col="VariableName", desc_col="VarDesc") -> Dict[str, str]:
+#     if path.lower().endswith((".xlsx", ".xls")):
+#         df = pd.read_excel(path)
+#     else:
+#         df = pd.read_csv(path)
+#     candidates_var = [var_col, "VarName", "Variable", "Variable_Name"]
+#     candidates_desc = [desc_col, "Var_Desc", "Var Description", "VarDesciption", "Desc"]
+#     vcol = next((c for c in candidates_var if c in df.columns), None)
+#     dcol = next((c for c in candidates_desc if c in df.columns), None)
+#     if not vcol or not dcol:
+#         raise ValueError(f"Could not find variable/desc columns in {path}. Columns = {list(df.columns)}")
+#     m = {}
+#     for _, r in df[[vcol, dcol]].dropna(subset=[vcol]).iterrows():
+#         rv = str(r[vcol]).strip()
+#         vd = str(r[dcol]).strip() if pd.notna(r[dcol]) else ""
+#         if rv and vd: m[rv] = vd
+#     return m
 
 def init_dynamic_registry(varflag: Optional[Dict[str, str]] = None,
                           schemas_by_slug: Optional[Dict[str, dict]] = None) -> None:
     """
-    Initialize VarDesc + schema indexes. Safe to call multiple times.
+    Build and cache a registry of schema leaf fields for all sections.
+
+    The registry:
+    - Indexes schema leaf fields by tokenised names for fast fuzzy lookup.
+    - Stores VarFlagging information so we can ignore PII-only variables
+      when mapping.
+    - Is later used by `rename_variable` to resolve unknown variable names
+      on the fly.
+
+    Parameters
+    ----------
+    varflag_df : pd.DataFrame
+        VarFlagging metadata (including PII flags).
+    schemas_by_slug : dict
+        {section_slug: schema_dict} for all questionnaire sections.
     """
     global _VARFLAG, _SCHEMA_INDEX, _TOKEN_TO_LEAF, _RAWVAR_META, _XRAY_META, _ARRAYS_WITH_EXTRA
 
     # VarFlag (prefer caller-provided; otherwise optional default file)
     if varflag is None:
-        default = "/mnt/data/VariableFlagging.xlsx"
-        _VARFLAG = load_varflag_from_excel(default) if os.path.exists(default) else {}
+        _VARFLAG = {}
     else:
         _VARFLAG = dict(varflag)
 
@@ -139,8 +179,21 @@ def init_dynamic_registry(varflag: Optional[Dict[str, str]] = None,
 
 def rename_variable(key: str) -> Optional[dict]:
     """
-    Return routing metadata or None if not nested/unknown.
-    Accepts raw variable names, VarDesc, or schemaish names with index.
+    Resolve a raw variable name into schema and array metadata.
+
+    This is the central resolver used throughout the ETL.
+
+    It returns a dict describing:
+    - `section`: which section this variable belongs to.
+    - `schema_field`: the corresponding JSON field name.
+    - `array_path`: list of array names to reach the field (if nested).
+    - `indices` / `index_label`: indices or band labels for arrays
+      (e.g. pregnancy number, weight record number, age bands).
+    - any other section-specific hints needed to place the value.
+
+    For complex sections (Pregnancies, XRays, PhysicalDevelopment, etc.),
+    the function applies bespoke heuristics and regex patterns to decode
+    encodings (letter bands, number suffixes, etc.).
     """
     if not _RAWVAR_META:
         init_dynamic_registry()
@@ -171,9 +224,7 @@ def rename_variable(key: str) -> Optional[dict]:
 
     return None
 
-# ------------------------------
 # Internals (tokenization & matching)
-# ------------------------------
 
 def _normalize_token(s: str) -> str:
     s = s.strip()
@@ -308,10 +359,8 @@ def _pick_indices_from_text(text: str, needed: int, max_items_list: List[Optiona
     while len(chosen) < needed: chosen.append(1)
     return chosen
 
-# ------------------------------
 # Menstrual/Menopause (MM) Cur/20/40 bands
 # Applies to arrays: CycleDays, BreastDiscomfort, IrregularCycles, FlowDays
-# ------------------------------
 
 MM_ARRAYS = {"CycleDays", "BreastDiscomfort", "IrregularCycles", "FlowDays"}
 MM_BAND_ORDER = {"cur": 1, "20": 2, "40": 3}
@@ -358,10 +407,8 @@ AGE_OVER_RE  = re.compile(r'(?:over\s*(\d+)|(\d+)\s*\+|(\d+)\s*plus)', re.I)
 AGE_RANGE_RE = re.compile(r'(?:age\s*)?(\d{1,2})\s*(?:-|–|to|_)\s*(\d{1,2})', re.I)
 ASD_LETTER_RE  = re.compile(r'_(A|B|C)_', re.I)
 
-# ------------------------------
 # Physical Development (PD) RecordedWeights Cur/20/40/60 bands
-# Applies to array: RecordedWeights
-# ------------------------------
+# Applies to array: RecordedWeights, RecordedHeights
 PD_DEBUG = False
 
 def _pd_dbg(*args):
@@ -428,10 +475,6 @@ def _extract_pd_weight_band(desc_or_raw: str) -> str | None:
 def _pd_label(key: str) -> str:
     return "Cur" if key == "cur" else key
 
-# ------------------------------
-# Physical Development (PD) RecordedHeights Cur/20 bands
-# Applies to array: RecordedHeights
-# ------------------------------
 HD_ARRAY = "RecordedHeights"
 HD_BAND_ORDER = {"cur": 1, "20": 2}
 HD_NUM_FIELD = "R0_RecHght_Num"
@@ -473,12 +516,9 @@ def _extract_pd_height_band(desc_or_raw: str) -> str | None:
 def _hd_label(key: str) -> str:
     return "Cur" if key == "cur" else key
 
-
-
-# ------------------------------
 # Physical Development (PD) BraSize Cur/20 bands
 # Applies to array: BraSize
-# ------------------------------
+
 BRA_ARRAY = "BraSize"
 BRA_BAND_ORDER = {"cur": 1, "20": 2}
 BRA_NUM_FIELD = "R0_BraSize_Num"
@@ -521,10 +561,9 @@ def _extract_pd_bra_band(desc_or_raw: str) -> str | None:
 def _bra_label(key: str) -> str:
     return "Cur" if key == "cur" else key
 
-# ------------------------------
+
 # Physical Activity (PA) age bands for StrenuousExercise
-# Derived from Metadata_Name_PII.xlsx (VarDesc shows 18_29, 30_49, 50Plus).
-# ------------------------------
+
 PA_BANDS = {
     "18_29": (18, 29),
     "30_49": (30, 49),
@@ -532,7 +571,7 @@ PA_BANDS = {
 }
 PA_NUM_TO_KEY = {"1": "18_29", "2": "30_49", "3": "50plus"}
 PA_KEY_RE   = re.compile(r'(18[_-]?29|30[_-]?49|50\s*plus)', re.I)
-PA_NUM_RE   = re.compile(r'_(1|2|3)_')  # from raw like Q12_2_D_1
+PA_NUM_RE   = re.compile(r'_(1|2|3)_') 
 
 def _extract_pa_age_band(desc_or_raw: str):
     s = str(desc_or_raw or "")
@@ -542,7 +581,6 @@ def _extract_pa_age_band(desc_or_raw: str):
         key = m.group(1).lower().replace("-", "_").replace(" ", "")
         key = "50plus" if "50" in key and "plus" in key else key
         return (key, *PA_BANDS[key])
-    # numeric suffix from raw var (e.g., Q12_2_D_1 / _2 / _3)
     m = PA_NUM_RE.search(s)
     if m:
         num = m.group(1)
@@ -578,10 +616,9 @@ def _compute_pa_ageband_orders(varflag_map: Dict[str, str], token_index: Dict[st
         orders[path_key] = { key: i+1 for i, (key, _) in enumerate(sorted_keys) }
     return orders
 
-# ------------------------------
+
 # Night wakeups (OtherLifestyleFactors → NightWakeups)
 # Instances: 1..2 → "Rec", "20"
-# ------------------------------
 NW_ARRAY = "NightWakeups"
 NW_NUM_FIELD = "R0_NightWakeup_Num"
 
@@ -831,9 +868,8 @@ def _compose_indices(v_nums: List[int], leaf_info: dict, source_text: str, schem
     if len(nums) < depth: nums.extend([1] * (depth - len(nums)))
     return nums, label
 
-# ------------------------------
+
 # Strong matching
-# ------------------------------
 
 def _tokenize_words_lower_alias(s: str) -> List[str]:
     return re.findall(r'[A-Za-z]+', _apply_semantic_aliases(s).lower())
@@ -886,10 +922,7 @@ def _best_leaf_match(base_token: str, token_index: Dict[str, dict]) -> Optional[
 def _token_match(base_token: str, token_index: Dict[str, dict]) -> Optional[dict]:
     return _best_leaf_match(base_token, token_index)
 
-# ------------------------------
-# XRays helpers (NEW behavior for 12 main items)
-# ------------------------------
-
+# XRays helpers
 def _build_xray_meta(schemas_by_slug: Dict[str, dict]) -> Optional[dict]:
     xr = schemas_by_slug.get("xrays")
     if not isinstance(xr, dict): return None
@@ -947,7 +980,7 @@ def _xray_retarget_meta(meta: dict, source_text: str) -> dict:
     if not inst:
         inst = _extract_xray_instance_from_text(source_text)
     if not inst:
-        inst = 1  # default
+        inst = 1
 
     # Parent-level field
     if ap == [main]:
@@ -960,9 +993,7 @@ def _xray_retarget_meta(meta: dict, source_text: str) -> dict:
 
     return meta
 
-# ------------------------------
-# Chest X-ray (XRays) age bands for ChestXrayEvents
-# ------------------------------
+# Chest X-ray (XRays) age bands for ChestXrayEvents-
 CX_ARRAY = "ChestXrayEvents"
 CX_NUM_FIELD = "R0_ChestXray_Num"
 # Schema-defined labels in display order (instances 1..4)
@@ -973,9 +1004,8 @@ def _cx_label(idx: int) -> Optional[str]:
     except Exception:
         return None
 
-# ------------------------------
+
 # Generic "*Extra" arrays (Menstrual, XRays, etc.)
-# ------------------------------
 
 def _build_arrays_with_extra(schemas_by_slug: Dict[str, dict]) -> Dict[Tuple[str, str], dict]:
     """
@@ -1082,13 +1112,18 @@ def _generic_extra_retarget_meta(meta: dict, source_text: str) -> dict:
         "entry_num": child_idx,
     }
 
-# ------------------------------
-# Registry builder & on-the-fly resolve
-# ------------------------------
+
 
 def _materialize_registry_accepting_all_keys(varflag_map: Dict[str, str],
                                              token_index: Dict[str, dict],
                                              schemas_by_slug: Dict[str, dict]) -> Dict[str, dict]:
+    """
+    Ensure the dynamic registry is built and available.
+
+    This helper is called lazily by `rename_variable` so that notebooks
+    do not have to explicitly initialise the registry in trivial use cases.
+    """
+
     registry: Dict[str, dict] = {}
     asd_orders = _compute_asd_ageband_orders(varflag_map, token_index, schemas_by_slug)
     orders_pa = _compute_pa_ageband_orders(varflag_map, token_index, schemas_by_slug)
@@ -1134,12 +1169,11 @@ def _materialize_registry_accepting_all_keys(varflag_map: Dict[str, str],
                      "indices": meta.get("indices"), "index_label": meta.get("index_label"),
                      "num_field": meta.get("num_field"), "schema_field": meta.get("schema_field")})
 
-                # XRays → ChestXrayEvents uses R0_ChestXray_Num
+        # XRays → ChestXrayEvents uses R0_ChestXray_Num
         if meta.get("section") in ("xrays", "xray"):
             if (meta.get("array_path") or [None])[0] == CX_ARRAY:
                 meta["num_field"] = CX_NUM_FIELD
 
-        # XRays → ChestXrayEvents uses R0_ChestXray_Num
         if meta.get("section") in ("other_lifestyle_factors"):
             if (meta.get("array_path") or [None])[0] == NW_ARRAY:
                 meta["num_field"] = NW_NUM_FIELD
@@ -1148,7 +1182,7 @@ def _materialize_registry_accepting_all_keys(varflag_map: Dict[str, str],
         registry[str(raw_var).strip()] = meta
         # VarDesc key
         registry[str(desc).strip()] = meta
-        # schemaish 'R0_<Leaf><idx>'
+
         if meta["indices"] and meta["array_path"]:
             registry[f"{meta['schema_field']}{meta['indices'][-1]}"] = meta
         # bare schema leaf (R0_<Leaf>)
@@ -1189,7 +1223,6 @@ def _resolve_on_the_fly(key: str, token_index: Dict[str, dict], schemas_by_slug:
                  "indices": meta.get("indices"), "index_label": meta.get("index_label"),
                  "num_field": meta.get("num_field"), "schema_field": meta.get("schema_field")})
                  
-        # XRays → ChestXrayEvents uses R0_ChestXray_Num
     if meta.get("section") in ("xrays", "xray"):
         if (meta.get("array_path") or [None])[0] == CX_ARRAY:
             meta["num_field"] = CX_NUM_FIELD

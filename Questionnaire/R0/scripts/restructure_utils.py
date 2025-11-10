@@ -1,4 +1,18 @@
-# restructure_utils.py
+"""
+Restructuring utilities for questionnaire ETL.
+
+This module turns cleaned, mostly-flat records into nested JSON structures
+that exactly match the section JSON Schemas.
+
+It provides:
+- Resolver cache builders that map schema fields to lists of raw variables.
+- 'restructure_by_schema', which places values into the correct arrays and
+  nested objects based on schema metadata and nested_utils' resolution.
+
+The output of 'restructure_by_schema' is ready to be validated and written as the
+final JSON payload for each section.
+"""
+
 from __future__ import annotations
 import sys
 import re
@@ -7,21 +21,31 @@ import os
 import json
 from typing import Dict, List, Tuple, Any, Optional
 
+from nested_utils import rename_variable as _resolve
+
 sys.path.append(os.path.abspath("N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\Schema_and_Derivation_utils"))
 from config import validation_path
 
 CACHE_DIR = os.path.join(".", "out", "ResolverCache")
 
 def _norm_section(s: str) -> str:
+    """
+    Normalise a section label into a canonical slug used by this module.
+    """
     return (s or "").replace("_", "").lower()
 
 def build_resolver_cache_from_columns(section_slug: str, q_sect, raw_columns, cache_dir: str = CACHE_DIR, validation_path = validation_path):
     """
-    Build {R0_field: {'all': [raw...], <index>: [raw...]}} using nested_utils.rename_variable
-    and persist to out/ResolverCache/<section>_resolver_index.json
+    Build and save a resolver index for a section.
+
+    The resolver cache maps schema leaf fields to the raw variable names
+    that can populate them, optionally grouped by array index (e.g. '1',
+    '2', 'A', 'B').
+
+    This is used both to speed up restructuring and to provide a human-
+    readable summary under the ValidationSummary directory.
     """
     os.makedirs(cache_dir, exist_ok=True)
-    from nested_utils import rename_variable as _resolve  # uses same resolver your ETL relies on
 
     index = {}
     sect_norm = _norm_section(section_slug)
@@ -76,44 +100,12 @@ def build_breast_cancer_resolver_cache(
     validation_path = validation_path,
 ):
     """
-    Build a resolver index for the whole BreastCancer section.
+    Specialised resolver cache builder for breast cancer-related sections.
 
-    Shapes:
-
-    0) Top-level BreastCancer fields (no array_path), e.g. R0_MoreDrugEpisodesFirstBC
-
-        R0_MoreDrugEpisodesFirstBC: {
-            "all": [ "Q7_7_14" ],
-            "all" or "1" bucket: [ "Q7_7_14" ]   # depending on index_label / entry_num
-        }
-
-    1) Fields varying only by BreastCancers[*], e.g. R0_AgeAtDiagnosis:
-
-        R0_AgeAtDiagnosis: {
-            "all": [ ...all raws... ],
-            1:    [ ...BC1 raws... ],
-            2:    [ ...BC2 raws... ],
-            ...
-        }
-
-    2) Fields varying by BreastCancers[*].ChildArray[*], e.g. DrugTreatment:
-
-        R0_BCDrugRegimenName: {
-            "all": [ ...all raws... ],
-            1: {
-                "all": [ ...BC1 raws... ],
-                1:     [ ...BC1, drug 1... ],
-                2:     [ ...BC1, drug 2... ],
-            },
-            2: {
-                "all": [ ...BC2 raws... ],
-                1:     [ ...BC2, drug 1... ],
-            },
-            ...
-        }
+    Handles the additional complexity of multiple nested arrays and
+    relatives/episodes in the schema.
     """
     os.makedirs(cache_dir, exist_ok=True)
-    from nested_utils import rename_variable as _resolve
 
     index: dict = {}
     sect_norm = _norm_section(section_slug)
@@ -134,7 +126,7 @@ def build_breast_cancer_resolver_cache(
         array_path = list(meta.get("array_path") or [])
         indices    = list(meta.get("indices") or [])
 
-        # ---------- CASE 0: top-level BreastCancer fields (no array_path) ----------
+        # CASE 1: top-level BreastCancer fields (no array_path)
         # e.g. R0_MoreDrugEpisodesFirstBC
         if not array_path:
             label = meta.get("index_label")
@@ -159,7 +151,7 @@ def build_breast_cancer_resolver_cache(
         if array_path[0] != "BreastCancers":
             continue
 
-        # ---------- CASE 1: only BreastCancers[*] ----------
+        # CASE 2: only BreastCancers[*]
         if len(array_path) == 1 or len(indices) <= 1:
             bc_idx_raw = indices[0] if indices else 1
             try:
@@ -172,7 +164,7 @@ def build_breast_cancer_resolver_cache(
             rmap.setdefault(bc_idx, []).append(col)
             continue
 
-        # ---------- CASE 2: BreastCancers[*].ChildArray[*] (e.g. DrugTreatment) ----------
+        # CASE 3: BreastCancers[*].ChildArray[*] (e.g. DrugTreatment)
         bc_idx_raw    = indices[0] if indices else 1
         child_idx_raw = indices[1] if len(indices) > 1 else None
 
@@ -195,7 +187,6 @@ def build_breast_cancer_resolver_cache(
         if child_idx is not None:
             outer.setdefault(child_idx, []).append(col)
 
-    # ---------- tidy / de-dup ----------
     for r0, mapping in index.items():
         # top-level "all"
         if "all" in mapping:
@@ -205,12 +196,12 @@ def build_breast_cancer_resolver_cache(
             if bc_idx == "all":
                 continue
 
-            # Case 0 / 1: list of columns for this bucket
+            # Case 1 / 2: list of columns for this bucket
             if isinstance(val, list):
                 mapping[bc_idx] = sorted(dict.fromkeys(val))
                 continue
 
-            # Case 2: nested dict for BreastCancers[*].ChildArray[*]
+            # Case 3: nested dict for BreastCancers[*].ChildArray[*]
             if isinstance(val, dict):
                 if "all" in val:
                     val["all"] = sorted(dict.fromkeys(val["all"]))
@@ -219,7 +210,6 @@ def build_breast_cancer_resolver_cache(
                         continue
                     val[child_idx] = sorted(dict.fromkeys(cols))
 
-    # ---------- persist ----------
     os.makedirs(validation_path, exist_ok=True)
     gen_val_path = os.path.join(validation_path, f"{q_sect}_ValidationSummary")
     if not os.path.isdir(gen_val_path):
@@ -336,17 +326,37 @@ def restructure_by_schema(
     warm_resolver: bool = True,
 ) -> List[dict]:
     """
-    High-performance restructuring:
-      1) Resolve each unique unresolved raw key ONCE (reuse meta).
-      2) Fast path for already-final schema leaves (skip resolver).
-      3) O(1) child accumulation with dicts; convert to lists at the end.
-      4) Optional filtered cache warm (only unresolved keys).
+    Core restructuring engine.
 
-    Behavior: same arrays, indices, leaf names as before.
+    For each record in `processed_data`:
+    - Start from a flat dict of cleaned values.
+    - Use the resolver cache and `nested_utils.rename_variable` to
+      determine where each raw field should live in the nested JSON.
+    - Create and populate any necessary arrays and child objects.
+    - Respect index fields (e.g. pregnancy number, record number) and
+      schema `maxItems` constraints.
+    - Return a list of objects conforming structurally to the schema.
+
+    Parameters
+    ----------
+    schema : dict
+        JSON Schema describing the section.
+    processed_data : list[dict]
+        Output of `process_nested_data` / `process_flat_data`.
+    section_slug : str
+        Canonical section slug (e.g. "alcohol_smoking_diet").
+    q_sect : str
+        Human-readable section label used in filenames.
+    variable_mapping : dict, optional
+        Optional overrides for raw -> schema field mapping.
+    logger :
+        Optional logger.
+    use_cache : bool
+        Whether to use or build a resolver cache on disk.
     """
     variable_mapping = variable_mapping or {}
 
-    # ---------- schema inspection helpers ----------
+    # schema inspection helpers 
     def _discover_toplevel_arrays(s: dict) -> List[str]:
         props = (s or {}).get("properties") or {}
         return [k for k, v in props.items() if isinstance(v, dict) and v.get("type") == "array"]
@@ -418,15 +428,14 @@ def restructure_by_schema(
             return [meta["array_name"]], [int(meta["entry_num"])], meta.get("schema_field"), meta.get("index_label")
         return [], [], meta.get("schema_field"), meta.get("index_label")
 
-    # ---------- precompute schema facts ----------
-    leaf_index = _build_leaf_index(schema)            # { leaf -> array_path }
+    # precompute schema facts 
+    leaf_index = _build_leaf_index(schema)     
     schema_leaves = set(leaf_index.keys())
     toplevel_arrays = _discover_toplevel_arrays(schema)
     index_field_by_array = _index_fields_by_array(schema)
     child_max = _child_maxitems_map(schema)
-    has_preg = "Pregnancies" in toplevel_arrays  # keep legacy special-casing if you had it
+    has_preg = "Pregnancies" in toplevel_arrays
 
-    # ---------- optional: warm resolver only on unresolved keys ----------
     if warm_resolver:
         all_keys = {k for rec in (processed_data or []) for k in rec if k != "R0_StudyID"}
         unresolved = [k for k in all_keys if k not in schema_leaves and k not in variable_mapping]
@@ -436,7 +445,7 @@ def restructure_by_schema(
         except Exception:
             pass  # safe no-op
 
-    # ---------- pre-resolve unique unresolved raw keys ONCE ----------
+    # pre-resolve unique unresolved raw keys ONCE 
     resolved_meta: Dict[str, Tuple[List[str], List[int], Optional[str], Optional[Any]]] = {}
     for rec in (processed_data or []):
         for raw in rec.keys():
@@ -450,7 +459,7 @@ def restructure_by_schema(
 
     out: List[dict] = []
 
-    # ---------- helpers for O(1) child accumulation ----------
+    # helpers for child accumulation 
     def _place_final_leaf(obj: dict, level1: dict, leaf: str, val: Any) -> None:
         ap = leaf_index.get(leaf, [])
         if not ap:
@@ -482,7 +491,6 @@ def restructure_by_schema(
         child[field] = val
 
     def _finalize_children(item: dict, arr1: str):
-        # turn all __child_map__:* into lists; enforce maxItems
         maps = [(k, v) for k, v in list(item.items()) if isinstance(k, str) and k.startswith("__child_map__:")]
         for k, cmap in maps:
             arr2 = k.split(":", 1)[1]
@@ -523,7 +531,7 @@ def restructure_by_schema(
         out.update({k: item[k] for k in extra})
         return out
 
-    # ---------- main loop ----------
+    # main loop 
     for rec in (processed_data or []):
         if not isinstance(rec, dict):
             continue
@@ -600,65 +608,3 @@ def restructure_by_schema(
         out.append(obj)
 
     return out
-
-
-# ------------------------------
-# Wrappers (names/signatures preserved)
-# ------------------------------
-
-def restructure_physical_dev(processed_data, physdev_schema, variable_mapping):
-    return restructure_by_schema(processed_data, physdev_schema, "physical_dev", variable_mapping)
-
-def restructure_pregnancies(processed_data, preg_schema, variable_mapping):
-    return restructure_by_schema(processed_data, preg_schema, "pregnancies", variable_mapping)
-
-def restructure_xrays(processed_data, xray_schema, variable_mapping):
-    return restructure_by_schema(processed_data, xray_schema, "xrays", variable_mapping)
-
-def restructure_menstrual_menopause(processed_data, mm_schema, variable_mapping):
-    return restructure_by_schema(processed_data, mm_schema, "menstrual_menopause", variable_mapping)
-
-def restructure_breast_cancer(processed_data, bc_schema, variable_mapping):
-    return restructure_by_schema(processed_data, bc_schema, "breast_cancer", variable_mapping)
-
-def restructure_breast_disease(processed_data, bd_schema, variable_mapping):
-    return restructure_by_schema(processed_data, bd_schema, "breast_disease", variable_mapping)
-
-def restructure_alcohol_smoking_diet(processed_data, asd_schema, variable_mapping):
-    return restructure_by_schema(processed_data, asd_schema, "alcohol_smoking_diet", variable_mapping)
-
-def restructure_jobs(processed_data, job_schema, variable_mapping):
-    return restructure_by_schema(processed_data, job_schema, "jobs", variable_mapping)
-
-def restructure_physical_act(processed_data, physact_schema, variable_mapping):
-    return restructure_by_schema(processed_data, physact_schema, "physical_activity", variable_mapping)
-
-def restructure_contraceptive_hrt(processed_data, chrt_schema, variable_mapping):
-    return restructure_by_schema(processed_data, chrt_schema, "contraceptive_hrt", variable_mapping)
-
-def restructure_cancer_relatives(processed_data, canc_rel_schema, variable_mapping):
-    return restructure_by_schema(processed_data, canc_rel_schema, "cancer_relatives", variable_mapping)
-
-def restructure_illnesses(processed_data, illnesses_schema, variable_mapping):
-    return restructure_by_schema(processed_data, illnesses_schema, "mh_illnesses", variable_mapping)
-
-def restructure_birth_details(processed_data, birth_schema, variable_mapping):
-    return restructure_by_schema(processed_data, birth_schema, "birth_details", variable_mapping)
-    
-def restructure_general_information(processed_data, gi_schema, variable_mapping):
-    return restructure_by_schema(processed_data, gi_schema, "general_information", variable_mapping)
-
-def restructure_cancer_benign_tumors(processed_data, cbt_schema, variable_mapping):
-    return restructure_by_schema(processed_data, cbt_schema, "cancers_benign_tumors", variable_mapping)
-
-def restructure_mammograms(processed_data, mammograms_schema, variable_mapping):
-    return restructure_by_schema(processed_data, mammograms_schema, "mammograms", variable_mapping)
-
-def restructure_drugs_supplements(processed_data, drugs_supplements_schema, variable_mapping):
-    return restructure_by_schema(processed_data, drugs_supplements_schema, "drugs_supplements", variable_mapping)
-
-def restructure_other_breast_surgery(processed_data, obs_schema, variable_mapping):
-    return restructure_by_schema(processed_data, obs_schema, "other_breast_surgery", variable_mapping)
-
-def restructure_other_lifestyle_factors(processed_data, olf_schema, variable_mapping):
-    return restructure_by_schema(processed_data, olf_schema, "other_lifestyle_factors", variable_mapping)

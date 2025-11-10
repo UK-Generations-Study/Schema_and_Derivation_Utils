@@ -1,4 +1,19 @@
-# pseudo_anon_utils_combined.py
+"""
+Pseudo-anonymisation utilities for questionnaire data.
+
+This module handles:
+- Loading StudyID <-> TCode mappings from the Mailing database.
+- Building lookup structures for navigating JSON Schemas by field name.
+- Deriving date variables from day/month/year components and removing
+  the original components from the output.
+- Replacing StudyID with TCode and optionally shifting dates to protect
+  participant privacy.
+- Updating section schemas to describe the pseudo-anonymised output.
+
+It is used near the end of each ETL pipeline, just before validation
+and final JSON export.
+"""
+
 import sys
 import os
 import re
@@ -14,12 +29,33 @@ sys.path.append(os.path.abspath("N:\\CancerEpidem\\BrBreakthrough\\DeliveryProce
 from utilities import connect_DB, read_data
 
 def load_sid_codes(server, logger):
+    """
+    Load StudyID <-> TCode mappings from the SIDCodes table.
+
+    Parameters
+    ----------
+    server : str
+        SQL Server name or connection string fragment.
+    logger :
+        Optional logger for progress messages.
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with at least StudyID and TCode columns.
+    """
     dm_conn_sid = connect_DB('Mailing', server, logger)
     sid_df = read_data("SELECT * FROM [Mailing].[dbo].[SIDCodes]", dm_conn_sid, logger)
     sid_df['StudyID'] = sid_df['StudyID'].astype(int)
     return sid_df
 
 def build_name_to_fieldkey(schema_node, include_nested=False, prefix=''):
+    """
+    Build a mapping from JSON Schema 'name' attributes to JSON pointer keys.
+
+    This allows us to locate fields in the nested data structure using the
+    original variable names (e.g. R0_XrayDay) rather than their full path.
+    """
     name_to_key = {}
     properties = schema_node.get("properties", {})
     for key, val in properties.items():
@@ -43,6 +79,12 @@ def build_name_to_fieldkey(schema_node, include_nested=False, prefix=''):
     return name_to_key
 
 def build_path_keys(flat_date_dict, name_to_key):
+    """
+    Build a mapping from schema field keys to their JSON pointer paths.
+
+    The resulting dict makes it easy to navigate deeply nested structures
+    when deriving dates or removing fields.
+    """
     path_keys_dict = {}
     for new_field, var_names in flat_date_dict.items():
         path_keys = []
@@ -164,14 +206,26 @@ def drop_original_fields(data_list, flat_date_dict):
   
 def process_dates(data, sid_df, schema, logger, dateDict):
     """
-    Shift and derive dates in-place, respecting nested arrays, with role-aware (day/month/year) logic.
+    Derive full date fields from day/month/year components and remove the parts.
 
-    Supports:
-      • Top-level fields
-      • One-level arrays:   Parent[*].Leaf
-      • Two-level arrays:   Parent[*].Child[*].Leaf
+    For each section:
+    - Use `dateDict` to identify which components belong to which derived date.
+    - Locate the corresponding fields in the nested JSON using schema lookups.
+    - Assemble a full date (where possible) and store it in the derived field.
+    - Remove the original component fields from the records.
 
-    Writes each derived date into the SAME container as its components.
+    Parameters
+    ----------
+    data_list : list[dict]
+        Pseudo-anonymised JSON-like records.
+    sid_df : pd.DataFrame
+        StudyID/TCode mappings (kept for consistency, even if not directly used).
+    schema : dict
+        JSON Schema for the section, used to resolve paths and types.
+    logger :
+        Logger for progress messages.
+    dateDict : dict
+        Per-section config describing date components and question ranges.
     """
 
     def _detect_role(var_name: str) -> str | None:
@@ -183,7 +237,7 @@ def process_dates(data, sid_df, schema, logger, dateDict):
         """
         s = str(var_name)
 
-        # ---- High-confidence suffixes (CamelCase or underscore) ----
+        # High-confidence suffixes (CamelCase or underscore)
         # Day
         if re.search(r'(?:^|_)(Day|D)$', s, flags=re.I) or re.search(r'(Day|D)$', s, flags=re.I):
             return 'day'
@@ -194,13 +248,12 @@ def process_dates(data, sid_df, schema, logger, dateDict):
         if re.search(r'(?:^|_)(Year|Yr|Y)$', s, flags=re.I) or re.search(r'(Year|Yr|Y)$', s, flags=re.I):
             return 'year'
 
-        # ---- DOB short tokens used in your sheets ----
+        # DOB short tokens used in your sheets
         if re.search(r'(?:^|_)DOBd$', s, flags=re.I): return 'day'
         if re.search(r'(?:^|_)DOBm$', s, flags=re.I): return 'month'
         if re.search(r'(?:^|_)DOBy$', s, flags=re.I): return 'year'
 
-        # ---- Very broad fallbacks (last resort) ----
-        # (CamelCase doesn't give \b before capitals, so avoid relying on \b)
+        # Very broad fallbacks (last resort)
         if 'month' in s.lower() or 'mnth' in s.lower() or 'mth' in s.lower():
             return 'month'
         if 'year'  in s.lower() or 'yr'   in s.lower():
@@ -252,7 +305,7 @@ def process_dates(data, sid_df, schema, logger, dateDict):
             return None
         return None
 
-    # -------- 1) Flatten all section dateDicts --------
+    # Flatten all section dateDicts
     flat_date_dict = {}
     for section in dateDict.values():
         flat_date_dict.update(section.get("dateDict", {}))
@@ -260,8 +313,8 @@ def process_dates(data, sid_df, schema, logger, dateDict):
     # Keep the original component names per derived field (for role detection)
     flat_names = {new_field: comps for new_field, comps in flat_date_dict.items()}
 
-    # -------- 2) Map variable names to JSON paths (supports nested arrays) --------
-    name_to_key = build_name_to_fieldkey(schema, include_nested=True)  # already defined in this module. 
+    # Map variable names to JSON paths
+    name_to_key = build_name_to_fieldkey(schema, include_nested=True) 
 
     def _normalize_to_star(path: str) -> str:
         # Convert '[]' to '[*]' for wildcard iteration
@@ -280,15 +333,15 @@ def process_dates(data, sid_df, schema, logger, dateDict):
 
     path_keys_dict = _build_path_keys(flat_date_dict, name_to_key)
     
-    # -------- 3) Attach per-StudyID day-shift --------
+    # Attach per-StudyID day-shift
     random_map = sid_df.set_index('StudyID')['Random'].astype(int).to_dict()
     for record in data:
         record['R0_StudyID'] = int(record['R0_StudyID'])
         record['Random'] = random_map.get(record['R0_StudyID'], 0)
 
-    # -------- 4) Utilities for navigating and writing --------
+    # Utilities for navigating and writing
     def _common_container_prefix(paths):
-        seg_lists = [p.split('.')[:-1] for p in paths]  # drop leaf
+        seg_lists = [p.split('.')[:-1] for p in paths]
         if not seg_lists: return []
         pref = []
         for cols in zip(*seg_lists):
@@ -318,7 +371,7 @@ def process_dates(data, sid_df, schema, logger, dateDict):
     def _set_rel(obj, key, value):
         obj[key] = value
 
-    # -------- 5) Main derivation loop --------
+    # Main derivation loop
     for record in data:
         shift_days = int(record.get('Random', 0))
 
@@ -326,11 +379,9 @@ def process_dates(data, sid_df, schema, logger, dateDict):
             if not comp_paths:
                 continue
 
-            # Where to write (container) based on all component paths
             container_segs = _common_container_prefix(comp_paths)
             stars = sum(seg.count('[*]') for seg in container_segs)
 
-            # After the last [*], we have a dot path to the leaf within the container item
             rel_leafs = [p.split('[*].')[-1] for p in comp_paths]
 
             # Expected roles for this derived field from component names
@@ -354,7 +405,7 @@ def process_dates(data, sid_df, schema, logger, dateDict):
                             if 1 <= xnum <= 3:   # Option A: year only
                                 parts['month'] = None
                             elif 4 <= xnum <= 12:  # Option B: month+year
-                                pass  # leave month in place
+                                pass
                         except Exception:
                             pass
                         
@@ -402,11 +453,16 @@ def process_dates(data, sid_df, schema, logger, dateDict):
                 # Deeper nesting not currently required; skip safely.
                 continue
 
-    # -------- 6) Drop original date components + Random --------
-    return drop_original_fields(data, flat_date_dict)  # existing helper in this file. 
+    # Drop original date components + Random
+    return drop_original_fields(data, flat_date_dict)
 
 
 def pseudo_anonymize_studyid(data, sid_df):
+    """
+    Replace R0_StudyID with R0_TCode in the data records.
+
+    Uses the SIDCodes mapping to ensure there is a unique TCode per StudyID.
+    """
     mapping = sid_df.set_index('StudyID')['TCode'].to_dict()
     new_data = []
     for record in data:
@@ -439,20 +495,19 @@ def apply_full_pseudo_anonymization(data, server, logger, schema=None, dateDict=
 
 def update_schema(old_schema_path, new_schema_path, dateDict, pii_vars, section_name):
     """
-    Build a PII-safe schema:
-      • Insert each derived field exactly where its first component lived (preserve visual order).
-      • Remove all original components + all PII variables everywhere in the tree.
-      • Match PII by raw questionnaire name (e.g., 'xradhosp4', 'Q9_…'), by schema JSON key (e.g., 'R0_XrayHospital_Extra'),
-        and by the schema 'name' property (which can be 'Q9_…' or 'R0_…').
-      • Also drop family variants: if 'R0_XrayHospital' is PII, remove 'R0_XrayHospital_Extra', etc.
-      • Never remove a derived field that shares the same name as a component (e.g., R0_XrayYear).
-      • Replace StudyID with R0_TCode and update 'required'; add $defs back-ref.
-    """
-    from collections import OrderedDict
-    import json
-    import re
+    Produce a pseudo-anonymised schema from a raw section schema.
 
-    # ---------- small helpers ----------
+    This function:
+    - Inserts new derived date fields with format "date".
+    - Removes PII fields and date components that will not appear in the
+      pseudo-anonymised JSON.
+    - Replaces R0_StudyID with R0_TCode in definitions and required lists.
+    - Adds a back-reference to the raw schema under `$defs`.
+
+    The resulting schema describes the final, privacy-protected output.
+    """
+
+    # small helpers
     def ordered_load(path):
         with open(path, "r") as f:
             return json.load(f, object_pairs_hook=OrderedDict)
@@ -559,10 +614,10 @@ def update_schema(old_schema_path, new_schema_path, dateDict, pii_vars, section_
         props0 = schema_obj.get("properties", OrderedDict())
         scrub_properties(props0)
 
-    # ---------- Load ----------
+    # Load
     schema = ordered_load(old_schema_path)
 
-    # ---------- Inputs ----------
+    # Inputs
     if section_name not in dateDict:
         raise ValueError(f"Section '{section_name}' not found in dateDict")
     inner_dict = (dateDict[section_name] or {}).get("dateDict", {}) or {}
@@ -570,7 +625,7 @@ def update_schema(old_schema_path, new_schema_path, dateDict, pii_vars, section_
     # Provided by your utils; must include nested paths like 'XrayEvents[].R0_XrayFromYr'
     name_to_key = build_name_to_fieldkey(schema, include_nested=True)
 
-    # ---------- 1) Insert derived fields IN PLACE (before any deletions) ----------
+    # Insert derived fields IN PLACE
     for new_field, components in inner_dict.items():
         if not components:
             continue
@@ -605,8 +660,8 @@ def update_schema(old_schema_path, new_schema_path, dateDict, pii_vars, section_
         updated = insert_replacing_components(parent_props, new_field, derived_field, set(component_json_keys))
         write_back_parent(schema, parent_path, updated)
 
-    # ---------- 2) Remove PII + date component leaves (everywhere) ----------
-    # (a) Build sets we’ll remove; keep derived names protected
+    # Remove PII + date component leaves (everywhere)
+    # Build sets to remove; keep derived names protected
     derived_names = set(inner_dict.keys())
 
     # Gather components for removal (except components that equal a derived name)
@@ -690,7 +745,7 @@ def update_schema(old_schema_path, new_schema_path, dateDict, pii_vars, section_
                 family_bases=family_bases,
                 preserve_keys=derived_names)
 
-    # ---------- 3) Replace StudyID with R0_TCode at top ----------
+    # Replace StudyID with R0_TCode at top
     tcode_property = OrderedDict([
         ("name", "TCode"),
         ("description", "Pseudo-anonymized 8-character study identifier."),
@@ -714,16 +769,17 @@ def update_schema(old_schema_path, new_schema_path, dateDict, pii_vars, section_
         req.append("R0_TCode")
     schema["required"] = req
 
-    # ---------- 4) Add $defs back-reference ----------
+    # Add $defs back-reference
     if "$defs" not in schema:
         schema["$defs"] = OrderedDict()
     schema["$defs"][section_name] = {"$ref": f"../raw/{section_name}_JSON.json"}
 
-    # ---------- Write ----------
+    # Write
     ordered_dump(schema, new_schema_path)
     print(f"Updated {section_name} schema written to {new_schema_path}")
 
 
+# Date dictionary that shows provenance for raw date variables and is used by pseudo-anon process
 dateDict = dateDict_new = {
     "GeneralInformation": {
         "dateDict": {},
@@ -731,7 +787,7 @@ dateDict = dateDict_new = {
     },
     "BirthDetails": {
         "dateDict": {
-            #"R0_DOB": ["R0_DOB_Day", "R0_DOB_Mnth", "R0_DOB_Yr"]
+            
         },
         "question_range": "BETWEEN 51 AND 91"
     },
