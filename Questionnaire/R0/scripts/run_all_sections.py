@@ -47,7 +47,10 @@ from qc_utils import (
     reconcile_value_frequencies
 )
 
+from schema_utils import build_variable_mapping
+
 from utilities import createLogger
+
 from config import (
     Delivery_log_path,
     test_server,
@@ -109,10 +112,7 @@ def run_section(q_sect: str):
     schema = load_schema(r0_json_path, f"{q_sect}_Schema")
     init_varresolver_from_dfPII(dfPII, schema, q_sect)
 
-    variable_mapping = {**{k: v for k, v in schema.get("properties", {}).items()}}
-    # or use your helper if you prefer:
-    # from schema_utils import build_variable_mapping
-    # variable_mapping = build_variable_mapping(schema)
+    variable_mapping = build_variable_mapping(schema)
 
     constraint_map, var_type_map = extract_schema_constraints(schema)
 
