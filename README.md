@@ -88,102 +88,103 @@ Typical run time for the whole ETL for all sections is around 3 hours.
 # Schemas & Validation
 The ETL is schema-driven. Every transformation step is designed to produce JSON that conforms to an explicit JSON Schema.
 
-1. Schema layout
+**1. Schema layout**
 
-   - Raw input schemas
+    - Raw input schemas
+   
+    Describe the structure of the section as it comes from the questionnaire.
+       
+        - `schemas/raw/<SectionName>_JSON.json`
 
-      Describe the structure of the section as it comes from the questionnaire.
-     
-     - `schemas/raw/<SectionName>_JSON.json`
-
-   - Pseudo-anonymised output schemas
+    - Pseudo-anonymised output schemas
 
       Describe the final JSON written out after:
      
-     - Replacing `StudyID` with `TCode`.
+        - Replacing `StudyID` with `TCode`.
 
-     - Aggregating and deriving combined date fields.
+        - Aggregating and deriving combined date fields.
 
-     - Removing pii and date componenents.
+        - Removing pii and date componenents.
 
-     - `schemas/pseudo_anon/<SectionName>_PseudoAnon.json`
+        - `schemas/pseudo_anon/<SectionName>_PseudoAnon.json`
 
     -Each pseudo-anon schema keeps a reference back to the raw schema (via $defs), so you can trace where fields came from.
 
-2. How schemas are used in the ETL
+**2. How schemas are used in the ETL**
 
-   a. Load schema
+    a. Load schema
    
-      For each section, the script loads the raw schema, and `load_schema` also resolves any $ref references so the rest of the pipeline sees a fully expanded schema.
+    For each section, the script loads the raw schema, and `load_schema` also resolves any $ref references so the rest of the pipeline sees a fully expanded schema.
       
-   b. Drive cleaning and types
+    b. Drive cleaning and types
 
-      The schema provides the following JSON built-in schema keywords that are extracted and used in cleaning processing (`process_nested_data`):
+    The schema provides the following JSON built-in schema keywords that are extracted and used in cleaning processing (`process_nested_data`):
 
-      - expected JSON types to cast values to the correct type (`string`, `integer`, `number`, etc.)
+        - expected JSON types to cast values to the correct type (`string`, `integer`, `number`, etc.)
       
-      - numeric bounds where values outside are set to null (`minimum`, `maximum`)
+        - numeric bounds where values outside are set to null (`minimum`, `maximum`)
   
             Only use maximum if it is a finite numeric scale or categorical numeric value, i.e. not continuous (day of the month, numerical value of month in the year, etc.)
   
             Only use minimum where values cannot be negative (height, weight, age, etc.) 
       
-      - allowed values that guide recodes of special values and unknown codes (enum)
+        - allowed values that guide recodes of special values and unknown codes (enum)
 
-      The schema provides the following custom annotations that are not built in to JSON validation, but help the user with processing or context:
+        The schema provides the following custom annotations that are not built in to JSON validation, but help the user with processing or context:
 
-      - question ID that corresponds to the SQL metadata where questions that ask the same contextual question have the same ID (`questionID`)
+        - question ID that corresponds to the SQL metadata where questions that ask the same contextual question have the same ID (`questionID`)
      
-      - variable name as it corresponds to the SQL database, differs depending on level of variable (`name`):
+        - variable name as it corresponds to the SQL database, differs depending on level of variable (`name`):
      
         Flat (non-array) fields use the original raw variable names from SQL. These are 1:1 with the human-readable variable names that were created when the data were first collected.
 
         For array fields, we use new, human-readable schema field names instead. Arrays are repeated structures and the underlying raw variable names follow inconsistent patterns, so a single raw name cannot reliably represent all repeats. Using stable schema field names keeps the schemas compact and easier to understand.
 
-       - question as it was written in the questionnaire (`question`)
+        - question as it was written in the questionnaire (`question`)
      
-       - descrption of the variable and question to help the user decipher the context and use of the variable (`description`)
+        - description of the variable and question to help the user decipher the context and use of the variable (`description`)
      
-       - allowed value descriptions defining what numeric values mean (`enumDescriptions`)
+        - allowed value descriptions defining what numeric values mean (`enumDescriptions`)
      
-       - answer IDs where repeated answers have the same ID that correlate to the metadata (`answerID`)
+        - answer IDs where repeated answers have the same ID that correlate to the metadata (`answerID`)
 
-   c. Drive restructuring
+    c. Drive restructuring
 
-      The schema also defines where fields live in the nested structure (arrays, objects, index fields). `restructure_utils` uses this metadata, together with `nested_utils`, to build the final nested JSON objects that match the schema structure.
+    The schema also defines where fields live in the nested structure (arrays, objects, index fields). `restructure_utils` uses this metadata, together with `nested_utils`, to build the final nested JSON objects that match the schema structure.
       
-   d. Pseudo-anonymised schema generation
+    d. Pseudo-anonymised schema generation
   
-      After restructuring, pseudo_anon_utils takes the raw schema and:
+    After restructuring, pseudo_anon_utils takes the raw schema and:
 
-      - inserts new derived date fields
+        - inserts new derived date fields
       
-      - removes raw date components and PII fields
+        - removes raw date components and PII fields
       
-      - replaces R0_StudyID with R0_TCode
+        - replaces R0_StudyID with R0_TCode
       
-      The result is the pseudo-anonymised schema, which is what we validate the final output against.
+    The result is the pseudo-anonymised schema, which is what we validate the final output against.
 
 3. Validation process
 
-   Validation is performed using the JSON schema through a helper in `common_utils`.
+    Validation is performed using the JSON schema through a helper in `common_utils`.
 
-   Any validation errors are:
+    Any validation errors are:
 
-   - logged with the record index and field path
+        - logged with the record index and field path
    
-   - summarised for review in the ETL logs or in the CLI
-   
-   If errors is empty, the section’s JSON is considered structurally valid.
+        - summarised for review in the ETL logs or in the CLI
 
-4. Adding or updating schemas
+    If errors is empty, the section’s JSON is considered structurally valid.
 
-   When extending or updating the ETL:
-       1. Add/update the raw schema under `schemas/raw/`.
+5. Adding or updating schemas
 
-       2. Regenerate the pseudo-anon schema via `pseudo-anon utilities`.
+    When extending or updating the ETL:
 
-       3. Run the ETL + validation for that section and review any schema errors.
+        1. Add/update the raw schema under `schemas/raw/`.
+
+        2. Regenerate the pseudo-anon schema via `pseudo-anon utilities`.
+
+        3. Run the ETL + validation for that section and review any schema errors.
 
 # Logging & QC
 
