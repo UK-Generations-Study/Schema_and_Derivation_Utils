@@ -9,21 +9,26 @@ msa_driver = 'Microsoft Access Driver (*.mdb, *.accdb)'
 user=''
 pwd=''
 
+delivery_process = 'N:\CancerEpidem\BrBreakthrough\DeliveryProcess'
 
-Delivery_log_path = 'N:\CancerEpidem\BrBreakthrough\DeliveryProcess\Logs'
+schema_derivation = delivery_process + r'\Schema_and_Derivation_utils\\Questionnaire\\R0'
 
-r0_json_path = 'N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Schema_and_Derivation_utils\\Questionnaire\\R0\\json_schemas\\raw'
+Delivery_log_path = delivery_process + r'\Logs'
 
-r0_json_path_pii = 'N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Schema_and_Derivation_utils\\Questionnaire\\R0\\json_schemas\\post_pii'
+json_path = schema_derivation + r'\json_schemas'
 
-out_json_path = 'N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Data_Output_Testing'
+r0_json_path = json_path + r'\raw'
 
-mock_data_path = 'N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Schema_and_Derivation_utils\\Questionnaire\\R0\\mock_data'
+r0_json_path_pii = json_path + r'\post_pii'
 
-mock_data_df_path = 'N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Schema_and_Derivation_utils\\Questionnaire\\R0\\mock_data\\dataFrame'
+out_json_path = delivery_process + r'\Data_Output_Testing'
 
-mock_data_json_path = 'N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Schema_and_Derivation_utils\\Questionnaire\\R0\\mock_data\\json'
+mock_data_path = schema_derivation + r'\mock_data'
 
-validation_path = 'N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Schema_and_Derivation_utils\\Questionnaire\\R0\\validation'
+mock_data_df_path = schema_derivation + r'\mock_data\\dataFrame'
 
-ct_path = 'N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Schema_and_Derivation_utils\\Questionnaire\\R0\\validation\\_change_tracking'
+mock_data_json_path = schema_derivation + r'\mock_data\\json'
+
+validation_path = schema_derivation + r'\validation'
+
+ct_path = validation_path + r'\_change_tracking'
