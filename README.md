@@ -6,7 +6,7 @@ This README was last updated 10/11/2025.
 The Generations Study questionnaire data began collection in 2004 on paper using Optical Character Recognition (OCR) to read each questionnaire into database storable data. This methodology for data collection continued throughout baseline data collection acros the cohort. This ETL process aims to better-document the current state of the data, update and siplify the data processing, and make the derivation methodology of variables from the raw data available to the public.
 
 # Data Scope
-As of the last update this ETL applies to all Baseline (R0) questionnaire data. There are 19 raw sections in the ETL, plus an additional raw derivation section for variables that need to be derived within the secure server to preserve participant identities. The raw data read in covers over 1,850 different questions, while the output processed data covers over 950 variables due to aggregation of date fields and teh removal of variables that potentially contain Personally Identifying Information (PII). Following is the list of all raw sections of baseline data:
+As of the last update this ETL applies to all Baseline (R0) questionnaire data. There are 19 raw sections in the ETL, plus an additional raw derivation section for variables that need to be derived within the secure server to preserve participant identities. The raw data read in covers over 1,850 different questions from the SQL database they are stored in, while the output processed data covers over 950 variables in JSON format due to aggregation of date fields and teh removal of variables that potentially contain Personally Identifying Information (PII). Following is the list of all raw sections of baseline data:
 - Alcohol, Smoking & Diet
 - Birth Details
 - Breast Cancer
@@ -28,7 +28,16 @@ As of the last update this ETL applies to all Baseline (R0) questionnaire data. 
 - X-Rays
 
 # Repository Structure
+Questionnaire/
+   └───R0/
+       ├───json_schemas/
+       │   ├───post_pii/
+       │   └───raw/     
+       ├───scripts/   
+       └───validation/
+           └───{section}_ValidationSummary/
 
+`json_schemas`
 
 # Pipeline Flow
 
