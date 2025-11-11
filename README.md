@@ -29,15 +29,30 @@ As of the last update this ETL applies to all Baseline (R0) questionnaire data. 
 
 # Repository Structure
 Questionnaire/
-   └───R0/
-       ├───json_schemas/
-       │   ├───post_pii/
-       │   └───raw/     
-       ├───scripts/   
-       └───validation/
-           └───{section}_ValidationSummary/
 
-`json_schemas`
+    └───R0/
+        ├───json_schemas/
+        │   ├───post_pii/
+        │   └───raw/
+        ├───scripts/
+        └───validation/
+            └───{section}_ValidationSummary/
+
+`json_schemas/`
+
+Schemas that define the expected JSON structure for each questionnaire and document the provenance of the variable.
+
+- `raw/`
+   
+   Original "as-collected" schemas for each section (before pseudo-anonymisation and date aggregation/derivation).
+
+- `post_pii/`
+   
+   Post-processing schemas that describe the final pseu-doanonymised output of R0 non-derived variables:
+
+    - `StudyID` -> `TCode`.
+    - Raw date componenets aggregated to pseudo-anonymised complete dates.
+    - PII fields dropped.   
 
 # Pipeline Flow
 
