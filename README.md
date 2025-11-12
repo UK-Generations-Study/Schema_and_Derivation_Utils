@@ -1,6 +1,6 @@
 # Generations Study Questionnaire Data ETL
 Repo for maintaining JSON schemas, scripts, and non-PII quality check (QC) outputs to produce derived datasets for Generations Study (GS) data.
-This README was last updated 10/11/2025.
+This README was last updated 12/11/2025.
 
 # Overview & Background
 The Generations Study questionnaire data began collection in 2004 on paper using Optical Character Recognition (OCR) to read each questionnaire into database storable data. This methodology for data collection continued throughout baseline data collection acros the cohort. This ETL process aims to better-document the current state of the data, update and siplify the data processing, and make the derivation methodology of variables from the raw data available to the public.
