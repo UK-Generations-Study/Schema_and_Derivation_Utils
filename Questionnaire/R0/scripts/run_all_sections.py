@@ -1,4 +1,3 @@
-# run_all_sections.py
 
 import os
 import sys
@@ -33,7 +32,8 @@ from common_utils import (
 
 from restructure_utils import (
     restructure_by_schema,
-    build_resolver_cache_from_columns
+    build_resolver_cache_from_columns,
+    build_breast_cancer_resolver_cache
 )
 
 from pseudo_anon_utils import (
@@ -135,11 +135,18 @@ def run_section(q_sect: str):
         variable_mapping,
     )
 
-    # build resolver cache for QC
-    raw_df = pivoted.reset_index()
-    resolver, res_path = build_resolver_cache_from_columns(
-        section_slug, q_sect, raw_df.columns
-    )
+    if q_sect == "BreastCancer":
+        # build resolver cache for QC
+        raw_df = pivoted.reset_index()
+        resolver, res_path = build_breast_cancer_resolver_cache(
+            q_sect, raw_df.columns
+        )
+    else:
+        # build resolver cache for QC
+        raw_df = pivoted.reset_index()
+        resolver, res_path = build_resolver_cache_from_columns(
+            section_slug, q_sect, raw_df.columns
+        )
     logger.info(f"Resolver cache written to: {res_path}")
 
     # -------------------- Validate & save (allvar) --------------------
