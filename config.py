@@ -2,8 +2,8 @@
 # configuration values for connecting to the database
 driver_32 = 'ODBC Driver 17 for SQL Server'
 driver_64 = 'SQL Server'
-test_server = 'DoverVTest'
-live_server = 'DoverV'
+test_server = ''
+live_server = ''
 msa_driver = 'Microsoft Access Driver (*.mdb, *.accdb)'
 
 user=''
@@ -30,5 +30,6 @@ mock_data_df_path = schema_derivation + r'\mock_data\\dataFrame'
 mock_data_json_path = schema_derivation + r'\mock_data\\json'
 
 validation_path = schema_derivation + r'\validation'
+
 
 ct_path = validation_path + r'\_change_tracking'
