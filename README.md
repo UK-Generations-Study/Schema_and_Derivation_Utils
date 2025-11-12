@@ -36,7 +36,7 @@ Questionnaire/
         │   └───raw/
         ├───scripts/
         └───validation/
-            └───{section}_ValidationSummary/
+            └───<SectionName>_ValidationSummary/
 
 `json_schemas/`
 
@@ -268,19 +268,46 @@ If a section fails QC or validation:
 
 If necessary, re-run the section notebook with a higher log level (e.g. `DEBUG=True`) and a smaller sample size to iterate quickly on issues.
 
-# Error Handling & Troubleshooting
-
-
-# Extending the ETL
-
-
 # Data Privacy & Security
 
+This ETL is designed to work with sensitive questionnaire data, so data protection is built into both the code and the workflow.
 
-# Testing
+- Pseudo-anonymisation
 
+The pipeline never writes out raw identifiers directly from the source database:
 
-# License & Ownership
+- `StudyID` replaced pseudo-identifier stored in private server, `TCode`.
 
+- Date components aggregated to derived dates.
+
+    - Aggregates individual date fields from raw data amd shidt that date by a given number per participant stored in a private server.
+ 
+- Removal of direct PII data.
+
+    - No variables that have indentifying information, or potentially identifying information are inclided in the processed data
+ 
+    - Includes names, adresses, names of towns, names of hospitals, and any variable that was asked as open ended text like medications, cancer types, and familial relationships.
+ 
+- Handling of real data
+
+    - This repo is intended to contain code and schemas only.
+    
+    - Real questionnaire data, SID mappings, and any intermediate extracts must not be committed to Git or shared via this repository.
+    
+    - Database connection details (servers, usernames, passwords) are removed in `config` and must not be committed to the repo.
+ 
+- Access control and usage
+
+- This ETL is intended for use by authorised team members only, in compliance with:
+
+    - The study’s data governance policies, and any applicable legal/regulatory requirements (e.g. GDPR for EU/UK datasets).
+
+- Users running the ETL are responsible for:
+
+    - Ensuring they have permission to access the underlying databases.
+    
+    - Not exporting or sharing outputs outside approved channels.
 
 # Contacts
+
+Please contact Tal Cohen, tal.cohen@icr.ac.uk, if you have any questions or concerns.
