@@ -369,13 +369,13 @@ The pipeline never writes out raw identifiers directly from the source database:
  
     - Includes names, adresses, names of towns, names of hospitals, and any variable that was asked as open ended text like medications, cancer types, and familial relationships.
  
-# 11.2 Handling of real data
+## 11.2 Handling of real data
 
-    - This repo is intended to contain code and schemas only.
+- This repo is intended to contain code and schemas only.
     
-    - Real questionnaire data, SID mappings, and any intermediate extracts must not be committed to Git or shared via this repository.
+- Real questionnaire data, SID mappings, and any intermediate extracts must not be committed to Git or shared via this repository.
     
-    - Database connection details (servers, usernames, passwords) are removed in `config` and must not be committed to the repo.
+- Database connection details (servers, usernames, passwords) are removed in `config` and must not be committed to the repo.
  
 ## 11.3 Access control and usage
 
