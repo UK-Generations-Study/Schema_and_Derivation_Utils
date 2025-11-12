@@ -50,7 +50,9 @@ As of the last update this ETL applies to all Baseline (R0) questionnaire data. 
    Post-processing schemas that describe the final pseu-doanonymised output of R0 non-derived variables:
 
     - `StudyID` -> `TCode`.
+      
     - Raw date componenets aggregated to pseudo-anonymised complete dates.
+      
     - PII fields dropped.   
 
 # 5. Pipeline Flow
@@ -64,17 +66,39 @@ ETL step-by-step:
 7. Output and QC reports.
 
 # 6. Installation & Prerequisites
-Python version 3.11.5
 
-Python packages installed:
+Before running the ETL, ensure you have:
 
-- pandas
-- numpy
-- jsonschema
-- SQLAlchemy
-- pyodbc
+**Python**
+  
+  - Python 3.10+.
+    
+  - Recommended: Python 3.11 or later.
 
-Microsoft Access Driver for SQL.
+  - Dependencies are listed in `requirements.txt`, but are:
+
+          - pandas==2.3.3
+          - numpy==2.3.4
+          - matplotlib==3.10.7
+          - SQLAlchemy==2.0.44
+          - jsonschema==4.25.1
+          - pyodbc==5.3.0
+ 
+**Operating system and environment**
+
+  - A machine with access to the Windows network paths used in `config.py`.
+    
+  - Ability to create and activate a virtual environment (e.g. `venv`, `conda`, `uv`).
+
+**Database & drivers**
+
+  - Appropriate ODBC drivers installed, matching the `config.py` settings:
+    
+    - `ODBC Driver 17 for SQL Server` (32-bit)
+      
+    - `SQL Server` (64-bit)
+      
+    - Microsoft Access Driver for SQL.
 
 # 7. Configuration
 The paths for schemas, output data, QC, etc. are in `config_utils.py` which can all be updated by adjusting the base `delivery_process` string variable. You must also make sure you have a SQL account that you can connect through a Microsoft Access Driver. 
@@ -82,7 +106,7 @@ The paths for schemas, output data, QC, etc. are in `config_utils.py` which can 
 # 8. Running the ETL
 Run the `run_all_sections.py` script, and that will run the full ETL. For example, in VS Code, press the play button when opening the Python script. Or, using a Command Line Interface (CLI), `python run_all_sections.py`.
 
-Typical run time for the whole ETL for all sections is around 3 hours.
+On current infrastructure, a full run for all sections takes on the order of a few hours. Runtime will vary by environment.
 
 # 9. Schemas & Validation
 The ETL is schema-driven. Every transformation step is designed to produce JSON that conforms to an explicit JSON Schema.
@@ -99,6 +123,8 @@ The ETL is schema-driven. Every transformation step is designed to produce JSON 
 - Each pseudo-anon schema keeps a reference back to the raw schema (via $defs), so you can trace where fields came from.
 
 ## 9.2. How schemas are used in the ETL
+
+This section will be most helpful for data managers and developers.
 
 **9.2.a. Load schema**
 
@@ -267,7 +293,7 @@ Change-tracking is used by `qc_utils` to explain differences in value distributi
 
 ## 10.3. Validation and resolver summaries
 
-For each section, schema validation and variable resolution generate artefacts under a `ValidationSummary` directory.
+For each section, schema validation and variable resolution generate artefacts under a `ValidationSummary` directory at the end of each section's ETL.
 
 - Root directory (per round): `validation/`
 
@@ -335,7 +361,7 @@ The pipeline never writes out raw identifiers directly from the source database:
 
 - Date components aggregated to derived dates.
 
-    - Aggregates individual date fields from raw data amd shidt that date by a given number per participant stored in a private server.
+    - Aggregates individual date fields from raw data amd shift that date by a given number per participant offset stored separately.
  
 - Removal of direct PII data.
 
@@ -363,6 +389,14 @@ The pipeline never writes out raw identifiers directly from the source database:
     
     - Not exporting or sharing outputs outside approved channels.
 
-# 12. Contacts
+# 12. License / Usage
+
+Internal ICR use only. Do not distribute or reuse without appropriate approvals.
+
+# 13. Contributing
+
+If you need to extend or modify the ETL, raise an issue or discuss changes with the data engineering / GS team.
+
+# 14. Contacts
 
 Please contact Tal Cohen, tal.cohen@icr.ac.uk, if you have any questions or concerns.
