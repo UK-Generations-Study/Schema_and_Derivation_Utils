@@ -198,7 +198,7 @@ The schema provides the following custom annotations that are not built in to JS
         
         Fourth pill name: ocname4o
     
-    The first three appear to follow a pattern (`Q6_1_{instance}_1`), but the fourth switches to a different naming convention (ocname4o). There is no single, reliable pattern that covers all repeats.
+    The first three appear to follow a pattern (`Q6_1_{instance}_1`), but the fourth switches to a different naming convention (`ocname4o`). There is no single, reliable pattern that covers all repeats.
 
     Using the human-readable variable name, all of these are represented by the same pattern:
     
