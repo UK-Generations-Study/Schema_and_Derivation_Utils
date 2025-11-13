@@ -75,7 +75,7 @@ Before running the ETL, ensure you have:
     
   - Recommended: Python 3.11 or later.
 
-  - Dependencies are listed in `requirements.txt`, but are:
+  - Dependencies are listed in `requirements.txt`, and are:
 
           - pandas==2.3.3
           - numpy==2.3.4
