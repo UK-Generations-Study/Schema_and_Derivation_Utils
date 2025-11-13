@@ -77,12 +77,12 @@ Before running the ETL, ensure you have:
 
   - Dependencies are listed in `requirements.txt`, and are:
 
-          - pandas==2.3.3
-          - numpy==2.3.4
-          - matplotlib==3.10.7
-          - SQLAlchemy==2.0.44
-          - jsonschema==4.25.1
-          - pyodbc==5.3.0
+          pandas==2.3.3
+          numpy==2.3.4
+          matplotlib==3.10.7
+          SQLAlchemy==2.0.44
+          jsonschema==4.25.1
+          pyodbc==5.3.0
  
 **Operating system and environment**
 
