@@ -3,7 +3,7 @@ Repo for maintaining JSON schemas, scripts, and non-PII quality check (QC) outpu
 This README was last updated 12/11/2025.
 
 # 2. Overview & Background
-The Generations Study questionnaire data began collection in 2004 on paper using Optical Character Recognition (OCR) to read each questionnaire into database storable data. This methodology for data collection continued throughout baseline data collection acros the cohort. This ETL process aims to better-document the current state of the data, update and siplify the data processing, and make the derivation methodology of variables from the raw data available to the public.
+The Generations Study questionnaire data began collection in 2004 on paper using Optical Character Recognition (OCR) to read each questionnaire into database storable data. This methodology for data collection continued throughout baseline data collection across the cohort. This ETL process aims to better-document the current state of the data, update and simplify the data processing, and make the derivation methodology of variables from the raw data available to the public.
 
 # 3. Data Scope
 As of the last update this ETL applies to all Baseline (R0) questionnaire data. There are 19 raw sections in the ETL, plus an additional raw derivation section for variables that need to be derived within the secure server to preserve participant identities. The raw data read in covers over 1,850 different questions from the SQL database they are stored in, while the output processed data covers over 950 variables in JSON format due to aggregation of date fields and teh removal of variables that potentially contain Personally Identifying Information (PII). Following is the list of all raw sections of baseline data:
@@ -47,11 +47,11 @@ As of the last update this ETL applies to all Baseline (R0) questionnaire data. 
 
 - `post_pii/`
    
-   Post-processing schemas that describe the final pseu-doanonymised output of R0 non-derived variables:
+   Post-processing schemas that describe the final pseudo-anonymised output of R0 non-derived variables:
 
     - `StudyID` -> `TCode`.
       
-    - Raw date componenets aggregated to pseudo-anonymised complete dates.
+    - Raw date components aggregated to pseudo-anonymised complete dates.
       
     - PII fields dropped.   
 
@@ -118,7 +118,7 @@ The ETL is schema-driven. Every transformation step is designed to produce JSON 
 
     - Replacing `StudyID` with `TCode`.
     - Aggregating and deriving combined date fields.
-    - Removing pii and date componenents.
+    - Removing pii and date components.
 
 - Each pseudo-anon schema keeps a reference back to the raw schema (via $defs), so you can trace where fields came from.
 
@@ -128,7 +128,7 @@ This section will be most helpful for data managers and developers.
 
 **9.2.a. Load schema**
 
-For each section, the script loads the raw schema, and `load_schema` also resolves any $ref references so the rest of the pipeline sees a fully expanded schema.
+For each section, the script loads the raw schema, and `load_schema` also resolves any `$ref` references so the rest of the pipeline sees a fully expanded schema.
   
 **9.2.b. Schema driven cleaning and types**
 
@@ -164,9 +164,9 @@ The schema provides the following custom annotations that are not built in to JS
  
     Because there is only one value per participant and it always refers to the same question, the schema can safely use the SQL name (or a stable equivalent).
  
-    Example — flat variable, 1:1 association:
+    Example - flat variable, 1:1 association:
 
-        - Question: “Have you ever been pregnant?”
+        - Question: "Have you ever been pregnant?"
         
         - SQL column: Q5_3_1
 
@@ -184,7 +184,7 @@ The schema provides the following custom annotations that are not built in to JS
 
     Using stable schema field names keeps the schemas compact and easier to understand.
 
-    Example — array variable (unreliable pattern in SQL naming):
+    Example - array variable (unreliable pattern in SQL naming):
 
     Contraceptive pill name is a repeated question: each instance refers to a different pill.
     
@@ -204,7 +204,7 @@ The schema provides the following custom annotations that are not built in to JS
     
         ContracepPill{instance}_Name
 
-    The array index (0, 1, 2, 3, …) captures which pill instance it is.
+    The array index (0, 1, 2, 3, etc.) captures which pill instance it is.
     
     The `name` annotation removes the instance within the human-readable name and the processing picks up on the patterning and is able to find the correct raw variable name using just this:
     
@@ -244,7 +244,7 @@ Any validation errors are:
 
 - summarised for review in the ETL logs or in the CLI
 
-If no errors, the section’s JSON is considered structurally valid.
+If no errors, the section's JSON is considered structurally valid.
 
 ## 9.4. Adding or updating schemas
 
@@ -274,7 +274,7 @@ This ETL is designed to surface problems early via structured logs and a set of 
 
 ## 10.2. Change-tracking output
 
-During cleaning, the ETL records any value-level changes (e.g. `"1"` → `1`, out-of-range → `null`) into a change-tracking structure. Due to sensitivity of some of the data in the files, the change-tracking JSONs have not been uploaded to the repo.
+During cleaning, the ETL records any value-level changes (e.g. `"1"` -> `1`, out-of-range -> `null`) into a change-tracking structure. Due to sensitivity of some of the data in the files, the change-tracking JSONs have not been uploaded to the repo.
 
 - Saved to: `validation/<CHANGE_TRACKING_DIR>/<SECTION_SLUG>_change_tracking.json`
 
@@ -301,7 +301,7 @@ For each section, schema validation and variable resolution generate artefacts u
 
     - `validation/<SectionName>_ValidationSummary/`
 
-Inside each section’s folder you will find:
+Inside each section's folder you will find:
 
 - `<SectionSlug>_resolver_index.json`
 
@@ -331,7 +331,7 @@ Outputs include:
     
     - Saved to: `validation/<SectionName>_ValidationSummary/variable_check.json`
 
-These artefacts help answer “which raw variable ended up in which JSON field?”, “why did validation fail?”, "are all variables accounted for?".
+These artefacts help answer "which raw variable ended up in which JSON field?", "why did validation fail?", "are all variables accounted for?".
 
 ## 10.5. Interpreting failures
 
@@ -343,7 +343,7 @@ If a section fails QC or validation:
 
 - Open the resolver cache (`<SECTION_SLUG>_resolver_index.json`) to verify that variables are mapped to the expected schema fields.
 
-- Review change-tracking and QC outputs for unexpected occurences:
+- Review change-tracking and QC outputs for unexpected occurrences:
 
 - Look for unexpected large numbers of changes for a single field.
 
@@ -355,7 +355,7 @@ This ETL is designed to work with sensitive questionnaire data, so data protecti
 
 ## 11.1 Pseudo-anonymisation
 
-The pipeline never writes out raw identifiers directly from the source database:
+The pipeline never writes out raw identifiers directly from the source database and the data follows a similar pseudo-anonymisation process as the schema in 9.2.d:
 
 - `StudyID` replaced pseudo-identifier stored in private server, `TCode`.
 
@@ -365,9 +365,9 @@ The pipeline never writes out raw identifiers directly from the source database:
  
 - Removal of direct PII data.
 
-    - No variables that have indentifying information, or potentially identifying information are inclided in the processed data
+    - No variables that have identifying information, or potentially identifying information are included in the processed data
  
-    - Includes names, adresses, names of towns, names of hospitals, and any variable that was asked as open ended text like medications, cancer types, and familial relationships.
+    - Includes names, addresses, names of towns, names of hospitals, and any variable that was asked as open ended text like medications, cancer types, and familial relationships.
  
 ## 11.2 Handling of real data
 
@@ -381,7 +381,7 @@ The pipeline never writes out raw identifiers directly from the source database:
 
 - This ETL is intended for use by authorised team members only, in compliance with:
 
-    - The study’s data governance policies, and any applicable legal/regulatory requirements (e.g. GDPR for EU/UK datasets).
+    - The study's data governance policies, and any applicable legal/regulatory requirements (e.g. GDPR for EU/UK datasets).
 
 - Users running the ETL are responsible for:
 
