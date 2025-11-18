@@ -1,12 +1,16 @@
 # 1. Generations Study Questionnaire Data ETL
+
 Repo for maintaining JSON schemas, scripts, and non-PII quality check (QC) outputs to produce derived datasets for Generations Study (GS) data.
+
 This README was last updated 12/11/2025.
 
 # 2. Overview & Background
+
 The Generations Study questionnaire data began collection in 2004 on paper using Optical Character Recognition (OCR) to read each questionnaire into database storable data. This methodology for data collection continued throughout baseline data collection across the cohort. This ETL process aims to better-document the current state of the data, update and simplify the data processing, and make the derivation methodology of variables from the raw data available to the public.
 
 # 3. Data Scope
-As of the last update this ETL applies to all Baseline (R0) questionnaire data. There are 19 raw sections in the ETL, plus an additional raw derivation section for variables that need to be derived within the secure server to preserve participant identities. The raw data read in covers over 1,850 different questions from the SQL database they are stored in, while the output processed data covers over 950 variables in JSON format due to aggregation of date fields and teh removal of variables that potentially contain Personally Identifying Information (PII). Following is the list of all raw sections of baseline data:
+
+As of the last update this ETL applies to all Baseline (R0) questionnaire data. There are 19 raw sections in the ETL, plus an additional raw derivation section for variables that need to be derived within the secure server (Trusted Research Environment, TRE) to preserve participant identities. The raw data read in covers over 1,850 different questions from the SQL database they are stored in, while the output processed data covers over 950 variables in JSON format due to aggregation of date fields and teh removal of variables that potentially contain Personally Identifying Information (PII). Following is the list of all raw sections of baseline data:
 - Alcohol, Smoking & Diet
 - Birth Details
 - Breast Cancer
@@ -26,6 +30,8 @@ As of the last update this ETL applies to all Baseline (R0) questionnaire data. 
 - Physical Development
 - Pregnancies
 - X-Rays
+
+The raw derivation step uses the Mailing database (with variables `ADOB`, `EventDate`, `Random` and `TCode`) to create a small set of entry variables that are safe to export: shifted date of birth (`DOB`), unshifted year of birth (`YOB`), shifted date of entry (`EntryDate`), unshifted year of entry (`EntryYear`), and age in whole years at entry (`AgeEntry`)
 
 # 4. Repository Structure
         Questionnaire/
@@ -49,22 +55,43 @@ As of the last update this ETL applies to all Baseline (R0) questionnaire data. 
            
     Post-processing schemas that describe the final pseudo-anonymised output of R0 non-derived variables:
         
-    - `StudyID` -> `TCode`.
-              
+    - `StudyID` -> `TCode`.   
     - Raw date components aggregated to pseudo-anonymised complete dates.
-              
     - PII fields dropped.
 
 - `scripts/`
+  
+  Code to run the ETL and the raw derivation step (both executed in the TRE, but independent of each other):
 
-  Python and Jupyter scripts that run the ETL to process raw data into pseudo-anonymised, analysis-ready data.
+  - Questionnaire ETL consists of `run_all_sections.py` plus helper modules (`cleaning_utils.py`, `nested_utils.py`, `pseudo_anon_utils.py`, `schema_utils.py`, `qc_utils.py`, etc.) to:
 
-- `validation/`
+    - extract from SQL
+    - pivot/clean
+    - restructure to nested JSON
+    - pseudo-anonymise and validate against the post-PII schemas.
 
-  Each section has a folder in this path that holds QC on variables and counts for the data.
+  - Raw derivation – RawDerivation.ipynb uses the Mailing database to derive a small set of pseudo-anonymised sensitive entry variables before export:
+  
+    - DOB (shifted date of birth, YYYY-MM-DD)
+    - YOB (unshifted year of birth)
+    - EntryDate (shifted entry date, YYYY-MM-DD)
+    - EntryYear (unshifted entry year)
+    - AgeEntry (age in whole years at entry)
+ 
+      These are written to a JSON keyed and linked by TCode and then used alongside the section-level questionnaire outputs.
+
+- validation/
+
+  Per-section QC outputs:
+
+  - `<SectionName>_ValidationSummary/` folders hold:
+
+    - resolver index (raw -> schema field mapping)
+    - JSON Schema validation output
+    - QC JSONs such as `variable_check.json` and `value_reconciliation.json`.
 
 # 5. Pipeline Flow
-ETL step-by-step:
+Raw processing ETL step-by-step:
 1. Extract from source (SQL).
 2. Pivot/standardise variables.
 3. Clean and type-cast according to schemas.
@@ -73,6 +100,8 @@ ETL step-by-step:
 6. Validate against new PII JSON schemas.
 7. Output and QC reports.
 
+Runing `RawDerivation.ipynb` occurs separately as its own task and is self contained in one script.
+
 # 6. Installation & Prerequisites
 
 Before running the ETL, ensure you have:
@@ -80,9 +109,7 @@ Before running the ETL, ensure you have:
 **Python**
   
   - Python 3.10+.
-    
   - Recommended: Python 3.11 or later.
-
   - Dependencies are listed in `requirements.txt`, and are:
 
           pandas==2.3.3
@@ -95,7 +122,6 @@ Before running the ETL, ensure you have:
 **Operating system and environment**
 
   - A machine with access to the Windows network paths used in `config.py`.
-    
   - Ability to create and activate a virtual environment (e.g. `venv`, `conda`, `uv`).
 
 **Database & drivers**
@@ -103,9 +129,7 @@ Before running the ETL, ensure you have:
   - Appropriate ODBC drivers installed, matching the `config.py` settings:
     
     - `ODBC Driver 17 for SQL Server` (32-bit)
-      
     - `SQL Server` (64-bit)
-      
     - Microsoft Access Driver for SQL.
 
 # 7. Configuration
@@ -147,7 +171,6 @@ _**9.2.b.1 Built-in keywords**_
 The schema provides the following JSON built-in schema keywords that are extracted and used in cleaning processing (`process_nested_data`):
 
 - expected JSON types to cast values to the correct type (`string`, `integer`, `number`, etc.)
-
 - numeric bounds where values outside are set to null (`minimum`, `maximum`)
 
     Only use maximum if it is a finite numeric scale or categorical numeric value, i.e. not continuous (day of the month, numerical value of month in the year, etc.)
@@ -161,13 +184,11 @@ _**9.2.b.2 Custom annotations**_
 The schema provides the following custom annotations that are not built in to JSON validation, but help the user with processing or context:
 
 - question ID that corresponds to the SQL metadata where questions that ask the same contextual question have the same ID (`questionID`)
-
 - variable name as it corresponds to the SQL database, differs depending on level of variable (`name`):
 
   **_Flat (non-array) fields_**
 
-  - use the original raw variable names from SQL
-    
+  - use the original raw variable names from SQL    
   - are 1:1 with the human-readable variable names that were created when the data were first collected.
  
     Because there is only one value per participant and it always refers to the same question, the schema can safely use the SQL name (or a stable equivalent).
@@ -175,7 +196,7 @@ The schema provides the following custom annotations that are not built in to JS
     Example - flat variable, 1:1 association:
 
         - Question: "Have you ever been pregnant?"
-        
+
         - SQL column: Q5_3_1
 
     No pattern recognition needed.
@@ -183,11 +204,8 @@ The schema provides the following custom annotations that are not built in to JS
   **_Array fields (repeated structures)_**
 
   - use new, human-readable schema field names
-  
   - arrays are repeated structures (e.g. multiple drug regimens, pregnancies, jobs)
-  
   - the raw SQL variable names follow inconsistent patterns
-  
   - a single raw name cannot reliably represent all repeats
 
     Using stable schema field names keeps the schemas compact and easier to understand.
@@ -219,11 +237,8 @@ The schema provides the following custom annotations that are not built in to JS
         ContracepPill_Name
 
 - question as it was written in the questionnaire (`question`)
-
 - description of the variable and question to help the user decipher the context and use of the variable (`description`)
-
 - allowed value descriptions defining what numeric values mean (`enumDescriptions`)
-
 - answer IDs where repeated answers have the same ID that correlate to the metadata (`answerID`)
 
 **9.2.c. Drive restructuring**
@@ -235,12 +250,16 @@ The schema also defines where fields live in the nested structure (arrays, objec
 After restructuring, pseudo_anon_utils takes the raw schema and:
 
 - inserts new derived date fields
-
 - removes raw date components and PII fields
-
 - replaces `StudyID` with `R0_TCode`
   
 The result is the pseudo-anonymised schema, which is what we validate the final output against.
+
+**9.2.e. Raw derivation inside the TRE**
+
+A small set of entry variables is derived separate to the main ETL run, also within the TRE:
+
+These variables are written to RawDerivedVariables.json and then treated as part of the "processed-raw" inputs to the questionnaire ETL. The underlying identifying dates (`ADOB`, `EventDate`) and the `Random` offset never leave the TRE. More details on how the variables are derived are in the schema, `RawDerivedVariables_Schema.json`.
 
 ## 9.3. Validation process
 
@@ -249,7 +268,6 @@ Validation is performed using the JSON schema through a helper in `common_utils`
 Any validation errors are:
 
 - logged with the record index and field path
-
 - summarised for review in the ETL logs or in the CLI
 
 If no errors, the section's JSON is considered structurally valid.
@@ -259,9 +277,7 @@ If no errors, the section's JSON is considered structurally valid.
 When extending or updating the ETL:
 
 1. Add/update the raw schema under `schemas/raw/`.
-
 2. Regenerate the pseudo-anon schema via `pseudo-anon utilities`.
-
 3. Run the ETL + validation for that section and review any schema errors.
 
 # 10. Logging & QC
@@ -271,13 +287,9 @@ This ETL is designed to surface problems early via structured logs and a set of 
 ## 10.1. Runtime logging
 
 - The ETL uses a standard Python `logging` logger configured in the entry scripts / notebooks.
-
 - Typical log messages include:
-
 - Start/end of each major stage (extract, pivot, clean, restructure, pseudo-anon, validate).
-
 - Row counts before/after key operations.
-
 - Summaries of validation and QC checks.
 
 ## 10.2. Change-tracking output
@@ -285,7 +297,6 @@ This ETL is designed to surface problems early via structured logs and a set of 
 During cleaning, the ETL records any value-level changes (e.g. `"1"` -> `1`, out-of-range -> `null`) into a change-tracking structure. Due to sensitivity of some of the data in the files, the change-tracking JSONs have not been uploaded to the repo.
 
 - Saved to: `validation/<CHANGE_TRACKING_DIR>/<SECTION_SLUG>_change_tracking.json`
-
 - Structure (per section):
 
         {
@@ -304,7 +315,6 @@ Change-tracking is used by `qc_utils` to explain differences in value distributi
 For each section, schema validation and variable resolution generate artefacts under a `ValidationSummary` directory at the end of each section's ETL.
 
 - Root directory (per round): `validation/`
-
 - Per-section subfolder:
 
     - `validation/<SectionName>_ValidationSummary/`
@@ -312,9 +322,7 @@ For each section, schema validation and variable resolution generate artefacts u
 Inside each section's folder you will find:
 
 - `<SectionSlug>_resolver_index.json`
-
 - `Built by restructure_utils.build_resolver_cache_from_columns`
-
 - Maps schema fields to the raw variables that populate them (and their index bands).
 
 ## 10.4. QC reports
@@ -324,19 +332,14 @@ Outputs include:
 - Value frequency reconciliation:
 
     - Compares value counts in the raw pivot vs. the final JSON.
-    
     - Uses change-tracking to explain where values changed.
-    
     - Saved to: `validation/<SectionName>_ValidationSummary/value_reconciliation.json`
  
 - Variable alignment check:
 
     - Maps SQL variable names to new, human readable variable names.
-    
     - Utilizes the resolver.
-    
     - Checks against removed date and PII fields to make sure all variables are accounted for.
-    
     - Saved to: `validation/<SectionName>_ValidationSummary/variable_check.json`
 
 These artefacts help answer "which raw variable ended up in which JSON field?", "why did validation fail?", "are all variables accounted for?".
@@ -346,13 +349,9 @@ These artefacts help answer "which raw variable ended up in which JSON field?", 
 If a section fails QC or validation:
 
 - Check the log file in for stack traces and high-level error messages.
-
 - Inspect the JSON validation output to see which fields broke schema rules.
-
 - Open the resolver cache (`<SECTION_SLUG>_resolver_index.json`) to verify that variables are mapped to the expected schema fields.
-
 - Review change-tracking and QC outputs for unexpected occurrences:
-
 - Look for unexpected large numbers of changes for a single field.
 
 If necessary, re-run the section notebook with a higher log level (e.g. `DEBUG=True`) and a smaller sample size to iterate quickly on issues.
@@ -366,23 +365,24 @@ This ETL is designed to work with sensitive questionnaire data, so data protecti
 The pipeline never writes out raw identifiers directly from the source database and the data follows a similar pseudo-anonymisation process as the schema in 9.2.d:
 
 - `StudyID` replaced pseudo-identifier stored in private server, `TCode`.
-
 - Date components aggregated to derived dates.
 
-    - Aggregates individual date fields from raw data amd shift that date by a given number per participant offset stored separately.
+    - Inside the TRE, `RawDerivation.ipynb` uses actual dates of birth and entry (`ADOB`, `EventDate`) together with the participant-specific `Random` offset to create:
+    
+      - Shifted dates (`DOB`, `EntryDate`) that mask the true calendar dates but preserve within-person intervals.
+      - Unshifted year-only and age variables (`YOB`, `EntryYear`, `AgeEntry`) that are safe to export.
+
+    - In the questionnaire ETL, individual day/month/year components from the raw R0 tables are aggregated to derived dates and then shifted using the same Random offset logic, with partial dates completed according to pre-defined rules (e.g. 15th of the month, 1 July for year-only). Only these derived, shifted or aggregated forms appear in the processed JSON; the original date components and Random remain on the secure server.
  
 - Removal of direct PII data.
 
     - No variables that have identifying information, or potentially identifying information are included in the processed data
- 
     - Includes names, addresses, names of towns, names of hospitals, and any variable that was asked as open ended text like medications, cancer types, and familial relationships.
  
 ## 11.2 Handling of real data
 
-- This repo is intended to contain code and schemas only.
-    
+- This repo is intended to contain code and schemas only. 
 - Real questionnaire data, SID mappings, and any intermediate extracts must not be committed to Git or shared via this repository.
-    
 - Database connection details (servers, usernames, passwords) are removed in `config` and must not be committed to the repo.
  
 ## 11.3 Access control and usage
@@ -394,7 +394,6 @@ The pipeline never writes out raw identifiers directly from the source database 
 - Users running the ETL are responsible for:
 
     - Ensuring they have permission to access the underlying databases.
-    
     - Not exporting or sharing outputs outside approved channels.
 
 # 12. License / Usage
