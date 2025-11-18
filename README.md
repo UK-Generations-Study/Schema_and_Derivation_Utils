@@ -41,19 +41,27 @@ As of the last update this ETL applies to all Baseline (R0) questionnaire data. 
 
   Schemas that define the expected JSON structure for each questionnaire and document the provenance of the variable.
 
-- `raw/`
-   
-   Original "as-collected" schemas for each section (before pseudo-anonymisation and date aggregation/derivation).
-
-- `post_pii/`
-   
-   Post-processing schemas that describe the final pseudo-anonymised output of R0 non-derived variables:
-
+  - `raw/`
+           
+    Original "as-collected" schemas for each section (before pseudo-anonymisation and date aggregation/derivation).
+        
+  - `post_pii/`
+           
+    Post-processing schemas that describe the final pseudo-anonymised output of R0 non-derived variables:
+        
     - `StudyID` -> `TCode`.
-      
+              
     - Raw date components aggregated to pseudo-anonymised complete dates.
-      
-    - PII fields dropped.   
+              
+    - PII fields dropped.
+
+- `scripts/`
+
+  Python and Jupyter scripts that run the ETL to process raw data into pseudo-anonymised, analysis-ready data.
+
+- `validation/`
+
+  Each section has a folder in this path that holds QC on variables and counts for the data.
 
 # 5. Pipeline Flow
 ETL step-by-step:
