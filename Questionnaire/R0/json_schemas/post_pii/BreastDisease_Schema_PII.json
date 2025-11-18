@@ -1,0 +1,540 @@
+{
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/BreastDisease.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BreastDisease",
+  "roundID": 1,
+  "type": "object",
+  "properties": {
+    "R0_TCode": {
+      "name": "TCode",
+      "description": "Pseudo-anonymized 8-character study identifier.",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "R0_BBD_Abnormality": {
+      "questionID": 1111,
+      "name": "Q7_4_1_1",
+      "question": "Have you ever been told by a doctor that you have had benign breast disease or abnormality?",
+      "description": "Participant's history of benign breast disease or abnormality.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "BBD": {
+      "name": "BBD",
+      "description": "Benign breast disease episodes (up to 4).",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_BBD_Num": {
+            "name": "R0_BBD_Num",
+            "description": "Sequential number of further episode.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "R0_BBD_Age": {
+            "questionID": 1113,
+            "name": "R0_BBD_Age",
+            "question": "How old were you when this benign breast disease or abnormality was diagnosed?",
+            "description": "Age at diagnosis of benign breast disease or abnormality.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_BBD_Breast": {
+            "questionID": 1114,
+            "name": "R0_BBD_Breast",
+            "question": "In which breast was this benign breast disease or abnormality?",
+            "description": "Breast affected by benign disease/abnormality.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              null
+            ],
+            "enumDescriptions": [
+              "0: Multiple responses",
+              "1: Left",
+              "2: Right",
+              "3: Both",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              959,
+              960,
+              961
+            ]
+          },
+          "R0_BBD_Surgery": {
+            "questionID": 1115,
+            "name": "R0_BBD_Surgery",
+            "question": "Did you have surgery for this benign breast disease or abnormality?",
+            "description": "Whether surgery was performed for the benign condition.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              null
+            ],
+            "enumDescriptions": [
+              "0: Multiple responses",
+              "1: Yes",
+              "2: No",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              1,
+              2
+            ]
+          },
+          "R0_BBD_ProcedureType": {
+            "questionID": 1118,
+            "name": "R0_BBD_ProcedureType",
+            "question": "What procedure was performed?",
+            "description": "Type of procedure performed for the benign condition.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              null
+            ],
+            "enumDescriptions": [
+              "0: Multiple responses",
+              "1: Cyst/fluid drained",
+              "2: Whole breast removal",
+              "3: Small sample removed",
+              "4: Both breasts removed",
+              "5: Part or lump removed",
+              "6: Other",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              964,
+              965,
+              966,
+              967,
+              968,
+              13
+            ]
+          },
+          "BBD_Extra": {
+            "name": "BBD_Extra",
+            "description": "Additional benign breast disease episodes.",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "R0_BBD_Date": {
+                  "name": "R0_BBD_Date",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_BBD_Month",
+                    "R0_BBD_Year"
+                  ]
+                },
+                "R0_BBD_FromAge": {
+                  "questionID": 1125,
+                  "name": "R0_BBD_FromAge",
+                  "question": "From age (if a range).",
+                  "description": "Start age if diagnosis given as a range.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "R0_BBD_ToAge": {
+                  "questionID": 1126,
+                  "name": "R0_BBD_ToAge",
+                  "question": "To age (if a range).",
+                  "description": "End age if diagnosis given as a range.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "R0_BBD_RangeStart": {
+                  "name": "R0_BBD_RangeStart",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_BBD_FromMnth",
+                    "R0_BBD_FromYr"
+                  ]
+                },
+                "R0_BBD_RangeEnd": {
+                  "name": "R0_BBD_RangeEnd",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_BBD_ToMnth",
+                    "R0_BBD_ToYr"
+                  ]
+                },
+                "R0_BBD_Mastec": {
+                  "questionID": 1135,
+                  "name": "R0_BBD_Mastec",
+                  "question": "Was the type of procedure performed Whole breast removed?",
+                  "description": "If the procedure type was whole breast removed.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    0,
+                    1,
+                    null
+                  ],
+                  "enumDescriptions": [
+                    "0: No",
+                    "1: Yes",
+                    "null: Missing or invalid."
+                  ],
+                  "answerID": [
+                    2,
+                    1
+                  ]
+                },
+                "R0_BBD_Lump": {
+                  "questionID": 1135,
+                  "name": "R0_BBD_Lump",
+                  "question": "Was the type of procedure performed part or lump removed?",
+                  "description": "If the procedure type was part or lump removed.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    0,
+                    1,
+                    null
+                  ],
+                  "enumDescriptions": [
+                    "0: No",
+                    "1: Yes",
+                    "null: Missing or invalid."
+                  ],
+                  "answerID": [
+                    2,
+                    1
+                  ]
+                },
+                "R0_BBD_Biopsy": {
+                  "questionID": 1135,
+                  "name": "R0_BBD_Biopsy",
+                  "question": "Was the type of procedure performed small sample removed (biopsy)?",
+                  "description": "If the procedure type was small sample removed (biopsy).",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    0,
+                    1,
+                    null
+                  ],
+                  "enumDescriptions": [
+                    "0: No",
+                    "1: Yes",
+                    "null: Missing or invalid."
+                  ],
+                  "answerID": [
+                    2,
+                    1
+                  ]
+                },
+                "R0_BBD_BothRem": {
+                  "questionID": 1135,
+                  "name": "R0_BBD_BothRem",
+                  "question": "Were both breasts removed for this benign breast disease?",
+                  "description": "If the procedure type was both breasts removed.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    0,
+                    1,
+                    null
+                  ],
+                  "enumDescriptions": [
+                    "0: No",
+                    "1: Yes",
+                    "null: Missing or invalid."
+                  ],
+                  "answerID": [
+                    2,
+                    1
+                  ]
+                },
+                "R0_BBD_Other": {
+                  "questionID": 1135,
+                  "name": "R0_BBD_Other",
+                  "question": "Was the type of procedure performed - other?",
+                  "description": "If the procedure type was other.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    0,
+                    1,
+                    null
+                  ],
+                  "enumDescriptions": [
+                    "0: No",
+                    "1: Yes",
+                    "null: Missing or invalid."
+                  ],
+                  "answerID": [
+                    2,
+                    1
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_BBD_Further": {
+      "questionID": 1120,
+      "name": "Q7_4_10",
+      "question": "Have you had any other benign breast disease episodes?",
+      "description": "Indicator for additional benign breast disease episodes.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Checked",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        712
+      ]
+    },
+    "R0_BBD_MoreRangeTime": {
+      "questionID": 1184,
+      "name": "brbenmorerange",
+      "question": "If you have more range of time for benign breast diseases, please tick here.",
+      "description": "Indicator for extended time ranges for a 5th benign breast disease episode.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: No",
+        "1: Yes",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        2,
+        1
+      ]
+    },
+    "R0_BBD_MoreThan4": {
+      "questionID": 1185,
+      "name": "brbenmore4",
+      "question": "If you have had more than 4 benign breast diseases, please tick here.",
+      "description": "Indicator for existence of a 5th benign breast disease episode.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: No",
+        "1: Yes",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        2,
+        1
+      ]
+    },
+    "R0_BreastInjuryDisease": {
+      "questionID": 1366,
+      "name": "Q7_10_1_1",
+      "question": "Have you ever had a serious injury to your breast(s) or any breast disease not mentioned above?",
+      "description": "History of serious breast injury or other breast disease (5th instance).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_BreastAffected": {
+      "questionID": 1368,
+      "name": "Q7_10_3_1",
+      "question": "Which breast(s) was affected in the breast injury or disease?",
+      "description": "Breast affected by injury/disease (5th instance).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen",
+        "1: Left",
+        "2: Right",
+        "3: Both",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        959,
+        960,
+        961
+      ]
+    },
+    "R0_BreastInjuryDisease_Age": {
+      "questionID": 1369,
+      "name": "Q7_10_4",
+      "question": "At what age did the breast injury happen or was the disease diagnosed?",
+      "description": "Age at injury/disease diagnosis (5th instance).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_FurtherBreastInjuryDisease": {
+      "questionID": 1370,
+      "name": "Q7_10_5",
+      "question": "If you had any further breast injuries or diseases not mentioned above, please tick here.",
+      "description": "Flag for additional breast injuries/diseases beyond the 5th instance.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Checked",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        1019
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "R0_TCode"
+  ],
+  "$defs": {
+    "BreastDisease": {
+      "$ref": "../raw/BreastDisease_JSON.json"
+    }
+  }
+}

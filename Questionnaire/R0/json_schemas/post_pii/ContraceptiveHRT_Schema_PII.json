@@ -1,0 +1,795 @@
+{
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/ContraceptiveHRT.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ContraceptiveHRT",
+  "type": "object",
+  "properties": {
+    "R0_TCode": {
+      "name": "TCode",
+      "description": "Pseudo-anonymized 8-character study identifier.",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "R0_ContracepPillUse": {
+      "questionID": 801,
+      "name": "Q6_1_1",
+      "question": "Have you ever used the contraceptive pill?",
+      "description": "Participant's use of contraceptive pills",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple options chosen",
+        "1: Yes",
+        "2: No",
+        "null: Missing data"
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "ContracepPill": {
+      "name": "ContracepPill",
+      "description": "Contraceptive pill usage history",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_ContracepPill_Num": {
+            "name": "R0_ContracepPill_Num",
+            "description": "Instance of taking contraceptive pill.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ]
+          },
+          "R0_ContracepPill_Unknown": {
+            "questionID": 803,
+            "name": "R0_ContracepPill_Unknown",
+            "question": "cannot remember the name of the [ordinal] contraceptive pill",
+            "description": "Participant's inability to recall pill name",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              null
+            ],
+            "enumDescriptions": [
+              "1: Unknown",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              5
+            ]
+          },
+          "R0_ContracepPill_StartAge": {
+            "questionID": 804,
+            "name": "R0_ContracepPill_StartAge",
+            "question": "At what age did you start using [ordinal] contraceptive pill?",
+            "description": "Age when participant began this contraceptive pill",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_ContracepPill_StopAge": {
+            "questionID": 805,
+            "name": "R0_ContracepPill_StopAge",
+            "question": "At what age did you stop using [ordinal] contraceptive pill?",
+            "description": "Age when participant discontinued this contraceptive pill",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_ContracepPill_CurrentUse": {
+            "questionID": 806,
+            "name": "ContracepPill_CurrentUse",
+            "question": "Are you still using the [ordinal] contraceptive pill?",
+            "description": "Participant's current usage status of this pill",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              null
+            ],
+            "enumDescriptions": [
+              "0: No",
+              "1: Yes",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              2,
+              804
+            ]
+          },
+          "ContracepPillExtra": {
+            "name": "ContracepPillExtra",
+            "description": "Additional timing details for contraceptive pills 4-9",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "R0_ContracepPill_Start": {
+                  "name": "R0_ContracepPill_Start",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_ContracepPill_StartMnth",
+                    "R0_ContracepPill_StartYr"
+                  ]
+                },
+                "R0_ContracepPill_End": {
+                  "name": "R0_ContracepPill_End",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_ContracepPill_StopMnth",
+                    "R0_ContracepPill_StopYr"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_ContracepPill_MoreThanThree": {
+      "questionID": 817,
+      "name": "Q6_1_more",
+      "question": "More than 3 episodes of contraceptive pill",
+      "description": "Participant's indication of multiple contraceptive pill uses",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Flagged",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        805
+      ]
+    },
+    "R0_ContracepPill_MoreThanNine": {
+      "questionID": 907,
+      "name": "ocmore9",
+      "question": "More than 9 episodes of contraceptive pills",
+      "description": "Participant's indication of extensive contraceptive pill use",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Flagged",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        1
+      ]
+    },
+    "R0_OtherHormonalContracep": {
+      "questionID": 818,
+      "name": "Q6_2_1",
+      "question": "Have you ever used any other type of hormonal contraception, such as contraception injected, implanted, or applied with a patch?",
+      "description": "Participant's use of non-pill contraceptive methods",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "OtherContracep": {
+      "name": "OtherContracep",
+      "description": "Non-pill contraceptive methods used by participant",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_OtherContracep_Num": {
+            "name": "R0_OtherContracep_Num",
+            "description": "Instance of other contraceptive method.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "R0_OtherContracep_StartAge": {
+            "questionID": 820,
+            "name": "R0_OtherContracep_StartAge",
+            "question": "At what age did you start using [ordinal] contraception (contraception injected, implanted, or applied with a patch)?",
+            "description": "Age participant began this contraceptive method",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_OtherContracep_StopAge": {
+            "questionID": 821,
+            "name": "R0_OtherContracep_StopAge",
+            "question": "At what age did you stop using [ordinal] contraception (contraception injected, implanted, or applied with a patch)?",
+            "description": "Age participant discontinued this contraceptive method",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_OtherContracep_CurrentUse": {
+            "questionID": 822,
+            "name": "R0_OtherContracep_CurrentUse",
+            "question": "Are you still using the [ordinal] contraception (contraception injected, implanted, or applied with a patch)?",
+            "description": "Participant's current usage status of this method",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              null
+            ],
+            "enumDescriptions": [
+              "0: No",
+              "1: Yes",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              2,
+              804
+            ]
+          },
+          "OtherContracepExtra": {
+            "name": "OtherContracepExtra",
+            "description": "Additional timing details for contraceptives 3-5",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "R0_OtherContracep_Start": {
+                  "name": "R0_OtherContracep_Start",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_OtherContracep_StartMnth",
+                    "R0_OtherContracep_StartYr"
+                  ]
+                },
+                "R0_OtherContracep_End": {
+                  "name": "R0_OtherContracep_End",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_OtherContracep_StopMnth",
+                    "R0_OtherContracep_StopYr"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_OtherContracep_MoreThanTwo": {
+      "questionID": 827,
+      "name": "Q6_2_more",
+      "question": "More than 2 episodes of contraception (contraception injected, implanted, or applied with a patch)",
+      "description": "Participant's indication of multiple contraceptive method uses",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Flagged",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        810
+      ]
+    },
+    "R0_HRT_Use": {
+      "questionID": 828,
+      "name": "Q6_3_1",
+      "question": "Have you ever had hormone replacement therapy (HRT)?",
+      "description": "Participant's history of HRT use",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "HRT": {
+      "name": "HRT",
+      "description": "Participant's HRT preparation details",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_HRT_Num": {
+            "name": "R0_HRT_Num",
+            "description": "Instance of HRT.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          },
+          "R0_HRT_StartAge": {
+            "questionID": 830,
+            "name": "R0_HRT_StartAge",
+            "question": "At what age did you start using [ordinal] Hormone preparation?",
+            "description": "Age participant began this HRT preparation",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_HRT_StopAge": {
+            "questionID": 831,
+            "name": "R0_HRT_StopAge",
+            "question": "At what age did you stop using [ordinal] Hormone preparation?",
+            "description": "Age participant discontinued this HRT preparation",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_HRT_CurrentUse": {
+            "questionID": 832,
+            "name": "R0_HRT_CurrentUse",
+            "question": "Are you still using the [ordinal] Hormone preparation?",
+            "description": "Participant's current usage status of this HRT",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              null
+            ],
+            "enumDescriptions": [
+              "0: No",
+              "1: Yes",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              2,
+              804
+            ]
+          },
+          "HRTExtra": {
+            "name": "HRTExtra",
+            "description": "Additional timing details for HRT preparations 4-8",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "R0_HRT_Start": {
+                  "name": "R0_HRT_Start",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_HRT_StartMnth",
+                    "R0_HRT_StartYr"
+                  ]
+                },
+                "R0_HRT_End": {
+                  "name": "R0_HRT_End",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_HRT_StopMnth",
+                    "R0_HRT_StopYr"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_HRT_MoreThanThree": {
+      "questionID": 841,
+      "name": "Q6_3_more",
+      "question": "More than 3 episodes of Hormone Preparation",
+      "description": "Participant's indication of multiple HRT preparations",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Flagged",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        805
+      ]
+    },
+    "R0_HRT_MoreThanEight": {
+      "questionID": 973,
+      "name": "hrtmore8",
+      "question": "More than 8 episodes of Hormone Preparation",
+      "description": "Participant's indication of extensive HRT use",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Flagged",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        2,
+        1
+      ]
+    },
+    "R0_HRT_HrmnLevelsChecked": {
+      "questionID": 842,
+      "name": "Q6_4_1",
+      "question": "When being considered for HRT, did a doctor measure your hormone levels?",
+      "description": "Participant's recollection of pre-HRT testing",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses",
+        "1: Yes",
+        "2: No",
+        "3: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        3
+      ]
+    },
+    "R0_OtherSexHrmnUse": {
+      "questionID": 843,
+      "name": "Q6_5_1",
+      "question": "Have you ever used any other type of sex hormone treatment or preparation (e.g., for osteoporosis, heart disease, pre-menopausal symptoms)?",
+      "description": "Participant's use of non-HRT sex hormones",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "OtherSexHrmn": {
+      "name": "OtherSexHrmn",
+      "description": "Participant's other hormone treatments",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_OtherSexHrmn_Num": {
+            "name": "R0_OtherSexHrmn_Num",
+            "description": "Instance of other hormone treatments.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ]
+          },
+          "R0_OtherSexHrmn_StartAge": {
+            "questionID": 845,
+            "name": "R0_OtherSexHrmn_StartAge",
+            "question": "At what age did you start using [ordinal] other type of sex hormone treatment or preparation?",
+            "description": "Age participant began this hormone treatment",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_OtherSexHrmn_StopAge": {
+            "questionID": 846,
+            "name": "R0_OtherSexHrmn_StopAge",
+            "question": "At what age did you stop using [ordinal] other type of sex hormone treatment or preparation?",
+            "description": "Age participant discontinued this hormone treatment",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_OtherSexHrmn_CurrentUse": {
+            "questionID": 847,
+            "name": "R0_OtherSexHrmn_CurrentUse",
+            "question": "Are you still using the [ordinal] other type of sex hormone treatment or preparation?",
+            "description": "Participant's current usage status of this hormone treatment",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              null
+            ],
+            "enumDescriptions": [
+              "0: No",
+              "1: Yes",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              2,
+              804
+            ]
+          },
+          "OtherSexHrmnExtra": {
+            "name": "OtherSexHrmnExtra",
+            "description": "Additional timing details for hormone treatments 3-7",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "R0_OtherSexHormones_Start": {
+                  "name": "R0_OtherSexHormones_Start",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_OtherSexHrmn_StartMnth",
+                    "R0_OtherSexHrmn_StartYr"
+                  ]
+                },
+                "R0_OtherSexHormones_End": {
+                  "name": "R0_OtherSexHormones_End",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_OtherSexHrmn_StopMnth",
+                    "R0_OtherSexHrmn_StopYr"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_OtherSexHrmn_MoreThanTwo": {
+      "questionID": 852,
+      "name": "Q6_5_more",
+      "question": "More than 2 episodes of other type of sex hormone treatment or preparation",
+      "description": "Participant's indication of multiple hormone treatments",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Flagged",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        810
+      ]
+    },
+    "R0_OtherSexHrmn_MoreSeven": {
+      "questionID": 1014,
+      "name": "otherhormonesmore7",
+      "question": "More than 7 episodes of other type of sex hormone treatment or preparation",
+      "description": "Participant's indication of extensive hormone treatments",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Flagged",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        2,
+        1
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "R0_TCode"
+  ],
+  "$defs": {
+    "ContraceptiveHRT": {
+      "$ref": "../raw/ContraceptiveHRT_JSON.json"
+    }
+  }
+}

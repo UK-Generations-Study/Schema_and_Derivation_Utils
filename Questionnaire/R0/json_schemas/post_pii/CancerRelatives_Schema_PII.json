@@ -1,0 +1,1454 @@
+{
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/CancerRelatives.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CancerRelatives",
+  "roundID": 1,
+  "type": "object",
+  "properties": {
+    "R0_TCode": {
+      "name": "TCode",
+      "description": "Pseudo-anonymized 8-character study identifier.",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "R0_BiologicalParentsUnknown": {
+      "questionID": 2500,
+      "name": "Q14_1",
+      "question": "Are your biological parents unknown to you?",
+      "description": "Indicates whether the participant does not know who their biological parents are.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "3: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        3
+      ]
+    },
+    "R0_FatherDOB": {
+      "name": "R0_FatherDOB",
+      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. If the year component is missing the derived value is null.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-derivedFrom": [
+        "R0_FatherDOB_Day",
+        "R0_FatherDOB_Month",
+        "R0_FatherDOB_Year"
+      ]
+    },
+    "R0_FatherDOB_Unknown": {
+      "questionID": 2506,
+      "name": "Q14_2DOBdn",
+      "question": "What is your father's date of birth? - Don't know",
+      "description": "Flag indicating the participant does not know their father's date of birth.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Don't know",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1
+      ]
+    },
+    "R0_FatherHeightFeet": {
+      "questionID": 2507,
+      "name": "Q14_2feet",
+      "question": "How tall is/was your father? - Feet",
+      "description": "Father's height as reported in feet component.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_FatherHeightInches": {
+      "questionID": 2508,
+      "name": "Q14_2inches",
+      "question": "How tall is/was your father? - Inches",
+      "description": "Father's height inches component (0-11).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 11
+    },
+    "R0_FatherBirthCountry": {
+      "questionID": 2509,
+      "name": "Q14_2_1_1",
+      "question": "In what country was your father born? (UK/Other/Not known)",
+      "description": "Father's country of birth.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: UK",
+        "2: Other",
+        "3: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        104,
+        13,
+        3,
+        10
+      ]
+    },
+    "R0_FatherCancerHistory": {
+      "questionID": 2511,
+      "name": "Q14_2_3_1",
+      "question": "Has your father ever had any type of cancer, leukaemia, Hodgkin's disease or lymphoma?",
+      "description": "Summary flag of any reported cancer for the father (any site).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "3: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        3
+      ]
+    },
+    "FatherCancers": {
+      "name": "FatherCancers",
+      "description": "List of cancer diagnoses reported for the father.",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_FatherCancer_Num": {
+            "name": "R0_FatherCancer_Num",
+            "question": "Instance of cancer that the participant's father had.",
+            "description": "",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2
+            ]
+          },
+          "R0_FatherCancerDate": {
+            "name": "R0_FatherCancerDate",
+            "description": "Derived and pseudo-anonymised year. The date is anchored at 1 July (day 1, month 7) of the reported year, shifted by a participant-specific offset, and only the year of the shifted date is stored. If the year component is missing the derived value is null.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9]{4}$",
+            "x-derivedFrom": [
+              "R0_FatherCancerYear"
+            ]
+          },
+          "R0_FatherCancerYearUnknown": {
+            "questionID": 2515,
+            "name": "R0_FatherCancerYearUnknown",
+            "question": "In what year was your father's cancer diagnosed? - Don't know",
+            "description": "Flag indicating the diagnosis year for this cancer is unknown.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              null
+            ],
+            "enumDescriptions": [
+              "0: Multiple responses selected",
+              "1: Don't know",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              1
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_FatherVitalStatus": {
+      "questionID": 2518,
+      "name": "Q14_2alive_1",
+      "question": "Is your father still alive? (Alive, Dead, Don't know)",
+      "description": "Father's vital status at the time of questionnaire.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Alive",
+        "2: Dead",
+        "3: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        2516,
+        2517,
+        3
+      ]
+    },
+    "R0_FatherDeathDate": {
+      "name": "R0_FatherDeathDate",
+      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. If the year component is missing the derived value is null.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-derivedFrom": [
+        "R0_FatherDOD_Day",
+        "R0_FatherDOD_Month",
+        "R0_FatherDOD_Year"
+      ]
+    },
+    "R0_FatherDOD_Unknown": {
+      "questionID": 2522,
+      "name": "Q14_2_dn3",
+      "question": "If deceased, what was your father's date of death? - Don't know",
+      "description": "Flag indicating the participant does not know the date of father's death.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1
+      ]
+    },
+    "R0_MotherDOB": {
+      "name": "R0_MotherDOB",
+      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. If the year component is missing the derived value is null.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-derivedFrom": [
+        "R0_MotherDOB_Day",
+        "R0_MotherDOB_Month",
+        "R0_MotherDOB_Year"
+      ]
+    },
+    "R0_MotherDOB_Unknown": {
+      "questionID": 2530,
+      "name": "Q14_3DOBdn",
+      "question": "What is your mother's date of birth? - Don't know",
+      "description": "Flag indicating the participant does not know their mother's date of birth.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1
+      ]
+    },
+    "R0_MotherBirthCountry": {
+      "questionID": 2531,
+      "name": "Q14_3_1_1",
+      "question": "In what country was your mother born? (UK/Other/Not known)",
+      "description": "Mother's country of birth",
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: UK",
+        "2: Other",
+        "3: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        104,
+        13,
+        3,
+        10
+      ]
+    },
+    "R0_MotherHeightFeet": {
+      "questionID": 2533,
+      "name": "Q14_3feet",
+      "question": "How tall is/was your mother? - Feet",
+      "description": "Mother's height as reported in feet component (0+). Use with inches to derive total height.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_MotherHeightInches": {
+      "questionID": 2534,
+      "name": "Q14_3inches",
+      "question": "How tall is/was your mother? - Inches",
+      "description": "Mother's height inches component (0-11).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 11
+    },
+    "R0_MotherCancerHistory": {
+      "questionID": 2535,
+      "name": "Q14_3_3_1",
+      "question": "Has your mother ever had any type of cancer, leukaemia, Hodgkin's disease or lymphoma?",
+      "description": "Summary flag of any reported cancer for the mother (any site).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "3: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        3
+      ]
+    },
+    "MotherCancers": {
+      "name": "MotherCancers",
+      "description": "List of distinct cancer diagnoses reported for the mother. Each item captures the site/type and the diagnosis year (if known).",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_MotherCancer_Num": {
+            "name": "R0_MotherCancer_Num",
+            "question": "Instance of cancer that the mother had.",
+            "description": "",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2
+            ]
+          },
+          "R0_MotherCancerDate": {
+            "name": "R0_MotherCancerDate",
+            "description": "Derived and pseudo-anonymised year. The date is anchored at 1 July (day 1, month 7) of the reported year, shifted by a participant-specific offset, and only the year of the shifted date is stored. If the year component is missing the derived value is null.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9]{4}$",
+            "x-derivedFrom": [
+              "R0_MotherCancerYear"
+            ]
+          },
+          "R0_MotherCancerYearUnknown": {
+            "questionID": 2539,
+            "name": "R0_MotherCancerYearUnknown",
+            "question": "In what year was your mother's cancer diagnosed? - Don't know",
+            "description": "Flag indicating the diagnosis year for this cancer is unknown.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              null
+            ],
+            "enumDescriptions": [
+              "0: Multiple responses selected",
+              "1: Don't know",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              1
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_MotherVitalStatus": {
+      "questionID": 2542,
+      "name": "Q14_3alive_1",
+      "question": "Is your mother still alive? (Alive, Dead, Don't know)",
+      "description": "Mother's vital status at the time of questionnaire completion.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Alive",
+        "2: Dead",
+        "3: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        2516,
+        2517,
+        3
+      ]
+    },
+    "R0_MotherDeathDate": {
+      "name": "R0_MotherDeathDate",
+      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. If the year component is missing the derived value is null.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-derivedFrom": [
+        "R0_MotherDOD_Day",
+        "R0_MotherDOD_Month",
+        "R0_MotherDOD_Year"
+      ]
+    },
+    "R0_MotherDOD_Unknown": {
+      "questionID": 2546,
+      "name": "Q14_3_dn3",
+      "question": "If deceased, what was your mother's date of death? - Don't know",
+      "description": "Flag indicating the participant does not know the date of mother's death.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1
+      ]
+    },
+    "R0_GrandparentUK_MM": {
+      "questionID": 2548,
+      "name": "Q14_4_UK_MM",
+      "question": "In what country were your grandparents born? (UK) - Mother's mother",
+      "description": "For the maternal grandmother (mother's mother): indicator whether her country of birth was the UK.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: UK",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        104
+      ]
+    },
+    "R0_GrandparentCountryDN_MM": {
+      "questionID": 2550,
+      "name": "Q14_4_DN_MM",
+      "question": "Do not know the country where Mother's mother was born.",
+      "description": "For the maternal grandmother: flag indicating the country of birth is not known.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        3
+      ]
+    },
+    "R0_GrandparentUK_MF": {
+      "questionID": 2551,
+      "name": "Q14_4_UK_MF",
+      "question": "In what country were your grandparents born? (UK) - Mother's father",
+      "description": "For the maternal grandfather (mother's father): indicator that his country of birth was the UK.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: UK",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        104
+      ]
+    },
+    "R0_GrandparentCountryDN_MF": {
+      "questionID": 2553,
+      "name": "Q14_4_DN_MF",
+      "question": "Do not know the country where Mother's father was born.",
+      "description": "For the maternal grandfather: flag indicating the country of birth is not known.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        3
+      ]
+    },
+    "R0_GrandparentUK_FM": {
+      "questionID": 2554,
+      "name": "Q14_4_UK_FM",
+      "question": "In what country were your grandparents born? (UK) - Father's mother",
+      "description": "For the paternal grandmother (father's mother): indicator that her country of birth was the UK.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: UK",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        104
+      ]
+    },
+    "R0_GrandparentCountryDN_FM": {
+      "questionID": 2556,
+      "name": "Q14_4_DN_FM",
+      "question": "Do not know the country where Father's mother was born.",
+      "description": "For the paternal grandmother: flag indicating the country of birth is not known.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        3
+      ]
+    },
+    "R0_GrandparentUK_FF": {
+      "questionID": 2557,
+      "name": "Q14_4_UK_FF",
+      "question": "In what country were your grandparents born? (UK) - Father's father",
+      "description": "For the paternal grandfather (father's father): indicator that his country of birth was the UK.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: UK",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        104
+      ]
+    },
+    "R0_GrandparentCountryDN_FF": {
+      "questionID": 2559,
+      "name": "Q14_4_DN_FF",
+      "question": "Do not know the country where Father's father was born.",
+      "description": "For the paternal grandfather: flag indicating the country of birth is not known.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        3
+      ]
+    },
+    "R0_GrandparentBreastCancer": {
+      "questionID": 2560,
+      "name": "Q14_5_1_1",
+      "question": "Have any of your grandparents had breast cancer?",
+      "description": "Summary indicator of whether any of the participant's four grandparents (maternal grandmother, maternal grandfather, paternal grandmother, paternal grandfather) are reported to have had breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        1,
+        2,
+        10
+      ]
+    },
+    "R0_GrandparentBreastCancerWho": {
+      "questionID": 2561,
+      "name": "Q14_5_2_1",
+      "question": "If any of your grandparents had breast cancer, which grandparent(s) was it?",
+      "description": "Specifies which grandparent(s) had breast cancer. Code 0 indicates that more than one grandparent applied.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option selected",
+        "1: Mother's mother",
+        "2: Father's mother",
+        "3: Mother's father",
+        "4: Father's father",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        2547,
+        2548,
+        2549,
+        2550
+      ]
+    },
+    "R0_SiblingsUnknown": {
+      "questionID": 2562,
+      "name": "Q14_6",
+      "question": "If you do not know about your biological siblings, please indicate?",
+      "description": "Flag identifying if the participant doesn't know about their biological siblings.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        3
+      ]
+    },
+    "R0_SiblingsTotal": {
+      "questionID": 2563,
+      "name": "Q14_7",
+      "question": "How many brothers, sisters, half-brothers, and half-sisters do you have in total?",
+      "description": "Count of living and deceased siblings.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "Siblings": {
+      "name": "Siblings",
+      "description": "Per-sibling details (relationship, shared parent for half-siblings, DOB, and cancer history). Use this array to capture up to 13 siblings.",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 13,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_Sibling_Num": {
+            "name": "R0_Sibling_Num",
+            "question": "Number of sibling of the participant.",
+            "description": "",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13
+            ]
+          },
+          "R0_SiblingRelation": {
+            "questionID": 2564,
+            "name": "R0_SiblingRelation",
+            "question": "What is this sibling's relationship to you?",
+            "description": "Sibling's relationship (e.g., brother, sister, half-brother, half-sister). Use in combination with SiblingParentShared for half-siblings.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              null
+            ],
+            "enumDescriptions": [
+              "0: Multiple responses selected",
+              "1: Brother",
+              "2: Half-brother",
+              "3: Sister",
+              "4: Half-sister",
+              "5: Sex unknown",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              2552,
+              2553,
+              2554,
+              2555,
+              2585
+            ]
+          },
+          "R0_SiblingParentShared": {
+            "questionID": 2565,
+            "name": "R0_SiblingParentShared",
+            "question": "If a half-sibling, which parent do you share?",
+            "description": "For half-siblings, indicates whether the shared parent is the mother or the father.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              null
+            ],
+            "enumDescriptions": [
+              "0: Multiple responses selected",
+              "1: Mother",
+              "2: Father",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              2556,
+              2557
+            ]
+          },
+          "R0_SiblingDOB_Unknown": {
+            "questionID": 2569,
+            "name": "R0_SiblingDOB_Unknown",
+            "question": "What is your sibling's date of birth? - Don't know",
+            "description": "Flag indicating the sibling's date of birth is unknown.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              null
+            ],
+            "enumDescriptions": [
+              "0: Multiple responses selected",
+              "1: Don't know",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              1
+            ]
+          },
+          "R0_SiblingCancerHistory": {
+            "questionID": 2570,
+            "name": "R0_SiblingCancerHistory",
+            "question": "Has this sibling ever had any type of cancer, leukaemia, Hodgkin's disease or lymphoma?",
+            "description": "Summary flag for any malignant disease reported for this sibling. Use the per-sibling fields below for details when applicable.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              null
+            ],
+            "enumDescriptions": [
+              "0: Multiple responses selected",
+              "1: Yes",
+              "2: No",
+              "3: Don't know",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              1,
+              2,
+              3
+            ]
+          },
+          "R0_SiblingCancerYear": {
+            "questionID": 2572,
+            "name": "R0_SiblingCancerYear",
+            "question": "In what year was your sibling's cancer diagnosed?",
+            "description": "Calendar year of the sibling's cancer diagnosis if known.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_SiblingCancerYearUnknown": {
+            "questionID": 2573,
+            "name": "R0_SiblingCancerYearUnknown",
+            "question": "In what year was your sibling's cancer diagnosed? - Don't know",
+            "description": "Flag indicating the diagnosis year for this sibling's cancer is unknown.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              null
+            ],
+            "enumDescriptions": [
+              "0: Multiple responses selected",
+              "1: Don't know",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              1
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_MoreThanFiveSiblings": {
+      "questionID": 2614,
+      "name": "Q14_13",
+      "question": "Indicate if there are more than 5 siblings.",
+      "description": "Flag indicating whether the participant has more than 5 siblings.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: More than 5 siblings.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        2565
+      ]
+    },
+    "R0_ChildCancerHistory": {
+      "questionID": 2695,
+      "name": "Q14_14_1",
+      "question": "Have any of your children ever had any type of cancer, including Hodgkin's disease, leukemia, or lymphoma?",
+      "description": "Flag indicating whether any of the participant's children have ever had cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: No",
+        "2: Yes",
+        "3: Not Applicable",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        6
+      ]
+    },
+    "ChildrenCancer": {
+      "name": "ChildrenCancer",
+      "description": "Per-child details for cancer history (up to 3 children). Use this array only when at least one child with cancer is reported.",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_ChildCancer_Num": {
+            "name": "R0_ChildCancer_Num",
+            "question": "Number of child that had cancer.",
+            "description": "",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2,
+              3
+            ]
+          },
+          "R0_ChildCancerDOB": {
+            "name": "R0_ChildCancerDOB",
+            "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. If the year component is missing the derived value is null.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date",
+            "x-derivedFrom": [
+              "R0_Child_DOB_Day",
+              "R0_Child_DOB_Month",
+              "R0_Child_DOB_Year"
+            ]
+          },
+          "R0_ChildDOB_Unknown": {
+            "questionID": 2700,
+            "name": "Q14_14DOBdn",
+            "question": "Do you not know your child's date of birth?",
+            "description": "Flag indicating the participant does not know this child's date of birth.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              null
+            ],
+            "enumDescriptions": [
+              "0: Multiple responses selected",
+              "1: Don't know",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              1
+            ]
+          },
+          "R0_ChildCancerYearUnknown": {
+            "questionID": 2703,
+            "name": "Q14_14TYPdn",
+            "question": "Do you not know the year when your child's cancer was diagnosed?",
+            "description": "Flag indicating the diagnosis year for this child's cancer is unknown.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              null
+            ],
+            "enumDescriptions": [
+              "0: Multiple responses selected",
+              "1: Don't know",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              1
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_MoreChildrenCancer": {
+      "questionID": 2704,
+      "name": "Q14_15",
+      "question": "If any more of your children had cancer, please provide details.",
+      "description": "Flag indicating whether thhas more children that have had cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: More children with cancer.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        2582
+      ]
+    },
+    "R0_DistantRelativesBreastCancer": {
+      "questionID": 2721,
+      "name": "Q14_16_1",
+      "question": "Have any of your more distant blood relatives had breast cancer?",
+      "description": "Summary question indicating whether any distant (non-parent, non-sibling, non-child) blood relatives are reported to have had breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "3: Don't know",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        2,
+        1,
+        3
+      ]
+    },
+    "R0_BreastCancerMotherSister": {
+      "questionID": 2722,
+      "name": "Q14_16which_1",
+      "question": "If yes, which relatives had breast cancer? (Mother's sister)",
+      "description": "Indicates whether the participant reports that their mother's sister had breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Yes"
+      ],
+      "answerID": [
+        2572
+      ]
+    },
+    "R0_BreastCancerFatherSister": {
+      "questionID": 2722,
+      "name": "Q14_16which_2",
+      "question": "If yes, which relatives had breast cancer? (Father's sister)",
+      "description": "Indicates whether the participant reports that their father's sister had breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "2: Yes"
+      ],
+      "answerID": [
+        2573
+      ]
+    },
+    "R0_BreastCancerMotherCousin": {
+      "questionID": 2722,
+      "name": "Q14_16which_3",
+      "question": "If yes, which relatives had breast cancer? (Mother's 1st cousin)",
+      "description": "Indicates whether the participant reports that a cousin on their mother's side had breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "3: Yes"
+      ],
+      "answerID": [
+        2574
+      ]
+    },
+    "R0_BreastCancerFatherCousin": {
+      "questionID": 2722,
+      "name": "Q14_16which_4",
+      "question": "If yes, which relatives had breast cancer? (Father's 1st cousin)",
+      "description": "Indicates whether the participant reports that a cousin on their father's side had breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        4,
+        null
+      ],
+      "enumDescriptions": [
+        "4: Yes"
+      ],
+      "answerID": [
+        2575
+      ]
+    },
+    "R0_BreastCancerMotherNiece": {
+      "questionID": 2722,
+      "name": "Q14_16which_5",
+      "question": "If yes, which relatives had breast cancer? (Mother's niece)",
+      "description": "Indicates whether the participant reports that their mother's niece had breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        5,
+        null
+      ],
+      "enumDescriptions": [
+        "5: Yes"
+      ],
+      "answerID": [
+        2576
+      ]
+    },
+    "R0_BreastCancerFatherNiece": {
+      "questionID": 2722,
+      "name": "Q14_16which_6",
+      "question": "If yes, which relatives had breast cancer? (Father's niece)",
+      "description": "Indicates whether the participant reports that their father's niece had breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        6,
+        null
+      ],
+      "enumDescriptions": [
+        "6: Yes"
+      ],
+      "answerID": [
+        2577
+      ]
+    },
+    "R0_BreastCancerGreatGrandmotherM": {
+      "questionID": 2722,
+      "name": "Q14_16which_7",
+      "question": "If yes, which relatives had breast cancer? (Mother's great grandmother)",
+      "description": "Indicates whether the participant reports that their maternal great-grandmother had breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        7,
+        null
+      ],
+      "enumDescriptions": [
+        "7: Yes"
+      ],
+      "answerID": [
+        2578
+      ]
+    },
+    "R0_BreastCancerGreatGrandmotherF": {
+      "questionID": 2722,
+      "name": "Q14_16which_8",
+      "question": "If yes, which relatives had breast cancer? (Father's great grandmother)",
+      "description": "Indicates whether the participant reports that their paternal great-grandmother had breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        8,
+        null
+      ],
+      "enumDescriptions": [
+        "8: Yes"
+      ],
+      "answerID": [
+        2579
+      ]
+    },
+    "R0_BreastCancerMotherOtherRelatives": {
+      "questionID": 2722,
+      "name": "Q14_16which_9",
+      "question": "If yes, which relatives had breast cancer? (Mother's other blood relatives)",
+      "description": "Indicates whether the participant reports any other maternal blood relatives with breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        9,
+        null
+      ],
+      "enumDescriptions": [
+        "9: Yes"
+      ],
+      "answerID": [
+        2580
+      ]
+    },
+    "R0_BreastCancerFatherOtherRelatives": {
+      "questionID": 2722,
+      "name": "Q14_16which_10",
+      "question": "If yes, which relatives had breast cancer? (Father's other blood relatives)",
+      "description": "Indicates whether the participant reports any other paternal blood relatives with breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        10,
+        null
+      ],
+      "enumDescriptions": [
+        "10: Yes"
+      ],
+      "answerID": [
+        2581
+      ]
+    },
+    "OtherRelatives": {
+      "name": "OtherRelatives",
+      "description": "Single question about other relatives with breast cancer, repeated three times.",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_OtherRelative_Num": {
+            "name": "R0_OtherRelative_Num",
+            "question": "Number of other relative question.",
+            "description": "",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2,
+              3
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_SiblingDOB": {
+      "name": "R0_SiblingDOB",
+      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. If the year component is missing the derived value is null.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-derivedFrom": [
+        "R0_Sibling_DOB_Day",
+        "R0_Sibling_DOB_Month",
+        "R0_Sibling_DOB_Year"
+      ]
+    },
+    "R0_ChildCancerDate": {
+      "name": "R0_ChildCancerDate",
+      "description": "Derived and pseudo-anonymised year. The date is anchored at 1 July (day 1, month 7) of the reported year, shifted by a participant-specific offset, and only the year of the shifted date is stored. If the year component is missing the derived value is null.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]{4}$",
+      "x-derivedFrom": [
+        "R0_Child_CancerYear"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "R0_TCode"
+  ],
+  "$defs": {
+    "CancerRelatives": {
+      "$ref": "../raw/CancerRelatives_JSON.json"
+    }
+  }
+}
