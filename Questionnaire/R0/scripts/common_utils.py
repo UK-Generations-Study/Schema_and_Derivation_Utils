@@ -93,7 +93,7 @@ def load_and_pivot_data(question_range, logger):
             FROM [QuestTransformed].[dbo].[NestedPregnancies] 
             WHERE RoundID = 1 AND QuestionID {0}
         '''
-    elif question_range == 'BETWEEN 401 AND 544':
+    elif question_range == 'BETWEEN 400 AND 544':
         base_query = '''
             SELECT [StudyID], [VariableName], [ResponseText]
             FROM [QuestTransformed].[dbo].[GeneralResponses] 
@@ -847,4 +847,5 @@ def init_varresolver_from_dfPII(dfPII, schema, section_name):
     nv.init_dynamic_registry(
         varflag=varflag,
         schemas_by_slug={slug: schema}
+
     )
