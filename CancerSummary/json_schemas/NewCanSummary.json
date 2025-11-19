@@ -9,8 +9,7 @@
         "CancerRegistry.STUDY_ID",
         "FlaggingCancers.STUDY_ID",
         "HistoPath_BrCa.STUDY_ID",
-        "HistoPath_OvCa.STUDY_ID",
-        "FlaggingDeaths.STUDY_ID"
+        "HistoPath_OvCa.STUDY_ID"
       ],
       "minimum": 0,
       "maximum": 499994
@@ -41,8 +40,7 @@
         "CancerRegistry.DIAGNOSIS_DATE",
         "FlaggingCancers.DIAGNOSIS_DATE",
         "HistoPath_BrCa.DIAGNOSIS_DATE",
-        "HistoPath_OvCa.DIAGNOSIS_DATE",
-        "FlaggingDeaths.DIAGNOSIS_DATE"
+        "HistoPath_OvCa.DIAGNOSIS_DATE"
       ]
     },
     "S_DIAGNOSIS_DATE": {
@@ -59,7 +57,7 @@
     "ICD_CODE": {
       "type": ["string", "null"],
       "description": "ICD-10-O2 site code (4-character) for tumour site.",
-      "x-description": "Primary ICD-10-O2 site code (4-character) describing the site of origin of the neoplasm. Source priority: 1) CancerRegistry.SITE_ICD10_O2 (\"Describes site of origin of the neoplasm\"); 2) FlaggingCancers.CancerICD (\"Cancer ICD code\"). Use the code as provided by the source without recoding. This field is per tumour (TUMOUR_ID).",
+      "x-description": "Primary ICD-10-O2 site code (4-character) describing the site of origin of the neoplasm. Source priority: 1) CancerRegistry.SITE_ICD10_O2 (\"Describes site of origin of the neoplasm\"); 2) FlaggingCancers.CancerICD (\"Cancer ICD code\"). Use the code as provided by the source without recoding. This field is per tumour (TUMOUR_ID). The ICD 9 codes are converted to ICD 10 by referencing https://seer.cancer.gov/tools/conversion/2022/ICD9CM%20to%20ICD10CM.FY2023.11.18.22.pdf (Last access date: 23/10/2025)",
       "x-sourcePriority": [
         "CancerRegistry.SITE_ICD10_O2",
         "FlaggingCancers.CancerICD",
@@ -91,7 +89,7 @@
     "CANCER_SITE": {
       "type": ["string", "null"],
       "description": "Text description of anatomical site",
-      "x-description": "Text description of anatomical site derived using ICD_CODE as per the IARC standards. The ICD codes are grouped into SITE (e.g., breast and ovarian) "
+      "x-description": "Text description of anatomical site derived using ICD_CODE (ICD 10) as per the IARC standards. The ICD codes are grouped into SITE (e.g., breast and ovarian). Reference link: https://icd.who.int/browse10/2019/en#/II (Last access date: 09/10/2025)"
     },
     "GRADE": {
       "type": ["string", "null"],
@@ -275,7 +273,7 @@
         "HistoPath_BrCa.ScreenDetected"
       ],
       "enum": ["N", "Y", "8", "9", null],
-      "enumDescriptions": ["N : No", "Y : Yes", "8 : Not applicable", "9 : Not known"]
+      "enumDescriptions": ["N : No", "Y : Yes", "8 : Not applicable", "9 : Not known", "null: missing"]
     },
     "S_SCREEN_DETECTED": {
       "type": ["string", "null"],
@@ -297,7 +295,16 @@
         "6 : Never Invited",
         "7 : Other",
         "9 : Not Known",
-        "NM : Not Mapped"
+        "NM : Not Mapped",
+        "null: missing"
+      ]
+    },
+    "SCREENINGSTATUSFULL_CODE": {
+      "description": "Large number of codes used to detail screening status.",
+      "type": ["string", "null"],
+      "x-description": "Full detailed screening status of the tumour code from Cancer Registry using SCREENINGSTATUSFULL_CODE",
+      "x-sourcePriority": [
+        "CancerRegistry.SCREENINGSTATUSFULL_CODE"
       ]
     },
     "LATERALITY": {
