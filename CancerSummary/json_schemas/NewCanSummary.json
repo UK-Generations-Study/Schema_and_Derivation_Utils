@@ -21,7 +21,7 @@
     "TUMOUR_ID": {
       "type": ["number", "null"],
       "description": "Unique identifier for each tumour (one participant may have several).",
-      "x-description": "Tumour-specific identifier. A participant may have multiple tumours, each with its own TUMOUR_ID. Provided directly in CancerRegistry.TUMOURID or FlaggingCancers.TumourID. Pathology datasets (HistoPath_BrCa, HistoPath_OvCa) do not include a universal tumour ID, only tumour-level details (e.g., count, site, laterality, size, grade, stage). When integrating, use CancerRegistry.TUMOURID (or FlaggingCancers.TumourID if registry ID is unavailable) as the primary source. Link pathology tumours to registry/flagging tumours when the pathology DATEKEY (best pathology date: DateSpecimenTaken → DateSpecimenReceived) is within ±90 days of the registry diagnosis date (DIAGNOSISDATEBEST) or flagging diagnosis date, and site/laterality/morphology are compatible. If pathology tumours cannot be linked, generate a synthetic ID in the format SYN-{STUDY_ID}-{DATEKEY}-{SITE3}-{LAT}-{SEQ}, where SITE3 is ICD-10 3-char (or UNK), LAT is laterality (L|R|M|B|U), and SEQ is a 2-digit sequence per participant/date/site/side. Group pathology records into one tumour if within 90 days, same site/laterality, and morphology-compatible. If an official ID later becomes available, replace the synthetic ID and maintain a lookup table that records the relationship between the two identifyers .",
+      "x-description": "Tumour-specific identifier. A participant may have multiple tumours, each with its own TUMOUR_ID. Provided directly in CancerRegistry.TUMOURID or FlaggingCancers.TumourID. Pathology datasets (HistoPath_BrCa, HistoPath_OvCa) do not include a universal tumour ID, only tumour-level details (e.g., count, site, laterality, size, grade, stage). When integrating, use CancerRegistry.TUMOURID (or FlaggingCancers.TumourID if registry ID is unavailable) as the primary source.",
       "x-sourcePriority": [
         "CancerRegistry.TUMOURID",
         "FlaggingCancers.TumourID"
@@ -90,6 +90,11 @@
       "type": ["string", "null"],
       "description": "Text description of anatomical site",
       "x-description": "Text description of anatomical site derived using ICD_CODE (ICD 10) as per the IARC standards. The ICD codes are grouped into SITE (e.g., breast and ovarian). Reference link: https://icd.who.int/browse10/2019/en#/II (Last access date: 09/10/2025)"
+    },
+    "GROUPED_SITE": {
+      "type": ["string", "null"],
+      "description": "Combined site for cancers as per GLOBOCAN 2020 database",
+      "x-description": "The cancers are combined using ICD-10 codes between C00-C97 as per GLOBOCAN 2020 database. Reference link: https://pubmed.ncbi.nlm.nih.gov/33538338/ (Last access date: 17/11/2025)"
     },
     "GRADE": {
       "type": ["string", "null"],

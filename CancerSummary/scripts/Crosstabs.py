@@ -108,5 +108,21 @@ required = {'HistoPath_BrCa.STUDY_ID', 'CancerRegistry.STUDY_ID'}
 laterality_check = CaSumFiltered_3[CaSumFiltered_3['S_STUDY_ID'].isin(['HistoPath_BrCa.STUDY_ID', 'CancerRegistry.STUDY_ID'])]\
                         .groupby(['STUDY_ID', 'DIAGNOSIS_DATE', 'MORPH_CODE'])[['S_STUDY_ID', 'LATERALITY']].agg(list)
 
-checked = laterality_check[laterality_check['S_STUDY_ID'].apply(lambda x: required.issubset(set(x)))]       
+checked = laterality_check[laterality_check['S_STUDY_ID'].apply(lambda x: required.issubset(set(x)))]
+
+benign = CaSumFiltered_7[CaSumFiltered_7['GROUPED_SITE']=='benign'][['S_STUDY_ID', 'DIAGNOSIS_DATE', 'ICD_CODE', 'MORPH_CODE',\
+                   'GROUPED_SITE']]
+
+unkn_uncert = CaSumFiltered_7[CaSumFiltered_7['GROUPED_SITE']=='unknown/uncertain'][['S_STUDY_ID', 'DIAGNOSIS_DATE', 'ICD_CODE', 'MORPH_CODE',\
+                   'GROUPED_SITE']]
+
+benign_source = benign.groupby('S_STUDY_ID')[['S_STUDY_ID']].size().reset_index(name='Count')
+
+unkn_uncert_source = unkn_uncert.groupby('S_STUDY_ID')[['S_STUDY_ID']].size().reset_index(name='Count')
+
+
+missing_mc = CaSumFiltered_7[CaSumFiltered_7['MORPH_CODE'].isna()][['S_STUDY_ID', 'DIAGNOSIS_DATE', 'ICD_CODE', 'MORPH_CODE',\
+                   'GROUPED_SITE']]
+
+missing_mc_source = missing_mc.groupby('S_STUDY_ID')[['S_STUDY_ID']].size().reset_index(name='Count')
 '''

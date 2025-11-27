@@ -73,7 +73,7 @@ def prepare_legacy_data(ca_summary, ca_summary_schema, target_schema, logger, ex
     
     legacy_filtered['MORPH_CODE'] = pd.to_numeric(legacy_filtered['MORPH_CODE'], errors='coerce').astype('Int64')
     
-    cols_to_exclude = ['HER2_FISH', 'SCREENINGSTATUSCOSD_CODE', 'S_TUMOUR_ID', 'AGE_AT_DIAGNOSIS', 'Ki67']
+    cols_to_exclude = ['HER2_FISH', 'SCREENINGSTATUSCOSD_CODE', 'S_TUMOUR_ID', 'AGE_AT_DIAGNOSIS', 'Ki67', 'GROUPED_SITE']
     
     legacy_filtered = legacy_filtered[existing_casum.columns.difference(cols_to_exclude)]
     

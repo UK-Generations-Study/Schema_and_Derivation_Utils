@@ -27,6 +27,8 @@ def derive_breast_morphology_code(data):
     if data.get('ICDMorphologyCode') and data['ICDMorphologyCode'] != 'null':
         if data.get('ICDMorphologyCode').startswith('M854') and data.get('PagetsDisease')=='Y':
             return data['ICDMorphologyCode']
+        elif data.get('Microinvasion')=='P':
+            return None
         elif data.get('ICDMorphologyCode').endswith('3') and data.get('InvasiveCarcinoma')=='P':
             return data['ICDMorphologyCode']
         elif data.get('ICDMorphologyCode').endswith('2') and data.get('InvasiveCarcinoma')=='N' and data.get('InsituCarcinoma')=='P':

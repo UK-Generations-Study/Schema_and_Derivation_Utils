@@ -25,7 +25,7 @@ from datetime import datetime
 import ICD_to_Site_Mapping as sm
 import Get_Legacy_Tumours as gl
 import Handle_Exceptions as he
-import matplotlib.pyplot as plt
+import SummaryReports as sp
 
 # create the logging object and format checker
 logger = createLogger('Generate_Cancer_Summary', cf.Delivery_log_path)
@@ -214,8 +214,6 @@ ovca_mapped.rename(columns={'StudyID':'STUDY_ID', 'DiagDat': 'DIAGNOSIS_DATE'}, 
 
 flagging_cancers.rename(columns={'StudyID':'STUDY_ID', 'DCancer': 'DIAGNOSIS_DATE', 'Histology':'MORPH_CODE'}, inplace=True) 
 
-#flagging_deaths.rename(columns={'StudyID':'STUDY_ID', 'DDeath': 'DIAGNOSIS_DATE'}, inplace=True) 
-
 registry_link = registry[['STUDY_ID', 'TUMOURID', 'DIAGNOSIS_DATE', 'SITE_ICD10_O2', 'MORPH_CODE', 'GRADE', \
                           'TUMOURSIZE', 'NODESEXCISED', 'NODESINVOLVED', 'LATERALITY', 'ER_STATUS', 'PR_STATUS', \
                           'HER2_STATUS', 'T_BEST', 'N_BEST', 'M_BEST', 'STAGE_BEST', 'SCREENDETECTED', \
@@ -354,6 +352,8 @@ CancerSummary = CancerSummary.drop(['ICD_CODE_mapped'], axis=1)
 # Populate SITE using ICD code
 CancerSummary['CANCER_SITE'] = CancerSummary.apply(lambda row: sm.get_site_from_ICD(row['ICD_CODE'], row['S_STUDY_ID']), axis=1)
 
+CancerSummary['GROUPED_SITE'] = CancerSummary['ICD_CODE'].apply(sm.group_sites)
+
 CancerSummary = CancerSummary[existing_casum.columns]
 
 #%% Exceptional rules
@@ -406,19 +406,17 @@ final_json, cleaned_data = cv.getCleanJsonData(CaSumFiltered_6.copy(), "NewCance
 
 invalid_rows = cv.dataValidation(final_json, target_schema)
 
-if len(invalid_rows)!=0:
+if len(invalid_rows)>=10:
     logger.warning("Invalid data found in Cancer Summary")
     # sys.exit('Refer to Invalid rows')
     logger.info('Invalid entry count: '+ str(len(invalid_rows)))
 
-#else:
+else:
     # Load the data to the database
-#    write_to_DB(CancerSummary, 'NewCancerSummary', upload_conn, logger)
+    write_to_DB(CaSumFiltered_6, 'NewCancerSummary', upload_conn, logger)
 
 #%% Summary reports
 logger.info("Generating Summary reports")
-
-summary_path = "SummaryReports_v2.xlsx"
 
 # QC checks
 invalid_diagdate = CancerSummary[CancerSummary['DIAGNOSIS_DATE'].isna() | (CancerSummary['AGE_AT_DIAGNOSIS']<0)]
@@ -435,124 +433,5 @@ CaSumFiltered_7['S_STUDY_ID'] = CaSumFiltered_7['S_STUDY_ID'].str.lower().fillna
 legacy_filtered['CANCER_SITE'] = legacy_filtered['CANCER_SITE'].str.lower().fillna('NaN')
 CaSumFiltered_7['CANCER_SITE'] = CaSumFiltered_7['CANCER_SITE'].str.lower().fillna('NaN')
 
-#%% Completeness of data - overall
-bins = [0, 2004, 2009, 2014, 2019, 2025]
-labels = ['<2004', '2005-2009', '2010-2014', '2015-2019', '2020-2025']
-CaSumFiltered_7['YEAR'] = CaSumFiltered_7['DIAGNOSIS_DATE'].dt.year
-CaSumFiltered_7['year_range'] = pd.cut(CaSumFiltered_7['YEAR'], bins=bins, labels=labels)
-
-all_cancer_cols = ['STUDY_ID', 'TUMOUR_ID', 'DIAGNOSIS_DATE', 'AGE_AT_DIAGNOSIS', 'ICD_CODE', 'MORPH_CODE',\
-                   'CANCER_SITE', 'GRADE', 'TUMOUR_SIZE', 'STAGE']
-
-# --- 2) Year-range completeness (%) and N computed the same way as overall ---
-completeness_pct = (CaSumFiltered_7.groupby('year_range')[all_cancer_cols]
-                    .apply(lambda df: df.notnull().mean() * 100).T )
-
-# counts (N) per year_range
-completeness_n = (CaSumFiltered_7.groupby('year_range')[all_cancer_cols]
-                .apply(lambda df: df.notnull().sum()).T)
-
-# Rename columns so they are explicit when merged
-completeness_pct = completeness_pct.rename(columns=lambda c: f"{c} Completeness (%)")
-completeness_n = completeness_n.rename(columns=lambda c: f"{c} N")
-completeness_n = completeness_n.reset_index().rename(columns={'index': 'Column3'})
-completeness_pct = completeness_pct.reset_index().rename(columns={'index': 'Column2'})
-
-overall_completeness = pd.DataFrame({
-                        'Completeness (%)': CaSumFiltered_7[all_cancer_cols].notnull().mean() * 100,
-                        'N': CaSumFiltered_7[all_cancer_cols].notnull().sum()})
-
-overall_completeness = overall_completeness.reset_index().rename(columns={'index': 'Column'})
-
-# --- 3) Merge overall + per-year-range into single dataframe ---
-overall_complete = pd.concat([overall_completeness, completeness_pct, completeness_n], axis=1)
-
-overall_complete = overall_complete.round(decimals=2)
-overall_complete = overall_complete.drop(['Column2', 'Column3'], axis=1)
-
-overall_complete = overall_complete[['Column', 'Completeness (%)', 'N', 
-                                    '<2004 Completeness (%)', '<2004 N',
-                                    '2005-2009 Completeness (%)', '2005-2009 N', 
-                                    '2010-2014 Completeness (%)', '2010-2014 N',
-                                    '2015-2019 Completeness (%)', '2015-2019 N',
-                                    '2020-2025 Completeness (%)', '2020-2025 N']]
-
-#%%
-# Completeness of data - breast variables
-br_cols = ['ER_STATUS', 'PR_STATUS', 'HER2_STATUS', 'HER2_FISH', 'Ki67', 'SCREEN_DETECTED',\
-               'SCREENINGSTATUSCOSD_CODE','LATERALITY', 'T_STAGE', 'N_STAGE', 'M_STAGE', \
-               'TUMOUR_SIZE', 'NODES_TOTAL', 'NODES_POSITIVE']
-br_subset = CaSumFiltered_7[CaSumFiltered_7['CANCER_SITE']=='breast'].copy()
-
-# --- 2) Year-range completeness (%) and N computed the same way as overall ---
-completeness_pct = (CaSumFiltered_7.groupby('year_range')[br_cols]
-                    .apply(lambda df: df.notnull().mean() * 100).T )
-
-# counts (N) per year_range
-completeness_n = (CaSumFiltered_7.groupby('year_range')[br_cols]
-                .apply(lambda df: df.notnull().sum()).T)
-
-# Rename columns so they are explicit when merged
-completeness_pct = completeness_pct.rename(columns=lambda c: f"{c} Completeness (%)")
-completeness_n = completeness_n.rename(columns=lambda c: f"{c} N")
-completeness_n = completeness_n.reset_index().rename(columns={'index': 'Column3'})
-completeness_pct = completeness_pct.reset_index().rename(columns={'index': 'Column2'})
-
-br_completeness = pd.DataFrame({
-                    'Completeness (%)': br_subset[br_cols].notnull().mean() * 100,
-                    'N': br_subset[br_cols].notnull().sum()})
-
-br_completeness = br_completeness.reset_index().rename(columns={'index': 'Column'})
-
-# --- 3) Merge overall + per-year-range into single dataframe ---
-br_complete = pd.concat([br_completeness, completeness_pct, completeness_n], axis=1)
-
-br_complete = br_complete.round(decimals=2)
-br_complete = br_complete.drop(['Column2', 'Column3'], axis=1)
-
-br_complete = br_complete[['Column', 'Completeness (%)', 'N', 
-                                    '<2004 Completeness (%)', '<2004 N',
-                                    '2005-2009 Completeness (%)', '2005-2009 N', 
-                                    '2010-2014 Completeness (%)', '2010-2014 N',
-                                    '2015-2019 Completeness (%)', '2015-2019 N',
-                                    '2020-2025 Completeness (%)', '2020-2025 N']]
-
-#%% Grouped by SITE
-CaSumFiltered_7['GROUPED_SITE'] = CaSumFiltered_7['ICD_CODE'].apply(sm.group_sites)
-site_groups = CaSumFiltered_7.groupby('GROUPED_SITE')[['STUDY_ID']].size().reset_index(name='Count')
-
-# Grouped by SOURCE for all cancers
-source_groups = CaSumFiltered_7.groupby('S_STUDY_ID')[['STUDY_ID']].size().reset_index(name='Count')
-
-# Grouped by SOURCE for breast cancer incidents
-CaSumFiltered_8 = CaSumFiltered_7[CaSumFiltered_7['CANCER_SITE']=='breast'].copy()
-br_source_groups = CaSumFiltered_8.groupby('S_STUDY_ID')[['STUDY_ID']].size().reset_index(name='Count')
-
-#%% Year of diagnosis range with data source % contributed
-br_source_percent = CaSumFiltered_7[CaSumFiltered_7['CANCER_SITE']=='breast'].copy()
-
-source_percent = (br_source_percent.groupby(['year_range', 'S_STUDY_ID'])['STUDY_ID']
-          .sum().groupby(level=0)
-          .apply(lambda x: 100 * x / x.sum())
-          .reset_index(name='%_contribution'))
-
-source_percent = source_percent[source_percent['%_contribution'].notna()]
-source_percent['year_range'] = source_percent['year_range'].astype(str)
-
-# PIVOT SO EACH YEAR RANGE IS A COLUMN
-pivoted = source_percent.pivot(index='S_STUDY_ID', columns='year_range', values='%_contribution').reset_index()
-pivoted = pivoted.rename(columns={'S_STUDY_ID':'Source'})
-pivoted = pivoted.round(decimals=2)
-
-#%% save the reports to an excel file
-reports = [('Overall Completeness', overall_complete),
-           ('Breast variable Completeness', br_complete),
-           ('Groups by SITE', site_groups),
-           ('Groups by Source', source_groups),
-           ('Groups by Source (Breast cases)', br_source_groups),
-           ('YearOfDiag by Source', pivoted)]
-
-with pd.ExcelWriter(os.path.join(cf.casum_report_path, summary_path)) as writer:
-    for rpt_name, data in reports:
-        sheet = rpt_name
-        data.to_excel(writer, sheet_name=sheet, index=False)
+# execute the script for summary reports
+sp.generate_summary_reports(CaSumFiltered_7, "SummaryReports_v3.xlsx")

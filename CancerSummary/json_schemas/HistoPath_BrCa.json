@@ -204,14 +204,14 @@
     "SpecimenType": {
       "description": "Surgical procedure performed to opbtain the main issue specimen described in the report",
       "type": ["string", "null"],
-      "enum": ["WBB", "WLE", "M", "NBO", "OB", "Re-ex", "SE", "TMP", "FNA", "LB", null],
+      "enum": ["WBB", "WLE", "M", "NBO", "OB", "REX", "SE", "TMP", "FNA", "LB", null],
       "enumDescriptions": [
         "WBB: if Wide Bore Needle Biopsy (also called Core Biopsy or Mammotome Biopsy) was performed.",
         "WLE: if Wide Local Excision was performed.",
         "M: if Mastectomy was performed.",
         "NBO: if only Node Biopsy was performed.",
         "OB: if Open Biopsy was performed.",
-        "Re-ex: if a re-excision (wide excision) was performed.",
+        "REX: if a re-excision (wide excision) was performed.",
         "SE: if Segmental Excision was performed.",
         "TMP: if Therapeutic Mammoplasty was performed.",
         "FNA: if Fine Needle Aspiration was performed.",
@@ -445,7 +445,7 @@
     "TypeComponent": {
       "description": "Type of Component that describes invasive carcinoma type in the report",
       "type": ["string", "null"],
-      "enum": ["Lob", "Pap", "Tub", "Crb", "Muc", "Med", "T/C", "Oth", "D/L", "Tul", null],
+      "enum": ["Lob", "Pap", "Tub", "Crb", "Muc", "Med", "T/C", "Oth", "D/L", "Tul", "Mic", null],
       "enumDescriptions": [
         "Lob': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Lobular'.",
         "Pap': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Papillary'.",
@@ -457,6 +457,7 @@
         "Oth: Other", 
         "D/L: Ductal/Lobular (mixed tumour with ductal and lobular components. Type = MTT)", 
         "Tul: Tubulobular (mixed tumour with tubular and lobular components. Type = MIX)",
+        "Mic: Infiltrating duct mixed with other types of carcinoma.",
         "null: if the invasive carcinoma type is not specified as of 'Pure Special Type' in the report (and so variable 'invasiveCarcinomaType' is not 'PST') or the component type is not specified in the report."
       ]
     },

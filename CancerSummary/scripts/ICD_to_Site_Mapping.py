@@ -162,7 +162,6 @@ def get_site_from_ICD(icd_code, s_study_id=None):
 
 
 # Mapping dictionary: keys are site names, values are lists of ICD code ranges
-# https://pubmed.ncbi.nlm.nih.gov/33538338/
 grouped_site_mapping = {
     'lip': ['C00-C06'],
     'oral cavity': ['C00-C06'],
@@ -181,7 +180,7 @@ grouped_site_mapping = {
     'melanoma of skin': ['C43'],
     'NMSC': ['C44'],
     'mesothelioma': ['C45'],
-    'Kaposi sarcoma': ['C46'],
+    'kaposi sarcoma': ['C46'],
     'female breast': ['C50'],
     'vulva': ['C51'],
     'vagina': ['C52'],
@@ -195,16 +194,19 @@ grouped_site_mapping = {
     'bladder': ['C67'],
     'brain, CNS': ['C70-C72'],
     'thyroid': ['C73'],
-    'Hodgkin lymphoma': ['C81'],
+    'hodgkin lymphoma': ['C81'],
     'non-Hodgkin lymphoma': ['C82-C86', 'C96'],
     'multiple myeloma': ['C88', 'C90'],
-    'leukemia': ['C91-C95']
+    'leukemia': ['C91-C95'],
+    'in-situ': ['D00-D09'],
+    'benign': ['D10-D36'],
+    'unknown/uncertain': ['D37-D48']
 }
 
 # Helper function to check if ICD code falls in range
 def group_sites(icd):
     if pd.isna(icd):
-        return 'Unknown'
+        return 'unknown'
 
     icd3 = icd[:3]
     for site, ranges in grouped_site_mapping.items():
@@ -216,4 +218,4 @@ def group_sites(icd):
             else:
                 if icd3 == r:
                     return site
-    return 'Unknown'
+    return 'unknown'
