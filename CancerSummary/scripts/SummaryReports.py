@@ -120,20 +120,26 @@ def generate_summary_reports(CaSumFiltered_7, summary_path):
     three_var_site_groups = CaSumFiltered_7.groupby('GROUPED_SITE')[['GRADE', 'STAGE', 'TUMOUR_SIZE']].agg(lambda x: x.notna().sum())\
                             .reset_index().rename(columns={'index': 'GROUPED_SITE'})
     
-    # Year of diagnosis range with data source % contributed
-    br_source_percent = CaSumFiltered_7[CaSumFiltered_7['CANCER_SITE']=='breast'].copy()
-    
-    source_percent = (br_source_percent.groupby(['year_range', 'S_STUDY_ID'])['STUDY_ID']
-              .sum().groupby(level=0)
-              .apply(lambda x: 100 * x / x.sum())
-              .reset_index(name='%_contribution'))
-    
-    source_percent = source_percent[source_percent['%_contribution'].notna()]
+    # Filter to breast cancer
+    br_source_percent = CaSumFiltered_7[CaSumFiltered_7['CANCER_SITE'] == 'breast'].copy()
+
+    tmp = (br_source_percent
+        .groupby(['year_range', 'S_STUDY_ID'])['STUDY_ID']
+        .sum()
+        .groupby(level=0)
+        .transform(lambda x: 100 * x / x.sum()))
+
+    # Fix: ensure MultiIndex has the correct names BEFORE reset_index
+    tmp.index = tmp.index.set_names(['year_range', 'S_STUDY_ID'])
+
+    # Convert Series -> DataFrame safely
+    source_percent = tmp.reset_index(name='%_contribution')
     source_percent['year_range'] = source_percent['year_range'].astype(str)
-    
-    # PIVOT SO EACH YEAR RANGE IS A COLUMN
-    pivoted = source_percent.pivot(index='S_STUDY_ID', columns='year_range', values='%_contribution').reset_index()
-    pivoted = pivoted.rename(columns={'S_STUDY_ID':'Source'})
+    source_percent = source_percent[source_percent['%_contribution'].notna()]
+
+    pivoted = (source_percent.pivot(index='S_STUDY_ID', columns='year_range', values='%_contribution').reset_index())
+
+    pivoted = pivoted.rename(columns={'S_STUDY_ID': 'Source'})
     pivoted = pivoted.round(decimals=2)
     
     # save the reports to an excel file
@@ -142,8 +148,8 @@ def generate_summary_reports(CaSumFiltered_7, summary_path):
                ('Non-Null count by SITE (only 3)', three_var_site_groups),
                ('Groups by SITE', site_groups),
                ('Groups by Source', source_groups),
-               ('Groups by Source (Breast cases)', br_source_groups),
-               ('YearOfDiag by Source', pivoted)]
+               ('Groups by Source (Breast)', br_source_groups),
+               ('YearOfDiag by Source (Breast)', pivoted)]
     
     with pd.ExcelWriter(os.path.join(cf.casum_report_path, summary_path)) as writer:
         for rpt_name, data in reports:

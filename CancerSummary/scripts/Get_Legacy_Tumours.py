@@ -68,6 +68,9 @@ def prepare_legacy_data(ca_summary, ca_summary_schema, target_schema, logger, ex
     legacy_filtered['GRADE'] = np.where(legacy_filtered['GRADE'].isna() | legacy_filtered['GRADE'].str.contains('G'), \
                                        legacy_filtered['GRADE'], 'G' + legacy_filtered['GRADE'])
     
+    legacy_filtered['ICD_CODE'] = np.where(legacy_filtered['ICD_CODE'].notna() & legacy_filtered['ICD_CODE']=='C56Z',\
+                                       legacy_filtered['ICD_CODE'].str[:3], legacy_filtered['ICD_CODE'])
+        
     stage_map = {'I':'1', 'II':'2', 'III':'3', 'IV':'4'}
     legacy_filtered['STAGE'] = legacy_filtered['STAGE'].map(stage_map).fillna(legacy_filtered['STAGE'])
     

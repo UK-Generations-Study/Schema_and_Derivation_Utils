@@ -61,7 +61,7 @@
       "x-sourcePriority": [
         "CancerRegistry.SITE_ICD10_O2",
         "FlaggingCancers.CancerICD",
-        "FlaggingDeaths.UCCode"
+        "HistoPath_OvCa.ICD_CODE"
       ],
       "maxLength": 4
     },
@@ -72,12 +72,11 @@
     "MORPH_CODE": {
       "type": ["number", "null"],
       "description": "ICD-O morphology code (tumour histology/behaviour).",
-      "x-description": "ICD-O morphology code describing the histological type/behaviour of the tumour (as provided by the source; may include the behaviour suffix, e.g., \"/2\", \"/3\"). Per tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.MORPH_ICD10_O2 (preferred); 2) CancerRegistry.MORPH_CODE (fallback); 3) HistoPath_BrCa.MORPH_CODE. Store the code exactly as provided (no recoding).",
+      "x-description": "ICD-O morphology code describing the histological type/behaviour of the tumour (as provided by the source; may include the behaviour suffix, e.g., \"/2\", \"/3\"). Per tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.HISTOLOGY_CODED (renamed as MORPH_CODE) 2) FlaggingCancers.MORPH_CODE 3) HistoPath_BrCa.MORPH_CODE. Store the code exactly as provided (no recoding).",
       "x-sourcePriority": [
         "CancerRegistry.MORPH_CODE",
         "FlaggingCancers.MORPH_CODE",
-        "HistoPath_BrCa.MORPH_CODE",
-        "HistoPath_OvCa.MORPH_CODE"
+        "HistoPath_BrCa.MORPH_CODE"
       ],
       "minimum": 8000,
       "maximum": 99999
@@ -94,7 +93,7 @@
     "GROUPED_SITE": {
       "type": ["string", "null"],
       "description": "Combined site for cancers as per GLOBOCAN 2020 database",
-      "x-description": "The cancers are combined using ICD-10 codes between C00-C97 as per GLOBOCAN 2020 database. Reference link: https://pubmed.ncbi.nlm.nih.gov/33538338/ (Last access date: 17/11/2025)"
+      "x-description": "The cancers are combined using ICD-10 codes between C00-C97 as per GLOBOCAN 2020 database. Reference link: https://pubmed.ncbi.nlm.nih.gov/33538338/ (Last access date: 17/11/2025). There are 3 additional groups to represent in-situ, benign, and unknown tumours"
     },
     "GRADE": {
       "type": ["string", "null"],

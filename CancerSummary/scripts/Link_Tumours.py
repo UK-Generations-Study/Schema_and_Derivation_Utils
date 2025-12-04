@@ -115,6 +115,13 @@ def get_linking_rules(source1: str, source2: str) -> bool:
     return sources in linkable_pairs
 
 
+# helper to safely compare values
+def safe_equal(a, b) -> bool:
+    """Return True only if both values are non-null and equal."""
+    if pd.isna(a) or pd.isna(b):
+        return False
+    return a == b
+
 # should_link_tumours
 def should_link_tumours(anchor: pd.Series, candidate: pd.Series, window: int = 90) -> bool:
     """
@@ -123,7 +130,7 @@ def should_link_tumours(anchor: pd.Series, candidate: pd.Series, window: int = 9
         anchor (Series): Series of data for tumour to compare
         candidate (Series): Series of data for tumour to be compared
         window (integer): duration for diagnosis date match
-    Returns: Boolean object    
+    Returns: Boolean object
     """
     # same patient
     if anchor["STUDY_ID"] != candidate["STUDY_ID"]:
@@ -150,39 +157,45 @@ def should_link_tumours(anchor: pd.Series, candidate: pd.Series, window: int = 9
             old_row = candidate
             new_row = anchor
 
-        # exact-match shortcut across linking fields for safety: if they match exactly -> link
+        # exact-match shortcut across linking fields
         if new_row["source"] in ("CancerRegistry", "HistoPath_BrCa"):
             linking_fields = ["DIAGNOSIS_DATE", "LATERALITY", "MORPH_CODE"]
-        else:  # HistoPath_OvCa, FlaggingCancers, etc.
+        elif new_row["source"] in ("HistoPath_OvCa"):
+            linking_fields = ["DIAGNOSIS_DATE", "ICD_CODE"]
+        else:
             linking_fields = ["DIAGNOSIS_DATE", "MORPH_CODE"]
 
-        identical = all(((pd.isna(old_row.get(f)) and pd.isna(new_row.get(f))) or (old_row.get(f) == new_row.get(f)))
-                        for f in linking_fields)
+        identical = all(
+            (pd.isna(old_row.get(f)) and pd.isna(new_row.get(f))) or safe_equal(old_row.get(f), new_row.get(f))
+            for f in linking_fields
+        )
         if identical:
             return True
 
         # Otherwise use same rules (within date window already checked)
         if new_row["source"] in ("CancerRegistry", "HistoPath_BrCa"):
-            return (old_row.get("MORPH_CODE") == new_row.get("MORPH_CODE") and
-                    old_row.get("LATERALITY") == new_row.get("LATERALITY"))
+            return safe_equal(old_row.get("MORPH_CODE"), new_row.get("MORPH_CODE")) and \
+                   safe_equal(old_row.get("LATERALITY"), new_row.get("LATERALITY"))
+        elif new_row["source"] in ("HistoPath_OvCa"):
+            return safe_equal(old_row.get("ICD_CODE"), new_row.get("ICD_CODE"))
         else:
-            return old_row.get("MORPH_CODE") == new_row.get("MORPH_CODE")
+            return safe_equal(old_row.get("MORPH_CODE"), new_row.get("MORPH_CODE"))
 
     # Regular new-vs-new source case
     sources = tuple(sorted([anchor["source"], candidate["source"]]))
 
     if sources == ('CancerRegistry', 'HistoPath_BrCa'):
-        return (anchor.get("LATERALITY") == candidate.get("LATERALITY")
-                and anchor.get("MORPH_CODE") == candidate.get("MORPH_CODE"))
+        return safe_equal(anchor.get("LATERALITY"), candidate.get("LATERALITY")) and \
+               safe_equal(anchor.get("MORPH_CODE"), candidate.get("MORPH_CODE"))
 
     elif sources in [('CancerRegistry', 'HistoPath_OvCa'),
-                     ('CancerRegistry', 'FlaggingCancers'),
-                     ('FlaggingCancers', 'HistoPath_BrCa'),
                      ('FlaggingCancers', 'HistoPath_OvCa')]:
-        
-        return anchor.get("MORPH_CODE") == candidate.get("MORPH_CODE")
+        return safe_equal(anchor.get("ICD_CODE"), candidate.get("ICD_CODE"))
 
-    # default no-link
+    elif sources in [('CancerRegistry', 'FlaggingCancers'),
+                     ('FlaggingCancers', 'HistoPath_BrCa')]:
+        return safe_equal(anchor.get("MORPH_CODE"), candidate.get("MORPH_CODE"))
+
     return False
 
 
@@ -210,6 +223,7 @@ def build_clusters_optimized(data_sources: dict, window: int = 90) -> List[List[
                 "DIAGNOSIS_DATE": pd.to_datetime(row.get("DIAGNOSIS_DATE"), errors="coerce"),
                 "LATERALITY": row.get("LATERALITY"),
                 "MORPH_CODE": row.get("MORPH_CODE"),
+                "ICD_CODE": row.get("ICD_CODE"),
                 "full_row": row,   # keep original Series/dict for later use
                 "original_index": idx
             }
@@ -261,7 +275,8 @@ def build_clusters_optimized(data_sources: dict, window: int = 90) -> List[List[
                     "STUDY_ID": rec["STUDY_ID"],
                     "DIAGNOSIS_DATE": rec["DIAGNOSIS_DATE"],
                     "LATERALITY": rec["LATERALITY"],
-                    "MORPH_CODE": rec["MORPH_CODE"]
+                    "MORPH_CODE": rec["MORPH_CODE"],
+                    "ICD_CODE": rec["ICD_CODE"]
                 })
 
             clusters.append(formatted_cluster)

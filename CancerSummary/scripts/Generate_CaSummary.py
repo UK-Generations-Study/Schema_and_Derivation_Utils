@@ -56,7 +56,7 @@ for source, raw_schema in cf.casum_data_sources.items():
         logger.info(source + ' row count: ' + str(len(data)))
 
     # read the JSON schema
-    with open(os.path.join(cf.casum_json_path, raw_schema), 'r') as schema:    
+    with open(os.path.join(cf.casum_json_path, raw_schema), 'r') as schema:
         json_schema = json.load(schema)
         all_schemas[source] = json_schema
 
@@ -83,7 +83,7 @@ fl_cancers = all_data['FlaggingCancers']
 hist_Brca = all_data['Histopath_BrCa_GS_v1']
 hist_Ovca = all_data['OvCa_Histopath_II']
 ca_summary = all_data['casummary_v1']
-existing_casum = all_data['NewCancerSummary']
+existing_casum = all_data['NewCancerSummary_v2']
 existing_casum = existing_casum.drop(['SUMMARY_ID'], axis=1)
 
 # get the JSON schemas
@@ -92,14 +92,14 @@ fl_cancers_schema = all_schemas['FlaggingCancers']
 hist_Brca_schema = all_schemas['Histopath_BrCa_GS_v1']
 hist_Ovca_schema = all_schemas['OvCa_Histopath_II']
 ca_summary_schema = all_schemas['casummary_v1']
-target_schema = all_schemas['NewCancerSummary']
+target_schema = all_schemas['NewCancerSummary_v2']
 
 # select required columns
 can_reg.rename(columns={'STUDY_ID':'PersonID'}, inplace=True)
-registry = can_reg[['PersonID', 'TUMOURID', 'DIAGNOSISDATEBEST', 'SITE_ICD10_O2', 'MORPH_ICD10_O2',\
-                    'MORPH_CODED', 'HISTOLOGY_CODED', 'GRADE', 'TUMOURSIZE', 'NODESEXCISED', \
-                    'NODESINVOLVED', 'LATERALITY', 'ER_STATUS', 'ER_SCORE', 'PR_STATUS', 'PR_SCORE', 'HER2_STATUS',\
-                    'T_BEST', 'N_BEST', 'M_BEST', 'STAGE_BEST', 'SCREENDETECTED', 'SCREENINGSTATUSCOSD_CODE']].copy()
+registry = can_reg[['PersonID', 'TUMOURID', 'DIAGNOSISDATEBEST', 'SITE_ICD10_O2', 'HISTOLOGY_CODED', 'GRADE', \
+                    'TUMOURSIZE', 'NODESEXCISED', 'NODESINVOLVED', 'LATERALITY', 'ER_STATUS', 'ER_SCORE', 'PR_STATUS', \
+                    'PR_SCORE', 'HER2_STATUS','T_BEST', 'N_BEST', 'M_BEST', 'STAGE_BEST', 'SCREENDETECTED', \
+                    'SCREENINGSTATUSCOSD_CODE']].copy()
 
 flagging_cancers = fl_cancers[['StudyID', 'TumourID', 'DCancer', 'CancerICD', 'Histology']].copy()
 
@@ -187,17 +187,11 @@ patterns = lookup_df["StagePattern"].tolist()
 logger.info("Deriving the Stage variable for HistoPath Breast data")
 brca_mapped["Stage"] = brca_mapped.apply(md.get_stage, axis=1, args=(patterns, lookup_dict))
 
-# Deriving ICD morphology code for Path report data
-
-
 # Deriving ICD morphology code for Breast data
 logger.info("Deriving ICD morphology code for breast cancer data")
 
 brca_mapped['MORPH_CODE'] = brca_mapped.apply(mc.derive_breast_morphology_code, axis=1)
 brca_mapped['MORPH_CODE'] = brca_mapped['MORPH_CODE'].str.replace("M", "",)
-
-logger.info("Deriving ICD morphology code for ovarian cancer data")
-ovca_mapped['MORPH_CODE'] = ovca_mapped.apply(mc.derive_ovarian_morphology_code, axis=1)
 
 #%% get source columns ready for tumour selection logic
 logger.info("Prepare sources to link the tumours")
@@ -227,7 +221,7 @@ brca_mapped['OtherNodesPositive'] = pd.to_numeric(brca_mapped['OtherNodesPositiv
 brca_mapped['NodesTotal'] = brca_mapped['AxillaryNodesTotal'] + brca_mapped['OtherNodesTotal']
 brca_mapped['NodesPositive'] = brca_mapped['AxillaryNodesPositive'] + brca_mapped['OtherNodesPositive']
 
-#%% # filter out the benign and non-malignant cases
+#%% filter out the benign and non-malignant cases
 logger.info("Filter source data as required")
 brca_mapped = brca_mapped[~brca_mapped['MORPH_CODE'].str.startswith("0", na=False)]
 
@@ -241,16 +235,18 @@ brca_link = brca_mapped[['STUDY_ID', 'DIAGNOSIS_DATE', 'LATERALITY', 'MORPH_CODE
 
 brca_link['MORPH_CODE'] = pd.to_numeric(brca_link['MORPH_CODE'], errors='coerce').astype('Int64')
 
-ovca_link = ovca_mapped[['STUDY_ID', 'DIAGNOSIS_DATE', 'MORPH_CODE', 'Grade_I_II_III', 'Stage_FIGO']].copy()
-ovca_link['MORPH_CODE'] = pd.to_numeric(ovca_link['MORPH_CODE'], errors='coerce').astype('Int64')
+ovca_link = ovca_mapped[['STUDY_ID', 'DIAGNOSIS_DATE', 'Grade_I_II_III', 'Stage_FIGO']].copy()
 ovca_link['Grade_I_II_III'] = np.where(ovca_link['Grade_I_II_III']=='N', None, ovca_link['Grade_I_II_III'])
+ovca_link['ICD_CODE'] = 'C56'
 
 flagging_cancers_link = flagging_cancers[['STUDY_ID', 'TumourID', 'DIAGNOSIS_DATE', 'CancerICD', 'MORPH_CODE']].copy()
 flagging_cancers_link['MORPH_CODE'] = pd.to_numeric(flagging_cancers_link['MORPH_CODE'], errors='coerce').astype('Int64')
+flagging_cancers_link['ICD_CODE'] = flagging_cancers_link['CancerICD'].str[:3]
 
 registry_link['STUDY_ID'] = registry_link['STUDY_ID'].astype('Int64')
 registry_link['STAGE_BEST'] = np.where(registry_link['STAGE_BEST'].isin(['NA', 'U', 'X']), None, registry_link['STAGE_BEST'])
 registry_link['MORPH_CODE'] = pd.to_numeric(registry_link['MORPH_CODE'], errors='coerce').astype('Int64')
+registry_link['ICD_CODE'] = registry_link['SITE_ICD10_O2'].str[:3]
 
 existing_casum['MORPH_CODE'] = pd.to_numeric(existing_casum['MORPH_CODE'], errors='coerce').astype('Int64')
 
@@ -309,7 +305,7 @@ except Exception as e:
     logger.error("Failed to build tumour dataset:" + str(e))
 
 # save the tumour source mapping
-#lt.tumour_source_mapping(clusters, CancerSummary)
+lt.tumour_source_mapping(clusters, CancerSummary)
 
 #%% Populate other remaining fields
 logger.info("Deriving Age at diagnosis and SITE")
@@ -353,6 +349,9 @@ CancerSummary = CancerSummary.drop(['ICD_CODE_mapped'], axis=1)
 CancerSummary['CANCER_SITE'] = CancerSummary.apply(lambda row: sm.get_site_from_ICD(row['ICD_CODE'], row['S_STUDY_ID']), axis=1)
 
 CancerSummary['GROUPED_SITE'] = CancerSummary['ICD_CODE'].apply(sm.group_sites)
+
+# filter out the benign cases
+CancerSummary = CancerSummary[(CancerSummary['GROUPED_SITE']!='benign') & (CancerSummary['GROUPED_SITE']!='unknown')]
 
 CancerSummary = CancerSummary[existing_casum.columns]
 
@@ -401,6 +400,7 @@ logger.info("Validating the result data using JSON schema")
 # type casting for schema validation
 CaSumFiltered_6['TUMOUR_ID'] = pd.to_numeric(CaSumFiltered_6['TUMOUR_ID'], errors='coerce').astype('Int64')
 CaSumFiltered_6['TUMOUR_SIZE'] =  pd.to_numeric(CaSumFiltered_6['TUMOUR_SIZE'], errors='coerce')
+CaSumFiltered_6['MORPH_CODE'] = pd.to_numeric(CaSumFiltered_6['MORPH_CODE'], errors='coerce').astype('Int64')
 
 final_json, cleaned_data = cv.getCleanJsonData(CaSumFiltered_6.copy(), "NewCancerSummary")
 
@@ -413,7 +413,7 @@ if len(invalid_rows)>=10:
 
 else:
     # Load the data to the database
-    write_to_DB(CaSumFiltered_6, 'NewCancerSummary', upload_conn, logger)
+    write_to_DB(CaSumFiltered_6, 'NewCancerSummary_v2', upload_conn, logger)
 
 #%% Summary reports
 logger.info("Generating Summary reports")
@@ -434,4 +434,29 @@ legacy_filtered['CANCER_SITE'] = legacy_filtered['CANCER_SITE'].str.lower().fill
 CaSumFiltered_7['CANCER_SITE'] = CaSumFiltered_7['CANCER_SITE'].str.lower().fillna('NaN')
 
 # execute the script for summary reports
-sp.generate_summary_reports(CaSumFiltered_7, "SummaryReports_v3.xlsx")
+sp.generate_summary_reports(CaSumFiltered_7, "SummaryReports_v4.xlsx")
+
+#%% Pseudo-anonymise the data
+logger.info("Pseudo-anonymise and create JSON data")
+
+sidcode = read_data('select StudyID, TCode, Random from SIDCodes', mailing_conn, logger)
+sidcode['StudyID'] = pd.to_numeric(sidcode['StudyID'], errors='coerce').astype('Int64')
+
+CaSum_pseudo_anon = CaSumFiltered_6.merge(sidcode, left_on=['STUDY_ID'], right_on=['StudyID'], how='left')
+
+CaSum_pseudo_anon['DIAGNOSIS_DATE'] = CaSum_pseudo_anon['DIAGNOSIS_DATE'] + pd.to_timedelta(CaSum_pseudo_anon['Random'], unit='days')
+
+CaSum_pseudo_anon = CaSum_pseudo_anon.drop(['StudyID', 'STUDY_ID', 'Random'], axis=1)
+
+version_ts = {'version': '1.0.0', 'timestamp': str(datetime.now())}
+
+CaSum_pseudo_anon['DIAGNOSIS_DATE'] = CaSum_pseudo_anon['DIAGNOSIS_DATE'].dt.strftime('%Y-%m-%d %H:%M:%S')
+CaSum_pseudo_anon['CREATED_TIME'] = CaSum_pseudo_anon['CREATED_TIME'].dt.strftime('%Y-%m-%d %H:%M:%S')
+CaSum_pseudo_anon = CaSum_pseudo_anon.replace(np.nan, None)
+
+df_to_dict = CaSum_pseudo_anon.to_dict(orient='records')
+
+json_data = {**version_ts, "data": df_to_dict}
+
+with open(os.path.join(cf.casum_report_path, 'CancerSummary.json'), 'w') as f:
+    json.dump(json_data, f, indent=4)

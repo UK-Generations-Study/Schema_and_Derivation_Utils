@@ -116,7 +116,7 @@ def getCleanJsonData(df, source):
                     lambda x: str(int(x)) if pd.notna(x) and x==int(x) else (str(x) if pd.notna(x) else np.nan))        
 
     # nan to null
-    df = df.where(pd.notnull(df), None)
+    df = df.where(pd.notna(df), None)
     
     # convert the data into JSON format
     json_data = df.to_dict(orient='records')
