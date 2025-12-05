@@ -4,7 +4,7 @@
     "STUDY_ID": {
       "type": ["integer"],
       "description": "Unique participant identifier",
-      "x-description": "Unique participant identifier in the Generations Study. Present in all source datasets as CancerRegistry.STUDY_ID, FlaggingCancers.STUDY_ID, HistoPath_BrCa.STUDY_ID, and HistoPath_OvCa.STUDY_ID. Values are identical across sources and serve as the primary key to link records between datasets. No transformation or source prioritisation required.",
+      "x-description": "Unique participant identifier in the Generations Study. Present in all source datasets as CancerRegistry.STUDY_ID, FlaggingCancers.STUDY_ID, HistoPath_BrCa.STUDY_ID, and HistoPath_OvCa.STUDY_ID. Values are identical across sources and serve as the primary key to link records between datasets. No transformation or source prioritisation required. These are renamed to STUDY_ID to link among the sources",
       "x-sourcePriority": [
         "CancerRegistry.STUDY_ID",
         "FlaggingCancers.STUDY_ID",
@@ -35,7 +35,7 @@
       "type": ["string"],
       "format": "date-time",
       "description": "Best estimate of tumour diagnosis date (per tumour).",
-      "x-description": "Best estimate of the tumour diagnosis date (YYYY-MM-DD). Each participant may have multiple diagnosis dates, one per distinct tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.DIAGNOSIS_DATE; 2)Flagging Cancers - use DIAGNOSIS_DATE; 3) Pathology reports — for breast use HistoPath_BrCa.DIAGNOSIS_DATE ; for ovarian use HistoPath_OvCa.DIAGNOSIS_DATE ; 4) Flagging Deaths - use DIAGNOSIS_DATE",
+      "x-description": "Best estimate of the tumour diagnosis date (YYYY-MM-DD). Each participant may have multiple diagnosis dates, one per distinct tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.DIAGNOSIS_DATE; 2)Flagging Cancers - use DIAGNOSIS_DATE; 3) Pathology reports — for breast use HistoPath_BrCa.DIAGNOSIS_DATE ; for ovarian use HistoPath_OvCa.DIAGNOSIS_DATE. These are renamed to DIAGNOSIS_DATE to link among the sources",
       "x-sourcePriority": [
         "CancerRegistry.DIAGNOSIS_DATE",
         "FlaggingCancers.DIAGNOSIS_DATE",
@@ -72,7 +72,7 @@
     "MORPH_CODE": {
       "type": ["number", "null"],
       "description": "ICD-O morphology code (tumour histology/behaviour).",
-      "x-description": "ICD-O morphology code describing the histological type/behaviour of the tumour (as provided by the source; may include the behaviour suffix, e.g., \"/2\", \"/3\"). Per tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.HISTOLOGY_CODED (renamed as MORPH_CODE) 2) FlaggingCancers.MORPH_CODE 3) HistoPath_BrCa.MORPH_CODE. Store the code exactly as provided (no recoding).",
+      "x-description": "ICD-O morphology code describing the histological type/behaviour of the tumour (as provided by the source; may include the behaviour suffix, e.g., \"/2\", \"/3\"). Per tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.HISTOLOGY_CODED (renamed as MORPH_CODE) 2) FlaggingCancers.MORPH_CODE 3) HistoPath_BrCa.MORPH_CODE. Store the code exactly as provided (no recoding). These are renamed to MORPH_CODE to link among the sources",
       "x-sourcePriority": [
         "CancerRegistry.MORPH_CODE",
         "FlaggingCancers.MORPH_CODE",
@@ -314,7 +314,7 @@
     "LATERALITY": {
       "type": ["string", "null"],
       "description": "Side of body affected (left, right, bilateral, unknown).",
-      "x-description": "Laterality of the tumour (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.LATERALITY (retain registry codes: L, R, M, B, 8, 9). Cancer Registry values take precedence when available; harmonise all values to registry coding. 2) HistoPath_BrCa.LATERALITY (map L/R as-is, U → '9');",
+      "x-description": "Laterality of the tumour (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.LATERALITY (retain registry codes: L, R, M, B, 8, 9). Cancer Registry values take precedence when available; harmonise all values to registry coding. 2) HistoPath_BrCa.LATERALITY (map L/R as-is, U → '9'). These are renamed to STUDY_ID link among the sources",
       "x-sourcePriority": [
         "CancerRegistry.LATERALITY",
         "HistoPath_BrCa.LATERALITY"        

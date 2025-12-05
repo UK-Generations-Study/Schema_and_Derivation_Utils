@@ -72,7 +72,7 @@ for source, raw_schema in cf.casum_data_sources.items():
     if len(invalid_rows)!=0:
         logger.warning("Invalid data found during validation")
         logger.info('Invalid entry count - ' + source + ': '+ str(len(invalid_rows)))
-#        sys.exit('Refer to Invalid rows')
+        # sys.exit('Refer to Invalid rows')
     else:
         logger.info("Validation complete. No erros")
 
@@ -252,15 +252,16 @@ existing_casum['MORPH_CODE'] = pd.to_numeric(existing_casum['MORPH_CODE'], error
 
 # Legacy tumours (take only confirmed tumours)
 legacy_filtered = gl.prepare_legacy_data(ca_summary, ca_summary_schema, target_schema, logger, existing_casum)
+existing_casum['TUMOUR_ID'] = pd.to_numeric(existing_casum['TUMOUR_ID'], errors='coerce').astype('Int64')
 
 # selecting data sources
 data_sources = {
-    "CancerRegistry": registry_link.copy(),
-    "FlaggingCancers": flagging_cancers_link.copy(),
-    "HistoPath_BrCa": brca_link.copy(),
-    "HistoPath_OvCa": ovca_link.copy(),
-    "ExistingCaSum": existing_casum.copy(),
-    "Legacy": legacy_filtered.copy()
+    "CancerRegistry": registry_link,
+    "FlaggingCancers": flagging_cancers_link,
+    "HistoPath_BrCa": brca_link,
+    "HistoPath_OvCa": ovca_link,
+    "ExistingCaSum": existing_casum,
+    "Legacy": legacy_filtered
 }
 
 for src, df in data_sources.items():
@@ -305,7 +306,7 @@ except Exception as e:
     logger.error("Failed to build tumour dataset:" + str(e))
 
 # save the tumour source mapping
-lt.tumour_source_mapping(clusters, CancerSummary)
+# lt.tumour_source_mapping(clusters, CancerSummary)
 
 #%% Populate other remaining fields
 logger.info("Deriving Age at diagnosis and SITE")
@@ -340,7 +341,7 @@ CancerSummary['ICD_CODE'] = CancerSummary['ICD_CODE'].str.rstrip('-')
 
 CancerSummary['ICD_CODE_mapped'] = CancerSummary['ICD_CODE'].map(icd_mapping).fillna(CancerSummary['ICD_CODE'])
 
-CancerSummary['ICD_CODE'] = np.where(~CancerSummary['ICD_CODE'].str.match(r'^[A-Za-z]').fillna(False) & CancerSummary['ICD_CODE'].notna(),\
+CancerSummary['ICD_CODE'] = np.where(~CancerSummary['ICD_CODE'].str.match(r'^[A-Za-z]').fillna(False),\
                                    CancerSummary['ICD_CODE_mapped'], CancerSummary['ICD_CODE'])\
 
 CancerSummary = CancerSummary.drop(['ICD_CODE_mapped'], axis=1)
@@ -365,7 +366,7 @@ for col in CaSumFiltered_1.columns:
     if col.startswith('S_'):
         CaSumFiltered_1 = CaSumFiltered_1.copy()
         CaSumFiltered_1[col] = CaSumFiltered_1[col].str.split('.').str[0]
-        CaSumFiltered_1[col] = CaSumFiltered_1[col].str.replace('CancerRegistry', 'CancerRegistry_0125')
+        CaSumFiltered_1[col] = CaSumFiltered_1[col].str.replace(r'\bCancerRegistry\b', 'CancerRegistry_0125', regex=True)
         CaSumFiltered_1[col] = CaSumFiltered_1[col].str.replace(' ', '_')
         CaSumFiltered_1[col] = CaSumFiltered_1[col].str.replace('PHE_', 'CancerRegistry_')
         CaSumFiltered_1[col] = CaSumFiltered_1[col].str.replace('flagging', 'Flagging')
@@ -460,3 +461,5 @@ json_data = {**version_ts, "data": df_to_dict}
 
 with open(os.path.join(cf.casum_report_path, 'CancerSummary.json'), 'w') as f:
     json.dump(json_data, f, indent=4)
+    
+'''

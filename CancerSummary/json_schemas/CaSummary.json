@@ -50,7 +50,7 @@
     },
     "diagdate": {
       "description": "Selected Diagnosis date",
-      "type": ["string"],
+      "type": ["string", "null"],
       "format": "date-time",
       "maxLength": 23
     },
@@ -74,13 +74,13 @@
     },
     "regdate": {
       "description": "Registry diagnosis date",
-      "type": ["string"],
+      "type": ["string", "null"],
       "format": "date-time",
       "maxLength": 23
     },
     "repdate": {
       "description": "Participant Reported diagnosis date",
-      "type": ["string"],
+      "type": ["string", "null"],
       "format": "date-time",
       "maxLength": 23
     },
@@ -289,13 +289,13 @@
     },
     "cohortentrydate": {
       "description": "Date of Entry to Cohort (see dbo_General)",
-      "type": ["string"],
+      "type": ["string", "null"],
       "format": "date-time",
       "maxLength": 23
     },
     "date_added": {
       "description": "Date added to table",
-      "type": ["string"],
+      "type": ["string", "null"],
       "format": "date-time",
       "maxLength": 23
     },
@@ -306,7 +306,7 @@
     },
     "update": {
       "description": "Date record updated",
-      "type": ["string"],
+      "type": ["string", "null"],
       "format": "date-time",
       "maxLength": 23
     },
