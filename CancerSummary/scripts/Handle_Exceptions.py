@@ -80,136 +80,112 @@ def expand_registry_laterality(df):
     return new_df
 
 
-def resolve_morph_code_conflicts(df: pd.DataFrame, sources) -> pd.DataFrame:
+def resolve_morph_code_conflicts(df: pd.DataFrame, registry_sources) -> pd.DataFrame:
     """
-    Resolves MORPH_CODE conflicts between 2 sources.
-    Fully compatible with multi-row groups and NaN handling.
-
-    Logic:
-      1. Group by STUDY_ID, DIAGNOSIS_DATE, or LATERALITY depending pn the sources.
-      2. If CANCER_SITE differs → keep all.
-      3. If same → apply per-pair logic:
-         - If one MORPH_CODE is null → keep the non-null.
-         - If both contain '8500':
-             keep one ending with '3' if available, else Registry.
-         - If only one contains '8500' → keep the other.
-         - Else → prefer Registry.
-      4. If multiple Registry/HistoPath pairs → evaluate each pair.
-      5. Remove all losing rows from that group.
+    Resolves MORPH_CODE conflicts only when Registry and other sources differ.
+    Keeps Registry rows; drops conflicting non-Registry rows.
+    If no conflict, all rows are kept.
     """
 
     df = df.copy()
     df["_orig_index"] = df.index
-    to_drop = set()
     new_rows = []
 
-    def morph_to_str(m):
-        """Convert numeric/float morph safely to string; return '' for NaN/empty."""
-        if pd.isna(m):
-            return ""
-        # preserve strings as-is, but remove .0 if coming from float-like ints
-        try:
-            # if it's a float that's effectively an integer, cast to int first
-            if isinstance(m, float) and m.is_integer():
-                return str(int(m))
-            return str(m).strip()
-        except Exception:
-            return str(m)
-
-    if set(sources) == {"CancerRegistry_0125", "HistoPath_BrCa"}:
+    # Choose grouping rule
+    if {"CancerRegistry_0125", "HistoPath_BrCa"}.issubset(registry_sources):
         grouped = df.groupby(["STUDY_ID", "DIAGNOSIS_DATE", "LATERALITY"])
     else:
         grouped = df.groupby(["STUDY_ID", "DIAGNOSIS_DATE"])
 
     for _, group in grouped:
-        # single-row group -> keep
+
+        # Single-row group -> keep
         if len(group) == 1:
-            new_rows.append(group.iloc[0])
+            new_rows.append(group.iloc[0].to_dict())
             continue
 
-        # If cancer sites differ, do not resolve (keep all)
+        # If cancer sites differ → keep all
         if group["CANCER_SITE"].nunique(dropna=True) > 1:
             new_rows.extend(group.to_dict("records"))
             continue
 
-        # Separate relevant sources and others
-        candidates = group[group["S_STUDY_ID"].isin(sources)].copy()
-        others = group[~group["S_STUDY_ID"].isin(sources)].to_dict("records")
-
-        # If no candidates or only one type present -> keep as-is
-        if candidates.empty or len(candidates) == 1:
+        # Check if MORPH_CODE conflict exists
+        morphs = group["MORPH_CODE"].dropna().unique()
+        if len(morphs) <= 1:
+            # No conflict, keep all rows
             new_rows.extend(group.to_dict("records"))
             continue
 
-        # Build ranking keys for each candidate
-        ranks = []
-        for idx, row in candidates.iterrows():
-            morph_raw = row.get("MORPH_CODE")
-            morph_s = morph_to_str(morph_raw)
+        # Conflict exists → keep only Registry rows
+        registry_rows = group[group["S_STUDY_ID"].isin(registry_sources)]
+        if not registry_rows.empty:
+            new_rows.extend(registry_rows.to_dict("records"))
+        else:
+            # No Registry row → keep all
+            new_rows.extend(group.to_dict("records"))
 
-            is_null = (morph_s == "")
-            has_8500 = ("8500" in morph_s)
-            ends_with_3 = morph_s.endswith("3") if morph_s else False
-            length_digits = len(morph_s)
+    # Convert to DataFrame
+    result = pd.DataFrame(new_rows)
 
-            # Source priority: prefer CancerRegistry if tie
-            source_priority = 1 if row["S_STUDY_ID"] == "CancerRegistry_0125" else 0
+    # Drop duplicates based on original index
+    if "_orig_index" in result.columns:
+        result = result.drop_duplicates(subset="_orig_index")
 
-            # Ranking tuple (higher is better); tuple ordered by importance:
-            # 1) non-null (1/0), 2) no-8500 (1/0), 3) endswith3 (1/0),
-            # 4) length_digits (int), 5) source_priority (1/0)
-            rank_tuple = (
-                0 if is_null else 1,          # prefer non-null
-                0 if has_8500 else 1,         # prefer not containing 8500
-                1 if ends_with_3 else 0,      # prefer ending with 3
-                length_digits,                # prefer longer (more detailed)
-                source_priority               # prefer registry if tie
-            )
+    result = result.drop(columns=["_orig_index"], errors="ignore")
+    return result
 
-            ranks.append((idx, rank_tuple, row))
 
-        # If all morphs are null, keep CancerRegistry if present else first candidate
-        if all(r[1][0] == 0 for r in ranks):
-            # find registry candidate if exists
-            reg_candidates = [r for r in ranks if r[2]["S_STUDY_ID"] == "CancerRegistry_0125"]
-            if reg_candidates:
-                chosen_idx, _, chosen_row = reg_candidates[0]
-            else:
-                chosen_idx, _, chosen_row = ranks[0]
-            new_rows.append(chosen_row)
-            # mark all other candidate rows for dropping
-            for idx, _, row in ranks:
-                if idx != chosen_idx:
-                    to_drop.add(row["_orig_index"])
-            # add 'others' back
-            new_rows.extend(others)
+def resolve_icd_code_conflicts(df: pd.DataFrame, registry_sources) -> pd.DataFrame:
+    """
+    Resolves ICD_CODE conflicts only when Registry and other sources differ.
+    Keeps Registry rows; drops conflicting non-Registry rows.
+    If no conflict, all rows are kept.
+    """
+    df = df.copy()
+    df["_orig_index"] = df.index
+    new_rows = []
+
+    # Choose grouping rule
+    if {"CancerRegistry_0125", "HistoPath_BrCa"}.issubset(registry_sources):
+        grouped = df.groupby(["STUDY_ID", "DIAGNOSIS_DATE", "LATERALITY"])
+    else:
+        grouped = df.groupby(["STUDY_ID", "DIAGNOSIS_DATE"])
+
+    for _, group in grouped:
+
+        # Single-row group -> keep
+        if len(group) == 1:
+            new_rows.append(group.iloc[0].to_dict())
             continue
 
-        # choose candidate with max rank_tuple lexicographically
-        # stable deterministic: if multiple equal, keep first occurrence of max
-        ranks_sorted = sorted(ranks, key=lambda x: x[1], reverse=True)
-        chosen_idx, chosen_rank, chosen_row = ranks_sorted[0]
+        # If cancer sites differ → keep all
+        if group["CANCER_SITE"].nunique(dropna=True) > 1:
+            new_rows.extend(group.to_dict("records"))
+            continue
 
-        # append chosen row
-        new_rows.append(chosen_row)
+        # Check if ICD_CODE conflict exists
+        icd_codes = group["ICD_CODE"].dropna().unique()
+        if len(icd_codes) <= 1:
+            # No conflict, keep all rows
+            new_rows.extend(group.to_dict("records"))
+            continue
 
-        # mark other candidate rows for dropping
-        for idx, _, row in ranks:
-            if idx != chosen_idx:
-                to_drop.add(row["_orig_index"])
+        # Conflict exists → keep only Registry rows
+        registry_rows = group[group["S_STUDY_ID"].isin(registry_sources)]
+        if not registry_rows.empty:
+            new_rows.extend(registry_rows.to_dict("records"))
+        else:
+            # No Registry row → keep all
+            new_rows.extend(group.to_dict("records"))
 
-        # keep other sources untouched
-        new_rows.extend(others)
+    # Convert to DataFrame
+    result = pd.DataFrame(new_rows)
 
-    # Keep unprocessed rows (not dropped)
-    untouched = df[~df['_orig_index'].isin(to_drop)].copy()
-    
-    cleaned = [dict(row) for row in new_rows if isinstance(row, (dict, pd.Series))]
+    # Drop duplicates based on original index
+    if "_orig_index" in result.columns:
+        result = result.drop_duplicates(subset="_orig_index")
 
-    # Combine resolved + untouched
-    final_df = pd.DataFrame(cleaned).drop_duplicates(subset=['_orig_index'], keep="first")
-    combined = pd.concat([final_df, untouched[~untouched['_orig_index'].isin(final_df['_orig_index'])]], ignore_index=True)
-    
-    combined = combined.drop(columns=['_orig_index'])
+    result = result.drop(columns=["_orig_index"], errors="ignore")
+    return result
 
-    return combined
+

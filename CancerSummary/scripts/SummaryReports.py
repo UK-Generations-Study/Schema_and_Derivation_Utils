@@ -13,6 +13,9 @@ sys.path.append(os.path.abspath('N:\CancerEpidem\BrBreakthrough\SHegde\Schema_an
 import config as cf
 
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import gaussian_kde
 
 def generate_summary_reports(CaSumFiltered_7, summary_path):
     '''
@@ -155,3 +158,69 @@ def generate_summary_reports(CaSumFiltered_7, summary_path):
         for rpt_name, data in reports:
             sheet = rpt_name
             data.to_excel(writer, sheet_name=sheet, index=False)
+            
+
+def plot_date_difference_density(df1, df2, filename="density_plot.png"):
+    """
+    Creates a KDE density graph (Y-axis in percentage) of diagnosis date differences
+    for STUDY_IDs that have exactly one diagnosis entry in both dataframes.
+    Only differences within ±90 days are included.
+    
+    Params:
+        df1, df2 : dataframes containing STUDY_ID and DIAGNOSIS_DATE
+        output_file : filename for saving the plot
+    """
+    # --- Step 1: Ensure dates are datetime ---
+    df1 = df1.copy()
+    df2 = df2.copy()
+    
+    df1['DIAGNOSIS_DATE'] = pd.to_datetime(df1['DIAGNOSIS_DATE'])
+    df2['DIAGNOSIS_DATE'] = pd.to_datetime(df2['DIAGNOSIS_DATE'])
+
+    # --- Step 2: Keep STUDY_IDs with exactly 1 record in each dataframe ---
+    c1 = df1.groupby('STUDY_ID')['DIAGNOSIS_DATE'].count()
+    c2 = df2.groupby('STUDY_ID')['DIAGNOSIS_DATE'].count()
+
+    valid_ids = set(c1[c1 == 1].index).intersection(set(c2[c2 == 1].index))
+
+    df1_single = df1[df1['STUDY_ID'].isin(valid_ids)]
+    df2_single = df2[df2['STUDY_ID'].isin(valid_ids)]
+
+    # --- Step 3: Merge ---
+    merged = df1_single.merge(df2_single, on='STUDY_ID',
+                              suffixes=('_df1', '_df2'))
+
+    # Compute day difference
+    merged['date_diff_days'] = (
+        merged['DIAGNOSIS_DATE_df1'] - merged['DIAGNOSIS_DATE_df2']
+    ).dt.days
+
+    # --- Step 4: Filter ±90 days ---
+    valid_links = merged[merged['date_diff_days'].between(-90, 90)]
+
+    if valid_links.empty:
+        print("No valid tumor links found within ±90 days for single-tumor STUDY_IDs.")
+        return
+
+    # --- Step 5: Build KDE density curve ---
+    x = valid_links['date_diff_days'].dropna().to_numpy()
+
+    kde = gaussian_kde(x)
+    x_range = np.linspace(x.min(), x.max(), 500)
+    y = kde(x_range)
+
+    # Convert to percentages
+    y_percent = (y / y.sum()) * 100
+
+    # --- Step 6: Plot and save ---
+    plt.figure(figsize=(10, 5))
+    plt.plot(x_range, y_percent, linewidth=2)
+
+    plt.title("Density of Diagnosis Date Differences (Single-Tumor STUDY_IDs)")
+    plt.xlabel("Difference in Days (df1 - df2)")
+    plt.ylabel("Percentage (%)")
+    plt.grid(True)
+    plt.tight_layout()
+
+    plt.savefig(os.path.join(cf.casum_report_path, filename + '.png'))
+    plt.close()

@@ -16,7 +16,7 @@
     },
     "S_STUDY_ID": {
       "type": ["string"],
-      "description": "Source from which the Study ID is selected in the target dataset. It will be one of the sources from x-sourcePriority for STUDY_ID."
+      "description": "Source from which the Study ID is selected in the target dataset. It will be one of the sources from x-sourcePriority for STUDY_ID. This field always represents the latest data source containing the tumour"
     },
     "TUMOUR_ID": {
       "type": ["number", "null"],
@@ -57,10 +57,11 @@
     "ICD_CODE": {
       "type": ["string", "null"],
       "description": "ICD-10-O2 site code (4-character) for tumour site.",
-      "x-description": "Primary ICD-10-O2 site code (4-character) describing the site of origin of the neoplasm. Source priority: 1) CancerRegistry.SITE_ICD10_O2 (\"Describes site of origin of the neoplasm\"); 2) FlaggingCancers.CancerICD (\"Cancer ICD code\"). Use the code as provided by the source without recoding. This field is per tumour (TUMOUR_ID). The ICD 9 codes are converted to ICD 10 by referencing https://seer.cancer.gov/tools/conversion/2022/ICD9CM%20to%20ICD10CM.FY2023.11.18.22.pdf (Last access date: 23/10/2025)",
+      "x-description": "Primary ICD-10-O2 site code (4-character) describing the site of origin of the neoplasm. Source priority: 1) CancerRegistry.SITE_ICD10_O2 (\"Describes site of origin of the neoplasm\"); 2) FlaggingCancers.CancerICD (\"Cancer ICD code\"). Use the code as provided by the source without recoding. This field is per tumour (TUMOUR_ID). The ICD 9 codes are converted to ICD 10 by referencing https://seer.cancer.gov/tools/conversion/2022/ICD9CM%20to%20ICD10CM.FY2023.11.18.22.pdf (Last access date: 23/10/2025). These are derived in Path report data to link tumours among the sources",
       "x-sourcePriority": [
         "CancerRegistry.SITE_ICD10_O2",
         "FlaggingCancers.CancerICD",
+		"HistoPath_BrCa.ICD_CODE",
         "HistoPath_OvCa.ICD_CODE"
       ],
       "maxLength": 4
@@ -364,6 +365,22 @@
     "S_M_STAGE": {
       "type": ["string", "null"],
       "description": "Source from which M Stage of the tumour is selected in the target dataset. It will be one of the sources from x-sourcePriority for M_STAGE."
+    },
+	"REPORT_COUNT": {
+      "type": ["integer", "null"],
+	  "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual",
+      "x-description": "This field is carried to final dataset to match the tissue blocks received as part of pathology process. ",
+      "x-sourcePriority": [
+        "HistoPath_BrCa.ReportCount"
+      ]
+    },
+	"TUMOUR_COUNT": {
+      "type": ["integer", "null"],
+	  "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour, eg a patient with 2 tumours will have 2 rows with TumourCount=1 and TumourCount=2. No missing values allowed",
+      "x-description": "This field is carried to final dataset to match the tissue blocks received as part of pathology process. ",
+      "x-sourcePriority": [
+        "HistoPath_BrCa.TumourCount"        
+      ]
     },
     "CREATED_TIME": {
       "type": ["string"],

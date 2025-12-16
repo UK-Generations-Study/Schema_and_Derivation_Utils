@@ -555,6 +555,14 @@
       "description": "Metastasis staging describes whether cancer has spread to a different part of the body | Prefix c = Clinical assessment data (examination, imaging , endoscopy), p = pathological data (histopathologic examination of tissue sample)",
       "type": ["string", "null"],
       "pattern": "^(c|p)?(MX|M0|M0\\(i\\+\\)|M1)$"
+    },
+	"ReportCount": {
+      "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual",
+      "type": ["integer"]
+    },
+	"TumourCount": {
+      "description": "Tumour identifier coded sequencially from 1 to max number of tumours per pathology report. Dataset has one row per tumour, eg a patient with 2 tumours will have 2 rows with TumourCount=1 and TumourCount=2. No missing values allowed",
+      "type": ["integer"]
     }
   }
 }

@@ -159,11 +159,11 @@ def should_link_tumours(anchor: pd.Series, candidate: pd.Series, window: int = 9
 
         # exact-match shortcut across linking fields
         if new_row["source"] in ("CancerRegistry", "HistoPath_BrCa"):
-            linking_fields = ["DIAGNOSIS_DATE", "LATERALITY", "MORPH_CODE"]
+            linking_fields = ["DIAGNOSIS_DATE", "LATERALITY", "ICD_CODE"]
         elif new_row["source"] in ("HistoPath_OvCa"):
             linking_fields = ["DIAGNOSIS_DATE", "ICD_CODE"]
         else:
-            linking_fields = ["DIAGNOSIS_DATE", "MORPH_CODE"]
+            linking_fields = ["DIAGNOSIS_DATE", "ICD_CODE", "MORPH_CODE"]
 
         identical = all(
             (pd.isna(old_row.get(f)) and pd.isna(new_row.get(f))) or safe_equal(old_row.get(f), new_row.get(f))
@@ -174,27 +174,29 @@ def should_link_tumours(anchor: pd.Series, candidate: pd.Series, window: int = 9
 
         # Otherwise use same rules (within date window already checked)
         if new_row["source"] in ("CancerRegistry", "HistoPath_BrCa"):
-            return safe_equal(old_row.get("MORPH_CODE"), new_row.get("MORPH_CODE")) and \
+            return safe_equal(old_row.get("ICD_CODE"), new_row.get("ICD_CODE")) and \
                    safe_equal(old_row.get("LATERALITY"), new_row.get("LATERALITY"))
         elif new_row["source"] in ("HistoPath_OvCa"):
             return safe_equal(old_row.get("ICD_CODE"), new_row.get("ICD_CODE"))
         else:
-            return safe_equal(old_row.get("MORPH_CODE"), new_row.get("MORPH_CODE"))
+            return safe_equal(old_row.get("ICD_CODE"), new_row.get("ICD_CODE")) and \
+                   safe_equal(old_row.get("MORPH_CODE"), new_row.get("MORPH_CODE"))
 
     # Regular new-vs-new source case
     sources = tuple(sorted([anchor["source"], candidate["source"]]))
 
     if sources == ('CancerRegistry', 'HistoPath_BrCa'):
         return safe_equal(anchor.get("LATERALITY"), candidate.get("LATERALITY")) and \
-               safe_equal(anchor.get("MORPH_CODE"), candidate.get("MORPH_CODE"))
+               safe_equal(anchor.get("ICD_CODE"), candidate.get("ICD_CODE"))
 
     elif sources in [('CancerRegistry', 'HistoPath_OvCa'),
-                     ('FlaggingCancers', 'HistoPath_OvCa')]:
+                     ('FlaggingCancers', 'HistoPath_OvCa'),
+                     ('FlaggingCancers', 'HistoPath_BrCa')]:
         return safe_equal(anchor.get("ICD_CODE"), candidate.get("ICD_CODE"))
 
-    elif sources in [('CancerRegistry', 'FlaggingCancers'),
-                     ('FlaggingCancers', 'HistoPath_BrCa')]:
-        return safe_equal(anchor.get("MORPH_CODE"), candidate.get("MORPH_CODE"))
+    elif sources == ('CancerRegistry', 'FlaggingCancers'):
+        return safe_equal(anchor.get("MORPH_CODE"), candidate.get("MORPH_CODE")) and \
+               safe_equal(anchor.get("ICD_CODE"), candidate.get("ICD_CODE"))
 
     return False
 
@@ -215,19 +217,17 @@ def build_clusters_optimized(data_sources: dict, window: int = 90) -> List[List[
     for src, df in data_sources.items():
         if df is None or df.empty:
             continue
-        # Ensure DIAGNOSIS_DATE is datetime and source column included on record
         for idx, row in df.iterrows():
-            rec = {
+            all_records.append({
                 "source": src,
-                "STUDY_ID": row.get("STUDY_ID"),
-                "DIAGNOSIS_DATE": pd.to_datetime(row.get("DIAGNOSIS_DATE"), errors="coerce"),
+                "STUDY_ID": row["STUDY_ID"],
+                "DIAGNOSIS_DATE": pd.to_datetime(row["DIAGNOSIS_DATE"], errors="coerce"),
                 "LATERALITY": row.get("LATERALITY"),
                 "MORPH_CODE": row.get("MORPH_CODE"),
                 "ICD_CODE": row.get("ICD_CODE"),
-                "full_row": row,   # keep original Series/dict for later use
+                "full_row": row,
                 "original_index": idx
-            }
-            all_records.append(rec)
+            })
 
     if not all_records:
         return []
@@ -238,38 +238,39 @@ def build_clusters_optimized(data_sources: dict, window: int = 90) -> List[List[
     clusters = []
     visited = set()
 
-    # group by STUDY_ID for locality
+    # group by STUDY_ID
     for study_id, group in tum_df.groupby("STUDY_ID"):
-        indices = group.index.tolist()
-        n = len(indices)
+        idxs = group.index.tolist()
 
-        for i_pos, i in enumerate(indices):
-            if i in visited:
+        for start in idxs:
+            if start in visited:
                 continue
 
-            anchor = tum_df.loc[i]
-            # cluster as dict keyed by source to keep only one record per source
-            cluster_dict = {anchor["source"]: anchor}
-            visited.add(i)
+            # start new cluster
+            cluster = []
+            queue = [start]
 
-            # compare to later records for same STUDY_ID
-            for j_pos in range(i_pos + 1, n):
-                j = indices[j_pos]
-                if j in visited:
+            while queue:
+                i = queue.pop()
+                if i in visited:
                     continue
-                candidate = tum_df.loc[j]
+                visited.add(i)
 
-                if should_link_tumours(anchor, candidate, window):
-                    # add candidate if its source not yet present
-                    s = candidate["source"]
-                    if s not in cluster_dict:
-                        cluster_dict[s] = candidate
-                    visited.add(j)
+                rec_i = tum_df.loc[i]
+                cluster.append(rec_i)
 
-            # build formatted cluster list
-            formatted_cluster = []
-            for rec in cluster_dict.values():
-                formatted_cluster.append({
+                # compare to all others for this STUDY_ID
+                for j in idxs:
+                    if j in visited:
+                        continue
+                    rec_j = tum_df.loc[j]
+                    if should_link_tumours(rec_i, rec_j, window):
+                        queue.append(j)
+
+            # build final output for this cluster
+            formatted = []
+            for rec in cluster:
+                formatted.append({
                     "source": rec["source"],
                     "row": rec["full_row"],
                     "STUDY_ID": rec["STUDY_ID"],
@@ -279,7 +280,7 @@ def build_clusters_optimized(data_sources: dict, window: int = 90) -> List[List[
                     "ICD_CODE": rec["ICD_CODE"]
                 })
 
-            clusters.append(formatted_cluster)
+            clusters.append(formatted)
 
     return clusters
 
@@ -300,8 +301,7 @@ def select_value_per_field(cluster_matches, target_schema, default_source="Cance
         "FlaggingCancers",
         "Legacy",
         "HistoPath_BrCa",
-        "HistoPath_OvCa",
-        "FlaggingDeaths",
+        "HistoPath_OvCa"
     ]
 
     target_row = {}

@@ -193,6 +193,11 @@ logger.info("Deriving ICD morphology code for breast cancer data")
 brca_mapped['MORPH_CODE'] = brca_mapped.apply(mc.derive_breast_morphology_code, axis=1)
 brca_mapped['MORPH_CODE'] = brca_mapped['MORPH_CODE'].str.replace("M", "",)
 
+# derive ICD_CODE for breast pat report data
+brca_mapped['ICD_CODE'] = np.where(brca_mapped['InvasiveCarcinoma']=='P', 'C50', \
+                                   np.where((brca_mapped['InvasiveCarcinoma']=='N') & (brca_mapped['InsituCarcinoma']=='P'),\
+                                            'D05', None))
+
 #%% get source columns ready for tumour selection logic
 logger.info("Prepare sources to link the tumours")
 
@@ -228,10 +233,10 @@ brca_mapped = brca_mapped[~brca_mapped['MORPH_CODE'].str.startswith("0", na=Fals
 # filter out non-malignant cases
 brca_mapped = brca_mapped[brca_mapped['Malignant']=='Y']
 
-brca_link = brca_mapped[['STUDY_ID', 'DIAGNOSIS_DATE', 'LATERALITY', 'MORPH_CODE',\
+brca_link = brca_mapped[['STUDY_ID', 'DIAGNOSIS_DATE', 'LATERALITY', 'MORPH_CODE', 'ICD_CODE',\
                        'InvasiveGrade', 'DCISGrade', 'SizeInvasiveTumour', 'SizeDCISOnly', 'NodesTotal',\
                        'NodesPositive', 'ER_Status', 'PR_Status', 'HER2_Status', 'HER2_FISH',\
-                       'Tstage', 'MStage', 'NStage', 'Stage', 'ScreenDetected', 'Ki67']].copy()
+                       'Tstage', 'MStage', 'NStage', 'Stage', 'ScreenDetected', 'Ki67', 'ReportCount', 'TumourCount']].copy()
 
 brca_link['MORPH_CODE'] = pd.to_numeric(brca_link['MORPH_CODE'], errors='coerce').astype('Int64')
 
@@ -239,22 +244,46 @@ ovca_link = ovca_mapped[['STUDY_ID', 'DIAGNOSIS_DATE', 'Grade_I_II_III', 'Stage_
 ovca_link['Grade_I_II_III'] = np.where(ovca_link['Grade_I_II_III']=='N', None, ovca_link['Grade_I_II_III'])
 ovca_link['ICD_CODE'] = 'C56'
 
+#%%
+logger.info("Convert ICD 8/9 version to ICD-10")
+
+icd_code_mapping = pd.read_csv(os.path.join(cf.casum_report_path, cf.casum_ICD_conversion_file))
+
+icd_code_mapping['ICD10_Code'] = icd_code_mapping['ICD10_Code'].astype(str).apply(lambda x:x[:4] if len(x)==5 else x)
+icd_code_mapping['ICD9_Code'] = icd_code_mapping['ICD9_Code'].astype(str).apply(lambda x:x[:4] if len(x)==5 else x)
+
+icd_mapping = dict(zip(icd_code_mapping['ICD9_Code'], icd_code_mapping['ICD10_Code']))
+
+flagging_cancers['CancerICD'] = flagging_cancers['CancerICD'].str.rstrip('-')
+
+flagging_cancers['CancerICD_mapped'] = flagging_cancers['CancerICD'].map(icd_mapping).fillna(flagging_cancers['CancerICD'])
+
+flagging_cancers['CancerICD'] = np.where(~flagging_cancers['CancerICD'].str.match(r'^[A-Za-z]').fillna(False),\
+                                   flagging_cancers['CancerICD_mapped'], flagging_cancers['CancerICD'])
+
+flagging_cancers = flagging_cancers.drop(['CancerICD_mapped'], axis=1)
+
 flagging_cancers_link = flagging_cancers[['STUDY_ID', 'TumourID', 'DIAGNOSIS_DATE', 'CancerICD', 'MORPH_CODE']].copy()
 flagging_cancers_link['MORPH_CODE'] = pd.to_numeric(flagging_cancers_link['MORPH_CODE'], errors='coerce').astype('Int64')
-flagging_cancers_link['ICD_CODE'] = flagging_cancers_link['CancerICD'].str[:3]
+flagging_cancers_link['ICD_CODE'] = np.where(flagging_cancers_link['CancerICD'].str.contains('C56|C50|D05'),\
+                                             flagging_cancers_link['CancerICD'].str[:3],\
+                                                 flagging_cancers_link['CancerICD'])
 
 registry_link['STUDY_ID'] = registry_link['STUDY_ID'].astype('Int64')
 registry_link['STAGE_BEST'] = np.where(registry_link['STAGE_BEST'].isin(['NA', 'U', 'X']), None, registry_link['STAGE_BEST'])
 registry_link['MORPH_CODE'] = pd.to_numeric(registry_link['MORPH_CODE'], errors='coerce').astype('Int64')
-registry_link['ICD_CODE'] = registry_link['SITE_ICD10_O2'].str[:3]
+registry_link['ICD_CODE'] = np.where(registry_link['SITE_ICD10_O2'].str.contains('C56|C50|D05'), registry_link['SITE_ICD10_O2'].str[:3],\
+                                       registry_link['SITE_ICD10_O2'])
 
 existing_casum['MORPH_CODE'] = pd.to_numeric(existing_casum['MORPH_CODE'], errors='coerce').astype('Int64')
 
 # Legacy tumours (take only confirmed tumours)
 legacy_filtered = gl.prepare_legacy_data(ca_summary, ca_summary_schema, target_schema, logger, existing_casum)
 existing_casum['TUMOUR_ID'] = pd.to_numeric(existing_casum['TUMOUR_ID'], errors='coerce').astype('Int64')
+existing_casum['ICD_CODE'] = np.where(existing_casum['ICD_CODE'].str.contains('C56|C50|D05'), existing_casum['ICD_CODE'].str[:3],\
+                                       existing_casum['ICD_CODE'])
 
-# selecting data sources
+#%% selecting data sources
 data_sources = {
     "CancerRegistry": registry_link,
     "FlaggingCancers": flagging_cancers_link,
@@ -273,13 +302,18 @@ for src, df in data_sources.items():
         raise ValueError(f"{src} is missing DIAGNOSIS_DATE")
     df["DIAGNOSIS_DATE"] = pd.to_datetime(df["DIAGNOSIS_DATE"], errors="coerce").dt.tz_localize(None)
 
+# Date of diagnosis distribution
+# sp.plot_date_difference_density(registry_link, brca_link, 'Registry_vs_BrPath')
+# sp.plot_date_difference_density(registry_link, ovca_link, 'Registry_vs_OvPath')
+
 #%% Build Cancer Summary dataset
+
 try:
     logger.info("Linking tumours across all data sources")
     
     records = []
     # Build clusters (tumours linked across sources)
-    clusters = lt.build_clusters_optimized(data_sources, window=90)
+    clusters = lt.build_clusters_optimized(data_sources, window=60)
 
 except Exception as e:
     logger.error("Failed to link tumours:" + str(e))
@@ -342,7 +376,7 @@ CancerSummary['ICD_CODE'] = CancerSummary['ICD_CODE'].str.rstrip('-')
 CancerSummary['ICD_CODE_mapped'] = CancerSummary['ICD_CODE'].map(icd_mapping).fillna(CancerSummary['ICD_CODE'])
 
 CancerSummary['ICD_CODE'] = np.where(~CancerSummary['ICD_CODE'].str.match(r'^[A-Za-z]').fillna(False),\
-                                   CancerSummary['ICD_CODE_mapped'], CancerSummary['ICD_CODE'])\
+                                   CancerSummary['ICD_CODE_mapped'], CancerSummary['ICD_CODE'])
 
 CancerSummary = CancerSummary.drop(['ICD_CODE_mapped'], axis=1)
 
@@ -386,12 +420,12 @@ CaSumFiltered_4 = he.expand_registry_laterality(CaSumFiltered_3)
 CaSumFiltered_4 = CaSumFiltered_4[existing_casum.columns]
 
 # handle different Morphology code between Registry & Path Report
-logger.info("Handling difference in MORPH_CODE between Registry and Path report")
-CaSumFiltered_5 = he.resolve_morph_code_conflicts(CaSumFiltered_4, ["CancerRegistry_0125", "HistoPath_BrCa"])
+logger.info("Handling difference in ICD_CODE between Registry and Path report")
+CaSumFiltered_5 = he.resolve_icd_code_conflicts(CaSumFiltered_4, ["CancerRegistry_0125", "HistoPath_BrCa"])
 
 # handle different Morphology code between Registry & Flagging tumours
 logger.info("Handling difference in MORPH_CODE between Registry and Flagging")
-CaSumFiltered_6 = he.resolve_morph_code_conflicts(CaSumFiltered_5, ["CancerRegistry_0125", "FlaggingCancers"]) 
+CaSumFiltered_6 = he.resolve_morph_code_conflicts(CaSumFiltered_5, ["CancerRegistry_0125", "FlaggingCancers"])
 
 logger.info("Tumour dataset is ready")
 
@@ -428,10 +462,8 @@ logger.info("Unknown CANCER_SITE count: " + str(len(unknown_sites)))
 
 CaSumFiltered_7 = CaSumFiltered_6.copy()
 
-legacy_filtered['S_STUDY_ID'] = legacy_filtered['S_STUDY_ID'].str.lower().fillna('NaN')
 CaSumFiltered_7['S_STUDY_ID'] = CaSumFiltered_7['S_STUDY_ID'].str.lower().fillna('NaN')
 
-legacy_filtered['CANCER_SITE'] = legacy_filtered['CANCER_SITE'].str.lower().fillna('NaN')
 CaSumFiltered_7['CANCER_SITE'] = CaSumFiltered_7['CANCER_SITE'].str.lower().fillna('NaN')
 
 # execute the script for summary reports
@@ -449,17 +481,14 @@ CaSum_pseudo_anon['DIAGNOSIS_DATE'] = CaSum_pseudo_anon['DIAGNOSIS_DATE'] + pd.t
 
 CaSum_pseudo_anon = CaSum_pseudo_anon.drop(['StudyID', 'STUDY_ID', 'Random'], axis=1)
 
-version_ts = {'version': '1.0.0', 'timestamp': str(datetime.now())}
-
 CaSum_pseudo_anon['DIAGNOSIS_DATE'] = CaSum_pseudo_anon['DIAGNOSIS_DATE'].dt.strftime('%Y-%m-%d %H:%M:%S')
 CaSum_pseudo_anon['CREATED_TIME'] = CaSum_pseudo_anon['CREATED_TIME'].dt.strftime('%Y-%m-%d %H:%M:%S')
 CaSum_pseudo_anon = CaSum_pseudo_anon.replace(np.nan, None)
 
 df_to_dict = CaSum_pseudo_anon.to_dict(orient='records')
 
-json_data = {**version_ts, "data": df_to_dict}
+json_data = {**cf.casum_version_ts, "data": df_to_dict}
 
-with open(os.path.join(cf.casum_report_path, 'CancerSummary.json'), 'w') as f:
+with open(os.path.join(cf.casum_report_path, 
+                       'CancerSummary_' + cf.casum_version_ts['version'] + '.json'), 'w') as f:
     json.dump(json_data, f, indent=4)
-    
-'''

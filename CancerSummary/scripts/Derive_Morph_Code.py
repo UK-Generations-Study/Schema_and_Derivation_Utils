@@ -65,15 +65,15 @@ def derive_breast_morphology_code(data):
             elif component == 'Pap':
                 return '85033'  # Papillary carcinoma
             elif component == 'Mic':
-                return '85233'  # Infiltrating duct mixed with other
+                return '85243'  # Infiltrating duct mixed with other
             elif component == 'Tul':
-                return '85243'  # Lobular tubular adenocarcinoma
+                return '8523♥3'  # Lobular tubular adenocarcinoma
             
         elif invasive_type =='MTT':
-            return '85223'  # Infiltrating duct and lobular
+            return '85233'  # Infiltrating duct and lobular
             
         elif invasive_type =='MIX':
-            return '85233'  # Infiltrating duct mixed with other
+            return '85243'  # Infiltrating duct mixed with other
         
         else:
             return None
@@ -81,15 +81,15 @@ def derive_breast_morphology_code(data):
     elif data.get('InvasiveCarcinoma') == 'N':
         if data.get('InsituCarcinoma') == 'P':
             if data.get('DuctalCarcinomaInsitu') == 'P' and data.get('Cribiform_DCISGP') == 'Y':
-                return '82012'
+                return '85002'
             elif data.get('DuctalCarcinomaInsitu') == 'P' and data.get('Solid_DCISGP') == 'Y':
-                return '82302'
+                return '85002'
             elif data.get('DuctalCarcinomaInsitu') == 'P':
                 return '85002'
             elif data.get('LobularCarcinomaInsitu') == 'Y':
                 return '85202'
             elif data.get('LobularCarcinomaInsitu') == 'Y' and data.get('DuctalCarcinomaInsitu') == 'P':
-                return '85222'
+                return '85002'
             else:
                 return '85002'
     
