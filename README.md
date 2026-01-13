@@ -8,6 +8,8 @@ This README was last updated 12/11/2025.
 
 The Generations Study questionnaire data began collection in 2004 on paper using Optical Character Recognition (OCR) to read each questionnaire into database storable data. This methodology for data collection continued throughout baseline data collection across the cohort. This ETL process aims to better-document the current state of the data, update and simplify the data processing, and make the derivation methodology of variables from the raw data available to the public.
 
+This ETL creates data and metadata in JSON and JSON schema, respectively. It is advised that, if the user is new to JSON formats, before attempting to work with the data, the user reads through and completes the exercises in the following JSON reference lesson: [Introduction to JSON](https://json-schema.org/docs).
+
 # 3. Data Scope
 
 As of the last update this ETL applies to all Baseline (R0) questionnaire data. There are 19 raw sections in the ETL, plus an additional raw derivation section for variables that need to be derived within the secure server (Trusted Research Environment, TRE) to preserve participant identities. The raw data read in covers over 1,850 different questions from the SQL database they are stored in, while the output processed data covers over 950 variables in JSON format due to aggregation of date fields and teh removal of variables that potentially contain Personally Identifying Information (PII). Following is the list of all raw sections of baseline data:
