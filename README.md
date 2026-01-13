@@ -372,7 +372,7 @@ The pipeline never writes out raw identifiers directly from the source database 
       - Shifted dates (`DOB`, `EntryDate`) that mask the true calendar dates but preserve within-person intervals.
       - Unshifted year-only and age variables (`YOB`, `EntryYear`, `AgeEntry`) that are safe to export.
 
-    - In the questionnaire ETL, individual day/month/year components from the raw R0 tables are aggregated to derived dates and then shifted using the same Random offset logic, with partial dates completed according to pre-defined rules (e.g. 15th of the month, 1 July for year-only). Only these derived, shifted or aggregated forms appear in the processed JSON; the original date components and Random remain on the secure server.
+    - In the questionnaire ETL, individual day/month/year components from the raw R0 tables are aggregated to derived dates and then shifted using the same Random offset logic, with partial dates completed according to pre-defined rules as follows: aggregated dates with no day of the month are given the 15th day of the month, aggregated dates with no month values are given July, and if both day and month are missing the values given are the 1st of July. Then, the format that the date came in is preserved and used in the no-PII data, i.e. if the day was originally missing from the questionairre and became the 15th for shifting, the day will not show in the no-PII data to protect the exact number of days that the participant has their dates shifted by. Only these derived, shifted or aggregated forms appear in the processed JSON; the original date components and Random remain on the secure server.
  
 - Removal of direct PII data.
 
