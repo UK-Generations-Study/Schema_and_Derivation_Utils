@@ -84,7 +84,6 @@ hist_Brca = all_data['Histopath_BrCa_GS_v1']
 hist_Ovca = all_data['OvCa_Histopath_II']
 ca_summary = all_data['casummary_v1']
 existing_casum = all_data['NewCancerSummary_v2']
-existing_casum = existing_casum.drop(['SUMMARY_ID'], axis=1)
 
 # get the JSON schemas
 can_reg_schema = all_schemas['CancerRegistry']
@@ -279,9 +278,8 @@ existing_casum['MORPH_CODE'] = pd.to_numeric(existing_casum['MORPH_CODE'], error
 
 # Legacy tumours (take only confirmed tumours)
 legacy_filtered = gl.prepare_legacy_data(ca_summary, ca_summary_schema, target_schema, logger, existing_casum)
+
 existing_casum['TUMOUR_ID'] = pd.to_numeric(existing_casum['TUMOUR_ID'], errors='coerce').astype('Int64')
-existing_casum['ICD_CODE'] = np.where(existing_casum['ICD_CODE'].str.contains('C56|C50|D05'), existing_casum['ICD_CODE'].str[:3],\
-                                       existing_casum['ICD_CODE'])
 
 #%% selecting data sources
 data_sources = {
@@ -289,8 +287,8 @@ data_sources = {
     "FlaggingCancers": flagging_cancers_link,
     "HistoPath_BrCa": brca_link,
     "HistoPath_OvCa": ovca_link,
-    "ExistingCaSum": existing_casum,
-    "Legacy": legacy_filtered
+#    "ExistingCaSum": existing_casum,
+     "Legacy": legacy_filtered
 }
 
 for src, df in data_sources.items():
@@ -302,12 +300,7 @@ for src, df in data_sources.items():
         raise ValueError(f"{src} is missing DIAGNOSIS_DATE")
     df["DIAGNOSIS_DATE"] = pd.to_datetime(df["DIAGNOSIS_DATE"], errors="coerce").dt.tz_localize(None)
 
-# Date of diagnosis distribution
-# sp.plot_date_difference_density(registry_link, brca_link, 'Registry_vs_BrPath')
-# sp.plot_date_difference_density(registry_link, ovca_link, 'Registry_vs_OvPath')
-
 #%% Build Cancer Summary dataset
-
 try:
     logger.info("Linking tumours across all data sources")
     
@@ -343,7 +336,7 @@ except Exception as e:
 # lt.tumour_source_mapping(clusters, CancerSummary)
 
 #%% Populate other remaining fields
-logger.info("Deriving Age at diagnosis and SITE")
+logger.info("Deriving Age at diagnosis, Diagnosis Year and SITE")
 
 CancerSummary['CREATED_TIME'] = datetime.now()
 CancerSummary['CREATED_TIME'] = pd.to_datetime(CancerSummary['CREATED_TIME'], errors="coerce").dt.tz_localize(None)
@@ -361,6 +354,8 @@ CancerSummary['AGE_AT_DIAGNOSIS'] = np.where(CancerSummary['AGE_AT_DIAGNOSIS'].i
 CancerSummary['AGE_AT_DIAGNOSIS'] = pd.to_numeric(CancerSummary['AGE_AT_DIAGNOSIS'], errors='coerce').astype('Int64')
 
 CancerSummary.drop('DOB', axis=1, inplace=True)
+
+CancerSummary['DIAGNOSIS_YEAR'] = CancerSummary['DIAGNOSIS_DATE'].dt.year
 
 logger.info("Convert ICD 8/9 version to ICD-10")
 
@@ -385,14 +380,25 @@ CancerSummary['CANCER_SITE'] = CancerSummary.apply(lambda row: sm.get_site_from_
 
 CancerSummary['GROUPED_SITE'] = CancerSummary['ICD_CODE'].apply(sm.group_sites)
 
+total_count = len(CancerSummary)
+
+logger.warning("Total count of tumours: " + str(len(CancerSummary)))
+
 # filter out the benign cases
 CancerSummary = CancerSummary[(CancerSummary['GROUPED_SITE']!='benign') & (CancerSummary['GROUPED_SITE']!='unknown')]
 
+filtered_count = len(CancerSummary)
+
+logger.warning("Count of benign and unknown tumour sites: " + str(total_count-filtered_count))
+            
 CancerSummary = CancerSummary[existing_casum.columns]
 
 #%% Exceptional rules
 # Ignore PHE_0125 as it is being processed above. Do not conisder from Legacy
 CaSumFiltered_1 = CancerSummary[~CancerSummary['S_STUDY_ID'].str.contains('PHE_0125|Deaths')]
+
+logger.warning("Count of Flagging death tumour and duplicates: " \
+               + str(len(CancerSummary) - len(CaSumFiltered_1)))
 
 logger.info("Standardise source variables and CANCER_SITE")
 # Standardise the S_STUDY_ID and CANCER_SITE
@@ -413,25 +419,46 @@ for col in CaSumFiltered_1.columns:
 logger.info("Filter out invalid date of diagnosis")
 CaSumFiltered_2 = CaSumFiltered_1[CaSumFiltered_1['AGE_AT_DIAGNOSIS'].notna()]
 CaSumFiltered_3 = CaSumFiltered_2[CaSumFiltered_2['AGE_AT_DIAGNOSIS']>=0]
+logger.warning("Count of invalid date of diagnosis: " + str(len(CaSumFiltered_1) - len(CaSumFiltered_3)))
 
 # Replace unknown or Bilateral laterality using Path report
 logger.info("Handling difference in LATERALITY between Registry and Path report")
 CaSumFiltered_4 = he.expand_registry_laterality(CaSumFiltered_3)
 CaSumFiltered_4 = CaSumFiltered_4[existing_casum.columns]
+logger.warning("Count of tumours reduced after resolving LATERALITY between Registry and Path report: " + str(len(CaSumFiltered_3) - len(CaSumFiltered_4)))
 
 # handle different Morphology code between Registry & Path Report
-logger.info("Handling difference in ICD_CODE between Registry and Path report")
-CaSumFiltered_5 = he.resolve_icd_code_conflicts(CaSumFiltered_4, ["CancerRegistry_0125", "HistoPath_BrCa"])
+logger.info("Handling difference in ICD_CODE between sources")
+CaSumFiltered_5, dropped_icd = he.resolve_icd_code_conflicts(CaSumFiltered_4, ["CancerRegistry_0125", "HistoPath_BrCa"])
+logger.warning("Count of tumours reduced after resolving ICD_CODE between sources: " + str(len(CaSumFiltered_4) - len(CaSumFiltered_5)))
 
 # handle different Morphology code between Registry & Flagging tumours
-logger.info("Handling difference in MORPH_CODE between Registry and Flagging")
-CaSumFiltered_6 = he.resolve_morph_code_conflicts(CaSumFiltered_5, ["CancerRegistry_0125", "FlaggingCancers"])
+logger.info("Handling difference in MORPH_CODE between sources")
+CaSumFiltered_6, dropped_mc = he.resolve_morph_code_conflicts(CaSumFiltered_5, ["CancerRegistry_0125", "FlaggingCancers"])
+logger.warning("Count of tumours reduced after resolving MORPH_CODE between sources: " + str(len(CaSumFiltered_5) - len(CaSumFiltered_6)))
 
-logger.info("Tumour dataset is ready")
+logger.info("Removing duplicates")
+CaSumFiltered_6 = CaSumFiltered_6.loc[~(CaSumFiltered_6.duplicated(
+                subset=['STUDY_ID', 'DIAGNOSIS_DATE', 'ICD_CODE', 'MORPH_CODE', 'LATERALITY'], keep='first') &
+                   (CaSumFiltered_6['TUMOUR_ID'].isna()))]
+
+logger.info("Tumour dataset is ready. Final count:" + str(len(CaSumFiltered_6)))
+
+#%% Summary reports
+logger.info("Generating Summary reports")
+
+CaSumFiltered_7 = CaSumFiltered_6.copy()
+
+CaSumFiltered_7['S_STUDY_ID'] = CaSumFiltered_7['S_STUDY_ID'].str.lower().fillna('NaN')
+
+CaSumFiltered_7['CANCER_SITE'] = CaSumFiltered_7['CANCER_SITE'].str.lower().fillna('NaN')
+
+# execute the script for summary reports
+sp.generate_summary_reports(CaSumFiltered_7, "SummaryReports_v4.xlsx")
 
 #%% Validate dataset with Schema
-logger.info("Validating the result data using JSON schema")
 
+logger.info("Validating the result data using JSON schema")
 # type casting for schema validation
 CaSumFiltered_6['TUMOUR_ID'] = pd.to_numeric(CaSumFiltered_6['TUMOUR_ID'], errors='coerce').astype('Int64')
 CaSumFiltered_6['TUMOUR_SIZE'] =  pd.to_numeric(CaSumFiltered_6['TUMOUR_SIZE'], errors='coerce')
@@ -448,26 +475,7 @@ if len(invalid_rows)>=10:
 
 else:
     # Load the data to the database
-    write_to_DB(CaSumFiltered_6, 'NewCancerSummary_v2', upload_conn, logger)
-
-#%% Summary reports
-logger.info("Generating Summary reports")
-
-# QC checks
-invalid_diagdate = CancerSummary[CancerSummary['DIAGNOSIS_DATE'].isna() | (CancerSummary['AGE_AT_DIAGNOSIS']<0)]
-logger.info("Invalid DIAGNOSIS_DATE count: " + str(len(invalid_diagdate)))
-
-unknown_sites = CancerSummary[CancerSummary['CANCER_SITE'].isna()][['S_STUDY_ID', 'ICD_CODE', 'MORPH_CODE', 'CANCER_SITE']]
-logger.info("Unknown CANCER_SITE count: " + str(len(unknown_sites)))
-
-CaSumFiltered_7 = CaSumFiltered_6.copy()
-
-CaSumFiltered_7['S_STUDY_ID'] = CaSumFiltered_7['S_STUDY_ID'].str.lower().fillna('NaN')
-
-CaSumFiltered_7['CANCER_SITE'] = CaSumFiltered_7['CANCER_SITE'].str.lower().fillna('NaN')
-
-# execute the script for summary reports
-sp.generate_summary_reports(CaSumFiltered_7, "SummaryReports_v4.xlsx")
+    write_to_DB(CaSumFiltered_6, 'NewCancerSummary_v3', upload_conn, logger)
 
 #%% Pseudo-anonymise the data
 logger.info("Pseudo-anonymise and create JSON data")

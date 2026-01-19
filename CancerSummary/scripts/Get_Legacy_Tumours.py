@@ -68,11 +68,24 @@ def prepare_legacy_data(ca_summary, ca_summary_schema, target_schema, logger, ex
     legacy_filtered['GRADE'] = np.where(legacy_filtered['GRADE'].isna() | legacy_filtered['GRADE'].str.contains('G'), \
                                        legacy_filtered['GRADE'], 'G' + legacy_filtered['GRADE'])
     
-    legacy_filtered['ICD_CODE'] = np.where(legacy_filtered['ICD_CODE'].str.contains('C56|C50|D05')\
-                                           ,legacy_filtered['ICD_CODE'].str[:3], legacy_filtered['ICD_CODE'])
-        
     legacy_filtered['ICD_CODE'] = np.where(legacy_filtered['ICD_CODE'].str.contains('Z')\
                                            ,legacy_filtered['ICD_CODE'].str[:3], legacy_filtered['ICD_CODE'])
+            
+    icd_code_mapping = pd.read_csv(os.path.join(cf.casum_report_path, cf.casum_ICD_conversion_file))
+
+    icd_code_mapping['ICD10_Code'] = icd_code_mapping['ICD10_Code'].astype(str).apply(lambda x:x[:4] if len(x)==5 else x)
+    icd_code_mapping['ICD9_Code'] = icd_code_mapping['ICD9_Code'].astype(str).apply(lambda x:x[:4] if len(x)==5 else x)
+
+    icd_mapping = dict(zip(icd_code_mapping['ICD9_Code'], icd_code_mapping['ICD10_Code']))
+
+    legacy_filtered['ICD_CODE'] = legacy_filtered['ICD_CODE'].str.rstrip('-')
+
+    legacy_filtered['ICD_CODE_mapped'] = legacy_filtered['ICD_CODE'].map(icd_mapping).fillna(legacy_filtered['ICD_CODE'])
+
+    legacy_filtered['ICD_CODE'] = np.where(~legacy_filtered['ICD_CODE'].str.match(r'^[A-Za-z]').fillna(False),\
+                                       legacy_filtered['ICD_CODE_mapped'], legacy_filtered['ICD_CODE'])
+
+    legacy_filtered = legacy_filtered.drop(['ICD_CODE_mapped'], axis=1)
         
     stage_map = {'I':'1', 'II':'2', 'III':'3', 'IV':'4'}
     legacy_filtered['STAGE'] = legacy_filtered['STAGE'].map(stage_map).fillna(legacy_filtered['STAGE'])
@@ -80,7 +93,7 @@ def prepare_legacy_data(ca_summary, ca_summary_schema, target_schema, logger, ex
     legacy_filtered['MORPH_CODE'] = pd.to_numeric(legacy_filtered['MORPH_CODE'], errors='coerce').astype('Int64')
     
     cols_to_exclude = ['HER2_FISH', 'SCREENINGSTATUSCOSD_CODE', 'S_TUMOUR_ID', 'AGE_AT_DIAGNOSIS', 'Ki67', 'GROUPED_SITE', \
-                       'TUMOUR_COUNT', 'REPORT_COUNT']
+                       'TUMOUR_COUNT', 'REPORT_COUNT', 'DIAGNOSIS_YEAR']
     
     legacy_filtered = legacy_filtered[existing_casum.columns.difference(cols_to_exclude)]
     

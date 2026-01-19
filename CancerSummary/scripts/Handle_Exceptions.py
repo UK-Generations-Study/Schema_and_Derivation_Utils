@@ -12,6 +12,7 @@ import sys
 sys.path.append(os.path.abspath('N:\CancerEpidem\BrBreakthrough\SHegde\Schema_and_Derivation_utils'))
 
 import pandas as pd
+import re
 
 def expand_registry_laterality(df):
     """
@@ -80,112 +81,168 @@ def expand_registry_laterality(df):
     return new_df
 
 
-def resolve_morph_code_conflicts(df: pd.DataFrame, registry_sources) -> pd.DataFrame:
+def _extract_suffix_number(source: str) -> int:
+    """
+    Extract last 2-digit number from source name.
+    If not present, return -1 so it loses.
+    """
+    if not isinstance(source, str):
+        return -1
+    match = re.search(r"(\d{2})$", source)
+    return int(match.group(1)) if match else -1
+
+
+def resolve_morph_code_conflicts(df: pd.DataFrame, registry_sources):
     """
     Resolves MORPH_CODE conflicts only when Registry and other sources differ.
-    Keeps Registry rows; drops conflicting non-Registry rows.
-    If no conflict, all rows are kept.
+    Returns:
+        - resolved_df
+        - dropped_df (for debugging)
     """
-
     df = df.copy()
     df["_orig_index"] = df.index
-    new_rows = []
 
-    # Choose grouping rule
+    dropped_idx = set()
+
+    # Grouping rule
     if {"CancerRegistry_0125", "HistoPath_BrCa"}.issubset(registry_sources):
         grouped = df.groupby(["STUDY_ID", "DIAGNOSIS_DATE", "LATERALITY"])
     else:
         grouped = df.groupby(["STUDY_ID", "DIAGNOSIS_DATE"])
 
     for _, group in grouped:
+        
+        # check for required sources
+        if not set(registry_sources).issubset(set(group['S_STUDY_ID'])):
+            continue
 
-        # Single-row group -> keep
+        # Single row → nothing to resolve
         if len(group) == 1:
-            new_rows.append(group.iloc[0].to_dict())
             continue
 
-        # If cancer sites differ → keep all
+        # Different cancer sites → keep all
         if group["CANCER_SITE"].nunique(dropna=True) > 1:
-            new_rows.extend(group.to_dict("records"))
             continue
 
-        # Check if MORPH_CODE conflict exists
-        morphs = group["MORPH_CODE"].dropna().unique()
-        if len(morphs) <= 1:
-            # No conflict, keep all rows
-            new_rows.extend(group.to_dict("records"))
+        # No ICD conflict → keep all
+        icd_codes = group["MORPH_CODE"].dropna().unique()
+        if len(icd_codes) <= 1:
             continue
 
-        # Conflict exists → keep only Registry rows
-        registry_rows = group[group["S_STUDY_ID"].isin(registry_sources)]
-        if not registry_rows.empty:
-            new_rows.extend(registry_rows.to_dict("records"))
-        else:
-            # No Registry row → keep all
-            new_rows.extend(group.to_dict("records"))
+        # Conflict exists
+        # FlaggingCancers MUST be dropped
+        flagging_idx = group.index[group["S_STUDY_ID"] == "FlaggingCancers"]
+        dropped_idx.update(flagging_idx)
+        
+        # Drop FlaggingCancers only if other sources exist
+        non_flagging = group[group["S_STUDY_ID"] != "FlaggingCancers"]
+        candidates = non_flagging if not non_flagging.empty else group
 
-    # Convert to DataFrame
-    result = pd.DataFrame(new_rows)
+        # Pick winner by max numeric suffix
+        suffix = candidates['S_STUDY_ID'].apply(_extract_suffix_number)
+        max_suffix = suffix.max()
 
-    # Drop duplicates based on original index
-    if "_orig_index" in result.columns:
-        result = result.drop_duplicates(subset="_orig_index")
+        if (suffix == max_suffix).sum() > 1:
+            continue
+         
+        winner_idx = suffix.idxmax()
 
-    result = result.drop(columns=["_orig_index"], errors="ignore")
-    return result
+        # Everything else is dropped
+        dropped_idx.update(
+            candidates.index.difference([winner_idx])
+        )
+
+        # If FlaggingCancers was excluded, drop it too
+        dropped_idx.update(
+            group.index.difference(candidates.index)
+        )
+
+    resolved_df = df.loc[~df["_orig_index"].isin(dropped_idx)].copy()
+    dropped_df = df.loc[df["_orig_index"].isin(dropped_idx)].copy()
+
+    resolved_df = resolved_df.drop(columns="_orig_index", errors="ignore")
+    dropped_df = dropped_df.drop(columns="_orig_index", errors="ignore")
+
+    return resolved_df, dropped_df
 
 
-def resolve_icd_code_conflicts(df: pd.DataFrame, registry_sources) -> pd.DataFrame:
+def resolve_icd_code_conflicts(df: pd.DataFrame, registry_sources):
     """
-    Resolves ICD_CODE conflicts only when Registry and other sources differ.
-    Keeps Registry rows; drops conflicting non-Registry rows.
-    If no conflict, all rows are kept.
+    Resolves ICD_CODE conflicts by keeping exactly ONE row per tumour
+    when conflicts exist.
+
+    Rules:
+    - If no ICD_CODE conflict → keep all rows
+    - If conflict exists:
+        - Drop HistoPath_BrCa if other sources exist
+        - From remaining rows, keep the one with the
+          highest 2-digit numeric suffix in S_STUDY_ID
+
+    Returns:
+        resolved_df, dropped_df
     """
+
     df = df.copy()
     df["_orig_index"] = df.index
-    new_rows = []
 
-    # Choose grouping rule
+    dropped_idx = set()
+
+    # Grouping rule
     if {"CancerRegistry_0125", "HistoPath_BrCa"}.issubset(registry_sources):
         grouped = df.groupby(["STUDY_ID", "DIAGNOSIS_DATE", "LATERALITY"])
     else:
         grouped = df.groupby(["STUDY_ID", "DIAGNOSIS_DATE"])
 
     for _, group in grouped:
+        
+        # check for required sources
+        if not set(registry_sources).issubset(set(group['S_STUDY_ID'])):
+            continue
 
-        # Single-row group -> keep
+        # Single row → nothing to resolve
         if len(group) == 1:
-            new_rows.append(group.iloc[0].to_dict())
             continue
 
-        # If cancer sites differ → keep all
+        # Different cancer sites → keep all
         if group["CANCER_SITE"].nunique(dropna=True) > 1:
-            new_rows.extend(group.to_dict("records"))
             continue
 
-        # Check if ICD_CODE conflict exists
+        # No ICD conflict → keep all
         icd_codes = group["ICD_CODE"].dropna().unique()
         if len(icd_codes) <= 1:
-            # No conflict, keep all rows
-            new_rows.extend(group.to_dict("records"))
             continue
 
-        # Conflict exists → keep only Registry rows
-        registry_rows = group[group["S_STUDY_ID"].isin(registry_sources)]
-        if not registry_rows.empty:
-            new_rows.extend(registry_rows.to_dict("records"))
-        else:
-            # No Registry row → keep all
-            new_rows.extend(group.to_dict("records"))
+        # Conflict exists
+        # HistoPath_BrCa MUST be dropped
+        histopath_idx = group.index[group["S_STUDY_ID"] == "HistoPath_BrCa"]
+        dropped_idx.update(histopath_idx)
+        
+        # Drop HistoPath_BrCa only if other sources exist
+        non_histopath = group[group["S_STUDY_ID"] != "HistoPath_BrCa"]
+        candidates = non_histopath if not non_histopath.empty else group
 
-    # Convert to DataFrame
-    result = pd.DataFrame(new_rows)
+        # Pick winner by max numeric suffix
+        suffix = candidates['S_STUDY_ID'].apply(_extract_suffix_number)
+        max_suffix = suffix.max()
+        if (suffix==max_suffix).sum() > 1:
+            continue
+         
+        winner_idx = suffix.idxmax()
 
-    # Drop duplicates based on original index
-    if "_orig_index" in result.columns:
-        result = result.drop_duplicates(subset="_orig_index")
+        # Everything else is dropped
+        dropped_idx.update(
+            candidates.index.difference([winner_idx])
+        )
 
-    result = result.drop(columns=["_orig_index"], errors="ignore")
-    return result
+        # If HistoPath_BrCa was excluded, drop it too
+        dropped_idx.update(
+            group.index.difference(candidates.index)
+        )
 
+    resolved_df = df.loc[~df["_orig_index"].isin(dropped_idx)].copy()
+    dropped_df = df.loc[df["_orig_index"].isin(dropped_idx)].copy()
 
+    resolved_df = resolved_df.drop(columns="_orig_index", errors="ignore")
+    dropped_df = dropped_df.drop(columns="_orig_index", errors="ignore")
+
+    return resolved_df, dropped_df

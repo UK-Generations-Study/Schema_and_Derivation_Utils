@@ -34,7 +34,7 @@
     "DIAGNOSIS_DATE": {
       "type": ["string"],
       "format": "date-time",
-      "description": "Best estimate of tumour diagnosis date (per tumour).",
+      "description": "Best estimate of tumour diagnosis date (per tumour). The dates are shifted to psuedo-anonymise the data",
       "x-description": "Best estimate of the tumour diagnosis date (YYYY-MM-DD). Each participant may have multiple diagnosis dates, one per distinct tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.DIAGNOSIS_DATE; 2)Flagging Cancers - use DIAGNOSIS_DATE; 3) Pathology reports — for breast use HistoPath_BrCa.DIAGNOSIS_DATE ; for ovarian use HistoPath_OvCa.DIAGNOSIS_DATE. These are renamed to DIAGNOSIS_DATE to link among the sources",
       "x-sourcePriority": [
         "CancerRegistry.DIAGNOSIS_DATE",
@@ -47,10 +47,15 @@
       "type": ["string"],
       "description": "Source from which Diagnosis Date is selected in the target dataset. It will be one of the sources from x-sourcePriority for DIAGNOSIS_DATE."
     },
+    "DIAGNOSIS_YEAR": {
+      "type": ["integer", "null"],
+      "description": "Best estimate of tumour diagnosis year (per tumour). Real year from the diagnosis dates",
+      "x-description": "Best estimate of tumour diagnosis year calculated separately for each tumour using DIAGNOSIS_DATE"
+    },
     "AGE_AT_DIAGNOSIS": {
       "type": ["number"],
       "description": "Age of the patient when they were diagnosed with the tumour in years. (per tumour).",
-      "x-description": "Age in whole years at diagnosis, calculated separately for each tumour (TUMOUR_ID) using DOB from People table and the DIAGNOSIS_DATE for that tumour. Derived as floor((DIAGNOSIS_DATE – DOB) / 365.25).",
+      "x-description": "Age in whole years at diagnosis, calculated separately for each tumour using DOB from People table and the DIAGNOSIS_DATE for that tumour. Derived as floor((DIAGNOSIS_DATE – DOB) / 365.25).",
       "minimum": 0,
       "maximum": 200
     },
@@ -61,7 +66,7 @@
       "x-sourcePriority": [
         "CancerRegistry.SITE_ICD10_O2",
         "FlaggingCancers.CancerICD",
-		"HistoPath_BrCa.ICD_CODE",
+		    "HistoPath_BrCa.ICD_CODE",
         "HistoPath_OvCa.ICD_CODE"
       ],
       "maxLength": 4
@@ -371,12 +376,12 @@
 	  "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual",
       "x-description": "This field is carried to final dataset to match the tissue blocks received as part of pathology process. ",
       "x-sourcePriority": [
-        "HistoPath_BrCa.ReportCount"
+        "HistoPath_BrCa.ReportCount"        
       ]
     },
 	"TUMOUR_COUNT": {
       "type": ["integer", "null"],
-	  "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour, eg a patient with 2 tumours will have 2 rows with TumourCount=1 and TumourCount=2. No missing values allowed",
+	  "description": "Tumour identifier coded sequencially from 1 to max number of tumours per pathology report. Dataset has one row per tumour, eg a patient with 2 tumours will have 2 rows with TumourCount=1 and TumourCount=2. No missing values allowed",
       "x-description": "This field is carried to final dataset to match the tissue blocks received as part of pathology process. ",
       "x-sourcePriority": [
         "HistoPath_BrCa.TumourCount"        

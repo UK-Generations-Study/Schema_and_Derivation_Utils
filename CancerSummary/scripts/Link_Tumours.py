@@ -13,6 +13,7 @@ sys.path.append(os.path.abspath('N:\CancerEpidem\BrBreakthrough\SHegde\Schema_an
 
 import pandas as pd
 import time
+import numpy as np
 from typing import List
 import config as cf
 
@@ -122,6 +123,7 @@ def safe_equal(a, b) -> bool:
         return False
     return a == b
 
+
 # should_link_tumours
 def should_link_tumours(anchor: pd.Series, candidate: pd.Series, window: int = 90) -> bool:
     """
@@ -151,19 +153,24 @@ def should_link_tumours(anchor: pd.Series, candidate: pd.Series, window: int = 9
     if anchor["source"] in ("ExistingCaSum", "Legacy") or candidate["source"] in ("ExistingCaSum", "Legacy"):
         # identify which is the "new" row and which is the "old"
         if anchor["source"] in ("ExistingCaSum", "Legacy"):
-            old_row = anchor
+            old_row = anchor.copy()
             new_row = candidate
         else:
-            old_row = candidate
+            old_row = candidate.copy()
             new_row = anchor
+        
+        # temporary normalization
+        icd = old_row.get("ICD_CODE")
+        if isinstance(icd, str) and icd[:3] in {"C56", "C50", "D05"}:
+            old_row["ICD_CODE"] = icd[:3]
 
         # exact-match shortcut across linking fields
         if new_row["source"] in ("CancerRegistry", "HistoPath_BrCa"):
-            linking_fields = ["DIAGNOSIS_DATE", "LATERALITY", "ICD_CODE"]
+            linking_fields = ["LATERALITY", "ICD_CODE"]
         elif new_row["source"] in ("HistoPath_OvCa"):
-            linking_fields = ["DIAGNOSIS_DATE", "ICD_CODE"]
+            linking_fields = ["ICD_CODE"]
         else:
-            linking_fields = ["DIAGNOSIS_DATE", "ICD_CODE", "MORPH_CODE"]
+            linking_fields = ["ICD_CODE", "MORPH_CODE"]
 
         identical = all(
             (pd.isna(old_row.get(f)) and pd.isna(new_row.get(f))) or safe_equal(old_row.get(f), new_row.get(f))
@@ -212,7 +219,7 @@ def build_clusters_optimized(data_sources: dict, window: int = 90) -> List[List[
         clusters (list(dict)): Cluster with all the linked tumours in each dictionary
     """
 
-    # Gather all records
+    # --- 1. Gather all records ---
     all_records = []
     for src, df in data_sources.items():
         if df is None or df.empty:
@@ -237,47 +244,77 @@ def build_clusters_optimized(data_sources: dict, window: int = 90) -> List[List[
 
     clusters = []
     visited = set()
+    anchor_priority = ["CancerRegistry", "Legacy", "FlaggingCancers", "HistoPath_BrCa", "HistoPath_OvCa"]
 
-    # group by STUDY_ID
+    # --- 2. Group by patient ---
     for study_id, group in tum_df.groupby("STUDY_ID"):
         idxs = group.index.tolist()
 
-        for start in idxs:
-            if start in visited:
+        for idx in idxs:
+            if idx in visited:
                 continue
 
-            # start new cluster
-            cluster = []
-            queue = [start]
+            rec = tum_df.loc[idx]
 
-            while queue:
-                i = queue.pop()
-                if i in visited:
+            # determine priority of current record
+            if rec["source"] in anchor_priority:
+                rec_pri = anchor_priority.index(rec["source"])
+            else:
+                rec_pri = len(anchor_priority)
+
+            # skip as anchor only if a higher-priority record exists for same tumour
+            higher_priority_exists = False
+            for j in idxs:
+                if j == idx:
                     continue
-                visited.add(i)
+                other = tum_df.loc[j]
 
-                rec_i = tum_df.loc[i]
-                cluster.append(rec_i)
+                if other["source"] in anchor_priority:
+                    other_pri = anchor_priority.index(other["source"])
+                else:
+                    other_pri = len(anchor_priority)
 
-                # compare to all others for this STUDY_ID
-                for j in idxs:
-                    if j in visited:
-                        continue
-                    rec_j = tum_df.loc[j]
-                    if should_link_tumours(rec_i, rec_j, window):
-                        queue.append(j)
+                # Only block if higher-priority AND linkable (could be same tumour)
+                if other_pri < rec_pri:
+                    if should_link_tumours(other, rec, window):
+                        higher_priority_exists = True
+                        break
 
-            # build final output for this cluster
+            if higher_priority_exists:
+                continue  # skip this anchor
+
+            # anchor is now accepted
+            visited.add(idx)
+            cluster = [rec]
+
+            # --- 3. Anchor-based linking ---
+            for j in idxs:
+                if j == idx or j in visited:
+                    continue
+
+                candidate = tum_df.loc[j]
+
+                if candidate["source"] in anchor_priority:
+                    cand_pri = anchor_priority.index(candidate["source"])
+                else:
+                    cand_pri = len(anchor_priority)
+
+                if cand_pri >= rec_pri:
+                    if should_link_tumours(rec, candidate, window):
+                        cluster.append(candidate)
+                        visited.add(j)
+
+            # --- 4. Format cluster ---
             formatted = []
-            for rec in cluster:
+            for rec_item in cluster:
                 formatted.append({
-                    "source": rec["source"],
-                    "row": rec["full_row"],
-                    "STUDY_ID": rec["STUDY_ID"],
-                    "DIAGNOSIS_DATE": rec["DIAGNOSIS_DATE"],
-                    "LATERALITY": rec["LATERALITY"],
-                    "MORPH_CODE": rec["MORPH_CODE"],
-                    "ICD_CODE": rec["ICD_CODE"]
+                    "source": rec_item["source"],
+                    "row": rec_item["full_row"],
+                    "STUDY_ID": rec_item["STUDY_ID"],
+                    "DIAGNOSIS_DATE": rec_item["DIAGNOSIS_DATE"],
+                    "LATERALITY": rec_item["LATERALITY"],
+                    "MORPH_CODE": rec_item["MORPH_CODE"],
+                    "ICD_CODE": rec_item["ICD_CODE"]
                 })
 
             clusters.append(formatted)
@@ -336,7 +373,7 @@ def select_value_per_field(cluster_matches, target_schema, default_source="Cance
             # inject Legacy after FlaggingCancers if not already there
             if "Legacy" not in ordered_sources:
                 if "FlaggingCancers" in ordered_sources:
-                    idx = ordered_sources.index("FlaggingCancers") + 1
+                    idx = ordered_sources.index("FlaggingCancers")
                     ordered_sources.insert(idx, "Legacy")
                 else:
                     # if FlaggingCancers missing, put after CancerRegistry if present
