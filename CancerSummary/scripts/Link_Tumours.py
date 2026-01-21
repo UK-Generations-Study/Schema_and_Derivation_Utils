@@ -166,7 +166,7 @@ def should_link_tumours(anchor: pd.Series, candidate: pd.Series, window: int = 9
 
         # exact-match shortcut across linking fields
         if new_row["source"] in ("CancerRegistry", "HistoPath_BrCa"):
-            linking_fields = ["LATERALITY", "ICD_CODE"]
+            linking_fields = ["ICD_CODE", "LATERALITY"]
         elif new_row["source"] in ("HistoPath_OvCa"):
             linking_fields = ["ICD_CODE"]
         else:
@@ -362,13 +362,20 @@ def select_value_per_field(cluster_matches, target_schema, default_source="Cance
         if fld_priority:
             ordered_sources = []
             col_map = {}
+
             for src_field in fld_priority:
                 try:
                     src_name, col_name = src_field.split(".")
                 except ValueError:
                     continue
+
                 ordered_sources.append(src_name)
-                col_map[src_name] = col_name
+                if src_name not in col_map:
+                    col_map[src_name] = []
+                col_map[src_name].append(col_name)
+
+            # deduplicate while preserving order
+            ordered_sources = list(dict.fromkeys(ordered_sources))
 
             # inject Legacy after FlaggingCancers if not already there
             if "Legacy" not in ordered_sources:
@@ -390,17 +397,23 @@ def select_value_per_field(cluster_matches, target_schema, default_source="Cance
         for src in ordered_sources:
             if src not in cluster_matches:
                 continue
-            col = col_map.get(src, var)
-            candidate_row = cluster_matches[src]
-            candidate_val = candidate_row.get(col) if hasattr(candidate_row, "get") else None
 
-            if pd.notna(candidate_val) and candidate_val != "":
-                val = candidate_val
-                if src == "Legacy":
-                    # keep original Legacy provenance (e.g., 'PHE', 'ENCORE')
-                    src_used = candidate_row.get(f"S_{var}", None)
-                else:
-                    src_used = f"{src}.{col}"
+            candidate_row = cluster_matches[src]
+            cols = col_map.get(src, [var])
+
+            for col in cols:
+                candidate_val = (candidate_row.get(col) if hasattr(candidate_row, "get") else None )
+
+                if pd.notna(candidate_val) and candidate_val != "":
+                    val = candidate_val
+                    if src == "Legacy":
+                        # keep original Legacy provenance (e.g., 'PHE', 'ENCORE')
+                        src_used = candidate_row.get(f"S_{var}", None)
+                    else:
+                        src_used = f"{src}.{col}"
+                    break
+
+            if val is not None:
                 break
 
         # --- Fallback to ExistingCaSum if no new value ---

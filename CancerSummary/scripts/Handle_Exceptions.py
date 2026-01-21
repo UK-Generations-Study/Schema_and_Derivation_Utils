@@ -26,25 +26,25 @@ def expand_registry_laterality(df):
     new_rows = []
 
     # Separate datasets for convenience
-    registry_df = df[df["S_STUDY_ID"] == "CancerRegistry_0125"]
-    histo_df = df[df["S_STUDY_ID"] == "HistoPath_BrCa"]
+    registry_df = df[df["S_STUDY_ID"] == "CancerRegistry.STUDY_ID"]
+    histo_df = df[df["S_STUDY_ID"].str.contains("PHE|HistoPath_BrCa")]
 
     # Index HistoPath laterality by match keys
-    histo_group = (histo_df.groupby(["STUDY_ID", "DIAGNOSIS_DATE", "MORPH_CODE"])["LATERALITY"]
+    histo_group = (histo_df.groupby(["STUDY_ID", "DIAGNOSIS_DATE", "ICD_CODE"])["LATERALITY"]
                     .apply(list).to_dict())
 
     to_drop = set()
 
     for idx, row in registry_df.iterrows():
-        key = (row["STUDY_ID"], row["DIAGNOSIS_DATE"], row["MORPH_CODE"])
+        key = (row["STUDY_ID"], row["DIAGNOSIS_DATE"], row["ICD_CODE"])
         histo_lats = histo_group.get(key, [])
 
-        if row["LATERALITY"] in ["9", "B"] and histo_lats:
+        if row["LATERALITY"] in ["9", "B", "M"] and histo_lats:
             if row["LATERALITY"] == "9":
                 # Replace laterality with first available from HistoPath
                 new_row = row.copy()
                 new_row["LATERALITY"] = histo_lats[0]
-                new_row["S_LATERALITY"] = "HistoPath_BrCa.LATERALITY"
+                new_row["S_LATERALITY"] = new_row["S_STUDY_ID"]
                 new_rows.append(new_row)
 
             elif row["LATERALITY"] == "B":
@@ -52,12 +52,20 @@ def expand_registry_laterality(df):
                 for lat in sorted(set(histo_lats)):
                     new_row = row.copy()
                     new_row["LATERALITY"] = lat
-                    new_row["S_LATERALITY"] = "HistoPath_BrCa.LATERALITY"
+                    new_row["S_LATERALITY"] = new_row["S_STUDY_ID"]
+                    new_rows.append(new_row)
+                
+            elif row["LATERALITY"] == "M":
+                # Split row for all distinct HistoPath laterality values
+                for lat in sorted(set(histo_lats)):
+                    new_row = row.copy()
+                    new_row["LATERALITY"] = lat
+                    new_row["S_LATERALITY"] = new_row["S_STUDY_ID"]
                     new_rows.append(new_row)
             
             to_drop.update(histo_df[(histo_df["STUDY_ID"] == row["STUDY_ID"])
                             & (histo_df["DIAGNOSIS_DATE"] == row["DIAGNOSIS_DATE"])
-                            & (histo_df["MORPH_CODE"] == row["MORPH_CODE"])].index)
+                            & (histo_df["ICD_CODE"] == row["ICD_CODE"])].index)
 
         elif histo_lats and all(lat != row["LATERALITY"] for lat in histo_lats):
             new_row = row.copy()
@@ -65,13 +73,13 @@ def expand_registry_laterality(df):
             
             to_drop.update(histo_df[(histo_df["STUDY_ID"] == row["STUDY_ID"])
                             & (histo_df["DIAGNOSIS_DATE"] == row["DIAGNOSIS_DATE"])
-                            & (histo_df["MORPH_CODE"] == row["MORPH_CODE"])].index)
+                            & (histo_df["ICD_CODE"] == row["ICD_CODE"])].index)
             
         else:
             new_rows.append(row)
 
     # Add all other non-registry
-    other_sources = df[~df["S_STUDY_ID"].isin(["CancerRegistry_0125"])]
+    other_sources = df[~df["S_STUDY_ID"].isin(["CancerRegistry.STUDY_ID"])]
     
     # Drop matched HistoPath_BrCa rows
     other_sources = other_sources[~other_sources.index.isin(to_drop)].reset_index(drop=True)

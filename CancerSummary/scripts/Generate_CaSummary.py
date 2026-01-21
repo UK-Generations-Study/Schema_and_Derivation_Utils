@@ -83,7 +83,7 @@ fl_cancers = all_data['FlaggingCancers']
 hist_Brca = all_data['Histopath_BrCa_GS_v1']
 hist_Ovca = all_data['OvCa_Histopath_II']
 ca_summary = all_data['casummary_v1']
-existing_casum = all_data['NewCancerSummary_v2']
+existing_casum = all_data['NewCancerSummary_v3']
 
 # get the JSON schemas
 can_reg_schema = all_schemas['CancerRegistry']
@@ -91,7 +91,7 @@ fl_cancers_schema = all_schemas['FlaggingCancers']
 hist_Brca_schema = all_schemas['Histopath_BrCa_GS_v1']
 hist_Ovca_schema = all_schemas['OvCa_Histopath_II']
 ca_summary_schema = all_schemas['casummary_v1']
-target_schema = all_schemas['NewCancerSummary_v2']
+target_schema = all_schemas['NewCancerSummary_v3']
 
 # select required columns
 can_reg.rename(columns={'STUDY_ID':'PersonID'}, inplace=True)
@@ -395,27 +395,10 @@ CancerSummary = CancerSummary[existing_casum.columns]
 
 #%% Exceptional rules
 # Ignore PHE_0125 as it is being processed above. Do not conisder from Legacy
-CaSumFiltered_1 = CancerSummary[~CancerSummary['S_STUDY_ID'].str.contains('PHE_0125|Deaths')]
+CaSumFiltered_1 = CancerSummary[~CancerSummary['S_STUDY_ID'].str.contains('Deaths')]
+logger.warning("Count of Flagging death tumour: " + str(len(CancerSummary) - len(CaSumFiltered_1)))
 
-logger.warning("Count of Flagging death tumour and duplicates: " \
-               + str(len(CancerSummary) - len(CaSumFiltered_1)))
-
-logger.info("Standardise source variables and CANCER_SITE")
-# Standardise the S_STUDY_ID and CANCER_SITE
-for col in CaSumFiltered_1.columns:
-    if col.startswith('S_'):
-        CaSumFiltered_1 = CaSumFiltered_1.copy()
-        CaSumFiltered_1[col] = CaSumFiltered_1[col].str.split('.').str[0]
-        CaSumFiltered_1[col] = CaSumFiltered_1[col].str.replace(r'\bCancerRegistry\b', 'CancerRegistry_0125', regex=True)
-        CaSumFiltered_1[col] = CaSumFiltered_1[col].str.replace(' ', '_')
-        CaSumFiltered_1[col] = CaSumFiltered_1[col].str.replace('PHE_', 'CancerRegistry_')
-        CaSumFiltered_1[col] = CaSumFiltered_1[col].str.replace('flagging', 'Flagging')
-        CaSumFiltered_1[col] = CaSumFiltered_1[col].str.replace(r'\bFlagging\b', 'FlaggingCancers', regex=True)
-        CaSumFiltered_1[col] = CaSumFiltered_1[col].str.replace('HistoPath_ovca', 'HistoPath_OvCa')
-        CaSumFiltered_1[col] = CaSumFiltered_1[col].str.replace('Histopath_Report', 'HistoPath_BrCa')
-        CaSumFiltered_1[col] = CaSumFiltered_1[col].str.replace('HistoPath_Report', 'HistoPath_BrCa')
-        
-#%% Ignore rows with Invalid/NULL Diagnosis date
+# Ignore rows with Invalid/NULL Diagnosis date
 logger.info("Filter out invalid date of diagnosis")
 CaSumFiltered_2 = CaSumFiltered_1[CaSumFiltered_1['AGE_AT_DIAGNOSIS'].notna()]
 CaSumFiltered_3 = CaSumFiltered_2[CaSumFiltered_2['AGE_AT_DIAGNOSIS']>=0]
@@ -427,7 +410,23 @@ CaSumFiltered_4 = he.expand_registry_laterality(CaSumFiltered_3)
 CaSumFiltered_4 = CaSumFiltered_4[existing_casum.columns]
 logger.warning("Count of tumours reduced after resolving LATERALITY between Registry and Path report: " + str(len(CaSumFiltered_3) - len(CaSumFiltered_4)))
 
-# handle different Morphology code between Registry & Path Report
+#%%
+logger.info("Standardise source variables and CANCER_SITE")
+# Standardise the S_STUDY_ID and CANCER_SITE
+for col in CaSumFiltered_4.columns:
+    if col.startswith('S_'):
+        CaSumFiltered_4 = CaSumFiltered_4.copy()
+        CaSumFiltered_4[col] = CaSumFiltered_4[col].str.split('.').str[0]
+        CaSumFiltered_4[col] = CaSumFiltered_4[col].str.replace(r'\bCancerRegistry\b', 'CancerRegistry_0125', regex=True)
+        CaSumFiltered_4[col] = CaSumFiltered_4[col].str.replace(' ', '_')
+        CaSumFiltered_4[col] = CaSumFiltered_4[col].str.replace('PHE_', 'CancerRegistry_')
+        CaSumFiltered_4[col] = CaSumFiltered_4[col].str.replace('flagging', 'Flagging')
+        CaSumFiltered_4[col] = CaSumFiltered_4[col].str.replace(r'\bFlagging\b', 'FlaggingCancers', regex=True)
+        CaSumFiltered_4[col] = CaSumFiltered_4[col].str.replace('HistoPath_ovca', 'HistoPath_OvCa')
+        CaSumFiltered_4[col] = CaSumFiltered_4[col].str.replace('Histopath_Report', 'HistoPath_BrCa')
+        CaSumFiltered_4[col] = CaSumFiltered_4[col].str.replace('HistoPath_Report', 'HistoPath_BrCa')
+        
+#%% handle different Morphology code between Registry & Path Report
 logger.info("Handling difference in ICD_CODE between sources")
 CaSumFiltered_5, dropped_icd = he.resolve_icd_code_conflicts(CaSumFiltered_4, ["CancerRegistry_0125", "HistoPath_BrCa"])
 logger.warning("Count of tumours reduced after resolving ICD_CODE between sources: " + str(len(CaSumFiltered_4) - len(CaSumFiltered_5)))
@@ -437,34 +436,35 @@ logger.info("Handling difference in MORPH_CODE between sources")
 CaSumFiltered_6, dropped_mc = he.resolve_morph_code_conflicts(CaSumFiltered_5, ["CancerRegistry_0125", "FlaggingCancers"])
 logger.warning("Count of tumours reduced after resolving MORPH_CODE between sources: " + str(len(CaSumFiltered_5) - len(CaSumFiltered_6)))
 
-logger.info("Removing duplicates")
-CaSumFiltered_6 = CaSumFiltered_6.loc[~(CaSumFiltered_6.duplicated(
-                subset=['STUDY_ID', 'DIAGNOSIS_DATE', 'ICD_CODE', 'MORPH_CODE', 'LATERALITY'], keep='first') &
-                   (CaSumFiltered_6['TUMOUR_ID'].isna()))]
+key_cols = ['STUDY_ID', 'DIAGNOSIS_DATE', 'ICD_CODE', 'MORPH_CODE', 'LATERALITY']
+
+CaSumFiltered_7 = CaSumFiltered_6.loc[~(CaSumFiltered_6['TUMOUR_ID'].isna() & 
+                                        CaSumFiltered_6.duplicated(subset=key_cols, keep=False))]
+logger.info("Duplicate Count: " + str(len(CaSumFiltered_6) - len(CaSumFiltered_7)))
 
 logger.info("Tumour dataset is ready. Final count:" + str(len(CaSumFiltered_6)))
 
 #%% Summary reports
 logger.info("Generating Summary reports")
 
-CaSumFiltered_7 = CaSumFiltered_6.copy()
+CaSumFiltered_8 = CaSumFiltered_7.copy()
 
-CaSumFiltered_7['S_STUDY_ID'] = CaSumFiltered_7['S_STUDY_ID'].str.lower().fillna('NaN')
+CaSumFiltered_8['S_STUDY_ID'] = CaSumFiltered_8['S_STUDY_ID'].str.lower().fillna('NaN')
 
-CaSumFiltered_7['CANCER_SITE'] = CaSumFiltered_7['CANCER_SITE'].str.lower().fillna('NaN')
+CaSumFiltered_8['CANCER_SITE'] = CaSumFiltered_8['CANCER_SITE'].str.lower().fillna('NaN')
 
 # execute the script for summary reports
-sp.generate_summary_reports(CaSumFiltered_7, "SummaryReports_v4.xlsx")
+sp.generate_summary_reports(CaSumFiltered_8, "SummaryReports.xlsx")
 
 #%% Validate dataset with Schema
-
+'''
 logger.info("Validating the result data using JSON schema")
 # type casting for schema validation
-CaSumFiltered_6['TUMOUR_ID'] = pd.to_numeric(CaSumFiltered_6['TUMOUR_ID'], errors='coerce').astype('Int64')
-CaSumFiltered_6['TUMOUR_SIZE'] =  pd.to_numeric(CaSumFiltered_6['TUMOUR_SIZE'], errors='coerce')
-CaSumFiltered_6['MORPH_CODE'] = pd.to_numeric(CaSumFiltered_6['MORPH_CODE'], errors='coerce').astype('Int64')
+CaSumFiltered_7['TUMOUR_ID'] = pd.to_numeric(CaSumFiltered_7['TUMOUR_ID'], errors='coerce').astype('Int64')
+CaSumFiltered_7['TUMOUR_SIZE'] =  pd.to_numeric(CaSumFiltered_7['TUMOUR_SIZE'], errors='coerce')
+CaSumFiltered_7['MORPH_CODE'] = pd.to_numeric(CaSumFiltered_7['MORPH_CODE'], errors='coerce').astype('Int64')
 
-final_json, cleaned_data = cv.getCleanJsonData(CaSumFiltered_6.copy(), "NewCancerSummary")
+final_json, cleaned_data = cv.getCleanJsonData(CaSumFiltered_7.copy(), "NewCancerSummary")
 
 invalid_rows = cv.dataValidation(final_json, target_schema)
 
@@ -475,15 +475,15 @@ if len(invalid_rows)>=10:
 
 else:
     # Load the data to the database
-    write_to_DB(CaSumFiltered_6, 'NewCancerSummary_v3', upload_conn, logger)
-
+    write_to_DB(CaSumFiltered_7, 'NewCancerSummary_v3', upload_conn, logger)
+'''
 #%% Pseudo-anonymise the data
 logger.info("Pseudo-anonymise and create JSON data")
 
 sidcode = read_data('select StudyID, TCode, Random from SIDCodes', mailing_conn, logger)
 sidcode['StudyID'] = pd.to_numeric(sidcode['StudyID'], errors='coerce').astype('Int64')
 
-CaSum_pseudo_anon = CaSumFiltered_6.merge(sidcode, left_on=['STUDY_ID'], right_on=['StudyID'], how='left')
+CaSum_pseudo_anon = CaSumFiltered_7.merge(sidcode, left_on=['STUDY_ID'], right_on=['StudyID'], how='left')
 
 CaSum_pseudo_anon['DIAGNOSIS_DATE'] = CaSum_pseudo_anon['DIAGNOSIS_DATE'] + pd.to_timedelta(CaSum_pseudo_anon['Random'], unit='days')
 
