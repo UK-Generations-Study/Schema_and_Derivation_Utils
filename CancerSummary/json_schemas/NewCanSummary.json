@@ -16,12 +16,12 @@
     },
     "S_STUDY_ID": {
       "type": ["string"],
-      "description": "Source from which the Study ID is selected in the target dataset. It will be one of the sources from x-sourcePriority for STUDY_ID. This field always represents the latest data source containing the tumour"
+      "description": "Source from which the Study ID is selected in the target dataset. It will be one of the sources from x-sourcePriority for STUDY_ID in order."
     },
     "TUMOUR_ID": {
       "type": ["number", "null"],
       "description": "Unique identifier for each tumour (one participant may have several).",
-      "x-description": "Tumour-specific identifier. A participant may have multiple tumours, each with its own TUMOUR_ID. Provided directly in CancerRegistry.TUMOURID or FlaggingCancers.TumourID. Pathology datasets (HistoPath_BrCa, HistoPath_OvCa) do not include a universal tumour ID, only tumour-level details (e.g., count, site, laterality, size, grade, stage). When integrating, use CancerRegistry.TUMOURID (or FlaggingCancers.TumourID if registry ID is unavailable) as the primary source.",
+      "x-description": "Tumour-specific identifier. A participant may have multiple tumours, each with its own TUMOUR_ID. Provided directly in CancerRegistry.TUMOURID or FlaggingCancers.TumourID. Pathology datasets (HistoPath_BrCa, HistoPath_OvCa) do not include a universal tumour ID, only tumour-level details (e.g., count, site, laterality, size, grade, stage). When integrating, use CancerRegistry.TUMOURID (or FlaggingCancers.TumourID if registry ID is unavailable) as the primary source. The missing values in this field is either not carried from legacy dataset or tumour is from Path report",
       "x-sourcePriority": [
         "CancerRegistry.TUMOURID",
         "FlaggingCancers.TumourID"
@@ -152,7 +152,7 @@
       "description": "Number of lymph nodes examined.",
       "x-description": "Total number of local/regional lymph nodes examined (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.NODESINVOLVED — described in the registry schema as the \"number of local and regional nodes examined.\" Ovarian pathology does not provide node counts. Store as an integer; null if unavailable. 2) Breast pathology: NodesTotal = HistoPath_BrCa.AxillaryNodesTotal + HistoPath_BrCa.OtherNodesTotal (sum; treat nulls as 0 only if at least one component is non-null);",
       "x-sourcePriority": [
-        "CancerRegistry.NODESINVOLVED",
+        "CancerRegistry.NODESEXCISED",
         "HistoPath_BrCa.NodesTotal"
         ]
     },
@@ -165,7 +165,7 @@
       "description": "Number of lymph nodes positive for metastasis.",
       "x-description": "Number of local/regional lymph nodes positive for metastasis (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.NODESEXCISED — described in the registry schema as the \"number of local and regional nodes reported as being positive.\" Ovarian pathology does not provide node counts. Store as an integer; null if unavailable. 2) Breast pathology: NodesPositive = HistoPath_BrCa.AxillaryNodesPositive + HistoPath_BrCa.OtherNodesPositive (sum; treat nulls as 0 only if at least one component is non-null);",
       "x-sourcePriority": [
-        "CancerRegistry.NODESEXCISED",
+        "CancerRegistry.NODESINVOLVED",
         "HistoPath_BrCa.NodesPositive"       
       ]
     },

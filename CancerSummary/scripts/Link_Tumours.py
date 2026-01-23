@@ -125,7 +125,7 @@ def safe_equal(a, b) -> bool:
 
 
 # should_link_tumours
-def should_link_tumours(anchor: pd.Series, candidate: pd.Series, window: int = 90) -> bool:
+def should_link_tumours(anchor: pd.Series, candidate: pd.Series, window: int = 60) -> bool:
     """
     Decide whether two records (anchor, candidate) represent the same tumour.
     Args:
@@ -209,7 +209,7 @@ def should_link_tumours(anchor: pd.Series, candidate: pd.Series, window: int = 9
 
 
 # build_clusters_optimized
-def build_clusters_optimized(data_sources: dict, window: int = 90) -> List[List[dict]]:
+def build_clusters_optimized(data_sources: dict, window: int = 60) -> List[List[dict]]:
     """
     Build clusters of linked tumours across sources.
     Args:

@@ -158,7 +158,8 @@ def get_site_from_ICD(icd_code, s_study_id=None):
     code = icd_code[:3]
     
     if code in icd10_to_site_mapping:
-        return icd10_to_site_mapping.get(code, 'Unknown')
+        ret_code = icd10_to_site_mapping.get(code, 'Unknown')
+        return ret_code.title()
 
 
 # Mapping dictionary: keys are site names, values are lists of ICD code ranges
@@ -180,14 +181,13 @@ grouped_site_mapping = {
     'lung': ['C33-C34'],
     'Bone and Articular Cartilage': ['C40-C41'],
     'melanoma of skin': ['C43'],
-    'NMSC': ['C44'],
+    'non-melanoma of skin': ['C44'],
     'mesothelioma': ['C45'],
     'kaposi sarcoma': ['C46'],
     'breast': ['C50'],
     'vulva': ['C51'],
     'vagina': ['C52'],
-    'cervix uteri': ['C53'],
-    'corpus uteri': ['C54'],
+    'cervix uteri': ['C53-C55'],
     'ovary': ['C56'],
     'penis': ['C60'],
     'prostate': ['C61'],
@@ -200,15 +200,24 @@ grouped_site_mapping = {
     'non-Hodgkin lymphoma': ['C82-C86', 'C96'],
     'multiple myeloma': ['C88', 'C90'],
     'leukemia': ['C91-C95'],
-    'in-situ': ['D00-D09'],
+    'breast in-situ': ['D05'],
+    'Oral cavity/oesophagus/stomach in-situ': ['D00'],
+    'Other digestive organ in-situ': ['D01'],
+    'Middle ear in-situ/respiratory system in-situ': ['D02'],
+    'Skin/Melanoma in-situ': ['D03-D04'],
+    'Uterus in-situ': ['D06'],
+    'Other genital organ in-situ': ['D07'],
+    'Other and unspecified in-stu': ['D09'],
     'benign': ['D10-D36'],
-    'unknown/uncertain': ['D37-D48']
+    'unknown/uncertain behaviour': ['D37-D48'],
+    'other malignant neoplasms': ['C14', 'C24', 'C26', 'C37', 'C38', 'C39', 'C47', 'C48', 'C49', 'C57', 'C58', \
+                                  'C63', 'C68', 'C69', 'C74-C80', 'C87', 'C97']
 }
 
 # Helper function to check if ICD code falls in range
 def group_sites(icd):
     if pd.isna(icd):
-        return 'unknown'
+        return 'Unknown'
 
     icd3 = icd[:3]
     for site, ranges in grouped_site_mapping.items():
@@ -216,8 +225,8 @@ def group_sites(icd):
             if '-' in r:
                 start, end = r.split('-')
                 if start <= icd3 <= end:
-                    return site
+                    return site.title()
             else:
                 if icd3 == r:
-                    return site
-    return 'unknown'
+                    return site.title()
+    return 'Unknown'

@@ -193,7 +193,7 @@ brca_mapped['MORPH_CODE'] = brca_mapped.apply(mc.derive_breast_morphology_code, 
 brca_mapped['MORPH_CODE'] = brca_mapped['MORPH_CODE'].str.replace("M", "",)
 
 # derive ICD_CODE for breast pat report data
-brca_mapped['ICD_CODE'] = np.where(brca_mapped['InvasiveCarcinoma']=='P', 'C50', \
+brca_mapped['ICD_CODE'] = np.where((brca_mapped['InvasiveCarcinoma']=='P') | (brca_mapped['PagetsDisease']=='Y'), 'C50', \
                                    np.where((brca_mapped['InvasiveCarcinoma']=='N') & (brca_mapped['InsituCarcinoma']=='P'),\
                                             'D05', None))
 
@@ -222,8 +222,8 @@ brca_mapped['OtherNodesTotal'] = pd.to_numeric(brca_mapped['OtherNodesTotal'], e
 brca_mapped['AxillaryNodesPositive'] = pd.to_numeric(brca_mapped['AxillaryNodesPositive'], errors='coerce').astype('Int64')
 brca_mapped['OtherNodesPositive'] = pd.to_numeric(brca_mapped['OtherNodesPositive'], errors='coerce').astype('Int64')
 
-brca_mapped['NodesTotal'] = brca_mapped['AxillaryNodesTotal'] + brca_mapped['OtherNodesTotal']
-brca_mapped['NodesPositive'] = brca_mapped['AxillaryNodesPositive'] + brca_mapped['OtherNodesPositive']
+brca_mapped['NodesTotal'] = brca_mapped['AxillaryNodesTotal'].add(brca_mapped['OtherNodesTotal'],fill_value=0)
+brca_mapped['NodesPositive'] = brca_mapped['AxillaryNodesPositive'].add(brca_mapped['OtherNodesPositive'],fill_value=0)
 
 #%% filter out the benign and non-malignant cases
 logger.info("Filter source data as required")
@@ -252,15 +252,21 @@ icd_code_mapping['ICD10_Code'] = icd_code_mapping['ICD10_Code'].astype(str).appl
 icd_code_mapping['ICD9_Code'] = icd_code_mapping['ICD9_Code'].astype(str).apply(lambda x:x[:4] if len(x)==5 else x)
 
 icd_mapping = dict(zip(icd_code_mapping['ICD9_Code'], icd_code_mapping['ICD10_Code']))
+icd_mapping_3char = dict(zip(icd_code_mapping['ICD9_Code'].str[:3], icd_code_mapping['ICD10_Code'].str[:3]))
 
 flagging_cancers['CancerICD'] = flagging_cancers['CancerICD'].str.rstrip('-')
 
 flagging_cancers['CancerICD_mapped'] = flagging_cancers['CancerICD'].map(icd_mapping).fillna(flagging_cancers['CancerICD'])
+flagging_cancers['CancerICD_mapped_3char'] = flagging_cancers['CancerICD'].str[:3].\
+                                                map(icd_mapping_3char).fillna(flagging_cancers['CancerICD'])
 
 flagging_cancers['CancerICD'] = np.where(~flagging_cancers['CancerICD'].str.match(r'^[A-Za-z]').fillna(False),\
                                    flagging_cancers['CancerICD_mapped'], flagging_cancers['CancerICD'])
 
-flagging_cancers = flagging_cancers.drop(['CancerICD_mapped'], axis=1)
+flagging_cancers['CancerICD'] = np.where(~flagging_cancers['CancerICD'].str.match(r'^[A-Za-z]').fillna(False),\
+                                   flagging_cancers['CancerICD_mapped_3char'], flagging_cancers['CancerICD'])
+    
+flagging_cancers = flagging_cancers.drop(['CancerICD_mapped','CancerICD_mapped_3char'], axis=1)
 
 flagging_cancers_link = flagging_cancers[['STUDY_ID', 'TumourID', 'DIAGNOSIS_DATE', 'CancerICD', 'MORPH_CODE']].copy()
 flagging_cancers_link['MORPH_CODE'] = pd.to_numeric(flagging_cancers_link['MORPH_CODE'], errors='coerce').astype('Int64')
@@ -332,9 +338,6 @@ except Exception as e:
     
     logger.error("Failed to build tumour dataset:" + str(e))
 
-# save the tumour source mapping
-# lt.tumour_source_mapping(clusters, CancerSummary)
-
 #%% Populate other remaining fields
 logger.info("Deriving Age at diagnosis, Diagnosis Year and SITE")
 
@@ -355,25 +358,25 @@ CancerSummary['AGE_AT_DIAGNOSIS'] = pd.to_numeric(CancerSummary['AGE_AT_DIAGNOSI
 
 CancerSummary.drop('DOB', axis=1, inplace=True)
 
-CancerSummary['DIAGNOSIS_YEAR'] = CancerSummary['DIAGNOSIS_DATE'].dt.year
+CancerSummary['DIAGNOSIS_YEAR'] = CancerSummary['DIAGNOSIS_DATE'].dt.year.astype('Int64')
 
 logger.info("Convert ICD 8/9 version to ICD-10")
 
 icd_code_mapping = pd.read_csv(os.path.join(cf.casum_report_path, cf.casum_ICD_conversion_file))
 
-icd_code_mapping['ICD10_Code'] = icd_code_mapping['ICD10_Code'].astype(str).apply(lambda x:x[:4] if len(x)==5 else x)
-icd_code_mapping['ICD9_Code'] = icd_code_mapping['ICD9_Code'].astype(str).apply(lambda x:x[:4] if len(x)==5 else x)
-
-icd_mapping = dict(zip(icd_code_mapping['ICD9_Code'], icd_code_mapping['ICD10_Code']))
-
 CancerSummary['ICD_CODE'] = CancerSummary['ICD_CODE'].str.rstrip('-')
 
 CancerSummary['ICD_CODE_mapped'] = CancerSummary['ICD_CODE'].map(icd_mapping).fillna(CancerSummary['ICD_CODE'])
-
+CancerSummary['ICD_CODE_mapped_3char'] = CancerSummary['ICD_CODE'].str[:3].\
+                                                map(icd_mapping_3char).fillna(CancerSummary['ICD_CODE'])
+                                                
 CancerSummary['ICD_CODE'] = np.where(~CancerSummary['ICD_CODE'].str.match(r'^[A-Za-z]').fillna(False),\
                                    CancerSummary['ICD_CODE_mapped'], CancerSummary['ICD_CODE'])
 
-CancerSummary = CancerSummary.drop(['ICD_CODE_mapped'], axis=1)
+CancerSummary['ICD_CODE'] = np.where(~CancerSummary['ICD_CODE'].str.match(r'^[A-Za-z]').fillna(False),\
+                                   CancerSummary['ICD_CODE_mapped_3char'], CancerSummary['ICD_CODE'])
+    
+CancerSummary = CancerSummary.drop(['ICD_CODE_mapped','ICD_CODE_mapped_3char'], axis=1)
 
 # Populate SITE using ICD code
 CancerSummary['CANCER_SITE'] = CancerSummary.apply(lambda row: sm.get_site_from_ICD(row['ICD_CODE'], row['S_STUDY_ID']), axis=1)
@@ -385,7 +388,7 @@ total_count = len(CancerSummary)
 logger.warning("Total count of tumours: " + str(len(CancerSummary)))
 
 # filter out the benign cases
-CancerSummary = CancerSummary[(CancerSummary['GROUPED_SITE']!='benign') & (CancerSummary['GROUPED_SITE']!='unknown')]
+CancerSummary = CancerSummary[(CancerSummary['GROUPED_SITE']!='Benign') & (CancerSummary['GROUPED_SITE']!='Unknown')]
 
 filtered_count = len(CancerSummary)
 
@@ -411,7 +414,7 @@ CaSumFiltered_4 = CaSumFiltered_4[existing_casum.columns]
 logger.warning("Count of tumours reduced after resolving LATERALITY between Registry and Path report: " + str(len(CaSumFiltered_3) - len(CaSumFiltered_4)))
 
 #%%
-logger.info("Standardise source variables and CANCER_SITE")
+logger.info("Standardise source variables")
 # Standardise the S_STUDY_ID and CANCER_SITE
 for col in CaSumFiltered_4.columns:
     if col.startswith('S_'):
@@ -442,7 +445,7 @@ CaSumFiltered_7 = CaSumFiltered_6.loc[~(CaSumFiltered_6['TUMOUR_ID'].isna() &
                                         CaSumFiltered_6.duplicated(subset=key_cols, keep=False))]
 logger.info("Duplicate Count: " + str(len(CaSumFiltered_6) - len(CaSumFiltered_7)))
 
-logger.info("Tumour dataset is ready. Final count:" + str(len(CaSumFiltered_6)))
+logger.info("Tumour dataset is ready. Final count:" + str(len(CaSumFiltered_7)))
 
 #%% Summary reports
 logger.info("Generating Summary reports")
@@ -457,7 +460,6 @@ CaSumFiltered_8['CANCER_SITE'] = CaSumFiltered_8['CANCER_SITE'].str.lower().fill
 sp.generate_summary_reports(CaSumFiltered_8, "SummaryReports.xlsx")
 
 #%% Validate dataset with Schema
-'''
 logger.info("Validating the result data using JSON schema")
 # type casting for schema validation
 CaSumFiltered_7['TUMOUR_ID'] = pd.to_numeric(CaSumFiltered_7['TUMOUR_ID'], errors='coerce').astype('Int64')
@@ -476,7 +478,7 @@ if len(invalid_rows)>=10:
 else:
     # Load the data to the database
     write_to_DB(CaSumFiltered_7, 'NewCancerSummary_v3', upload_conn, logger)
-'''
+
 #%% Pseudo-anonymise the data
 logger.info("Pseudo-anonymise and create JSON data")
 
