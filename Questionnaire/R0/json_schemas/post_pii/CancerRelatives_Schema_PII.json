@@ -46,7 +46,7 @@
     },
     "R0_FatherDOB": {
       "name": "R0_FatherDOB",
-      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. If the year component is missing the derived value is null.",
+      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. The resulting dates are displayed by the non-assumedlevel that was in the raw data, i.e. if they day was missing in the raw data it will not be shown in the aggregated date, and same for month. This preserved the number of days that dates are shifted by per particiapnt. If the year component is missing thederived value is null.",
       "type": [
         "string",
         "null"
@@ -260,7 +260,7 @@
     },
     "R0_FatherDeathDate": {
       "name": "R0_FatherDeathDate",
-      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. If the year component is missing the derived value is null.",
+      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. The resulting dates are displayed by the non-assumedlevel that was in the raw data, i.e. if they day was missing in the raw data it will not be shown in the aggregated date, and same for month. This preserved the number of days that dates are shifted by per particiapnt. If the year component is missing thederived value is null.",
       "type": [
         "string",
         "null"
@@ -298,7 +298,7 @@
     },
     "R0_MotherDOB": {
       "name": "R0_MotherDOB",
-      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. If the year component is missing the derived value is null.",
+      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. The resulting dates are displayed by the non-assumedlevel that was in the raw data, i.e. if they day was missing in the raw data it will not be shown in the aggregated date, and same for month. This preserved the number of days that dates are shifted by per particiapnt. If the year component is missing thederived value is null.",
       "type": [
         "string",
         "null"
@@ -511,7 +511,7 @@
     },
     "R0_MotherDeathDate": {
       "name": "R0_MotherDeathDate",
-      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. If the year component is missing the derived value is null.",
+      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. The resulting dates are displayed by the non-assumedlevel that was in the raw data, i.e. if they day was missing in the raw data it will not be shown in the aggregated date, and same for month. This preserved the number of days that dates are shifted by per particiapnt. If the year component is missing thederived value is null.",
       "type": [
         "string",
         "null"
@@ -1073,7 +1073,7 @@
           },
           "R0_ChildCancerDOB": {
             "name": "R0_ChildCancerDOB",
-            "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. If the year component is missing the derived value is null.",
+            "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. The resulting dates are displayed by the non-assumedlevel that was in the raw data, i.e. if they day was missing in the raw data it will not be shown in the aggregated date, and same for month. This preserved the number of days that dates are shifted by per particiapnt. If the year component is missing thederived value is null.",
             "type": [
               "string",
               "null"
@@ -1417,7 +1417,7 @@
     },
     "R0_SiblingDOB": {
       "name": "R0_SiblingDOB",
-      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. If the year component is missing the derived value is null.",
+      "description": "Derived and pseudo-anonymised full date. Day, month and year components are combined and the resulting date is shifted by a participant-specific offset. If the day component is missing it is set to 15 before shifting. If the month component is missing (and a year is present) the date is treated as year-only, anchored at 1 July (day 1, month 7) of that year before shifting. If day and month are both missing the same rule applies. The resulting dates are displayed by the non-assumedlevel that was in the raw data, i.e. if they day was missing in the raw data it will not be shown in the aggregated date, and same for month. This preserved the number of days that dates are shifted by per particiapnt. If the year component is missing thederived value is null.",
       "type": [
         "string",
         "null"

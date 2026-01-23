@@ -390,7 +390,7 @@
     "R0_ChestNeckRadiotherapy": {
       "questionID": 1816,
       "name": "Q9_3_1_1",
-      "question": "Have you had chest or neck radiotherapy for Hodgkin\u2019s disease or other cancer?",
+      "question": "Have you had chest or neck radiotherapy for Hodgkins disease or other cancer?",
       "description": "Whether the participant received chest/neck radiotherapy for cancer",
       "type": [
         "integer",
@@ -458,39 +458,20 @@
             "type": [
               "integer",
               "null"
-            ]
-          },
-          "R0_XrayType": {
-            "questionID": 1818,
-            "name": "R0_XrayType",
-            "question": "Type of X-ray examination or treatment",
-            "description": "The type of X-ray procedure the participant underwent",
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "R0_XrayReason": {
-            "questionID": 1822,
-            "name": "R0_XrayReason",
-            "question": "Reason for X-ray/treatment",
-            "description": "The medical reason the participant underwent the X-ray",
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "R0_XRayDate": {
-            "name": "R0_XRayDate",
-            "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
-            "type": [
-              "string",
-              "null"
             ],
-            "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
-            "x-derivedFrom": [
-              "R0_XrayMonth",
-              "R0_XrayYear"
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
             ]
           },
           "XrayEventsExtra": {
@@ -512,6 +493,19 @@
                     "null"
                   ],
                   "minimum": 0
+                },
+                "R0_XRayDate": {
+                  "name": "R0_XRayDate",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_XrayMonth",
+                    "R0_XrayYear"
+                  ]
                 },
                 "R0_XrayFromAge": {
                   "questionID": 1841,

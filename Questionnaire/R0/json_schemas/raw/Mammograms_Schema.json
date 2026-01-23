@@ -1,5 +1,5 @@
 {
-    "$id =": "https://www.breakthroughgenerations.org.uk/schemas/Mammograms.json",
+    "$id": "https://www.breakthroughgenerations.org.uk/schemas/Mammograms.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "Mammograms",
     "roundID": 1,

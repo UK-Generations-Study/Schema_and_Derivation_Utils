@@ -1,5 +1,5 @@
 {
-    "$id =": "https://www.breakthroughgenerations.org.uk/schemas/MenstrualMenopause.json",
+    "$id": "https://www.breakthroughgenerations.org.uk/schemas/MenstrualMenopause.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "MenstrualMenopause",
     "roundID": 1,

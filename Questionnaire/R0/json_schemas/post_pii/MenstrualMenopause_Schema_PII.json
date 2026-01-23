@@ -1,5 +1,5 @@
 {
-  "$id =": "https://www.breakthroughgenerations.org.uk/schemas/MenstrualMenopause.json",
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/MenstrualMenopause.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "MenstrualMenopause",
   "roundID": 1,
@@ -1030,8 +1030,8 @@
                   ],
                   "minimum": 0
                 },
-                "R0_OvaryOperation": {
-                  "name": "R0_OvaryOperation",
+                "R0_OvaryOperation_Date": {
+                  "name": "R0_OvaryOperation_Date",
                   "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
                   "type": [
                     "string",

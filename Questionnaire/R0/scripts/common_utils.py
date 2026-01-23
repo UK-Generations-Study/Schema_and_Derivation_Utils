@@ -49,6 +49,7 @@ def get_config():
     return {
         'Delivery_log_path': 'N:\CancerEpidem\BrBreakthrough\DeliveryProcess\Logs',
         'test_server': 'DoverVTest',
+        'live_server': 'DoverV',
         'r0_json_path': 'N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Schema_and_Derivation_utils\\Questionnaire\\R0\\json_schemas',
         'out_json_path': 'N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Data_Output_Testing'
     }
@@ -81,7 +82,7 @@ def load_and_pivot_data(question_range, logger):
         - VarFlagging (dfPII) metadata.
     """
     config = get_config()
-    dm_conn = connect_DB('QuestTransformed', config['test_server'], logger)
+    dm_conn = connect_DB('QuestTransformed', config['live_server'], logger)
     
     if question_range == 'BETWEEN 550 AND 739':
         base_query = '''
@@ -847,5 +848,4 @@ def init_varresolver_from_dfPII(dfPII, schema, section_name):
     nv.init_dynamic_registry(
         varflag=varflag,
         schemas_by_slug={slug: schema}
-
     )

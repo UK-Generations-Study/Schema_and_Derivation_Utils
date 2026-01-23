@@ -546,22 +546,22 @@
       "x-formerName": "pregLbirthage"
     },
     "R0_BreastfeedingDuration": {
-      "description": "Total months of breastfeeding across live-birth pregnancies.",
+      "description": "Total weeks of breastfeeding across live-birth pregnancies.",
       "oneOf": [
         {
           "type": "null"
         },
         {
-          "const": 999,
+          "const": 9999,
           "description": "NA"
         },
         {
           "type": "number",
           "minimum": 0,
-          "exclusiveMaximum": 300
+          "exclusiveMaximum": 1200
         }
       ],
-      "x-description": "Sum breastfeeding duration reported per live-birth pregnancy (weeks) and convert to months (weeks ÷ 4.345; 1 decimal place). 999 (NA) non-live-birth pregnancies. Null if no breastfeeding information is available.",
+      "x-description": "Sum breastfeeding duration reported per live-birth pregnancy (weeks). 999 (NA) non-live-birth pregnancies. Null if no breastfeeding information is available.",
       "x-derivedFrom": [
         "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_BreastfeedingWks",
         "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_Outcome"
@@ -623,29 +623,6 @@
         "#/$defs/BreastDiseasePII/properties/R0_BBD_MoreThan4"
       ],
       "x-formerName": "brbendis"
-    },
-    "R0_FamHistBC": {
-      "description": "Family history of breast cancer in first-degree relatives (parents, full siblings, or children).",
-      "type": ["integer", "null"],
-      "enum": [0, 1, null],
-      "enumDescriptions": [
-        "0: No",
-        "1: Yes",
-        "null: Not collected / unknown"
-      ],
-      "x-description": "Set to 1 if any first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site equals 'breast' (or 'male breast') after normalization (case-insensitive, trimmed). Half-siblings are excluded from the first-degree roll-up. Set to 0 only when available first-degree 'any cancer' flags are explicitly 'No' and no first-degree cancer site equals 'breast'. Otherwise set to null (e.g., when there are 'Yes' responses without a site code, 'Don't know', or no information).",
-      "x-derivedFrom": [
-        "#/$defs/CancerRelativesPII/properties/FatherCancers/items/properties/R0_FatherCancerType",
-        "#/$defs/CancerRelativesPII/properties/MotherCancers/items/properties/R0_MotherCancerType",
-        "#/$defs/CancerRelativesPII/properties/Siblings/items/properties/R0_SiblingRelation",
-        "#/$defs/CancerRelativesPII/properties/Siblings/items/properties/R0_SiblingCancerType",
-        "#/$defs/CancerRelativesPII/properties/Siblings/items/properties/R0_SiblingCancerHistory",
-        "#/$defs/CancerRelativesPII/properties/Children/items/properties/R0_ChildCancerType",
-        "#/$defs/CancerRelativesPII/properties/R0_FatherCancerHistory",
-        "#/$defs/CancerRelativesPII/properties/R0_MotherCancerHistory",
-        "#/$defs/CancerRelativesPII/properties/R0_ChildCancerHistory"
-      ],
-      "x-formerName": "fambrca"
     },
     "R0_DiabetesStatus": {
       "type": [
@@ -724,14 +701,13 @@
         "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/OvaryUterusOperationsExtra/items/properties/R0_OvaryOp_FromAge",
         "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/OvaryUterusOperationsExtra/items/properties/R0_OvaryOp_ToAge"
       ],
-      "x-formerName": "menopause",
+      "x-formerName": "R1menopause",
       "enum": [
         1,
         2,
         3,
         4,
-        5,
-        6,
+        9,
         null
       ],
       "enumDescriptions": [
@@ -740,7 +716,6 @@
         "3: Assumed postmenopausal.",
         "4: Assumed premenopausal.",
         "9: Never had periods",
-        "10: Did not complete questionnaire.",
         "null: Missing or invalid"
       ]
     },
@@ -1118,6 +1093,181 @@
       ],
       "x-formerName": "dietfruitserv",
       "minimum": 0
+    },
+    "R0_FamHistCancer": {
+      "description": "Family history of any cancer in first-degree relatives (parents, full siblings, or children). Currently derived from legacy SAS scripts.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "enum": [
+        0, 
+        1, 
+        null
+      ],
+      "enumDescriptions": [
+        "0: No",
+        "1: Yes",
+        "null: Not collected / unknown"
+      ],
+      "x-description": "Set to 1 if any first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site equals contains indications of any cancer",
+      "x-derivedFrom": [
+
+      ],
+      "x-formerName": "famca"
+    },
+    "R0_FamHistCancerNum": {
+      "description": "Count of number of first-degree relatives with any cancer. Currently derived from legacy SAS scripts.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "minimum": 0,
+      "x-description": "Total count of first-degree relatives (mother, father, full sibling, or child) that have cancer entry whose coded site equals contains indications of any cancer",
+      "x-derivedFrom": [
+
+      ],
+      "x-formerName": "famcaN"
+    },
+    "R0_FamHistBC": {
+      "description": "Family history of breast cancer in first-degree relatives (parents, full siblings, or children). Currently derived from legacy SAS scripts.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "enum": [
+        0, 
+        1, 
+        null
+      ],
+      "enumDescriptions": [
+        "0: No",
+        "1: Yes",
+        "null: Not collected / unknown"
+      ],
+      "x-description": "Set to 1 if any first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site equals contains indications of breast cancer",
+      "x-derivedFrom": [
+
+      ],
+      "x-formerName": "fambrca"
+    },
+    "R0_FamHistBCNum": {
+      "description": "Count of number of first-degree relatives with breast cancer. Currently derived from legacy SAS scripts.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "minimum": 0,
+      "x-description": "Total count of first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site equals contains indications of breast cancer",
+      "x-derivedFrom": [
+
+      ],
+      "x-formerName": "fambrcan"
+    },
+    "R0_FamHistOV": {
+      "description": "Family history of ovarian cancer in first-degree relatives (parents, full siblings, or children). Currently derived from legacy SAS scripts.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "enum": [
+        0, 
+        1, 
+        null
+      ],
+      "enumDescriptions": [
+        "0: No",
+        "1: Yes",
+        "null: Not collected / unknown"
+      ],
+      "x-description": "Set to 1 if any first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site contains indications of ovarian cancer.",
+      "x-derivedFrom": [
+
+      ],
+      "x-formerName": "famovca"
+    },
+    "R0_FamHistOVNum": {
+      "description": "Count of number of first-degree relatives with ovarian cancer. Currently derived from legacy SAS scripts.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "minimum": 0,
+      "x-description": "Total count of first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site contains indications of ovarian cancer.",
+      "x-derivedFrom": [
+
+      ],
+      "x-formerName": "famovcan"
+    },
+    "R0_FamHistColo": {
+      "description": "Family history of colorectal cancer in first-degree relatives (parents, full siblings, or children). Currently derived from legacy SAS scripts.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "enum": [
+        0, 
+        1, 
+        null
+      ],
+      "enumDescriptions": [
+        "0: No",
+        "1: Yes",
+        "null: Not collected / unknown"
+      ],
+      "x-description": "Set to 1 if any first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site contains indications of colorectal cancer.",
+      "x-derivedFrom": [
+
+      ],
+      "x-formerName": "famcolorec"
+    },
+    "R0_FamHistColoNum": {
+      "description": "Count of number of first-degree relatives with colorectal cancer. Currently derived from legacy SAS scripts.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "minimum": 0,
+      "x-description": "Total count of first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site contains indications of colorectal cancer.",
+      "x-derivedFrom": [
+
+      ],
+      "x-formerName": "famcolorecn"
+    },
+    "R0_FamHistProst": {
+      "description": "Family history of prostate cancer in first-degree relatives (parents, full siblings, or children). Currently derived from legacy SAS scripts.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "enum": [
+        0, 
+        1, 
+        null
+      ],
+      "enumDescriptions": [
+        "0: No",
+        "1: Yes",
+        "null: Not collected / unknown"
+      ],
+      "x-description": "Set to 1 if any first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site contains indications of prostate cancer.",
+      "x-derivedFrom": [
+
+      ],
+      "x-formerName": "famprostate"
+    },
+    "R0_FamHistProstNum": {
+      "description": "Count of number of first-degree relatives with prostate cancer. Currently derived from legacy SAS scripts.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "minimum": 0,
+      "x-description": "Total count of first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site contains indications of prostate cancer.",
+      "x-derivedFrom": [
+
+      ],
+      "x-formerName": "famprostaten"
     }
   },
   "required": ["R0_TCode"],

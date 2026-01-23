@@ -674,8 +674,12 @@ def update_schema(old_schema_path, new_schema_path, dateDict, pii_vars, section_
                 "(and a year is present) the date is treated as year-only, "
                 "anchored at 1 July (day 1, month 7) of that year before "
                 "shifting. If day and month are both missing the same rule "
-                "applies. If the year component is missing the derived value "
-                "is null."
+                "applies. The resulting dates are displayed by the non-assumed"
+                "level that was in the raw data, i.e. if they day was missing "
+                "in the raw data it will not be shown in the aggregated date, "
+                "and same for month. This preserved the number of days that dates are "
+                "shifted by per particiapnt. If the year component is missing the"
+                "derived value is null."
             )
         elif n == 2:
             # Month-year questions
@@ -891,10 +895,10 @@ dateDict = dateDict_new = {
     "MenstrualMenopause": {
         "dateDict": {
             "R0_TemporaryPeriodStop_Start": ["R0_TempStopFromMth", "R0_TempStopFromYr"],
-            "R0_TemporaryPeriodStop_End":   ["R0_TempStopToMth",   "R0_TempStopToYr"],
-            "R0_OvaryOperation":            ["R0_OvaryOp_Mnth",      "R0_OvaryOp_Yr"],
+            "R0_TemporaryPeriodStop_End": ["R0_TempStopToMth", "R0_TempStopToYr"],
+            "R0_OvaryOperation_Date": ["R0_OvaryOp_Mnth", "R0_OvaryOp_Yr"],
             "R0_OvaryOperation_RangeStart": ["R0_OvaryOp_StartMnth", "R0_OvaryOp_StartYr"],
-            "R0_OvaryOperation_RangeEnd":   ["R0_OvaryOp_EndMnth",   "R0_OvaryOp_EndYr"]
+            "R0_OvaryOperation_RangeEnd": ["R0_OvaryOp_EndMnth", "R0_OvaryOp_EndYr"]
         },
         "question_range": "BETWEEN 400 AND 544"
     },
@@ -928,9 +932,9 @@ dateDict = dateDict_new = {
         "dateDict": {
             "R0_BreastCancerDiagnosis": ["R0_CancerDiagnosisMonth", "R0_CancerDiagnosisYear"],
             "R0_Radiotherapy_Start": ["R0_RadiotherapyStartMonth", "R0_RadiotherapyStartYear"],
-            "R0_Radiotherapy_End":   ["R0_RadiotherapyEndMonth",   "R0_RadiotherapyEndYear"],
+            "R0_Radiotherapy_End": ["R0_RadiotherapyEndMonth", "R0_RadiotherapyEndYear"],
             "R0_BCDrugRegimen_Start": ["R0_BCDrugRegimenStartMonth", "R0_BCDrugRegimenStartYear"],
-            "R0_BCDrugRegimen_End":   ["R0_BCDrugRegimenStopMonth",  "R0_BCDrugRegimenStopYear"]
+            "R0_BCDrugRegimen_End": ["R0_BCDrugRegimenStopMonth", "R0_BCDrugRegimenStopYear"]
         },
         "question_range": "BETWEEN 1186 AND 1250"
     },

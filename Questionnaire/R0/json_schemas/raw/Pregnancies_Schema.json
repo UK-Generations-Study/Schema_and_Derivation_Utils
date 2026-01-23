@@ -1,5 +1,5 @@
 {
-  "$id =": "https://www.breakthroughgenerations.org.uk/schemas/Pregnancies.json",
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/Pregnancies.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Pregnancies",
   "roundID": 1,
@@ -18,7 +18,7 @@
       "questionID": 550,
       "name": "Q5_1_1_1",
       "question": "Was there ever a time as long as a year or more when you tried to get pregnant, but did not?",
-      "description": "Participant experienced infertility for \u22651 year.",
+      "description": "Participant experienced infertility for a year.",
       "type": [
         "integer",
         "null"
