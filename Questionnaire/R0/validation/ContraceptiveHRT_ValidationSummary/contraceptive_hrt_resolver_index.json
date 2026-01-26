@@ -1,0 +1,931 @@
+{
+  "R0_StudyID": {
+    "all": [
+      "StudyID"
+    ]
+  },
+  "R0_ContracepPillUse": {
+    "all": [
+      "Q6_1_1"
+    ]
+  },
+  "R0_ContracepPill_Name": {
+    "all": [
+      "Q6_1_1_1",
+      "Q6_1_2_1",
+      "Q6_1_3_1",
+      "ocname4",
+      "ocname5",
+      "ocname6",
+      "ocname7",
+      "ocname8",
+      "ocname9"
+    ],
+    "1": [
+      "Q6_1_1_1"
+    ],
+    "2": [
+      "Q6_1_2_1"
+    ],
+    "3": [
+      "Q6_1_3_1"
+    ],
+    "4": [
+      "ocname4"
+    ],
+    "5": [
+      "ocname5"
+    ],
+    "6": [
+      "ocname6"
+    ],
+    "7": [
+      "ocname7"
+    ],
+    "8": [
+      "ocname8"
+    ],
+    "9": [
+      "ocname9"
+    ]
+  },
+  "R0_ContracepPill_Unknown": {
+    "all": [
+      "Q6_1_1_2",
+      "Q6_1_2_2",
+      "Q6_1_3_2",
+      "ocname4nk",
+      "ocname5nk",
+      "ocname6nk",
+      "ocname7nk"
+    ],
+    "1": [
+      "Q6_1_1_2"
+    ],
+    "2": [
+      "Q6_1_2_2"
+    ],
+    "3": [
+      "Q6_1_3_2"
+    ],
+    "4": [
+      "ocname4nk"
+    ],
+    "5": [
+      "ocname5nk"
+    ],
+    "6": [
+      "ocname6nk"
+    ],
+    "7": [
+      "ocname7nk"
+    ]
+  },
+  "R0_ContracepPill_StartAge": {
+    "all": [
+      "Q6_1_1_3",
+      "Q6_1_2_3",
+      "Q6_1_3_3",
+      "ocfromage4",
+      "ocfromage5",
+      "ocfromage6",
+      "ocfromage7",
+      "ocfromage8",
+      "ocfromage9"
+    ],
+    "1": [
+      "Q6_1_1_3"
+    ],
+    "2": [
+      "Q6_1_2_3"
+    ],
+    "3": [
+      "Q6_1_3_3"
+    ],
+    "4": [
+      "ocfromage4"
+    ],
+    "5": [
+      "ocfromage5"
+    ],
+    "6": [
+      "ocfromage6"
+    ],
+    "7": [
+      "ocfromage7"
+    ],
+    "8": [
+      "ocfromage8"
+    ],
+    "9": [
+      "ocfromage9"
+    ]
+  },
+  "R0_ContracepPill_StopAge": {
+    "all": [
+      "Q6_1_1_4",
+      "Q6_1_2_4",
+      "Q6_1_3_4",
+      "octoage4",
+      "octoage5",
+      "octoage6",
+      "octoage7",
+      "octoage8",
+      "octoage9"
+    ],
+    "1": [
+      "Q6_1_1_4"
+    ],
+    "2": [
+      "Q6_1_2_4"
+    ],
+    "3": [
+      "Q6_1_3_4"
+    ],
+    "4": [
+      "octoage4"
+    ],
+    "5": [
+      "octoage5"
+    ],
+    "6": [
+      "octoage6"
+    ],
+    "7": [
+      "octoage7"
+    ],
+    "8": [
+      "octoage8"
+    ],
+    "9": [
+      "octoage9"
+    ]
+  },
+  "R0_ContracepPill_CurrentUse": {
+    "all": [
+      "Q6_1_1_5",
+      "Q6_1_2_5",
+      "Q6_1_3_5",
+      "occurr4",
+      "occurr5",
+      "occurr6",
+      "occurr7",
+      "occurr8",
+      "occurr9"
+    ],
+    "1": [
+      "Q6_1_1_5"
+    ],
+    "2": [
+      "Q6_1_2_5"
+    ],
+    "3": [
+      "Q6_1_3_5"
+    ],
+    "4": [
+      "occurr4"
+    ],
+    "5": [
+      "occurr5"
+    ],
+    "6": [
+      "occurr6"
+    ],
+    "7": [
+      "occurr7"
+    ],
+    "8": [
+      "occurr8"
+    ],
+    "9": [
+      "occurr9"
+    ]
+  },
+  "R0_ContracepPill_MoreThanThree": {
+    "all": [
+      "Q6_1_more"
+    ]
+  },
+  "R0_OtherHormonalContracep": {
+    "all": [
+      "Q6_2_1"
+    ]
+  },
+  "R0_OtherContracep_Name": {
+    "all": [
+      "Q6_2_1_1",
+      "Q6_2_2_1",
+      "hcname3",
+      "hcname4",
+      "hcname5"
+    ],
+    "1": [
+      "Q6_2_1_1"
+    ],
+    "2": [
+      "Q6_2_2_1"
+    ],
+    "3": [
+      "hcname3"
+    ],
+    "4": [
+      "hcname4"
+    ],
+    "5": [
+      "hcname5"
+    ]
+  },
+  "R0_OtherContracep_StartAge": {
+    "all": [
+      "Q6_2_1_2",
+      "Q6_2_2_2",
+      "hcfromage3",
+      "hcfromage4",
+      "hcfromage5"
+    ],
+    "1": [
+      "Q6_2_1_2"
+    ],
+    "2": [
+      "Q6_2_2_2"
+    ],
+    "3": [
+      "hcfromage3"
+    ],
+    "4": [
+      "hcfromage4"
+    ],
+    "5": [
+      "hcfromage5"
+    ]
+  },
+  "R0_OtherContracep_StopAge": {
+    "all": [
+      "Q6_2_1_3",
+      "Q6_2_2_3",
+      "hctoage3",
+      "hctoage4",
+      "hctoage5"
+    ],
+    "1": [
+      "Q6_2_1_3"
+    ],
+    "2": [
+      "Q6_2_2_3"
+    ],
+    "3": [
+      "hctoage3"
+    ],
+    "4": [
+      "hctoage4"
+    ],
+    "5": [
+      "hctoage5"
+    ]
+  },
+  "R0_OtherContracep_CurrentUse": {
+    "all": [
+      "Q6_2_1_4",
+      "Q6_2_2_4",
+      "hccurr3",
+      "hccurr4",
+      "hccurr5"
+    ],
+    "1": [
+      "Q6_2_1_4"
+    ],
+    "2": [
+      "Q6_2_2_4"
+    ],
+    "3": [
+      "hccurr3"
+    ],
+    "4": [
+      "hccurr4"
+    ],
+    "5": [
+      "hccurr5"
+    ]
+  },
+  "R0_OtherContracep_MoreThanTwo": {
+    "all": [
+      "Q6_2_more"
+    ]
+  },
+  "R0_HRT_Use": {
+    "all": [
+      "Q6_3_1"
+    ]
+  },
+  "R0_HRT_Name": {
+    "all": [
+      "Q6_3_1_1",
+      "Q6_3_2_1",
+      "Q6_3_3_1",
+      "hrtname4",
+      "hrtname5",
+      "hrtname6",
+      "hrtname7",
+      "hrtname8"
+    ],
+    "1": [
+      "Q6_3_1_1"
+    ],
+    "2": [
+      "Q6_3_2_1"
+    ],
+    "3": [
+      "Q6_3_3_1"
+    ],
+    "4": [
+      "hrtname4"
+    ],
+    "5": [
+      "hrtname5"
+    ],
+    "6": [
+      "hrtname6"
+    ],
+    "7": [
+      "hrtname7"
+    ],
+    "8": [
+      "hrtname8"
+    ]
+  },
+  "R0_HRT_StartAge": {
+    "all": [
+      "Q6_3_1_2",
+      "Q6_3_2_2",
+      "Q6_3_3_2",
+      "hrtfromage4",
+      "hrtfromage5",
+      "hrtfromage6",
+      "hrtfromage7",
+      "hrtfromage8"
+    ],
+    "1": [
+      "Q6_3_1_2"
+    ],
+    "2": [
+      "Q6_3_2_2"
+    ],
+    "3": [
+      "Q6_3_3_2"
+    ],
+    "4": [
+      "hrtfromage4"
+    ],
+    "5": [
+      "hrtfromage5"
+    ],
+    "6": [
+      "hrtfromage6"
+    ],
+    "7": [
+      "hrtfromage7"
+    ],
+    "8": [
+      "hrtfromage8"
+    ]
+  },
+  "R0_HRT_StopAge": {
+    "all": [
+      "Q6_3_1_3",
+      "Q6_3_2_3",
+      "Q6_3_3_3",
+      "hrttoage4",
+      "hrttoage5",
+      "hrttoage6",
+      "hrttoage7",
+      "hrttoage8"
+    ],
+    "1": [
+      "Q6_3_1_3"
+    ],
+    "2": [
+      "Q6_3_2_3"
+    ],
+    "3": [
+      "Q6_3_3_3"
+    ],
+    "4": [
+      "hrttoage4"
+    ],
+    "5": [
+      "hrttoage5"
+    ],
+    "6": [
+      "hrttoage6"
+    ],
+    "7": [
+      "hrttoage7"
+    ],
+    "8": [
+      "hrttoage8"
+    ]
+  },
+  "R0_HRT_CurrentUse": {
+    "all": [
+      "Q6_3_1_4",
+      "Q6_3_2_4",
+      "Q6_3_3_4",
+      "hrtcurr4",
+      "hrtcurr5",
+      "hrtcurr6",
+      "hrtcurr7",
+      "hrtcurr8"
+    ],
+    "1": [
+      "Q6_3_1_4"
+    ],
+    "2": [
+      "Q6_3_2_4"
+    ],
+    "3": [
+      "Q6_3_3_4"
+    ],
+    "4": [
+      "hrtcurr4"
+    ],
+    "5": [
+      "hrtcurr5"
+    ],
+    "6": [
+      "hrtcurr6"
+    ],
+    "7": [
+      "hrtcurr7"
+    ],
+    "8": [
+      "hrtcurr8"
+    ]
+  },
+  "R0_HRT_MoreThanThree": {
+    "all": [
+      "Q6_3_more"
+    ]
+  },
+  "R0_HRT_HrmnLevelsChecked": {
+    "all": [
+      "Q6_4_1"
+    ]
+  },
+  "R0_OtherSexHrmnUse": {
+    "all": [
+      "Q6_5_1"
+    ]
+  },
+  "R0_OtherSexHrmn_Name": {
+    "all": [
+      "Q6_5_1_1",
+      "Q6_5_2_1",
+      "otherhormonesname3",
+      "otherhormonesname4",
+      "otherhormonesname5"
+    ],
+    "1": [
+      "Q6_5_1_1"
+    ],
+    "2": [
+      "Q6_5_2_1"
+    ],
+    "3": [
+      "otherhormonesname3"
+    ],
+    "4": [
+      "otherhormonesname4"
+    ],
+    "5": [
+      "otherhormonesname5"
+    ]
+  },
+  "R0_OtherSexHrmn_StartAge": {
+    "all": [
+      "Q6_5_1_2",
+      "Q6_5_2_2",
+      "otherhormonesfromage3",
+      "otherhormonesfromage4",
+      "otherhormonesfromage5"
+    ],
+    "1": [
+      "Q6_5_1_2"
+    ],
+    "2": [
+      "Q6_5_2_2"
+    ],
+    "3": [
+      "otherhormonesfromage3"
+    ],
+    "4": [
+      "otherhormonesfromage4"
+    ],
+    "5": [
+      "otherhormonesfromage5"
+    ]
+  },
+  "R0_OtherSexHrmn_StopAge": {
+    "all": [
+      "Q6_5_1_3",
+      "Q6_5_2_3",
+      "otherhormonestoage3",
+      "otherhormonestoage4",
+      "otherhormonestoage5"
+    ],
+    "1": [
+      "Q6_5_1_3"
+    ],
+    "2": [
+      "Q6_5_2_3"
+    ],
+    "3": [
+      "otherhormonestoage3"
+    ],
+    "4": [
+      "otherhormonestoage4"
+    ],
+    "5": [
+      "otherhormonestoage5"
+    ]
+  },
+  "R0_OtherSexHrmn_CurrentUse": {
+    "all": [
+      "Q6_5_1_4",
+      "Q6_5_2_4",
+      "otherhormonescurr3",
+      "otherhormonescurr4",
+      "otherhormonescurr5"
+    ],
+    "1": [
+      "Q6_5_1_4"
+    ],
+    "2": [
+      "Q6_5_2_4"
+    ],
+    "3": [
+      "otherhormonescurr3"
+    ],
+    "4": [
+      "otherhormonescurr4"
+    ],
+    "5": [
+      "otherhormonescurr5"
+    ]
+  },
+  "R0_OtherSexHrmn_MoreThanTwo": {
+    "all": [
+      "Q6_5_more"
+    ]
+  },
+  "R0_OtherContracep_StartMnth": {
+    "all": [
+      "hcfrommth3",
+      "hcfrommth4",
+      "hcfrommth5"
+    ],
+    "3": [
+      "hcfrommth3"
+    ],
+    "4": [
+      "hcfrommth4"
+    ],
+    "5": [
+      "hcfrommth5"
+    ]
+  },
+  "R0_OtherContracep_StartYr": {
+    "all": [
+      "hcfromyr3",
+      "hcfromyr4",
+      "hcfromyr5"
+    ],
+    "3": [
+      "hcfromyr3"
+    ],
+    "4": [
+      "hcfromyr4"
+    ],
+    "5": [
+      "hcfromyr5"
+    ]
+  },
+  "R0_OtherContracep_StopMnth": {
+    "all": [
+      "hctomth3",
+      "hctomth4",
+      "hctomth5"
+    ],
+    "3": [
+      "hctomth3"
+    ],
+    "4": [
+      "hctomth4"
+    ],
+    "5": [
+      "hctomth5"
+    ]
+  },
+  "R0_OtherContracep_StopYr": {
+    "all": [
+      "hctoyr3",
+      "hctoyr4",
+      "hctoyr5"
+    ],
+    "3": [
+      "hctoyr3"
+    ],
+    "4": [
+      "hctoyr4"
+    ],
+    "5": [
+      "hctoyr5"
+    ]
+  },
+  "R0_HRT_StartMnth": {
+    "all": [
+      "hrtfrommth4",
+      "hrtfrommth5",
+      "hrtfrommth6",
+      "hrtfrommth7",
+      "hrtfrommth8"
+    ],
+    "4": [
+      "hrtfrommth4"
+    ],
+    "5": [
+      "hrtfrommth5"
+    ],
+    "6": [
+      "hrtfrommth6"
+    ],
+    "7": [
+      "hrtfrommth7"
+    ],
+    "8": [
+      "hrtfrommth8"
+    ]
+  },
+  "R0_HRT_StartYr": {
+    "all": [
+      "hrtfromyr4",
+      "hrtfromyr5",
+      "hrtfromyr6",
+      "hrtfromyr7",
+      "hrtfromyr8"
+    ],
+    "4": [
+      "hrtfromyr4"
+    ],
+    "5": [
+      "hrtfromyr5"
+    ],
+    "6": [
+      "hrtfromyr6"
+    ],
+    "7": [
+      "hrtfromyr7"
+    ],
+    "8": [
+      "hrtfromyr8"
+    ]
+  },
+  "R0_HRT_MoreThanEight": {
+    "all": [
+      "hrtmore8"
+    ]
+  },
+  "R0_HRT_StopMnth": {
+    "all": [
+      "hrttomth4",
+      "hrttomth5",
+      "hrttomth6",
+      "hrttomth7",
+      "hrttomth8"
+    ],
+    "4": [
+      "hrttomth4"
+    ],
+    "5": [
+      "hrttomth5"
+    ],
+    "6": [
+      "hrttomth6"
+    ],
+    "7": [
+      "hrttomth7"
+    ],
+    "8": [
+      "hrttomth8"
+    ]
+  },
+  "R0_HRT_StopYr": {
+    "all": [
+      "hrttoyr4",
+      "hrttoyr5",
+      "hrttoyr6",
+      "hrttoyr7",
+      "hrttoyr8"
+    ],
+    "4": [
+      "hrttoyr4"
+    ],
+    "5": [
+      "hrttoyr5"
+    ],
+    "6": [
+      "hrttoyr6"
+    ],
+    "7": [
+      "hrttoyr7"
+    ],
+    "8": [
+      "hrttoyr8"
+    ]
+  },
+  "R0_ContracepPill_StartMnth": {
+    "all": [
+      "ocfrommth4",
+      "ocfrommth5",
+      "ocfrommth6",
+      "ocfrommth7",
+      "ocfrommth8",
+      "ocfrommth9"
+    ],
+    "4": [
+      "ocfrommth4"
+    ],
+    "5": [
+      "ocfrommth5"
+    ],
+    "6": [
+      "ocfrommth6"
+    ],
+    "7": [
+      "ocfrommth7"
+    ],
+    "8": [
+      "ocfrommth8"
+    ],
+    "9": [
+      "ocfrommth9"
+    ]
+  },
+  "R0_ContracepPill_StartYr": {
+    "all": [
+      "ocfromyr4",
+      "ocfromyr5",
+      "ocfromyr6",
+      "ocfromyr7",
+      "ocfromyr8",
+      "ocfromyr9"
+    ],
+    "4": [
+      "ocfromyr4"
+    ],
+    "5": [
+      "ocfromyr5"
+    ],
+    "6": [
+      "ocfromyr6"
+    ],
+    "7": [
+      "ocfromyr7"
+    ],
+    "8": [
+      "ocfromyr8"
+    ],
+    "9": [
+      "ocfromyr9"
+    ]
+  },
+  "R0_ContracepPill_MoreThanNine": {
+    "all": [
+      "ocmore9"
+    ]
+  },
+  "R0_ContracepPill_StopMnth": {
+    "all": [
+      "octomth4",
+      "octomth5",
+      "octomth6",
+      "octomth7",
+      "octomth8",
+      "octomth9"
+    ],
+    "4": [
+      "octomth4"
+    ],
+    "5": [
+      "octomth5"
+    ],
+    "6": [
+      "octomth6"
+    ],
+    "7": [
+      "octomth7"
+    ],
+    "8": [
+      "octomth8"
+    ],
+    "9": [
+      "octomth9"
+    ]
+  },
+  "R0_ContracepPill_StopYr": {
+    "all": [
+      "octoyr4",
+      "octoyr5",
+      "octoyr6",
+      "octoyr7",
+      "octoyr8",
+      "octoyr9"
+    ],
+    "4": [
+      "octoyr4"
+    ],
+    "5": [
+      "octoyr5"
+    ],
+    "6": [
+      "octoyr6"
+    ],
+    "7": [
+      "octoyr7"
+    ],
+    "8": [
+      "octoyr8"
+    ],
+    "9": [
+      "octoyr9"
+    ]
+  },
+  "R0_OtherSexHrmn_StartMnth": {
+    "all": [
+      "otherhormonesfrommth3",
+      "otherhormonesfrommth4",
+      "otherhormonesfrommth5"
+    ],
+    "3": [
+      "otherhormonesfrommth3"
+    ],
+    "4": [
+      "otherhormonesfrommth4"
+    ],
+    "5": [
+      "otherhormonesfrommth5"
+    ]
+  },
+  "R0_OtherSexHrmn_StartYr": {
+    "all": [
+      "otherhormonesfromyr3",
+      "otherhormonesfromyr4",
+      "otherhormonesfromyr5"
+    ],
+    "3": [
+      "otherhormonesfromyr3"
+    ],
+    "4": [
+      "otherhormonesfromyr4"
+    ],
+    "5": [
+      "otherhormonesfromyr5"
+    ]
+  },
+  "R0_OtherSexHrmn_MoreSeven": {
+    "all": [
+      "otherhormonesmore7"
+    ]
+  },
+  "R0_OtherSexHrmn_StopMnth": {
+    "all": [
+      "otherhormonestomth3",
+      "otherhormonestomth4",
+      "otherhormonestomth5"
+    ],
+    "3": [
+      "otherhormonestomth3"
+    ],
+    "4": [
+      "otherhormonestomth4"
+    ],
+    "5": [
+      "otherhormonestomth5"
+    ]
+  },
+  "R0_OtherSexHrmn_StopYr": {
+    "all": [
+      "otherhormonestoyr3",
+      "otherhormonestoyr4",
+      "otherhormonestoyr5"
+    ],
+    "3": [
+      "otherhormonestoyr3"
+    ],
+    "4": [
+      "otherhormonestoyr4"
+    ],
+    "5": [
+      "otherhormonestoyr5"
+    ]
+  }
+}

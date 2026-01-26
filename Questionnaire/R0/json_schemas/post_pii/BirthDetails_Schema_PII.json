@@ -1,0 +1,840 @@
+{
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/BirthDetails.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BirthDetails",
+  "type": "object",
+  "properties": {
+    "R0_TCode": {
+      "name": "TCode",
+      "description": "Pseudo-anonymized 8-character study identifier.",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "R0_CountryBorn": {
+      "questionID": 54,
+      "name": "Country_1",
+      "question": "In which country were you born?",
+      "description": "Participant's country of birth.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: UK.",
+        "2: Other country.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        104,
+        13
+      ]
+    },
+    "R0_BornHosp_Other": {
+      "questionID": 57,
+      "name": "Q2_4_1_1",
+      "question": "Were you born in a hospital or at some other place?",
+      "description": "Participant's place of birth (e.g., hospital, home).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Hospital.",
+        "2: Nursing home.",
+        "3: Home.",
+        "4: Other.",
+        "5: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        108,
+        109,
+        110,
+        13,
+        3
+      ]
+    },
+    "R0_Single_Twin": {
+      "questionID": 60,
+      "name": "Q2_5_1",
+      "question": "Are you a twin or single born?",
+      "description": "Whether the participant was born as a single, twin, or triplet/higher.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Single-born.",
+        "2: Twin.",
+        "3: Triplet/higher.",
+        "4: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        114,
+        115,
+        116,
+        3
+      ]
+    },
+    "R0_TwinFemale": {
+      "questionID": 61,
+      "name": "Q2_6_1_1",
+      "question": "If a twin, is your co-twin also female?",
+      "description": "Whether the participant's co-twin is female.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_TwinType": {
+      "questionID": 62,
+      "name": "Q2_6_2_1",
+      "question": "Are you identical or non-identical twins?",
+      "description": "Whether the participant and their twin are identical or non-identical.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Identical.",
+        "2: Non-identical.",
+        "3: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        117,
+        118,
+        3
+      ]
+    },
+    "R0_TwinType_Parents": {
+      "questionID": 63,
+      "name": "Q2_6_3_1",
+      "question": "How do you know about whether you are identical or non-identical twins? Parents told us",
+      "description": "Whether the participant's twin type was confirmed by parents.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_TwinType_Doctor": {
+      "questionID": 63,
+      "name": "Q2_6_4_1",
+      "question": "How do you know about whether you are identical or non-identical twins? Doctor said so",
+      "description": "Whether the participant's twin type was confirmed by a doctor.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_TwinType_Blood": {
+      "questionID": 63,
+      "name": "Q2_6_5_1",
+      "question": "How do you know about whether you are identical or non-identical twins? Blood test",
+      "description": "Whether the participant's twin type was confirmed by blood test.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_TwinType_AppSim": {
+      "questionID": 63,
+      "name": "Q2_6_6_1",
+      "question": "How do you know about whether you are identical or non-identical twins? We look similar",
+      "description": "Whether the participant's twin type was inferred from similar appearance.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_TwinType_AppDif": {
+      "questionID": 63,
+      "name": "Q2_6_7_1",
+      "question": "How do you know about whether you are identical or non-identical twins? We look different",
+      "description": "Whether the participant's twin type was inferred from different appearance.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_TwinType_Other": {
+      "questionID": 63,
+      "name": "Q2_6_8_1",
+      "question": "How do you know about whether you are identical or non-identical twins? Other reasons",
+      "description": "Other reasons for knowing the participant's twin type.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_TwinMist_Parents": {
+      "questionID": 69,
+      "name": "Q2_7_1_1",
+      "question": "As children, were you and your twin mistaken for each other by: Parents",
+      "description": "Whether the participant and their twin were mistaken by parents.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "3: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        3
+      ]
+    },
+    "R0_TwinMist_Siblings": {
+      "questionID": 69,
+      "name": "Q2_7_2_1",
+      "question": "As children, were you and your twin mistaken for each other by: brothers and sisters",
+      "description": "Whether the participant and their twin were mistaken by siblings.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "3: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        3
+      ]
+    },
+    "R0_TwinMist_ClseFrnds": {
+      "questionID": 69,
+      "name": "Q2_7_3_1",
+      "question": "As children, were you and your twin mistaken for each other by: close friends",
+      "description": "Whether the participant and their twin were mistaken by close friends.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "3: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        3
+      ]
+    },
+    "R0_TwinMist_CasFrnds": {
+      "questionID": 69,
+      "name": "Q2_7_4_1",
+      "question": "As children, were you and your twin mistaken for each other by: casual friends",
+      "description": "Whether the participant and their twin were mistaken by casual friends.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "3: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        3
+      ]
+    },
+    "R0_TwinMist_Clssmts": {
+      "questionID": 69,
+      "name": "Q2_7_5_1",
+      "question": "As children, were you and your twin mistaken for each other by: class-mates",
+      "description": "Whether the participant and their twin were mistaken by classmates.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "3: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        3
+      ]
+    },
+    "R0_TwinSimilarity": {
+      "questionID": 74,
+      "name": "Q2_8_1",
+      "question": "When growing up, were you described as being",
+      "description": "How the participant and their twin were described during childhood.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Alike as two peas.",
+        "2: Very alike.",
+        "3: Ordinary family likeness.",
+        "4: Not alike.",
+        "5: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        119,
+        120,
+        121,
+        122,
+        3
+      ]
+    },
+    "R0_MatPregWks": {
+      "questionID": 75,
+      "name": "Q2_9_1",
+      "question": "How many weeks was your mother pregnant with you?",
+      "description": "Number of weeks the participant's mother was pregnant with them.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_MatPregWks_Unkn": {
+      "questionID": 76,
+      "name": "Q2_9_2",
+      "question": "Don't know (weeks your mother pregnant with you)?",
+      "description": "Participant does not know the weeks of maternal pregnancy.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        3
+      ]
+    },
+    "R0_BirthExpEarlyLate": {
+      "questionID": 77,
+      "name": "Q2_9_3_1",
+      "question": "Do you know roughly whether you were born about the time expected or earlier or later?",
+      "description": "Whether the participant was born early, on time, or late.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Early.",
+        "2: On time.",
+        "3: Late.",
+        "4: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        124,
+        125,
+        126,
+        3
+      ]
+    },
+    "R0_Lbs_BirthWght": {
+      "questionID": 78,
+      "name": "Q2_10_lbs",
+      "question": "What was your birth weight? (Lbs)",
+      "description": "Participant's birth weight in pounds",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_Oz_BirthWght": {
+      "questionID": 79,
+      "name": "Q2_10_oz",
+      "question": "What was your birth weight? (oz)",
+      "description": "Participant's birth weight in ounces. This variable works in conjunction with pounds. Every increase of 16 ounces is another pound.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_G_BirthWght": {
+      "questionID": 80,
+      "name": "Q2_10_grams",
+      "question": "What was your birth weight? (Grams)",
+      "description": "Participant's birth weight in grams.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_BirthWght_Cat": {
+      "questionID": 81,
+      "name": "Q2_10_told_1",
+      "question": "If you do not know your birth weight, have you been told that you were:",
+      "description": "Participant's categorical birth weight description.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Average.",
+        "2: Unusually light/small.",
+        "3: Unusually heavy/large.",
+        "4: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        130,
+        131,
+        132,
+        3
+      ]
+    },
+    "R0_MatPrevPreg": {
+      "questionID": 82,
+      "name": "Q2_11_preg",
+      "question": "How many pregnancies did your mother have before you were born?",
+      "description": "Number of pregnancies the participant's mother had before them. Maximum is max number of pregnancies in cohort for all rounds of questionnaire.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_MatPrevPreg_Unkn": {
+      "questionID": 83,
+      "name": "Q2_11_dn",
+      "question": "Don't know how many pregnancies your mother have before you were born?",
+      "description": "Participant does not know the number of maternal pregnancies.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        3
+      ]
+    },
+    "R0_Delivery_Caesarean": {
+      "questionID": 84,
+      "name": "Q2_12_1_1",
+      "question": "Were you delivered by caesarean section?",
+      "description": "Whether the participant was delivered by caesarean section.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "3: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        3
+      ]
+    },
+    "R0_Mother_PreEclampsia": {
+      "questionID": 86,
+      "name": "Q2_13_1",
+      "question": "Did your mother have pre-eclampsia or eclampsia during pregnancy with you?",
+      "description": "Whether the participant's mother had pre-eclampsia/eclampsia.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "3: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        3
+      ]
+    },
+    "R0_Mother_PregComp": {
+      "questionID": 87,
+      "name": "Q2_14_1_1",
+      "question": "Did your mother have other complications during pregnancy with you?",
+      "description": "Whether the participant's mother had other pregnancy complications.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "3: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        3
+      ]
+    },
+    "R0_Postnatal_Incubator": {
+      "questionID": 89,
+      "name": "Q2_15_1",
+      "question": "Were you nursed in an incubator or special care unit after birth?",
+      "description": "Whether the participant was nursed in an incubator/special care after birth.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "3: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        3
+      ]
+    },
+    "R0_Birth_MedAbnorm": {
+      "questionID": 90,
+      "name": "Q2_16_1_1",
+      "question": "Did you have any medical or physical abnormalities present when you were born?",
+      "description": "Whether the participant had medical/physical abnormalities at birth.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "3: Don't know.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        10,
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "R0_TCode"
+  ],
+  "$defs": {
+    "BirthDetails": {
+      "$ref": "../raw/BirthDetails_JSON.json"
+    }
+  }
+}

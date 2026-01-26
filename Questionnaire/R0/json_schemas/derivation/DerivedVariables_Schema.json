@@ -1,0 +1,1157 @@
+{
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/DerivedVariables.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DerivedVariables",
+  "round": 1,
+  "type": "object",
+  "properties": {
+    "R0_TCode": {
+      "description": "Pseudo-anonymized 8-character study identifier.",
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 8,
+      "x-derivedFrom": [
+
+      ]
+    },
+    "R0_Ethnicity": {
+      "description": "Ethnicity of the study participant.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "x-description": "White includes: White, Jewish Ashkenazi, Jewish Sephardi. Black includes: Caribbean, African, Black-other. Asian includes: Indian, Pakistani, Bangladeshi, Chinese. Those reporting other or multiple ethnicities are grouped together.",
+      "enum": [
+        1, 
+        2, 
+        3, 
+        4, 
+        9, 
+        null
+      ],
+      "enumDescriptions": [
+                    "1: White.",
+                    "2: Black.",
+                    "3: Asian.",
+                    "4: Other.",
+                    "9: Not known.",
+                    "null: Left blank."
+                ],
+      "x-derivedFrom": [
+        "#/$defs/GeneralInformation/properties/R0_EthnGroupWhite",
+        "#/$defs/GeneralInformation/properties/R0_EthnGroupJAshk",
+        "#/$defs/GeneralInformation/properties/R0_EthnGroupJSeph",
+        "#/$defs/GeneralInformation/properties/R0_EthnGroupBlkCarib",
+        "#/$defs/GeneralInformation/properties/R0_EthnGroupBlkAfr",
+        "#/$defs/GeneralInformation/properties/R0_EthnGroupBlkOther",
+        "#/$defs/GeneralInformation/properties/R0_EthnGroupIndian",
+        "#/$defs/GeneralInformation/properties/R0_EthnGroupPakistani",
+        "#/$defs/GeneralInformation/properties/R0_EthnGroupBngldsh",
+        "#/$defs/GeneralInformation/properties/R0_EthnGroupChinese",
+        "#/$defs/GeneralInformation/properties/R0_EthnGroupNone"
+      ],
+      "x-formerName": "ethnicity"
+    },
+    "R0_AshkenaziAncestry": {
+      "description": "Flag for whether the participant has Ashkenazi Jewish ancestry.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "x-description": "Binary field indicating Ashkenazi Jewish ancestry.",
+      "enum": [
+        0, 
+        1, 
+        null
+      ],
+      "enumDescriptions": [
+                    "0: No.",
+                    "1: Yes.",
+                    "null: Unknown."
+                ],
+      "x-derivedFrom": [
+        "#/$defs/GeneralInformation/properties/R0_EthnGroupJAshk"
+      ],
+      "x-formerName": "AJancestry"
+    },
+    "R0_PregAt20": {
+      "description": "Flag whether the participant was pregnant at any point while 20 years old. Value is 999 (NA) if participant was not yet 20 at study entry.",
+      "type": [
+        "number", 
+        "null"
+      ],
+      "x-description": "Using shifted DOB, shifted end dates of pregnancies, days shifted from SID Codes, age at entry, and currently pregnant, it is calculated whether the particpant was pregnant during the age of 20.",
+      "enum": [
+        0, 
+        1,
+        999, 
+        null
+      ],
+      "enumDescriptions": [
+                    "0: No.",
+                    "1: Yes.",
+                    "999: NA",
+                    "null: Unknown."
+                ],
+      "x-derivedFrom": [
+        "#/$defs/RawDerived/properties/R0_DOB",
+        "#/$defs/PregnanciesPII/properties/Pregnancies/R0_PregnancyEndDate",
+        "#/$defs/RawDerived/properties/R0_AgeEntry",
+        "#/$defs/PregnanciesPII/properties/R0_CurrentPreg"
+      ],
+      "x-formerName": ""
+    },
+    "R0_Height20": {
+      "description": "Height in centimeters at 20 years old.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "const": 999,
+          "description": "NA"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 320
+        }
+      ],
+      "x-description": "Derived using priority: 1) Imperial inputs converted to cm (ft*30.48 + in*2.54) 2) Direct metric input. If both sources exist and differ by >5cm, uses value in cm. If neither valid, defaults to null.",
+      "x-derivedFrom": [
+        "#/$defs/PhysicalDevelopment/properties/RecordedHeights/items/properties/R0_RecWght_Num",
+        "#/$defs/PhysicalDevelopment/properties/RecordedHeights/items/properties/R0_HghtAge_Ft",
+        "#/$defs/PhysicalDevelopment/properties/RecordedHeights/items/properties/R0_HghtAge_In",
+        "#/$defs/PhysicalDevelopment/properties/RecordedHeights/items/properties/R0_HghtAge_Cm"
+      ],
+      "x-formerName": "height_best",
+      "$comment": "Allow: positive cm value, OR 999 = NA, OR null-missing"
+    },
+    "R0_Weight20": {
+      "description": "Weight in kilograms at 20 years old.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "const": 999,
+          "description": "NA"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 500
+        }
+      ],
+      "x-description": "Derived using priority: 1) Imperial inputs converted to kg (st*6.350293 + lbs*0.45359237) 2) Direct metric input. Uses imperial conversion when both sources exist. If neither valid, defaults to null.",
+      "x-derivedFrom": [
+        "#/$defs/PhysicalDevelopment/properties/RecordedWeights/items/properties/R0_RecWght_Num",
+        "#/$defs/PhysicalDevelopment/properties/RecordedWeights/items/properties/R0_WghtAge_St",
+        "#/$defs/PhysicalDevelopment/properties/RecordedWeights/items/properties/R0_WghtAge_Lbs",
+        "#/$defs/PhysicalDevelopment/properties/RecordedWeights/items/properties/R0_WghtAge_Kg"
+      ],
+      "x-formerName": "weight_20",
+      "$comment": "Allow: positive kg value, OR 999 = NA, OR null-missing"
+    },
+    "R0_BMI20": {
+      "description": "BMI at 20 years old. Set to 999 (NA) if participant was not yet 20 at the the time of study entry or if participant was pregnant at 20 years old.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "const": 999,
+          "description": "NA"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 165
+        }
+      ],
+      "x-description": "Body Mass Index (kg/m²). Age null calculation done by reading in age at entry to study. Pregnancy null calculation done by deriving end date of pregnancy, subtracting the length of pregnancy, and based on DOB, working out if the pregnancy range falls while the participant was 20.",
+      "minimum": 0,
+      "x-derivedFrom": [
+        "#/properties/R0_Height20",
+        "#/properties/R0_Weight20",
+        "#/$defs/RawDerived/properties/R0_AgeEntry",
+        "#/$defs/RawDerived/properties/R0_DOB",
+        "#/$defs/PregnanciesPII/properties/Pregnancies/R0_PregnancyEndDate",
+        "#/$defs/PregnanciesPII/properties/Pregnancies/R0_Preg_DurationWks"
+      ],
+      "x-formerName": "bmi_20",
+      "x-calculation": "R0_Weight20 / ((R0_Height20 / 100) ^ 2)"
+    },
+    "R0_PregAtEntry": {
+      "description": "Flag whether the participant was pregnant at entry to the study.",
+      "type": [
+        "number", 
+        "null"
+      ],
+      "x-description": "Using questionnaire question R0_CurrentPreg to flag if participant was pregnant at entry to the study.",
+      "enum": [
+        0, 
+        1, 
+        null
+      ],
+      "enumDescriptions": [
+                    "0: No.",
+                    "1: Yes.",
+                    "null: Unknown."
+                ],
+      "x-derivedFrom": [
+        "#/$defs/PregnanciesPII/properties/R0_CurrentPreg"
+      ],
+      "x-formerName": ""
+    },
+    "R0_Height": {
+      "description": "Height in centimeters at entry to the study.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 320
+        }
+      ],
+      "x-description": "Derived using priority: 1) Imperial inputs converted to cm (ft*30.48 + in*2.54) 2) Direct metric input. If both sources exist and differ by >5cm, uses value in cm. If neither valid, defaults to null.",
+      "x-derivedFrom": [
+        "#/$defs/PhysicalDevelopment/properties/R0_CurrentHght_Ft",
+        "#/$defs/PhysicalDevelopment/properties/R0_CurrentHght_In",
+        "#/$defs/PhysicalDevelopment/properties/R0_CurrentHght_Cm"
+      ],
+      "x-formerName": "height_best"
+    },
+    "R0_Weight": {
+      "description": "Weight in kilograms at entry to the study.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 500
+        }
+      ],
+      "x-description": " Derived using priority: 1) Imperial inputs converted to kg (st*6.350293 + lbs*0.45359237) 2) Direct metric input. Uses imperial conversion when both sources exist. If neither valid, defaults to null.",
+      "x-derivedFrom": [
+        "#/$defs/PhysicalDevelopment/properties/R0_CurrentWght_St",
+        "#/$defs/PhysicalDevelopment/properties/R0_CurrentWght_Lbs",
+        "#/$defs/PhysicalDevelopment/properties/R0_CurrentWght_Kg"
+      ],
+      "x-formerName": "weight_entry"
+    },
+    "R0_BMI": {
+      "description": "BMI at time entry to the study.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "const": 999,
+          "description": "NA"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 165
+        }
+      ],     
+      "x-description": "Body Mass Index (kg/m²). If currently pregnant is true when filling out the questionnaire, BMI is not calculated and value is 999 (NA).",
+      "x-derivedFrom": [
+        "#/properties/R0_Height",
+        "#/properties/R0_Weight",
+        "#/$defs/PregnanciesPII/properties/R0_CurrentPreg"
+      ],
+      "x-formerName": "bmi_entry",
+      "x-calculation": "R0_Weight / ((R0_Height / 100) ^ 2)"
+    },
+    "R0_WaistCircum": {
+      "description": "Waist circumference in centimeters at entrance into the study.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 350
+        }
+      ],
+      "x-description": "Derived using priority: 1) Imperial inputs converted to cm (in*2.54) 2) Direct metric input. Uses imperial conversion when both sources exist. If neither valid, defaults to 99999 (unknown).",
+      "x-derivedFrom": [
+        "#/$defs/PhysicalDevelopment/properties/R0_WaistCircum_In",
+        "#/$defs/PhysicalDevelopment/properties/R0_WaistCircum_Cm"
+      ],
+      "x-formerName": "bodysizewaist"
+    },
+    "R0_HipCircum": {
+      "description": "Hip circumference in centimeters at entrance to the study.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 350
+        }
+      ],
+      "x-description": "Derived using priority: 1) Imperial inputs converted to kg (in*2.54) 2) Direct metric input. Uses imperial conversion when both sources exist. If neither valid, defaults to 99999 (unknown).",
+      "x-derivedFrom": [
+        "#/$defs/PhysicalDevelopment/properties/R0_HipCircum_In",
+        "#/$defs/PhysicalDevelopment/properties/R0_HipCircum_Cm"
+      ],
+      "x-formerName": "bodysizehip"
+    },
+    "R0_WaistHipRatio": {
+      "description": "Waist-to-hip ratio at study entry.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "const": 999,
+          "description": "NA"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 10
+        }
+      ],
+      "x-description": "Waist-to-hip ratio. If currently pregnant is true when filling out the questionnaire, WHR is not calculated and is set to NA.",
+      "minimum": 0,
+      "x-derivedFrom": [
+        "#/properties/R0_WaistCircum",
+        "#/properties/R0_HipCircum",
+        "#/$defs/PregnanciesPII/properties/R0_CurrentPreg"
+      ],
+      "x-formerName": "bodysizewhr",
+      "x-calculation": "R0_WaistCircum / R0_HipCircum"
+    },
+    "R0_AgeMenarche": {
+      "description": "Age at first period (menarche), in whole years.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 100
+        }
+      ],
+      "x-description": "Logic: (1) If Ever had periods = No (R0_EverHadPeriods=2), set null. (2) Otherwise use the reported first-period age (R0_FirstPeriodAge).",
+      "minimum": 0,
+      "x-derivedFrom": [
+        "#/$defs/MenstrualMenopause/properties/R0_EverHadPeriods",
+        "#/$defs/MenstrualMenopause/properties/R0_FirstPeriodAge"
+      ],
+      "x-formerName": "menarcheage",
+      "x-calculation": ""
+    },
+    "R0_OralContraceptiveStatus": {
+      "description": "Whether the participant was using oral contraceptives at entry to the study.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "x-description": "Derived from pill episodes and age at entry. CURRENT (2) if any ContracepPill episode covers age at entry (StartAge ≤ R0_AgeEntry ≤ StopAge) or if CurrentUse=1 on any episode; FORMER (1) if any prior use but no episode covers entry; NEVER (0) if no pill use. Null if insufficient info.",
+      "enum": [
+        0, 
+        1, 
+        2, 
+        null
+      ],
+      "enumDescriptions": [
+        "0: Never.",
+        "1: Former.",
+        "2: Current.", 
+        "null: Not known."
+      ],
+      "x-derivedFrom": [
+        "#/$defs/ContraceptiveHRT/properties/R0_ContracepPillUse",
+        "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StartAge",
+        "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StopAge",
+        "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_CurrentUse",
+        "#/$defs/RawDerived/properties/R0_AgeEntry"
+      ],
+      "x-formerName": "ocstatus"
+    },
+    "R0_AgeStartedOC": {
+      "description": "Age first used oral contraceptives.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "const": 999,
+          "description": "NA"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 120
+        }
+      ],
+      "x-description": "Earliest start age across ContracepPill episodes. Null if never used or no valid start ages.",
+      "x-derivedFrom": [
+        "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StartAge"
+      ],
+      "x-formerName": "oc1age"
+    },
+    "R0_AgeLastUsedOC": {
+      "description": "Age last used oral contraceptives.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "const": 999,
+          "description": "NA"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 120
+        }
+      ],
+      "x-description": "For FORMER users, latest stop age across ContracepPill episodes that end on/before entry; for CURRENT, take age at entry, or NEVER, null.",
+      "x-derivedFrom": [
+        "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StopAge",
+        "#/$defs/RawDerived/properties/R0_AgeEntry"
+      ],
+      "x-formerName": "ocLage"
+    },
+    "R0_OCLength": {
+      "description": "Total duration of oral contraceptive use (years).",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "const": 999,
+          "description": "NA"
+        },
+        {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMaximum": 120
+        }
+      ],
+      "x-description": "Merge overlapping ContracepPill episodes; sum (min(StopAge, R0_AgeEntry) - StartAge) across merged spans, floor negatives at 0; treat ongoing episodes (missing StopAge or CurrentUse=1) as ending at R0_AgeEntry. Round to 1 dp. Null if insufficient info; 0 if never used.",
+      "x-derivedFrom": [
+        "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StartAge",
+        "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StopAge",
+        "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_CurrentUse",
+        "#/$defs/RawDerived/properties/R0_AgeEntry"
+      ],
+      "x-formerName": "oclength"
+    },
+    "R0_Parous": {
+      "description": "Parity status at entry to the study.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "enum": [
+        -1, 
+        0, 
+        1, 
+        9, 
+        null
+      ],
+      "enumDescriptions": [
+        "-1: Never pregnant.",
+        "0: Nulliparous (ever pregnant but no live birth before entry).",
+        "1: Parous (at least one pregnancy with a live birth before entry).",
+        "9: Ever pregnant but parity unknown (e.g. only pregnancies with unknown outcome or incomplete episode data).",
+        "null: Missing or inconsistent information."
+      ],
+      "x-description": "Using questionnaire responses (R0_EverPregnant and R0_TotalPregnancies) and the pregnancy episodes table: (1) Parous (1) if any pregnancy has a live-birth outcome (e.g. singleton live, multiple with ≥1 liveborn; outcome codes 1, 2, 3, 5, 10). (2) Nulliparous (0) if there is evidence of pregnancies but no live-birth outcomes and no pregnancies with unknown outcome (14). (3) Never pregnant (-1) if questionnaire data indicate no pregnancies and there are no pregnancy episodes. (4) Ever pregnant, parity unknown (9) if there is evidence of pregnancies but no live-birth outcomes and at least one pregnancy with unknown outcome or if the pregnancy table is empty but the questionnaire suggests pregnancies. Null if pregnancy information is entirely missing or internally inconsistent.",
+      "x-derivedFrom": [
+        "#/$defs/PregnanciesPII/properties/R0_EverPregnant",
+        "#/$defs/PregnanciesPII/properties/R0_TotalPregnancies",
+        "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_Outcome"
+      ],
+      "x-formerName": "pregparous"
+    },
+    "R0_Parity": {
+      "description": "Number of live-birth pregnancies at entry to the study.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "integer", 
+          "minimum": -1
+        }
+      ],
+      "x-description": "Count of pregnancies with a live-birth outcome (each pregnancy counts once; multiple births still count as 1 pregnancy). Excludes miscarriages, terminations, ectopic, stillbirth, molar, and unknown outcomes.",
+      "x-derivedFrom": [
+        "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_Outcome"
+      ],
+      "x-formerName": "pregparitycnt"
+    },
+    "R0_AgeBirthFirst": {
+      "description": "Age at first live birth (years).",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "const": 999,
+          "description": "NA"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 120
+        }
+      ],
+      "x-description": "Computed from the participant's DOB and the earliest pregnancy end date among live-birth pregnancies: whole years at the date of that birth (subtract 1 if the birthday in that calendar year had not yet occurred). 999 (NA) if no live-birth pregnancies or dates.",
+      "x-derivedFrom": [
+        "#/$defs/RawDerived/properties/R0_DOB",
+        "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_PregnancyEndDate",
+        "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_Outcome"
+      ],
+      "x-formerName": "preg1birthage"
+    },
+    "R0_AgeBirthLast": {
+      "description": "Age at last live birth (years).",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "const": 999,
+          "description": "NA"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 120
+        }
+      ],
+      "x-description": "Same calculation as age at first birth, but using the latest pregnancy end date among live-birth pregnancies. 999 (NA) if no live-birth pregnancies or dates.",
+      "x-derivedFrom": [
+        "#/$defs/RawDerived/properties/R0_DOB",
+        "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_PregnancyEndDate",
+        "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_Outcome"
+      ],
+      "x-formerName": "pregLbirthage"
+    },
+    "R0_BreastfeedingDuration": {
+      "description": "Total months of breastfeeding across live-birth pregnancies.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "const": 999,
+          "description": "NA"
+        },
+        {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMaximum": 300
+        }
+      ],
+      "x-description": "Sum breastfeeding duration reported per live-birth pregnancy (weeks) and convert to months (weeks ÷ 4.345; 1 decimal place). 999 (NA) non-live-birth pregnancies. Null if no breastfeeding information is available.",
+      "x-derivedFrom": [
+        "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_BreastfeedingWks",
+        "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_Outcome"
+      ],
+      "x-formerName": "pregbfwks"
+    },
+    "R0_Breastfed": {
+      "description": "Whether the participant has ever breastfed.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "enum": [
+        0, 
+        1,
+        999, 
+        null
+      ],
+      "enumDescriptions": [
+        "0: No",
+        "1: Yes",
+        "999: Not Applicable",
+        "null: Missing or invalid"
+      ],
+      "x-description": "Set to 1 if the summed breastfeeding duration across live-birth pregnancies is > 0 months; 0 if explicitly reported as 0 weeks across all live-birth pregnancies; null if there is no breastfeeding information: 999 (NA) if never a live-birth.",
+      "x-derivedFrom": [
+        "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_BreastfeedingWks",
+        "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_Outcome"
+      ],
+      "x-formerName": "pregbf"
+    },
+    "R0_BBD": {
+      "description": "History of benign breast disease.",
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "enum": [
+        0, 
+        1, 
+        null
+      ],
+      "enumDescriptions": [
+        "0: No",
+        "1: Yes",
+        "null: Missing or invalid"
+      ],
+      "x-description": "Set to 1 if ANY of the following are present in the BreastDisease section: (a) the direct question on benign breast disease/abnormality is answered 'Yes' (R0_BBD_Abnormality=1); (b) at least one episode is recorded with a type (R0_BBD_Type) or a coded procedure (R0_BBD_ProcedureType); (c) any 'extra' procedure flags indicate biopsy, part/lump removed, whole breast removed, both breasts removed, or other (R0_BBD_Biopsy/Lump/Mastec/BothRem/Other = 1); (d) 'further' or 'more than 4' boxes are ticked (R0_BBD_Further=1 or R0_BBD_MoreThan4=1). Set to 0 if the direct question is 'No' (R0_BBD_Abnormality=2) and no other evidence is present. Otherwise, null.",
+      "x-derivedFrom": [
+        "#/$defs/BreastDiseasePII/properties/R0_BBD_Abnormality",
+        "#/$defs/BreastDiseasePII/properties/BBD/items/properties/R0_BBD_Type",
+        "#/$defs/BreastDiseasePII/properties/BBD/items/properties/R0_BBD_ProcedureType",
+        "#/$defs/BreastDiseasePII/properties/BBD/items/properties/BBD_Extra/items/properties/R0_BBD_Biopsy",
+        "#/$defs/BreastDiseasePII/properties/BBD/items/properties/BBD_Extra/items/properties/R0_BBD_Lump",
+        "#/$defs/BreastDiseasePII/properties/BBD/items/properties/BBD_Extra/items/properties/R0_BBD_Mastec",
+        "#/$defs/BreastDiseasePII/properties/BBD/items/properties/BBD_Extra/items/properties/R0_BBD_BothRem",
+        "#/$defs/BreastDiseasePII/properties/BBD/items/properties/BBD_Extra/items/properties/R0_BBD_Other",
+        "#/$defs/BreastDiseasePII/properties/R0_BBD_Further",
+        "#/$defs/BreastDiseasePII/properties/R0_BBD_MoreThan4"
+      ],
+      "x-formerName": "brbendis"
+    },
+    "R0_FamHistBC": {
+      "description": "Family history of breast cancer in first-degree relatives (parents, full siblings, or children).",
+      "type": ["integer", "null"],
+      "enum": [0, 1, null],
+      "enumDescriptions": [
+        "0: No",
+        "1: Yes",
+        "null: Not collected / unknown"
+      ],
+      "x-description": "Set to 1 if any first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site equals 'breast' (or 'male breast') after normalization (case-insensitive, trimmed). Half-siblings are excluded from the first-degree roll-up. Set to 0 only when available first-degree 'any cancer' flags are explicitly 'No' and no first-degree cancer site equals 'breast'. Otherwise set to null (e.g., when there are 'Yes' responses without a site code, 'Don't know', or no information).",
+      "x-derivedFrom": [
+        "#/$defs/CancerRelativesPII/properties/FatherCancers/items/properties/R0_FatherCancerType",
+        "#/$defs/CancerRelativesPII/properties/MotherCancers/items/properties/R0_MotherCancerType",
+        "#/$defs/CancerRelativesPII/properties/Siblings/items/properties/R0_SiblingRelation",
+        "#/$defs/CancerRelativesPII/properties/Siblings/items/properties/R0_SiblingCancerType",
+        "#/$defs/CancerRelativesPII/properties/Siblings/items/properties/R0_SiblingCancerHistory",
+        "#/$defs/CancerRelativesPII/properties/Children/items/properties/R0_ChildCancerType",
+        "#/$defs/CancerRelativesPII/properties/R0_FatherCancerHistory",
+        "#/$defs/CancerRelativesPII/properties/R0_MotherCancerHistory",
+        "#/$defs/CancerRelativesPII/properties/R0_ChildCancerHistory"
+      ],
+      "x-formerName": "fambrca"
+    },
+    "R0_DiabetesStatus": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Diabetes diagnosis status at baseline.",
+      "x-description": "Questionnaire self-report of doctor diagnosis prior to R0.",
+      "x-derivedFrom": [
+        "#/$defs/MH_Illnesses/properties/R0_Diabetes"
+      ],
+      "x-formerName": "illnessdiabetes",
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: No",
+        "1: Yes",
+        "null: Missing or invalid"
+      ]
+    },
+    "R0_AgeDiabetes": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Age at diabetes diagnosis (years).",
+      "x-description": "Taken directly from questionnaire variable, otherwise unknown (only retained if R0_DiabetesStatus=1).",
+      "x-derivedFrom": [
+        "#/$defs/MH_Illnesses/properties/R0_DiabetesAge"
+      ],
+      "x-formerName": "illnessdiabetesage",
+      "minimum": 0
+    },
+    "R0_DiabetesInsulin": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Whether diabetes was treated with insulin at baseline.",
+      "x-description": "Taken directly from questionnaire variable, otherwise unknown.",
+      "x-derivedFrom": [
+        "#/$defs/MH_Illnesses/properties/R0_TreatedWithInsulin"
+      ],
+      "x-formerName": "illnessdiabetesinsulin",
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: No",
+        "1: Yes",
+        "null: Missing or invalid"
+      ]
+    },
+    "R0_Menopause": {
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "description": "Menopausal status at baseline.",
+      "x-description": "Variable uses questionnaire variable.",
+      "x-derivedFrom": [
+        "#/$defs/RawDerived/properties/R0_AgeEntry",
+        "#/$defs/MenstrualMenopause/properties/R0_EverHadPeriods",
+        "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedPerm",
+        "#/$defs/MenstrualMenopause/properties/R0_HRTPeriodsUnclear",
+        "#/$defs/MenstrualMenopause/properties/R0_MenopauseAge",
+        "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedReason",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/R0_OvaryOp_BothOvaries",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/R0_OvaryOp_Uterus",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/R0_OvaryOp_Age",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/OvaryUterusOperationsExtra/items/properties/R0_OvaryOp_FromAge",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/OvaryUterusOperationsExtra/items/properties/R0_OvaryOp_ToAge"
+      ],
+      "x-formerName": "menopause",
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Postmenopausal.",
+        "2: Premenopausal.",
+        "3: Assumed postmenopausal.",
+        "4: Assumed premenopausal.",
+        "9: Never had periods",
+        "10: Did not complete questionnaire.",
+        "null: Missing or invalid"
+      ]
+    },
+    "R0_AgeMenopause": {
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "description": "Age at menopause (years).",
+      "x-description": "Uses questionnaire variable as best answer, or if no answer avalable, variable takes into account reported operations, cancer treatments, HRT and OC use. Assumed age 51 years when menopause is masked by hysterectomy or HRT use.",
+      "x-derivedFrom": [
+        "#/$defs/RawDerived/properties/R0_AgeEntry",
+        "#/$defs/MenstrualMenopause/properties/R0_EverHadPeriods",
+        "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedPerm",
+        "#/$defs/MenstrualMenopause/properties/R0_HRTPeriodsUnclear",
+        "#/$defs/MenstrualMenopause/properties/R0_MenopauseAge",
+        "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedReason",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/R0_OvaryOp_BothOvaries",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/R0_OvaryOp_Uterus",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/R0_OvaryOp_Age",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/OvaryUterusOperationsExtra/items/properties/R0_OvaryOp_FromAge",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/OvaryUterusOperationsExtra/items/properties/R0_OvaryOp_ToAge"
+      ],
+      "x-formerName": "age_menopause",
+      "minimum": 0
+    },
+    "R0_MenopauseReason": {
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "description": "Reason periods stopped.",
+      "x-description": "Uses quesionnaire variable. If no other information given then answer unknown.",
+      "x-derivedFrom": [
+        "#/$defs/RawDerived/properties/R0_AgeEntry",
+        "#/$defs/MenstrualMenopause/properties/R0_EverHadPeriods",
+        "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedPerm",
+        "#/$defs/MenstrualMenopause/properties/R0_HRTPeriodsUnclear",
+        "#/$defs/MenstrualMenopause/properties/R0_MenopauseAge",
+        "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedReason",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/R0_OvaryOp_BothOvaries",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/R0_OvaryOp_Uterus",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/R0_OvaryOp_Age",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/OvaryUterusOperationsExtra/items/properties/R0_OvaryOp_FromAge",
+        "#/$defs/MenstrualMenopause/properties/OvaryUterusOperations/items/properties/OvaryUterusOperationsExtra/items/properties/R0_OvaryOp_ToAge"
+      ],
+      "x-formerName": "menopause_reason",
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6, 
+        7, 
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Natural.",
+        "2: Surgery (bilateral oophorectomy).",
+        "3: Surgery (hysterectomy only).",
+        "4: Surgery (type not known).",
+        "5: Chemotherapy, radiotherapy, or oher cancer treatment.",
+        "6: Does not know reason for stopping.",
+        "7: Other reported reason.",
+        "8: Not known: on hormones.",
+        "9: Not known: on HRT.",
+        "10: Not known: stress.",
+        "11: Premenopausal: breastfeeding or pregnant.",
+        "12: Perimenopausal.",
+        "13: Natural menopause while on HRT or OC.",
+        "14: Eating disorder or low weight.",
+        "15: Illness.",
+        "16: Premenopausal.",
+        "17: Status not known.",
+        "18: Surgery, but not oophorectomy or hysterectomy.",
+        "19: Never had periods.",
+        "null: Missing or invalid"
+      ]
+    },
+    "R0_HRTStatus": {
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "description": "Menopausal hormone treatment status at baseline.",
+      "x-description": "From HRT episode array: any prior but stopped = Former; active at R0 (stop missing or after EntryDate) = Current; none = Never.",
+      "x-derivedFrom": [
+        "#/$defs/ContraceptiveHRT/properties/R0_HRT_Use",
+        "#/$defs/ContraceptiveHRT/properties/HRT/items/properties/R0_HRT_StartAge",
+        "#/$defs/ContraceptiveHRT/properties/HRT/items/properties/R0_HRT_StopAge",
+        "#/$defs/ContraceptiveHRT/properties/HRT/items/properties/R0_HRT_CurrentUse",
+        "#/$defs/RawDerived/properties/R0_AgeEntry"
+      ],
+      "x-formerName": "hrtstatus",
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Never",
+        "1: Former",
+        "2: Current",
+        "null: Missing or invalid"
+      ]
+    },
+    "R0_HRTStartAge": {
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "description": "Age started menopausal hormone treatment.",
+      "x-description": "Earliest HRT start across episodes as given in the questionnaire.",
+      "x-derivedFrom": [
+        "#/$defs/ContraceptiveHRT/properties/HRT/items/properties/R0_HRT_StartAge"
+      ],
+      "x-formerName": "hrt1age",
+      "minimum": 0
+    },
+    "R0_HRTStopAge": {
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "description": "Age stopped menopausal hormone treatment.",
+      "x-description": "Latest HRT stop across episodes as given in the questionnaire.",
+      "x-derivedFrom": [
+        "#/$defs/ContraceptiveHRT/properties/HRT/items/properties/R0_HRT_StopAge"
+      ],
+      "x-formerName": "hrtlage",
+      "minimum": 0
+    },
+    "R0_HRTDuration": {
+      "type": [
+        "number", 
+        "null"
+      ],
+      "description": "Total duration of menopausal hormone treatment (years).",
+      "x-description": "Sum merged HRT episodes (stop - start)/365.25. If overlapping, does not duplicate overlapping time. Only includes periods before recruitment, not estimating open ended times occuring during entry date.",
+      "x-derivedFrom": [
+        "#/properties/R0_HRT_StartAge",
+        "#/properties/R0_HRT_StopAge"
+      ],
+      "x-formerName": "hrtlength",
+     "minimum": 0
+    },
+    "R0_AlcoholStatus": {
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "description": "Alcohol use status at baseline.",
+      "x-description": "Using questionnaire variables if ever been a regular drinker, and if still drinking at least one glass per week.",
+      "x-derivedFrom": [
+        "#/$defs/AlcoholSmokingDiet/properties/R0_AlcoholRegularUse",
+        "#/$defs/AlcoholSmokingDiet/properties/R0_AlcoholCurrentUse",
+        "#/$defs/AlcoholSmokingDiet/properties/R0_AlcoholStartAge",
+        "#/$defs/AlcoholSmokingDiet/properties/R0_AlcoholStopAge",
+        "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholConsumption_Num",
+        "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholBeer",
+        "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholRedWine",
+        "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholWhiteWine",
+        "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholSherry",
+        "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholSpirits",
+        "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholOther",
+        "#/$defs/RawDerived/properties/R0_AgeEntry"
+      ],
+      "x-formerName": "R1alcoholstatus",
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Never",
+        "1: Former",
+        "2: Current",
+        "null: Missing or invalid"
+      ]
+    },
+    "R0_AgeStartedDrinking": {
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "description": "Age started regularly drinking alcohol.",
+      "x-description": "Using questionnaire variable at what age did you start drinking.",
+      "x-derivedFrom": [
+        "#/$defs/AlcoholSmokingDiet/properties/R0_AlcoholStartAge"
+      ],
+      "x-formerName": "alcoholstartage",
+      "minimum": 0
+    },
+    "R0_AgeStoppedDrinking": {
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "description": "Age stopped regularly drinking alcohol.",
+      "x-description": "Using questionnaire variable at what age did you stop drinking.",
+      "x-derivedFrom": [
+        "#/$defs/AlcoholSmokingDiet/properties/R0_AlcoholStopAge"
+      ],
+      "x-formerName": "alcoholstopage",
+      "minimum": 0
+    },
+    "R0_AlcoholUnitsPerWeek": {
+      "type": [
+        "number", 
+        "null"
+      ],
+      "description": "Weekly alcohol units among current drinkers.",
+      "x-description": "Average of weekly units of all alcohols asked about in age range during entry to study.",
+      "x-derivedFrom": [
+        "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholConsumption_Num",
+        "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholBeer",
+        "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholRedWine",
+        "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholWhiteWine",
+        "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholSherry",
+        "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholSpirits",
+        "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholOther",
+        "#/$defs/AlcoholSmokingDiet/properties/R0_AlcoholCurrentUse",
+        "#/$defs/RawDerived/properties/R0_AgeEntry"
+      ],
+      "x-formerName": "R1alcoholunits",
+      "minimum": 0
+    },
+    "R0_SmokingStatus": {
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "description": "Cigarette smoking status at baseline.",
+      "x-description": "Using questionnaire variables if ever been a regular smoker, and if still smoking regularly.",
+      "x-derivedFrom": [
+        "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingRegularUse",
+        "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingCurrentUse",
+        "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingStartAge",
+        "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingStopAge",
+        "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_CigaretteConsumption_Num",
+        "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_Cigarettes",
+        "#/$defs/RawDerived/properties/R0_AgeEntry"
+      ],
+      "x-formerName": "R1smokingstatus",
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Never",
+        "1: Former",
+        "2: Current",
+        "null: Missing or invalid"]
+    },
+    "R0_AgeStartedSmoking": {
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "description": "Age started cigarette smoking.",
+      "x-description": "Using questionnaire variable at what age did you start smoking regularly.",
+      "x-derivedFrom": [
+        "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingStartAge"
+      ],
+      "x-formerName": "smokingstartage",
+      "minimum": 0
+    },
+    "R0_AgeStoppedSmoking": {
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "description": "Age stopped cigarette smoking.",
+      "x-description": "Using questionnaire variable at what age did you stop smoking regularly.",
+      "x-derivedFrom": [
+        "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingStopAge"
+      ],
+      "x-formerName": "smokingstopage",
+      "minimum": 0
+    },
+    "R0_CigsPerDay": {
+      "type": [
+        "number", 
+        "null"
+      ],
+      "description": "Cigarettes smoked per day (current smokers).",
+      "x-description": "Average of cigarettes per day smoked in age range during entry to study.",
+      "x-derivedFrom": [
+        "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_CigaretteConsumption_Num",
+        "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_Cigarettes",
+        "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingCurrentUse",
+        "#/$defs/RawDerived/properties/R0_AgeEntry"
+      ],
+      "x-formerName": "R1smokingcigs",
+      "minimum": 0
+    },
+    "R0_PackYears": {
+      "type": [
+        "number", 
+        "null"
+      ],
+      "description": "Cigarette smoking exposure (pack-years).",
+      "x-description": "Compute (cigarettes per day/20)*years smoked across smoking episodes; years = (stop - start)/365.25. Merge overlapping episodes; ignore implausible spans.",
+      "x-derivedFrom": [
+        "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingStartAge",
+        "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingStopAge",
+        "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_CigaretteConsumption_Num",
+        "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_Cigarettes",
+        "#/$defs/RawDerived/properties/R0_AgeEntry"
+      ],
+      "x-formerName": "R1smokingpackyears",
+      "minimum": 0,
+      "x-calculation": ""
+    },
+    "R0_PhysicalActivity": {
+      "type": [
+        "number", 
+        "null"
+      ],
+      "description": "Physical activity (hours/week).",
+      "x-description": "Baseline total physical activity in MET-hours per week. For each baseline domain, the self-reported hours per week are multiplied by a standard MET value derived as the average of selected activities in the 2024 Adult Compendium of Physical Activities: Strenuous sports/training that made you sweat or breathe hard (R0_SportsSweatHours): MET = 7.2, average of basketball (7.5), football (7.0), tennis singles (8.0), leisurely swimming (6.0), and jogging at self-selected pace (7.5). Work that made you sweat or breathe hard (R0_WorkSweatHours): MET = 5.5, average of manual/unskilled labor, moderate (4.5) and vigorous (6.5) effort. Other activities that made you sweat or breathe hard (R0_OtherSweatHours): MET = 5.5, average of yardwork moderate (4.0), yardwork vigorous (6.0), and chopping/splitting wood vigorous (6.5). Active housework (R0_ActiveHouseworkHours): MET = 3.4, average of heavy cleaning (3.5), multiple household tasks moderate (3.3), and general house cleaning moderate (3.3). Manual labour, gardening, decorating, DIY (R0_ManualLaborHours): MET = 3.9, average of yardwork moderate (4.0), gardening general moderate (3.8), and raking leaves (4.0). Walking (R0_WalkingHours): MET = 3.4, average of walking for pleasure at ~2.5 mph (3.0), ~3.0 mph (3.5), and walking 2.8-3.4 mph at a moderate speed (3.8). Cycling (R0_CyclingHours): MET = 5.0, average of bicycling <10 mph leisure (4.0), self-selected easy pace (4.3), and 10-11.9 mph leisure slow/light effort (6.8). Dancing (R0_DancingHours): MET = 4.8, average of ballet/modern/jazz general (5.0), ballroom fast (5.5), folk dancing moderate (5.0), and contemporary dance general (3.8). Other moderate or light exercise (R0_OtherModerateExerciseHours): MET = 3.8, average of yoga general (2.3), power yoga (4.0), calisthenics light/moderate (3.5), home exercise general (3.8), and health club exercise general (5.5). The derived variable equals the sum of MET x hours contributions across all domains with non-missing hours. If all contributing domains are missing, R0_PhysicalActivity is set to null.",
+      "x-derivedFrom": [
+        "#/$defs/PhysicalActivity/properties/R0_SportsSweatHours",
+        "#/$defs/PhysicalActivity/properties/R0_WorkSweatHours",
+        "#/$defs/PhysicalActivity/properties/R0_OtherSweatHours",
+        "#/$defs/PhysicalActivity/properties/R0_ActiveHouseworkHours",
+        "#/$defs/PhysicalActivity/properties/R0_ManualLaborHours",
+        "#/$defs/PhysicalActivity/properties/R0_WalkingHours",
+        "#/$defs/PhysicalActivity/properties/R0_CyclingHours",
+        "#/$defs/PhysicalActivity/properties/R0_DancingHours",
+        "#/$defs/PhysicalActivity/properties/R0_OtherModerateExerciseHours"
+      ],
+      "x-formerName": "PhysMetWorkTot",
+      "minimum": 0
+    },
+    "R0_GreenVegDailyServings": {
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "description": "Average daily green vegetable consumption.",
+      "x-description": "Cleaned numeric servings/day derived from questionnaire.",
+      "x-derivedFrom": [
+        "#/$defs/AlcoholSmokingDiet/properties/R0_GreenVegDailyServings"
+      ],
+      "x-formerName": "dietvegserv",
+      "minimum": 0
+    },
+    "R0_FruitDailyServings": {
+      "type": [
+        "integer", 
+        "null"
+      ],
+      "description": "Average daily fruit consumption.",
+      "x-description": "Cleaned numeric servings/day derived from questionnaire.",
+      "x-derivedFrom": [
+        "#/$defs/AlcoholSmokingDiet/properties/R0_FruitDailyServings"
+      ],
+      "x-formerName": "dietfruitserv",
+      "minimum": 0
+    }
+  },
+  "required": ["R0_TCode"],
+  "additionalProperties": false,
+  "$defs": {
+    "RawDerived": {
+      "$ref": "RawDerivedVariables_Schema.json"
+    },
+    "GeneralInformation": { 
+      "$ref": "GeneralInformation_Schema.json"
+    },
+    "PhysicalDevelopment": {
+      "$ref": "PhysicalDevelopment_Schema.json"
+    },
+    "Pregnancies": {
+      "$ref": "Pregnancies_Schema.json"
+    },
+    "PregnanciesPII": {
+      "$ref": "../post_pii/Pregnancies_Schema_PII.json"
+    },
+    "ContraceptiveHRT": {
+      "$ref": "ContraceptiveHRT_Schema.json"
+    },
+    "BreastDiseasePII": {
+      "$ref": "../post_pii/BreastDisease_Schema_PII.json"
+    },
+    "CancerRelativesPII": {
+      "$ref": "../post_pii/CancerRelatives_Schema_PII.json"
+    },
+    "MH_Illnesses": { 
+      "$ref": "../post_pii/MH_Illnesses_Schema_PII.json"
+    },
+    "AlcoholSmokingDiet": { 
+      "$ref": "../post_pii/AlcoholSmokingDiet_Schema_PII.json"
+    }
+  }
+}

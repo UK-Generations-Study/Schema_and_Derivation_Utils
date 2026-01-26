@@ -1,0 +1,474 @@
+{
+  "R0_StudyID": {
+    "all": [
+      "StudyID"
+    ]
+  },
+  "R0_HghtComp": {
+    "all": [
+      "Q3_10_1",
+      "Q3_9_1"
+    ],
+    "11": [
+      "Q3_10_1"
+    ],
+    "7": [
+      "Q3_9_1"
+    ]
+  },
+  "R0_GrowthStopped_Age": {
+    "all": [
+      "Q3_11"
+    ]
+  },
+  "R0_GrowthStopped_Unkn": {
+    "all": [
+      "Q3_11_dn"
+    ]
+  },
+  "R0_HghtAge_Cm": {
+    "all": [
+      "Q3_12_cm",
+      "Q3_13_cm"
+    ],
+    "20": [
+      "Q3_12_cm"
+    ],
+    "Cur": [
+      "Q3_13_cm"
+    ]
+  },
+  "R0_HghtAge_Ft": {
+    "all": [
+      "Q3_12_feet",
+      "Q3_13_feet"
+    ],
+    "20": [
+      "Q3_12_feet"
+    ],
+    "Cur": [
+      "Q3_13_feet"
+    ]
+  },
+  "R0_HghtAge_In": {
+    "all": [
+      "Q3_12_inch",
+      "Q3_13_inch"
+    ],
+    "20": [
+      "Q3_12_inch"
+    ],
+    "Cur": [
+      "Q3_13_inch"
+    ]
+  },
+  "R0_RecHght_Cm": {
+    "all": [
+      "Q3_14CM1",
+      "Q3_14CM2",
+      "Q3_14CM3"
+    ],
+    "1": [
+      "Q3_14CM1"
+    ],
+    "2": [
+      "Q3_14CM2"
+    ],
+    "3": [
+      "Q3_14CM3"
+    ]
+  },
+  "R0_RecHght_Ft": {
+    "all": [
+      "Q3_14FT1",
+      "Q3_14FT2",
+      "Q3_14FT3"
+    ],
+    "1": [
+      "Q3_14FT1"
+    ],
+    "2": [
+      "Q3_14FT2"
+    ],
+    "3": [
+      "Q3_14FT3"
+    ]
+  },
+  "R0_RecHght_In": {
+    "all": [
+      "Q3_14IN1",
+      "Q3_14IN2",
+      "Q3_14IN3"
+    ],
+    "1": [
+      "Q3_14IN1"
+    ],
+    "2": [
+      "Q3_14IN2"
+    ],
+    "3": [
+      "Q3_14IN3"
+    ]
+  },
+  "R0_ChildhoodHghtRec": {
+    "all": [
+      "Q3_14_1"
+    ]
+  },
+  "R0_RecHght_AgeMnth": {
+    "all": [
+      "Q3_14ageM1",
+      "Q3_14ageM2",
+      "Q3_14ageM3"
+    ],
+    "1": [
+      "Q3_14ageM1"
+    ],
+    "2": [
+      "Q3_14ageM2"
+    ],
+    "3": [
+      "Q3_14ageM3"
+    ]
+  },
+  "R0_RecHght_AgeYr": {
+    "all": [
+      "Q3_14ageY1",
+      "Q3_14ageY2",
+      "Q3_14ageY3"
+    ],
+    "1": [
+      "Q3_14ageY1"
+    ],
+    "2": [
+      "Q3_14ageY2"
+    ],
+    "3": [
+      "Q3_14ageY3"
+    ]
+  },
+  "R0_RecHght_Day": {
+    "all": [
+      "Q3_14day1",
+      "Q3_14day2",
+      "Q3_14day3"
+    ],
+    "1": [
+      "Q3_14day1"
+    ],
+    "2": [
+      "Q3_14day2"
+    ],
+    "3": [
+      "Q3_14day3"
+    ]
+  },
+  "R0_RecHght_Mnth": {
+    "all": [
+      "Q3_14month1",
+      "Q3_14month2",
+      "Q3_14month3"
+    ],
+    "1": [
+      "Q3_14month1"
+    ],
+    "2": [
+      "Q3_14month2"
+    ],
+    "3": [
+      "Q3_14month3"
+    ]
+  },
+  "R0_RecHght_Yr": {
+    "all": [
+      "Q3_14year1",
+      "Q3_14year2",
+      "Q3_14year3"
+    ],
+    "1": [
+      "Q3_14year1"
+    ],
+    "2": [
+      "Q3_14year2"
+    ],
+    "3": [
+      "Q3_14year3"
+    ]
+  },
+  "R0_RecHght_Institution": {
+    "all": [
+      "Q3_15_1"
+    ]
+  },
+  "R0_AgeMeas": {
+    "all": [
+      "Q3_15age1",
+      "Q3_15age2"
+    ],
+    "1": [
+      "Q3_15age1"
+    ],
+    "2": [
+      "Q3_15age2"
+    ]
+  },
+  "R0_AgeMeas_From": {
+    "all": [
+      "Q3_15from1",
+      "Q3_15from2"
+    ],
+    "1": [
+      "Q3_15from1"
+    ],
+    "2": [
+      "Q3_15from2"
+    ]
+  },
+  "R0_InstitutionName": {
+    "all": [
+      "Q3_15inst1",
+      "Q3_15inst2"
+    ],
+    "1": [
+      "Q3_15inst1"
+    ],
+    "2": [
+      "Q3_15inst2"
+    ]
+  },
+  "R0_AgeMeas_To": {
+    "all": [
+      "Q3_15to2",
+      "Q3_15to3"
+    ],
+    "1": [
+      "Q3_15to2"
+    ],
+    "2": [
+      "Q3_15to3"
+    ]
+  },
+  "R0_InstitutionTown": {
+    "all": [
+      "Q3_15town1",
+      "Q3_15town2"
+    ],
+    "1": [
+      "Q3_15town1"
+    ],
+    "2": [
+      "Q3_15town2"
+    ]
+  },
+  "R0_AgeBreastDev": {
+    "all": [
+      "Q3_16"
+    ]
+  },
+  "R0_AgeBreastDev_Unkn": {
+    "all": [
+      "Q3_16dn"
+    ]
+  },
+  "R0_BraCupSize": {
+    "all": [
+      "Q3_17_1",
+      "Q3_18_1"
+    ],
+    "Cur": [
+      "Q3_17_1"
+    ],
+    "20": [
+      "Q3_18_1"
+    ]
+  },
+  "R0_BraCupSize_Other": {
+    "all": [
+      "Q3_17other",
+      "Q3_18other"
+    ],
+    "Cur": [
+      "Q3_17other"
+    ],
+    "20": [
+      "Q3_18other"
+    ]
+  },
+  "R0_Dif_LeftRight_Breast": {
+    "all": [
+      "Q3_19_1_1"
+    ]
+  },
+  "R0_BreastDif_Size": {
+    "all": [
+      "Q3_19_2_1"
+    ]
+  },
+  "R0_WghtComp": {
+    "all": [
+      "Q3_1_1",
+      "Q3_2_1"
+    ],
+    "7": [
+      "Q3_1_1"
+    ],
+    "11": [
+      "Q3_2_1"
+    ]
+  },
+  "R0_WaistCircum_Cm": {
+    "all": [
+      "Q3_20cm"
+    ]
+  },
+  "R0_WaistCircum_In": {
+    "all": [
+      "Q3_20inches"
+    ]
+  },
+  "R0_WaistCircum_When": {
+    "all": [
+      "Q3_20when_1"
+    ]
+  },
+  "R0_HipCircum_Cm": {
+    "all": [
+      "Q3_21cm"
+    ]
+  },
+  "R0_HipCircum_In": {
+    "all": [
+      "Q3_21inches"
+    ]
+  },
+  "R0_HipCircum_When": {
+    "all": [
+      "Q3_21when_1"
+    ]
+  },
+  "R0_ArmSpan_Cm": {
+    "all": [
+      "Q3_22cm"
+    ]
+  },
+  "R0_ArmSpan_Ft": {
+    "all": [
+      "Q3_22feet"
+    ]
+  },
+  "R0_ArmSpan_In": {
+    "all": [
+      "Q3_22inches"
+    ]
+  },
+  "R0_ArmSpan_NotPractical": {
+    "all": [
+      "Q3_22na"
+    ]
+  },
+  "R0_WghtAge_Kg": {
+    "all": [
+      "Q3_3_kgs",
+      "Q3_4_kgs",
+      "Q3_5_kgs",
+      "Q3_8_kgs"
+    ],
+    "20": [
+      "Q3_3_kgs"
+    ],
+    "40": [
+      "Q3_4_kgs"
+    ],
+    "60": [
+      "Q3_5_kgs"
+    ],
+    "Cur": [
+      "Q3_8_kgs"
+    ]
+  },
+  "R0_WghtAge_Lbs": {
+    "all": [
+      "Q3_3_lbs",
+      "Q3_4_lbs",
+      "Q3_5_lbs",
+      "Q3_8_lbs"
+    ],
+    "20": [
+      "Q3_3_lbs"
+    ],
+    "40": [
+      "Q3_4_lbs"
+    ],
+    "60": [
+      "Q3_5_lbs"
+    ],
+    "Cur": [
+      "Q3_8_lbs"
+    ]
+  },
+  "R0_WghtAge_St": {
+    "all": [
+      "Q3_3_stones",
+      "Q3_4_stones",
+      "Q3_5_stones",
+      "Q3_8_stones"
+    ],
+    "20": [
+      "Q3_3_stones"
+    ],
+    "40": [
+      "Q3_4_stones"
+    ],
+    "60": [
+      "Q3_5_stones"
+    ],
+    "Cur": [
+      "Q3_8_stones"
+    ]
+  },
+  "R0_LowestWght_Age": {
+    "all": [
+      "Q3_6_age"
+    ]
+  },
+  "R0_LowestWght_Kg": {
+    "all": [
+      "Q3_6_kgs"
+    ]
+  },
+  "R0_LowestWght_Lbs": {
+    "all": [
+      "Q3_6_lbs"
+    ]
+  },
+  "R0_LowestWght_St": {
+    "all": [
+      "Q3_6_stones"
+    ]
+  },
+  "R0_HighestWght_Age": {
+    "all": [
+      "Q3_7_age"
+    ]
+  },
+  "R0_HighestWght_Kg": {
+    "all": [
+      "Q3_7_kgs"
+    ]
+  },
+  "R0_HighestWght_Lbs": {
+    "all": [
+      "Q3_7_lbs"
+    ]
+  },
+  "R0_HighestWght_St": {
+    "all": [
+      "Q3_7_stones"
+    ]
+  },
+  "R0_CurrentWght_When": {
+    "all": [
+      "Q3_8_when_1"
+    ]
+  }
+}

@@ -1,0 +1,503 @@
+{
+  "R0_StudyID": {
+    "all": [
+      "StudyID"
+    ]
+  },
+  "R0_ChestLungXray": {
+    "all": [
+      "Q9_1_1_1"
+    ]
+  },
+  "R0_ChestXray": {
+    "all": [
+      "Q9_1_2",
+      "Q9_1_3",
+      "Q9_1_4",
+      "Q9_1_5"
+    ],
+    "U20": [
+      "Q9_1_2"
+    ],
+    "20-39": [
+      "Q9_1_3"
+    ],
+    "40-59": [
+      "Q9_1_4"
+    ],
+    "60+": [
+      "Q9_1_5"
+    ]
+  },
+  "R0_SingleSideDentalXray": {
+    "all": [
+      "Q9_2_10_1"
+    ]
+  },
+  "R0_FluoroscopicChestXray": {
+    "all": [
+      "Q9_2_11_1"
+    ]
+  },
+  "R0_SpineClavicleNeckXray": {
+    "all": [
+      "Q9_2_1_1"
+    ]
+  },
+  "R0_BariumSwallowXray": {
+    "all": [
+      "Q9_2_2_1"
+    ]
+  },
+  "R0_EsophagusStomachXray": {
+    "all": [
+      "Q9_2_3_1"
+    ]
+  },
+  "R0_CoronaryAngiogram": {
+    "all": [
+      "Q9_2_4_1"
+    ]
+  },
+  "R0_LungStomachArteriogram": {
+    "all": [
+      "Q9_2_5_1"
+    ]
+  },
+  "R0_CTChestNeckScan": {
+    "all": [
+      "Q9_2_6_1"
+    ]
+  },
+  "R0_GallbladderXray": {
+    "all": [
+      "Q9_2_7_1"
+    ]
+  },
+  "R0_KidneyPyelogramXray": {
+    "all": [
+      "Q9_2_8_1"
+    ]
+  },
+  "R0_FullMouthDentalXray": {
+    "all": [
+      "Q9_2_9_1"
+    ]
+  },
+  "R0_ChestNeckRadiotherapy": {
+    "all": [
+      "Q9_3_1_1"
+    ]
+  },
+  "R0_ChestNeckRadiationOther": {
+    "all": [
+      "Q9_3_2_1"
+    ]
+  },
+  "R0_XrayType": {
+    "all": [
+      "Q9_4_1_1",
+      "Q9_4_2_1",
+      "Q9_4_3_1",
+      "xradtype10",
+      "xradtype11",
+      "xradtype4",
+      "xradtype5",
+      "xradtype6",
+      "xradtype7",
+      "xradtype8",
+      "xradtype9"
+    ],
+    "1": [
+      "Q9_4_1_1"
+    ],
+    "2": [
+      "Q9_4_2_1"
+    ],
+    "3": [
+      "Q9_4_3_1"
+    ],
+    "10": [
+      "xradtype10"
+    ],
+    "11": [
+      "xradtype11"
+    ],
+    "4": [
+      "xradtype4"
+    ],
+    "5": [
+      "xradtype5"
+    ],
+    "6": [
+      "xradtype6"
+    ],
+    "7": [
+      "xradtype7"
+    ],
+    "8": [
+      "xradtype8"
+    ],
+    "9": [
+      "xradtype9"
+    ]
+  },
+  "R0_XrayYear": {
+    "all": [
+      "Q9_4_1_2",
+      "Q9_4_2_2",
+      "Q9_4_3_2",
+      "xradyear10",
+      "xradyear11",
+      "xradyear4",
+      "xradyear5",
+      "xradyear6",
+      "xradyear7",
+      "xradyear8",
+      "xradyear9"
+    ],
+    "1": [
+      "Q9_4_1_2"
+    ],
+    "2": [
+      "Q9_4_2_2"
+    ],
+    "3": [
+      "Q9_4_3_2"
+    ],
+    "10": [
+      "xradyear10"
+    ],
+    "11": [
+      "xradyear11"
+    ],
+    "4": [
+      "xradyear4"
+    ],
+    "5": [
+      "xradyear5"
+    ],
+    "6": [
+      "xradyear6"
+    ],
+    "7": [
+      "xradyear7"
+    ],
+    "8": [
+      "xradyear8"
+    ],
+    "9": [
+      "xradyear9"
+    ]
+  },
+  "R0_XrayHospital": {
+    "all": [
+      "Q9_4_1_3",
+      "Q9_4_2_3",
+      "Q9_4_3_3",
+      "xradhosp10",
+      "xradhosp11",
+      "xradhosp4",
+      "xradhosp5",
+      "xradhosp6",
+      "xradhosp7",
+      "xradhosp8",
+      "xradhosp9"
+    ],
+    "1": [
+      "Q9_4_1_3"
+    ],
+    "2": [
+      "Q9_4_2_3"
+    ],
+    "3": [
+      "Q9_4_3_3"
+    ],
+    "10": [
+      "xradhosp10"
+    ],
+    "11": [
+      "xradhosp11"
+    ],
+    "4": [
+      "xradhosp4"
+    ],
+    "5": [
+      "xradhosp5"
+    ],
+    "6": [
+      "xradhosp6"
+    ],
+    "7": [
+      "xradhosp7"
+    ],
+    "8": [
+      "xradhosp8"
+    ],
+    "9": [
+      "xradhosp9"
+    ]
+  },
+  "R0_XrayTown": {
+    "all": [
+      "Q9_4_1_4",
+      "Q9_4_2_4",
+      "Q9_4_3_4",
+      "xradtown10",
+      "xradtown11",
+      "xradtown4",
+      "xradtown5",
+      "xradtown6",
+      "xradtown7",
+      "xradtown8",
+      "xradtown9"
+    ],
+    "1": [
+      "Q9_4_1_4"
+    ],
+    "2": [
+      "Q9_4_2_4"
+    ],
+    "3": [
+      "Q9_4_3_4"
+    ],
+    "10": [
+      "xradtown10"
+    ],
+    "11": [
+      "xradtown11"
+    ],
+    "4": [
+      "xradtown4"
+    ],
+    "5": [
+      "xradtown5"
+    ],
+    "6": [
+      "xradtown6"
+    ],
+    "7": [
+      "xradtown7"
+    ],
+    "8": [
+      "xradtown8"
+    ],
+    "9": [
+      "xradtown9"
+    ]
+  },
+  "R0_XrayReason": {
+    "all": [
+      "Q9_4_1_5",
+      "Q9_4_2_5",
+      "Q9_4_3_5",
+      "xradreason10",
+      "xradreason11",
+      "xradreason4",
+      "xradreason5",
+      "xradreason6",
+      "xradreason7",
+      "xradreason8",
+      "xradreason9"
+    ],
+    "1": [
+      "Q9_4_1_5"
+    ],
+    "2": [
+      "Q9_4_2_5"
+    ],
+    "3": [
+      "Q9_4_3_5"
+    ],
+    "10": [
+      "xradreason10"
+    ],
+    "11": [
+      "xradreason11"
+    ],
+    "4": [
+      "xradreason4"
+    ],
+    "5": [
+      "xradreason5"
+    ],
+    "6": [
+      "xradreason6"
+    ],
+    "7": [
+      "xradreason7"
+    ],
+    "8": [
+      "xradreason8"
+    ],
+    "9": [
+      "xradreason9"
+    ]
+  },
+  "R0_XrayMoreEvents": {
+    "all": [
+      "Q9_4_more"
+    ]
+  },
+  "R0_XrayFromAge": {
+    "all": [
+      "fromage4",
+      "fromage5",
+      "fromage6"
+    ],
+    "4": [
+      "fromage4"
+    ],
+    "5": [
+      "fromage5"
+    ],
+    "6": [
+      "fromage6"
+    ]
+  },
+  "R0_XrayToAge": {
+    "all": [
+      "toage4",
+      "toage5",
+      "toage6"
+    ],
+    "4": [
+      "toage4"
+    ],
+    "5": [
+      "toage5"
+    ],
+    "6": [
+      "toage6"
+    ]
+  },
+  "R0_XrayAge": {
+    "all": [
+      "xradage4",
+      "xradage5",
+      "xradage7"
+    ],
+    "4": [
+      "xradage4"
+    ],
+    "5": [
+      "xradage5"
+    ],
+    "7": [
+      "xradage7"
+    ]
+  },
+  "R0_XrayFromMth": {
+    "all": [
+      "xradfrommth4",
+      "xradfrommth5"
+    ],
+    "4": [
+      "xradfrommth4"
+    ],
+    "5": [
+      "xradfrommth5"
+    ]
+  },
+  "R0_XrayFromYr": {
+    "all": [
+      "xradfromyr4",
+      "xradfromyr5",
+      "xradfromyr6",
+      "xradfromyr7",
+      "xradfromyr8"
+    ],
+    "4": [
+      "xradfromyr4"
+    ],
+    "5": [
+      "xradfromyr5"
+    ],
+    "6": [
+      "xradfromyr6"
+    ],
+    "7": [
+      "xradfromyr7"
+    ],
+    "8": [
+      "xradfromyr8"
+    ]
+  },
+  "R0_XrayMonth": {
+    "all": [
+      "xradmm10",
+      "xradmm11",
+      "xradmm4",
+      "xradmm5",
+      "xradmm6",
+      "xradmm7",
+      "xradmm8",
+      "xradmm9"
+    ],
+    "10": [
+      "xradmm10"
+    ],
+    "11": [
+      "xradmm11"
+    ],
+    "4": [
+      "xradmm4"
+    ],
+    "5": [
+      "xradmm5"
+    ],
+    "6": [
+      "xradmm6"
+    ],
+    "7": [
+      "xradmm7"
+    ],
+    "8": [
+      "xradmm8"
+    ],
+    "9": [
+      "xradmm9"
+    ]
+  },
+  "R0_XrayMoreThanTwelve": {
+    "all": [
+      "xradmorethan"
+    ]
+  },
+  "R0_XrayToMth": {
+    "all": [
+      "xradtomth4",
+      "xradtomth5"
+    ],
+    "4": [
+      "xradtomth4"
+    ],
+    "5": [
+      "xradtomth5"
+    ]
+  },
+  "R0_XrayToYr": {
+    "all": [
+      "xradtoyr4",
+      "xradtoyr5",
+      "xradtoyr6",
+      "xradtoyr7",
+      "xradtoyr8"
+    ],
+    "4": [
+      "xradtoyr4"
+    ],
+    "5": [
+      "xradtoyr5"
+    ],
+    "6": [
+      "xradtoyr6"
+    ],
+    "7": [
+      "xradtoyr7"
+    ],
+    "8": [
+      "xradtoyr8"
+    ]
+  }
+}

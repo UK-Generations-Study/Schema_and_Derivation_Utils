@@ -1,16 +1,64 @@
-# schema_utils.py
+"""
+Helper utilities for working with JSON Schemas.
+
+These functions are small, schema-focused helpers used by the ETL to:
+- Build mappings from schema field names to variable names.
+- Extract numeric constraints (min/max) and enumerations for cleaning.
+- Extract type information for variables.
+
+They are intentionally lightweight and are sometimes duplicated in spirit
+by similar helpers in `common_utils`.
+"""
+
 import json
 
 def build_variable_mapping(schema):
-    """Build mapping from variable names to schema fields"""
-    return {
-        prop["name"]: key
-        for key, prop in schema["additionalProperties"]["properties"].items()
-        if "name" in prop
-    }
+    """
+    Build a mapping from schema field keys to their 'name' attributes.
+
+    Parameters
+    ----------
+    schema : dict
+        JSON Schema for a questionnaire section.
+
+    Returns
+    -------
+    dict
+        {field_key: schema_name} mapping used to relate raw variables
+        to schema fields.
+    """
+    # Check schema type (array or object)
+    if "items" in schema and "properties" in schema["items"]:
+        props = schema["items"]["properties"]
+    elif "properties" in schema:
+        props = schema["properties"]
+    else:
+        props = {}
+
+    mapping = {}
+    for key, prop in props.items():
+        # Map property name to key
+        if "name" in prop:
+            mapping[prop["name"]] = key
+        # Map key to itself for direct access
+        mapping[key] = key
+        
+    return mapping
 
 def extract_constraints(schema_props):
-    """Extract min/max constraints from schema properties"""
+    """
+    Extract constraint information (min/max/enum) from schema properties.
+
+    Parameters
+    ----------
+    schema_props : dict
+        The 'properties' dictionary from a JSON Schema object.
+
+    Returns
+    -------
+    dict
+        {field_name: {"minimum": ..., "maximum": ..., "enum": [...]}}
+    """
     constraint_map = {}
     for field, props in schema_props.items():
         min_val, max_val = None, None
@@ -52,7 +100,20 @@ def extract_constraints(schema_props):
     return constraint_map
 
 def extract_var_types(schema_props):
-    """Extract variable types from schema properties"""
+    """
+    Extract type information for each property in a schema.
+
+    Parameters
+    ----------
+    schema_props : dict
+        The 'properties' dictionary from a JSON Schema object.
+
+    Returns
+    -------
+    dict
+        {field_name: json_type}
+    """
+
     var_type_map = {}
     for field, props in schema_props.items():
         if "type" in props:
@@ -78,3 +139,4 @@ def extract_var_types(schema_props):
     
     print("Extracted variable types for all fields")
     return var_type_map
+

@@ -1,0 +1,370 @@
+{
+  "R0_StudyID": {
+    "all": [
+      "StudyID"
+    ]
+  },
+  "R0_NonBCTamoxRaloxUse": {
+    "all": [
+      "Q8_11_1_1"
+    ]
+  },
+  "R0_NonBCDrugType": {
+    "all": [
+      "Q8_11_2_1"
+    ]
+  },
+  "R0_NonBCDrugStartAge": {
+    "all": [
+      "Q8_11_3"
+    ]
+  },
+  "R0_NonBCDrugDurationYrs": {
+    "all": [
+      "Q8_11_4"
+    ]
+  },
+  "R0_NonBCDrugDurationMnths": {
+    "all": [
+      "Q8_11_5"
+    ]
+  },
+  "R0_NonBCDrugOngoing": {
+    "all": [
+      "Q8_11_6"
+    ]
+  },
+  "R0_NonBCDrugEpisodes": {
+    "all": [
+      "Q8_11_7"
+    ]
+  },
+  "R0_GrowthHormoneUse": {
+    "all": [
+      "Q8_12_1"
+    ]
+  },
+  "R0_AcneMedsPrescribed": {
+    "all": [
+      "Q8_13_1_1"
+    ]
+  },
+  "R0_AcneMedsStartAge": {
+    "all": [
+      "Q8_13_2"
+    ]
+  },
+  "R0_AntibioticsRecentUse": {
+    "all": [
+      "Q8_14_1_1"
+    ]
+  },
+  "R0_AntibioticsDays": {
+    "all": [
+      "Q8_14_2"
+    ]
+  },
+  "R0_AspirinRecentUse": {
+    "all": [
+      "Q8_15_1_1"
+    ]
+  },
+  "R0_AspirinDays": {
+    "all": [
+      "Q8_15_2"
+    ]
+  },
+  "R0_AspirinRegularEp": {
+    "all": [
+      "Q8_16_1"
+    ],
+    "1": [
+      "Q8_16_1"
+    ]
+  },
+  "R0_AspirinStartAgeEp": {
+    "all": [
+      "Q8_16_A_1",
+      "Q8_16_A_2"
+    ],
+    "1": [
+      "Q8_16_A_1"
+    ],
+    "2": [
+      "Q8_16_A_2"
+    ]
+  },
+  "R0_AspirinEndAgeEp": {
+    "all": [
+      "Q8_16_B_1",
+      "Q8_16_B_2"
+    ],
+    "1": [
+      "Q8_16_B_1"
+    ],
+    "2": [
+      "Q8_16_B_2"
+    ]
+  },
+  "R0_AspirinOngoingEp": {
+    "all": [
+      "Q8_16_C_1",
+      "Q8_16_C_2"
+    ],
+    "1": [
+      "Q8_16_C_1"
+    ],
+    "2": [
+      "Q8_16_C_2"
+    ]
+  },
+  "R0_AspirinMoreEpisodes": {
+    "all": [
+      "Q8_16_more"
+    ]
+  },
+  "R0_IbuprofenRecentUse": {
+    "all": [
+      "Q8_17_1_1"
+    ]
+  },
+  "R0_IbuprofenDays": {
+    "all": [
+      "Q8_17_2"
+    ]
+  },
+  "R0_IbuprofenRegularEp": {
+    "all": [
+      "Q8_18_1"
+    ],
+    "1": [
+      "Q8_18_1"
+    ]
+  },
+  "R0_IbuprofenStartAgeEp": {
+    "all": [
+      "Q8_18_A_1",
+      "Q8_18_A_2"
+    ],
+    "1": [
+      "Q8_18_A_1"
+    ],
+    "2": [
+      "Q8_18_A_2"
+    ]
+  },
+  "R0_IbuprofenEndAgeEp": {
+    "all": [
+      "Q8_18_B_1",
+      "Q8_18_B_2"
+    ],
+    "1": [
+      "Q8_18_B_1"
+    ],
+    "2": [
+      "Q8_18_B_2"
+    ]
+  },
+  "R0_IbuprofenOngoingEp": {
+    "all": [
+      "Q8_18_C_1",
+      "Q8_18_C_2"
+    ],
+    "1": [
+      "Q8_18_C_1"
+    ],
+    "2": [
+      "Q8_18_C_2"
+    ]
+  },
+  "R0_IbuprofenMoreEpisodes": {
+    "all": [
+      "Q8_18_more"
+    ]
+  },
+  "R0_OtherPainkillersRecentUse": {
+    "all": [
+      "Q8_19_1_1"
+    ]
+  },
+  "R0_OtherPainkillersDays": {
+    "all": [
+      "Q8_19_2"
+    ]
+  },
+  "R0_OtherRecentPainkillerName": {
+    "all": [
+      "Q8_19_3"
+    ]
+  },
+  "R0_OtherPainkillersRegular": {
+    "all": [
+      "Q8_20_1",
+      "use3Painkillers",
+      "use4Painkillers",
+      "use5Painkillers"
+    ],
+    "1": [
+      "Q8_20_1"
+    ],
+    "3": [
+      "use3Painkillers"
+    ],
+    "4": [
+      "use4Painkillers"
+    ],
+    "5": [
+      "use5Painkillers"
+    ]
+  },
+  "R0_OtherPainkillersStartAge": {
+    "all": [
+      "Q8_20_1_1",
+      "Q8_20_2_1"
+    ],
+    "1": [
+      "Q8_20_1_1"
+    ],
+    "2": [
+      "Q8_20_2_1"
+    ]
+  },
+  "R0_OtherPainkillersEndAge": {
+    "all": [
+      "Q8_20_1_2",
+      "Q8_20_2_2"
+    ],
+    "1": [
+      "Q8_20_1_2"
+    ],
+    "2": [
+      "Q8_20_2_2"
+    ]
+  },
+  "R0_OtherPainkillersOngoing": {
+    "all": [
+      "Q8_20_1_3",
+      "Q8_20_2_3"
+    ],
+    "1": [
+      "Q8_20_1_3"
+    ],
+    "2": [
+      "Q8_20_2_3"
+    ]
+  },
+  "R0_OtherPainkillersName": {
+    "all": [
+      "Q8_20_1_4",
+      "Q8_20_2_4",
+      "type3Painkillers",
+      "type4Painkillers",
+      "type5Painkillers"
+    ],
+    "1": [
+      "Q8_20_1_4"
+    ],
+    "2": [
+      "Q8_20_2_4"
+    ],
+    "3": [
+      "type3Painkillers"
+    ],
+    "4": [
+      "type4Painkillers"
+    ],
+    "5": [
+      "type5Painkillers"
+    ]
+  },
+  "R0_OtherPainkillersMoreEpisodes": {
+    "all": [
+      "Q8_20_more"
+    ]
+  },
+  "R0_FolicAcidSuppUse": {
+    "all": [
+      "Q8_21_A_1_1"
+    ]
+  },
+  "R0_VitaminDSuppUse": {
+    "all": [
+      "Q8_21_A_2_1"
+    ]
+  },
+  "R0_CalciumSuppUse": {
+    "all": [
+      "Q8_21_A_3_1"
+    ]
+  },
+  "R0_FolicAcidDurationYrs": {
+    "all": [
+      "Q8_21_B_1"
+    ]
+  },
+  "R0_VitaminDDurationYrs": {
+    "all": [
+      "Q8_21_B_2"
+    ]
+  },
+  "R0_CalciumDurationYrs": {
+    "all": [
+      "Q8_21_B_3"
+    ]
+  },
+  "R0_VitaminSuppRecentUse": {
+    "all": [
+      "Q8_22_1_1"
+    ]
+  },
+  "R0_VitaminSuppMultivitamin": {
+    "all": [
+      "Q8_22_2_1"
+    ]
+  },
+  "R0_VitaminSuppCodLiverOil": {
+    "all": [
+      "Q8_22_2_2"
+    ]
+  },
+  "R0_VitaminSuppOther": {
+    "all": [
+      "Q8_22_2_3"
+    ]
+  },
+  "R0_VitaminTextSuppOther": {
+    "all": [
+      "Q8_22_3",
+      "Q8_22_4"
+    ],
+    "1": [
+      "Q8_22_3"
+    ],
+    "2": [
+      "Q8_22_4"
+    ]
+  },
+  "R0_MelatoninUse": {
+    "all": [
+      "Q8_23_1"
+    ]
+  },
+  "R0_StatinUse": {
+    "all": [
+      "Q8_24_1"
+    ]
+  },
+  "R0_OtherPainkillersMoreThanFive": {
+    "all": [
+      "morethan5Painkillers"
+    ]
+  },
+  "R0_OtherPainkillersEndYr": {
+    "all": [
+      "toyr3Painkillers"
+    ],
+    "3": [
+      "toyr3Painkillers"
+    ]
+  }
+}
