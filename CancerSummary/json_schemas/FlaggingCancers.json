@@ -1,0 +1,83 @@
+{
+  "type": "object",
+  "properties": {
+    "StudyID": {
+      "description": "Internal Study ID",
+      "type": ["integer"],
+      "minimum": 0,
+      "maximum": 499994
+    },
+    "DCancer": {
+      "description": "Cancer diagnosis date",
+      "type": ["string", "null"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "CancerICD": {
+      "description": "Cancer ICD code",
+      "type": ["string", "null"],
+      "maxLength": 4
+    },
+    "Histology": {
+      "description": "Histology code for the cancer",
+      "type": ["string", "null"],
+      "maxLength": 5
+    },
+    "TumourID": {
+      "description": "Tumour registration number",
+      "type": ["string", "null"],
+      "maxLength": 11
+    },
+    "DReceived": {
+      "description": "Date received | This date will match to a folder N:\\CancerEpidem\\BrBreakthrough\\Janeh\\Flagging\\CEN\\yyyymmdd containing the source data received.",
+      "type": ["string"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "Region": {
+      "description": "Region | England and Wales: Received from HSCIC (Health & Social Care Information Centre) or earlier equivalent. Scotland: Received from GRO NHSCR (General Register Office for Scotland, NHS Central Register)",
+      "type": ["string"],
+      "maxLength": 50,
+      "enum":["Scotland", "England and Wales"]
+    },
+    "DCreated": {
+      "description": "Date record created",
+      "type": ["string"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "CreatedBy": {
+      "description": "Record created by | 'CEN' if automated import, Network login ID of user if manually entered",
+      "type": ["string", "null"],
+      "maxLength": 15
+    },
+    "DUpdated": {
+      "description": "Date record updated",
+      "type": ["string", "null"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "UpdatedBy": {
+      "description": "Record updated by | Network Login ID of user performing the update",
+      "type": ["string", "null"],
+      "maxLength": 15
+    },
+    "DCancelled": {
+      "description": "Date cancellation of registration received | This date will match to a folder N:\\CancerEpidem\\BrBreakthrough\\Janeh\\Flagging\\CEN\\yyyymmdd containing the source data received.",
+      "type": ["string", "null"],
+      "format": "date-time",
+      "maxLength": 23
+    },
+    "Notes": {
+      "description": "Additional notes",
+      "type": ["string", "null"],
+      "maxLength": 255
+    },
+    "PersonId": {
+      "description": "BGS PersonID",
+      "type": ["integer"],
+      "minimum":1,
+      "maximum": 777656
+    }
+  }
+}
