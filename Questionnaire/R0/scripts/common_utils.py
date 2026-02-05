@@ -18,24 +18,21 @@ this module to perform the heavy lifting.
 import os
 import sys
 import json
-import re
 import pandas as pd
-from collections import defaultdict
 from jsonschema.validators import validator_for
-from jsonschema import Draft202012Validator, validate, FormatChecker, RefResolver
-from concurrent.futures import ThreadPoolExecutor
+from jsonschema import FormatChecker, RefResolver
 import time
 
-sys.path.append(os.path.abspath("N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Schema_and_Derivation_utils\\Questionnaire\\R0\\scripts"))
+sys.path.append(os.path.abspath("C:\\Users\\tcohen\\OneDrive - The Institute of Cancer Research\\Documents\\Misc\\Schema_and_Derivation_Utils\\Questionnaire\\R0\\scripts"))
 import cleaning_utils as cr
 from nested_utils import rename_variable
 from pseudo_anon_utils import load_sid_codes, process_dates, pseudo_anonymize_studyid
-from cleaning_utils import rules, convert_to_date
+from cleaning_utils import rules
 from nested_utils import rename_variable
 
-sys.path.append(os.path.abspath("N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Schema_and_Derivation_utils"))
-from utilities import connect_DB, createLogger, read_data
-from config import r0_json_path, r0_json_path_pii, ct_path 
+sys.path.append(os.path.abspath("C:\\Users\\tcohen\\OneDrive - The Institute of Cancer Research\\Documents\\Misc\\Schema_and_Derivation_Utils"))
+from utilities import connect_DB, read_data
+from config import ct_path 
 
 def get_config():
     """
@@ -43,15 +40,15 @@ def get_config():
 
     The config typically contains:
     - database connection parameters
-    - base paths for schemas, outputs, and validation artefacts
+    - base paths for schemas, outputs, and validation artifacts
     - any section-specific settings required by the notebooks.
     """
     return {
-        'Delivery_log_path': 'N:\CancerEpidem\BrBreakthrough\DeliveryProcess\Logs',
+        'Delivery_log_path': 'R:\\_JSON_Data',
         'test_server': 'DoverVTest',
         'live_server': 'DoverV',
-        'r0_json_path': 'N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Schema_and_Derivation_utils\\Questionnaire\\R0\\json_schemas',
-        'out_json_path': 'N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Data_Output_Testing'
+        'r0_json_path': 'C:\\Users\\tcohen\\OneDrive - The Institute of Cancer Research\\Documents\\Misc\\Schema_and_Derivation_utils\\Questionnaire\\R0\\json_schemas',
+        'out_json_path': 'R:\\_JSON_Data\\v20260123\\Questionnaire\\R0\\minimally_processed'
     }
 
 def load_and_pivot_data(question_range, logger):
