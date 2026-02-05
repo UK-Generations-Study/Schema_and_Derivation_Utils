@@ -2,10 +2,10 @@
   "$id": "https://www.breakthroughgenerations.org.uk/schemas/DerivedVariables.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "DerivedVariables",
-  "round": 1,
+  "round": "Mailing",
   "type": "object",
   "properties": {
-    "R0_TCode": {
+    "TCode": {
       "description": "Pseudo-anonymized 8-character study identifier.",
       "type": "string",
       "minLength": 8,
@@ -14,7 +14,7 @@
 
       ]
     },
-    "R0_AgeEntry": {
+    "AgeEntry": {
       "description": "Age at entry to study.",
       "type": [
         "integer", 
@@ -28,7 +28,7 @@
       ],
       "x-formerName": "age_entry"
     },
-    "R0_DOB": {
+    "DOB": {
       "description": "Shifted date of birth",
       "type": [
         "string", 
@@ -41,7 +41,7 @@
       ],
       "x-formerName": "dob_shifted"
     },
-    "R0_YOB": {
+    "YOB": {
       "description": "Unshifted year of birth.",
       "type": [
         "integer", 
@@ -53,7 +53,7 @@
       ],
       "x-formerName": "yrdob"
     },
-    "R0_EntryDate": {
+    "EntryDate": {
       "description": "Shifted date of entry into the study.",
       "type": [
         "string", 
@@ -66,7 +66,7 @@
       ],
       "x-formerName": "date_entry_shifted"
     },
-    "R0_EntryYear": {
+    "EntryYear": {
       "description": "Actual year of entry into the study.",
       "type": [
         "integer", 
@@ -79,6 +79,6 @@
       "x-formerName": "date_entry_shifted"
     }
   },
-  "required": ["R0_TCode"],
+  "required": ["TCode"],
   "additionalProperties": false
 }

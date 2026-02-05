@@ -77,26 +77,26 @@
     "R0_PregAt20": {
       "description": "Flag whether the participant was pregnant at any point while 20 years old. Value is 999 (NA) if participant was not yet 20 at study entry.",
       "type": [
-        "number", 
+        "number",
         "null"
       ],
-      "x-description": "Using shifted DOB, shifted end dates of pregnancies, days shifted from SID Codes, age at entry, and currently pregnant, it is calculated whether the particpant was pregnant during the age of 20.",
+      "x-description": "Derived on the shifted timeline using raw-derivation DOB (shifted) and pregnancy episodes. Compute the age-20 window as [DOB+20y, DOB+21y). For each pregnancy episode, form an interval [end - duration, end] where end = R0_PregnancyEndDate (shifted). Duration comes from R0_Preg_DurationWks when present; if missing and outcome indicates a term pregnancy (e.g., live birth / stillbirth categories), assume 40 weeks; otherwise skip the episode. If any episode overlaps the age-20 window, set 1. If AgeEntry < 20, set 999 (NA). If R0_CurrentPreg == 1 and AgeEntry == 20, set 1.",
       "enum": [
-        0, 
+        0,
         1,
-        999, 
+        999,
         null
       ],
       "enumDescriptions": [
-                    "0: No.",
-                    "1: Yes.",
-                    "999: NA",
-                    "null: Unknown."
-                ],
+        "0: No.",
+        "1: Yes.",
+        "999: NA",
+        "null: Unknown."
+      ],
       "x-derivedFrom": [
-        "#/$defs/RawDerived/properties/R0_DOB",
+        "#/$defs/RawDerived/properties/DOB",
         "#/$defs/PregnanciesPII/properties/Pregnancies/R0_PregnancyEndDate",
-        "#/$defs/RawDerived/properties/R0_AgeEntry",
+        "#/$defs/RawDerived/properties/AgeEntry",
         "#/$defs/PregnanciesPII/properties/R0_CurrentPreg"
       ],
       "x-formerName": ""
@@ -174,8 +174,8 @@
       "x-derivedFrom": [
         "#/properties/R0_Height20",
         "#/properties/R0_Weight20",
-        "#/$defs/RawDerived/properties/R0_AgeEntry",
-        "#/$defs/RawDerived/properties/R0_DOB",
+        "#/$defs/RawDerived/properties/Age_Entry",
+        "#/$defs/RawDerived/properties/DOB",
         "#/$defs/PregnanciesPII/properties/Pregnancies/R0_PregnancyEndDate",
         "#/$defs/PregnanciesPII/properties/Pregnancies/R0_Preg_DurationWks"
       ],
@@ -360,7 +360,7 @@
         "integer", 
         "null"
       ],
-      "x-description": "Derived from pill episodes and age at entry. CURRENT (2) if any ContracepPill episode covers age at entry (StartAge ≤ R0_AgeEntry ≤ StopAge) or if CurrentUse=1 on any episode; FORMER (1) if any prior use but no episode covers entry; NEVER (0) if no pill use. Null if insufficient info.",
+      "x-description": "Derived from pill episodes and age at entry. CURRENT (2) if any ContracepPill episode covers age at entry (StartAge ≤ Age_Entry ≤ StopAge) or if CurrentUse=1 on any episode; FORMER (1) if any prior use but no episode covers entry; NEVER (0) if no pill use. Null if insufficient info.",
       "enum": [
         0, 
         1, 
@@ -378,7 +378,7 @@
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StartAge",
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StopAge",
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_CurrentUse",
-        "#/$defs/RawDerived/properties/R0_AgeEntry"
+        "#/$defs/RawDerived/properties/Age_Entry"
       ],
       "x-formerName": "ocstatus"
     },
@@ -423,7 +423,7 @@
       "x-description": "For FORMER users, latest stop age across ContracepPill episodes that end on/before entry; for CURRENT, take age at entry, or NEVER, null.",
       "x-derivedFrom": [
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StopAge",
-        "#/$defs/RawDerived/properties/R0_AgeEntry"
+        "#/$defs/RawDerived/properties/Age_Entry"
       ],
       "x-formerName": "ocLage"
     },
@@ -443,12 +443,12 @@
           "exclusiveMaximum": 120
         }
       ],
-      "x-description": "Merge overlapping ContracepPill episodes; sum (min(StopAge, R0_AgeEntry) - StartAge) across merged spans, floor negatives at 0; treat ongoing episodes (missing StopAge or CurrentUse=1) as ending at R0_AgeEntry. Round to 1 dp. Null if insufficient info; 0 if never used.",
+      "x-description": "Merge overlapping ContracepPill episodes; sum (min(StopAge, Age_Entry) - StartAge) across merged spans, floor negatives at 0; treat ongoing episodes (missing StopAge or CurrentUse=1) as ending at Age_Entry. Round to 1 dp. Null if insufficient info; 0 if never used.",
       "x-derivedFrom": [
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StartAge",
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StopAge",
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_CurrentUse",
-        "#/$defs/RawDerived/properties/R0_AgeEntry"
+        "#/$defs/RawDerived/properties/Age_Entry"
       ],
       "x-formerName": "oclength"
     },
@@ -515,7 +515,7 @@
       ],
       "x-description": "Computed from the participant's DOB and the earliest pregnancy end date among live-birth pregnancies: whole years at the date of that birth (subtract 1 if the birthday in that calendar year had not yet occurred). 999 (NA) if no live-birth pregnancies or dates.",
       "x-derivedFrom": [
-        "#/$defs/RawDerived/properties/R0_DOB",
+        "#/$defs/RawDerived/properties/DOB",
         "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_PregnancyEndDate",
         "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_Outcome"
       ],
@@ -539,7 +539,7 @@
       ],
       "x-description": "Same calculation as age at first birth, but using the latest pregnancy end date among live-birth pregnancies. 999 (NA) if no live-birth pregnancies or dates.",
       "x-derivedFrom": [
-        "#/$defs/RawDerived/properties/R0_DOB",
+        "#/$defs/RawDerived/properties/DOB",
         "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_PregnancyEndDate",
         "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_Outcome"
       ],
@@ -558,7 +558,7 @@
         {
           "type": "number",
           "minimum": 0,
-          "exclusiveMaximum": 1200
+          "exclusiveMaximum": 1300
         }
       ],
       "x-description": "Sum breastfeeding duration reported per live-birth pregnancy (weeks). 999 (NA) non-live-birth pregnancies. Null if no breastfeeding information is available.",
@@ -689,7 +689,7 @@
       "description": "Menopausal status at baseline.",
       "x-description": "Variable uses questionnaire variable.",
       "x-derivedFrom": [
-        "#/$defs/RawDerived/properties/R0_AgeEntry",
+        "#/$defs/RawDerived/properties/Age_Entry",
         "#/$defs/MenstrualMenopause/properties/R0_EverHadPeriods",
         "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedPerm",
         "#/$defs/MenstrualMenopause/properties/R0_HRTPeriodsUnclear",
@@ -727,7 +727,7 @@
       "description": "Age at menopause (years).",
       "x-description": "Uses questionnaire variable as best answer, or if no answer avalable, variable takes into account reported operations, cancer treatments, HRT and OC use. Assumed age 51 years when menopause is masked by hysterectomy or HRT use.",
       "x-derivedFrom": [
-        "#/$defs/RawDerived/properties/R0_AgeEntry",
+        "#/$defs/RawDerived/properties/Age_Entry",
         "#/$defs/MenstrualMenopause/properties/R0_EverHadPeriods",
         "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedPerm",
         "#/$defs/MenstrualMenopause/properties/R0_HRTPeriodsUnclear",
@@ -750,7 +750,7 @@
       "description": "Reason periods stopped.",
       "x-description": "Uses quesionnaire variable. If no other information given then answer unknown.",
       "x-derivedFrom": [
-        "#/$defs/RawDerived/properties/R0_AgeEntry",
+        "#/$defs/RawDerived/properties/Age_Entry",
         "#/$defs/MenstrualMenopause/properties/R0_EverHadPeriods",
         "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedPerm",
         "#/$defs/MenstrualMenopause/properties/R0_HRTPeriodsUnclear",
@@ -820,7 +820,7 @@
         "#/$defs/ContraceptiveHRT/properties/HRT/items/properties/R0_HRT_StartAge",
         "#/$defs/ContraceptiveHRT/properties/HRT/items/properties/R0_HRT_StopAge",
         "#/$defs/ContraceptiveHRT/properties/HRT/items/properties/R0_HRT_CurrentUse",
-        "#/$defs/RawDerived/properties/R0_AgeEntry"
+        "#/$defs/RawDerived/properties/Age_Entry"
       ],
       "x-formerName": "hrtstatus",
       "enum": [
@@ -895,7 +895,7 @@
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholSherry",
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholSpirits",
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholOther",
-        "#/$defs/RawDerived/properties/R0_AgeEntry"
+        "#/$defs/RawDerived/properties/Age_Entry"
       ],
       "x-formerName": "R1alcoholstatus",
       "enum": [
@@ -953,7 +953,7 @@
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholSpirits",
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholOther",
         "#/$defs/AlcoholSmokingDiet/properties/R0_AlcoholCurrentUse",
-        "#/$defs/RawDerived/properties/R0_AgeEntry"
+        "#/$defs/RawDerived/properties/Age_Entry"
       ],
       "x-formerName": "R1alcoholunits",
       "minimum": 0
@@ -972,7 +972,7 @@
         "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingStopAge",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_CigaretteConsumption_Num",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_Cigarettes",
-        "#/$defs/RawDerived/properties/R0_AgeEntry"
+        "#/$defs/RawDerived/properties/Age_Entry"
       ],
       "x-formerName": "R1smokingstatus",
       "enum": [
@@ -1024,7 +1024,7 @@
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_CigaretteConsumption_Num",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_Cigarettes",
         "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingCurrentUse",
-        "#/$defs/RawDerived/properties/R0_AgeEntry"
+        "#/$defs/RawDerived/properties/Age_Entry"
       ],
       "x-formerName": "R1smokingcigs",
       "minimum": 0
@@ -1041,7 +1041,7 @@
         "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingStopAge",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_CigaretteConsumption_Num",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_Cigarettes",
-        "#/$defs/RawDerived/properties/R0_AgeEntry"
+        "#/$defs/RawDerived/properties/Age_Entry"
       ],
       "x-formerName": "R1smokingpackyears",
       "minimum": 0,
