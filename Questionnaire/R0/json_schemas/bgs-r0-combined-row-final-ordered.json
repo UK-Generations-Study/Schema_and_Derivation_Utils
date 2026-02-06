@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/bgs-r0-combined-row.json",
+  "title": "Generations Study - R0 Questionnaire - Participant Record (Combined)",
+  "description": "Complete participant record combining all R0 questionnaire domains into a single participant-level row",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "GeneralInformation.json"
+    },
+    {
+      "$ref": "BirthDetails.json"
+    },
+    {
+      "$ref": "PhysicalDevelopment.json"
+    },
+    {
+      "$ref": "MenstrualMenopause.json"
+    },
+    {
+      "$ref": "Pregnancies.json"
+    },
+    {
+      "$ref": "ContraceptiveHRT.json"
+    },
+    {
+      "$ref": "Mammograms.json"
+    },
+    {
+      "$ref": "BreastDisease.json"
+    },
+    {
+      "$ref": "BreastCancer.json"
+    },
+    {
+      "$ref": "OtherBreastSurgery.json"
+    },
+    {
+      "$ref": "MH_CancersBenignTumors.json"
+    },
+    {
+      "$ref": "MH_Illnesses.json"
+    },
+    {
+      "$ref": "MH_DrugsSupplements.json"
+    },
+    {
+      "$ref": "XRays.json"
+    },
+    {
+      "$ref": "Jobs.json"
+    },
+    {
+      "$ref": "AlcoholSmokingDiet.json"
+    },
+    {
+      "$ref": "PhysicalActivity.json"
+    },
+    {
+      "$ref": "OtherLifestyleFactors.json"
+    },
+    {
+      "$ref": "CancerRelatives.json"
+    },
+    {
+      "$ref": "DerivedVariables.json"
+    },
+    {
+      "$ref": "RawDerivedVariables.json"
+    }
+  ]
+}
