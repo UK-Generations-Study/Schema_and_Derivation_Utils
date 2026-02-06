@@ -75,12 +75,12 @@
       "x-formerName": "AJancestry"
     },
     "R0_PregAt20": {
-      "description": "Flag whether the participant was pregnant at any point while 20 years old. Value is 999 (NA) if participant was not yet 20 at study entry.",
+      "description": "Whether the participant was pregnant at any point while 20 years old.",
       "type": [
         "number",
         "null"
       ],
-      "x-description": "Derived on the shifted timeline using raw-derivation DOB (shifted) and pregnancy episodes. Compute the age-20 window as [DOB+20y, DOB+21y). For each pregnancy episode, form an interval [end - duration, end] where end = R0_PregnancyEndDate (shifted). Duration comes from R0_Preg_DurationWks when present; if missing and outcome indicates a term pregnancy (e.g., live birth / stillbirth categories), assume 40 weeks; otherwise skip the episode. If any episode overlaps the age-20 window, set 1. If AgeEntry < 20, set 999 (NA). If R0_CurrentPreg == 1 and AgeEntry == 20, set 1.",
+      "x-description": "Derived on the shifted timeline using mailing DOB (shifted) and pregnancy episodes. Compute the age-20 window as [DOB+20y, DOB+21y). For each pregnancy episode, form an interval [end - duration, end] where end = R0_PregnancyEndDate (shifted). Duration comes from R0_Preg_DurationWks when present; if missing and outcome indicates a term pregnancy (e.g., live birth / stillbirth categories), assume 40 weeks; otherwise skip the episode. If any episode overlaps the age-20 window, set 1. If AgeEntry < 20, set 999 (NA). If R0_CurrentPreg == 1 and AgeEntry == 20, set 1. Value is 999 (NA) if participant was not yet 20 at baseline.",
       "enum": [
         0,
         1,
@@ -94,9 +94,9 @@
         "null: Unknown."
       ],
       "x-derivedFrom": [
-        "#/$defs/RawDerived/properties/DOB",
+        "#/$defs/Mailing/properties/DOB",
         "#/$defs/PregnanciesPII/properties/Pregnancies/R0_PregnancyEndDate",
-        "#/$defs/RawDerived/properties/AgeEntry",
+        "#/$defs/Mailing/properties/AgeEntry",
         "#/$defs/PregnanciesPII/properties/R0_CurrentPreg"
       ],
       "x-formerName": ""
@@ -124,7 +124,7 @@
         "#/$defs/PhysicalDevelopment/properties/RecordedHeights/items/properties/R0_HghtAge_In",
         "#/$defs/PhysicalDevelopment/properties/RecordedHeights/items/properties/R0_HghtAge_Cm"
       ],
-      "x-formerName": "height_best",
+      "x-formerName": "bodysizeht20",
       "$comment": "Allow: positive cm value, OR 999 = NA, OR null-missing"
     },
     "R0_Weight20": {
@@ -154,7 +154,7 @@
       "$comment": "Allow: positive kg value, OR 999 = NA, OR null-missing"
     },
     "R0_BMI20": {
-      "description": "BMI at 20 years old. Set to 999 (NA) if participant was not yet 20 at the the time of study entry or if participant was pregnant at 20 years old.",
+      "description": "BMI at 20 years old. ",
       "oneOf": [
         {
           "type": "null"
@@ -169,13 +169,13 @@
           "exclusiveMaximum": 165
         }
       ],
-      "x-description": "Body Mass Index (kg/m²). Age null calculation done by reading in age at entry to study. Pregnancy null calculation done by deriving end date of pregnancy, subtracting the length of pregnancy, and based on DOB, working out if the pregnancy range falls while the participant was 20.",
+      "x-description": "Body Mass Index (kg/m²). Age null calculation done by reading in age at baseline. Set to 999 (NA) if participant was not yet 20 at baseline or if participant was pregnant at 20 years old.",
       "minimum": 0,
       "x-derivedFrom": [
         "#/properties/R0_Height20",
         "#/properties/R0_Weight20",
-        "#/$defs/RawDerived/properties/Age_Entry",
-        "#/$defs/RawDerived/properties/DOB",
+        "#/$defs/Mailing/properties/Age_Entry",
+        "#/$defs/Mailing/properties/DOB",
         "#/$defs/PregnanciesPII/properties/Pregnancies/R0_PregnancyEndDate",
         "#/$defs/PregnanciesPII/properties/Pregnancies/R0_Preg_DurationWks"
       ],
@@ -183,12 +183,12 @@
       "x-calculation": "R0_Weight20 / ((R0_Height20 / 100) ^ 2)"
     },
     "R0_PregAtEntry": {
-      "description": "Flag whether the participant was pregnant at entry to the study.",
+      "description": "Flag whether the participant was pregnant at baseline.",
       "type": [
         "number", 
         "null"
       ],
-      "x-description": "Using questionnaire question R0_CurrentPreg to flag if participant was pregnant at entry to the study.",
+      "x-description": "Using questionnaire question R0_CurrentPreg to flag if participant was pregnant at baseline.",
       "enum": [
         0, 
         1, 
@@ -205,7 +205,7 @@
       "x-formerName": ""
     },
     "R0_Height": {
-      "description": "Height in centimeters at entry to the study.",
+      "description": "Height in centimeters at baseline.",
       "oneOf": [
         {
           "type": "null"
@@ -225,7 +225,7 @@
       "x-formerName": "height_best"
     },
     "R0_Weight": {
-      "description": "Weight in kilograms at entry to the study.",
+      "description": "Weight in kilograms at baseline.",
       "oneOf": [
         {
           "type": "null"
@@ -236,7 +236,7 @@
           "exclusiveMaximum": 500
         }
       ],
-      "x-description": " Derived using priority: 1) Imperial inputs converted to kg (st*6.350293 + lbs*0.45359237) 2) Direct metric input. Uses imperial conversion when both sources exist. If neither valid, defaults to null.",
+      "x-description": "Derived using priority: 1) Imperial inputs converted to kg (st*6.350293 + lbs*0.45359237) 2) Direct metric input. Uses imperial conversion when both sources exist. If neither valid, defaults to null.",
       "x-derivedFrom": [
         "#/$defs/PhysicalDevelopment/properties/R0_CurrentWght_St",
         "#/$defs/PhysicalDevelopment/properties/R0_CurrentWght_Lbs",
@@ -245,7 +245,7 @@
       "x-formerName": "weight_entry"
     },
     "R0_BMI": {
-      "description": "BMI at time entry to the study.",
+      "description": "BMI at baseline.",
       "oneOf": [
         {
           "type": "null"
@@ -260,7 +260,7 @@
           "exclusiveMaximum": 165
         }
       ],     
-      "x-description": "Body Mass Index (kg/m²). If currently pregnant is true when filling out the questionnaire, BMI is not calculated and value is 999 (NA).",
+      "x-description": "Body Mass Index (kg/m²). If currently pregnant is true at baseline, BMI is not calculated and value is 999 (NA).",
       "x-derivedFrom": [
         "#/properties/R0_Height",
         "#/properties/R0_Weight",
@@ -270,7 +270,7 @@
       "x-calculation": "R0_Weight / ((R0_Height / 100) ^ 2)"
     },
     "R0_WaistCircum": {
-      "description": "Waist circumference in centimeters at entrance into the study.",
+      "description": "Waist circumference in centimeters at baseline.",
       "oneOf": [
         {
           "type": "null"
@@ -289,7 +289,7 @@
       "x-formerName": "bodysizewaist"
     },
     "R0_HipCircum": {
-      "description": "Hip circumference in centimeters at entrance to the study.",
+      "description": "Hip circumference in centimeters at baseline.",
       "oneOf": [
         {
           "type": "null"
@@ -308,7 +308,7 @@
       "x-formerName": "bodysizehip"
     },
     "R0_WaistHipRatio": {
-      "description": "Waist-to-hip ratio at study entry.",
+      "description": "Waist-to-hip ratio at baseline.",
       "oneOf": [
         {
           "type": "null"
@@ -323,7 +323,7 @@
           "exclusiveMaximum": 10
         }
       ],
-      "x-description": "Waist-to-hip ratio. If currently pregnant is true when filling out the questionnaire, WHR is not calculated and is set to NA.",
+      "x-description": "Waist-to-hip ratio. If currently pregnant is true at baseline, WHR is not calculated and is set to NA.",
       "minimum": 0,
       "x-derivedFrom": [
         "#/properties/R0_WaistCircum",
@@ -355,7 +355,7 @@
       "x-calculation": ""
     },
     "R0_OralContraceptiveStatus": {
-      "description": "Whether the participant was using oral contraceptives at entry to the study.",
+      "description": "Whether the participant was using oral contraceptives at baseline.",
       "type": [
         "integer", 
         "null"
@@ -378,7 +378,7 @@
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StartAge",
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StopAge",
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_CurrentUse",
-        "#/$defs/RawDerived/properties/Age_Entry"
+        "#/$defs/Mailing/properties/Age_Entry"
       ],
       "x-formerName": "ocstatus"
     },
@@ -420,10 +420,10 @@
           "exclusiveMaximum": 120
         }
       ],
-      "x-description": "For FORMER users, latest stop age across ContracepPill episodes that end on/before entry; for CURRENT, take age at entry, or NEVER, null.",
+      "x-description": "For former users, latest stop age across ContracepPill episodes that end on/before entry; for current, take age at entry, or never, null.",
       "x-derivedFrom": [
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StopAge",
-        "#/$defs/RawDerived/properties/Age_Entry"
+        "#/$defs/Mailing/properties/Age_Entry"
       ],
       "x-formerName": "ocLage"
     },
@@ -448,12 +448,12 @@
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StartAge",
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StopAge",
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_CurrentUse",
-        "#/$defs/RawDerived/properties/Age_Entry"
+        "#/$defs/Mailing/properties/Age_Entry"
       ],
       "x-formerName": "oclength"
     },
     "R0_Parous": {
-      "description": "Parity status at entry to the study.",
+      "description": "Parity status at baseline.",
       "type": [
         "integer", 
         "null"
@@ -481,7 +481,7 @@
       "x-formerName": "pregparous"
     },
     "R0_Parity": {
-      "description": "Number of live-birth pregnancies at entry to the study.",
+      "description": "Number of live-birth pregnancies at baseline.",
       "oneOf": [
         {
           "type": "null"
@@ -515,7 +515,7 @@
       ],
       "x-description": "Computed from the participant's DOB and the earliest pregnancy end date among live-birth pregnancies: whole years at the date of that birth (subtract 1 if the birthday in that calendar year had not yet occurred). 999 (NA) if no live-birth pregnancies or dates.",
       "x-derivedFrom": [
-        "#/$defs/RawDerived/properties/DOB",
+        "#/$defs/Mailing/properties/DOB",
         "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_PregnancyEndDate",
         "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_Outcome"
       ],
@@ -539,7 +539,7 @@
       ],
       "x-description": "Same calculation as age at first birth, but using the latest pregnancy end date among live-birth pregnancies. 999 (NA) if no live-birth pregnancies or dates.",
       "x-derivedFrom": [
-        "#/$defs/RawDerived/properties/DOB",
+        "#/$defs/Mailing/properties/DOB",
         "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_PregnancyEndDate",
         "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_Outcome"
       ],
@@ -609,7 +609,7 @@
         "1: Yes",
         "null: Missing or invalid"
       ],
-      "x-description": "Set to 1 if ANY of the following are present in the BreastDisease section: (a) the direct question on benign breast disease/abnormality is answered 'Yes' (R0_BBD_Abnormality=1); (b) at least one episode is recorded with a type (R0_BBD_Type) or a coded procedure (R0_BBD_ProcedureType); (c) any 'extra' procedure flags indicate biopsy, part/lump removed, whole breast removed, both breasts removed, or other (R0_BBD_Biopsy/Lump/Mastec/BothRem/Other = 1); (d) 'further' or 'more than 4' boxes are ticked (R0_BBD_Further=1 or R0_BBD_MoreThan4=1). Set to 0 if the direct question is 'No' (R0_BBD_Abnormality=2) and no other evidence is present. Otherwise, null.",
+      "x-description": "Set to 1 if any of the following are present in the BreastDisease section: (a) the direct question on benign breast disease/abnormality is answered 'Yes' (R0_BBD_Abnormality=1); (b) at least one episode is recorded with a type (R0_BBD_Type) or a coded procedure (R0_BBD_ProcedureType); (c) any 'extra' procedure flags indicate biopsy, part/lump removed, whole breast removed, both breasts removed, or other (R0_BBD_Biopsy/Lump/Mastec/BothRem/Other = 1); (d) 'further' or 'more than 4' boxes are ticked (R0_BBD_Further=1 or R0_BBD_MoreThan4=1). Set to 0 if the direct question is 'No' (R0_BBD_Abnormality=2) and no other evidence is present. Otherwise, null.",
       "x-derivedFrom": [
         "#/$defs/BreastDiseasePII/properties/R0_BBD_Abnormality",
         "#/$defs/BreastDiseasePII/properties/BBD/items/properties/R0_BBD_Type",
@@ -689,7 +689,7 @@
       "description": "Menopausal status at baseline.",
       "x-description": "Variable uses questionnaire variable.",
       "x-derivedFrom": [
-        "#/$defs/RawDerived/properties/Age_Entry",
+        "#/$defs/Mailing/properties/Age_Entry",
         "#/$defs/MenstrualMenopause/properties/R0_EverHadPeriods",
         "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedPerm",
         "#/$defs/MenstrualMenopause/properties/R0_HRTPeriodsUnclear",
@@ -725,9 +725,9 @@
         "null"
       ],
       "description": "Age at menopause (years).",
-      "x-description": "Uses questionnaire variable as best answer, or if no answer avalable, variable takes into account reported operations, cancer treatments, HRT and OC use. Assumed age 51 years when menopause is masked by hysterectomy or HRT use.",
+      "x-description": "Uses questionnaire variable as best answer, or if no answer available, variable takes into account reported operations, cancer treatments, HRT and OC use. Assumed age 51 years when menopause is masked by hysterectomy or HRT use.",
       "x-derivedFrom": [
-        "#/$defs/RawDerived/properties/Age_Entry",
+        "#/$defs/Mailing/properties/Age_Entry",
         "#/$defs/MenstrualMenopause/properties/R0_EverHadPeriods",
         "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedPerm",
         "#/$defs/MenstrualMenopause/properties/R0_HRTPeriodsUnclear",
@@ -748,9 +748,9 @@
         "null"
       ],
       "description": "Reason periods stopped.",
-      "x-description": "Uses quesionnaire variable. If no other information given then answer unknown.",
+      "x-description": "Uses questionnaire variable. If no other information given then answer unknown.",
       "x-derivedFrom": [
-        "#/$defs/RawDerived/properties/Age_Entry",
+        "#/$defs/Mailing/properties/Age_Entry",
         "#/$defs/MenstrualMenopause/properties/R0_EverHadPeriods",
         "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedPerm",
         "#/$defs/MenstrualMenopause/properties/R0_HRTPeriodsUnclear",
@@ -790,7 +790,7 @@
         "2: Surgery (bilateral oophorectomy).",
         "3: Surgery (hysterectomy only).",
         "4: Surgery (type not known).",
-        "5: Chemotherapy, radiotherapy, or oher cancer treatment.",
+        "5: Chemotherapy, radiotherapy, or other cancer treatment.",
         "6: Does not know reason for stopping.",
         "7: Other reported reason.",
         "8: Not known: on hormones.",
@@ -820,7 +820,7 @@
         "#/$defs/ContraceptiveHRT/properties/HRT/items/properties/R0_HRT_StartAge",
         "#/$defs/ContraceptiveHRT/properties/HRT/items/properties/R0_HRT_StopAge",
         "#/$defs/ContraceptiveHRT/properties/HRT/items/properties/R0_HRT_CurrentUse",
-        "#/$defs/RawDerived/properties/Age_Entry"
+        "#/$defs/Mailing/properties/Age_Entry"
       ],
       "x-formerName": "hrtstatus",
       "enum": [
@@ -868,7 +868,7 @@
         "null"
       ],
       "description": "Total duration of menopausal hormone treatment (years).",
-      "x-description": "Sum merged HRT episodes (stop - start)/365.25. If overlapping, does not duplicate overlapping time. Only includes periods before recruitment, not estimating open ended times occuring during entry date.",
+      "x-description": "Sum merged HRT episodes (stop - start)/365.25. If overlapping, does not duplicate overlapping time. Only includes periods before recruitment, not estimating open ended times occurring during entry date.",
       "x-derivedFrom": [
         "#/properties/R0_HRT_StartAge",
         "#/properties/R0_HRT_StopAge"
@@ -895,7 +895,7 @@
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholSherry",
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholSpirits",
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholOther",
-        "#/$defs/RawDerived/properties/Age_Entry"
+        "#/$defs/Mailing/properties/Age_Entry"
       ],
       "x-formerName": "R1alcoholstatus",
       "enum": [
@@ -943,7 +943,7 @@
         "null"
       ],
       "description": "Weekly alcohol units among current drinkers.",
-      "x-description": "Average of weekly units of all alcohols asked about in age range during entry to study.",
+      "x-description": "Average of weekly units of all alcohols asked about in age range at baseline.",
       "x-derivedFrom": [
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholConsumption_Num",
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholBeer",
@@ -953,7 +953,7 @@
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholSpirits",
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholOther",
         "#/$defs/AlcoholSmokingDiet/properties/R0_AlcoholCurrentUse",
-        "#/$defs/RawDerived/properties/Age_Entry"
+        "#/$defs/Mailing/properties/Age_Entry"
       ],
       "x-formerName": "R1alcoholunits",
       "minimum": 0
@@ -964,7 +964,7 @@
         "null"
       ],
       "description": "Cigarette smoking status at baseline.",
-      "x-description": "Using questionnaire variables if ever been a regular smoker, and if still smoking regularly.",
+      "x-description": "Using questionnaire variables if ever been a regular smoker, and if still smoking regularly at baseline.",
       "x-derivedFrom": [
         "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingRegularUse",
         "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingCurrentUse",
@@ -972,7 +972,7 @@
         "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingStopAge",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_CigaretteConsumption_Num",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_Cigarettes",
-        "#/$defs/RawDerived/properties/Age_Entry"
+        "#/$defs/Mailing/properties/Age_Entry"
       ],
       "x-formerName": "R1smokingstatus",
       "enum": [
@@ -1019,12 +1019,12 @@
         "null"
       ],
       "description": "Cigarettes smoked per day (current smokers).",
-      "x-description": "Average of cigarettes per day smoked in age range during entry to study.",
+      "x-description": "Average of cigarettes per day smoked in age range at baseline.",
       "x-derivedFrom": [
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_CigaretteConsumption_Num",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_Cigarettes",
         "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingCurrentUse",
-        "#/$defs/RawDerived/properties/Age_Entry"
+        "#/$defs/Mailing/properties/Age_Entry"
       ],
       "x-formerName": "R1smokingcigs",
       "minimum": 0
@@ -1041,7 +1041,7 @@
         "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingStopAge",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_CigaretteConsumption_Num",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_Cigarettes",
-        "#/$defs/RawDerived/properties/Age_Entry"
+        "#/$defs/Mailing/properties/Age_Entry"
       ],
       "x-formerName": "R1smokingpackyears",
       "minimum": 0,
@@ -1112,7 +1112,8 @@
       ],
       "x-description": "Set to 1 if any first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site equals contains indications of any cancer",
       "x-derivedFrom": [
-
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14FamhistCancer.sas",
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14Famhistory.sas"
       ],
       "x-formerName": "famca"
     },
@@ -1125,7 +1126,8 @@
       "minimum": 0,
       "x-description": "Total count of first-degree relatives (mother, father, full sibling, or child) that have cancer entry whose coded site equals contains indications of any cancer",
       "x-derivedFrom": [
-
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14FamhistCancer.sas",
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14Famhistory.sas"
       ],
       "x-formerName": "famcaN"
     },
@@ -1147,7 +1149,8 @@
       ],
       "x-description": "Set to 1 if any first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site equals contains indications of breast cancer",
       "x-derivedFrom": [
-
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14FamhistCancer.sas",
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14Famhistory.sas"
       ],
       "x-formerName": "fambrca"
     },
@@ -1160,7 +1163,8 @@
       "minimum": 0,
       "x-description": "Total count of first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site equals contains indications of breast cancer",
       "x-derivedFrom": [
-
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14FamhistCancer.sas",
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14Famhistory.sas"
       ],
       "x-formerName": "fambrcan"
     },
@@ -1182,7 +1186,8 @@
       ],
       "x-description": "Set to 1 if any first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site contains indications of ovarian cancer.",
       "x-derivedFrom": [
-
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14FamhistCancer.sas",
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14Famhistory.sas"
       ],
       "x-formerName": "famovca"
     },
@@ -1195,7 +1200,8 @@
       "minimum": 0,
       "x-description": "Total count of first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site contains indications of ovarian cancer.",
       "x-derivedFrom": [
-
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14FamhistCancer.sas",
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14Famhistory.sas"
       ],
       "x-formerName": "famovcan"
     },
@@ -1217,7 +1223,8 @@
       ],
       "x-description": "Set to 1 if any first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site contains indications of colorectal cancer.",
       "x-derivedFrom": [
-
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14FamhistCancer.sas",
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14Famhistory.sas"
       ],
       "x-formerName": "famcolorec"
     },
@@ -1230,7 +1237,8 @@
       "minimum": 0,
       "x-description": "Total count of first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site contains indications of colorectal cancer.",
       "x-derivedFrom": [
-
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14FamhistCancer.sas",
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14Famhistory.sas"
       ],
       "x-formerName": "famcolorecn"
     },
@@ -1252,7 +1260,8 @@
       ],
       "x-description": "Set to 1 if any first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site contains indications of prostate cancer.",
       "x-derivedFrom": [
-
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14FamhistCancer.sas",
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14Famhistory.sas"
       ],
       "x-formerName": "famprostate"
     },
@@ -1265,7 +1274,8 @@
       "minimum": 0,
       "x-description": "Total count of first-degree relative (mother, father, full sibling, or child) has a cancer entry whose coded site contains indications of prostate cancer.",
       "x-derivedFrom": [
-
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14FamhistCancer.sas",
+        "N:/BrBreakthrough/analysis/riskfactors/SAS/Code/Q14Famhistory.sas"
       ],
       "x-formerName": "famprostaten"
     }
@@ -1273,8 +1283,8 @@
   "required": ["R0_TCode"],
   "additionalProperties": false,
   "$defs": {
-    "RawDerived": {
-      "$ref": "RawDerivedVariables_Schema.json"
+    "Mailing": {
+      "$ref": "Mailing_Schema.json"
     },
     "GeneralInformation": { 
       "$ref": "GeneralInformation_Schema.json"

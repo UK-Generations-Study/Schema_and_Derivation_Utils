@@ -1,8 +1,8 @@
 {
-  "$id": "https://www.breakthroughgenerations.org.uk/schemas/DerivedVariables.json",
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/Mailing_Schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "DerivedVariables",
-  "round": "Mailing",
+  "title": "Mailing",
+  "round": "",
   "type": "object",
   "properties": {
     "TCode": {
