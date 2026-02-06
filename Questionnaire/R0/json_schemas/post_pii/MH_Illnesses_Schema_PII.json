@@ -166,7 +166,7 @@
           "R0_ThyroidTreatment_Age": {
             "questionID": 1433,
             "name": "R0_ThyroidTreatment_Yrs",
-            "question": "At what age did you start the [ordinal] thyroid treatment?",
+            "question": "At what age did you start the thyroid treatment?",
             "description": "Age (in years) when this thyroid treatment episode began.",
             "type": [
               "integer",
@@ -177,7 +177,7 @@
           "R0_ThyroidTreatment_Yrs": {
             "questionID": 1434,
             "name": "R0_ThyroidTreatment_Yrs",
-            "question": "How long did you take the [ordinal] treatment for thyroid? - Years",
+            "question": "How long did you take the treatment for thyroid? - Years",
             "description": "Duration of this thyroid treatment episode in whole years.",
             "type": [
               "integer",
@@ -188,7 +188,7 @@
           "R0_ThyroidTreatment_Mnths": {
             "questionID": 1435,
             "name": "R0_ThyroidTreatment_Mnths",
-            "question": "How long did you take the [ordinal] treatment for thyroid? - Months",
+            "question": "How long did you take the treatment for thyroid? - Months",
             "description": "Additional duration of this thyroid treatment episode in whole months.",
             "type": [
               "integer",
@@ -200,7 +200,7 @@
           "R0_ThyroidTreatment_Still": {
             "questionID": 1436,
             "name": "R0_ThyroidTreatment_Still",
-            "question": "Are you still using the [ordinal] treatment for thyroid?",
+            "question": "Are you still using the treatment for thyroid?",
             "description": "Whether this thyroid treatment episode is ongoing at the time of questionnaire completion.",
             "type": [
               "integer",
@@ -457,7 +457,7 @@
           "R0_ED_DrAge": {
             "questionID": 1453,
             "name": "R0_ED_DrAge",
-            "question": "If you saw a doctor for the [ordinal] eating disorder, at what age did this first happen?",
+            "question": "If you saw a doctor for the eating disorder, at what age did this first happen?",
             "description": "Age (in years) at first medical consultation for this eating disorder episode (if applicable).",
             "type": [
               "integer",
@@ -468,7 +468,7 @@
           "R0_ED_DrAgeNA": {
             "questionID": 1454,
             "name": "R0_ED_DrAgeNA",
-            "question": "If you saw a doctor for the [ordinal] eating disorder, at what age did this first happen? - not applicable",
+            "question": "If you saw a doctor for the eating disorder, at what age did this first happen? - not applicable",
             "description": "Flag that doctor consultation is not applicable for this episode.",
             "type": [
               "integer",
@@ -489,7 +489,7 @@
           "R0_ED_LostPeriods_Age": {
             "questionID": 1455,
             "name": "R0_ED_LostPeriods_Age",
-            "question": "If you lost your periods due to the [ordinal] eating disorder, at what age did it first occur?",
+            "question": "If you lost your periods due to the eating disorder, at what age did it first occur?",
             "description": "Age (in years) at onset of temporary absence of periods for this episode (if applicable).",
             "type": [
               "integer",
@@ -500,7 +500,7 @@
           "R0_ED_LostPeriods_AgeNA": {
             "questionID": 1456,
             "name": "R0_ED_LostPeriods_AgeNA",
-            "question": "If you lost your periods due to the [ordinal] eating disorder, at what age did it first occur? - not applicable",
+            "question": "If you lost your periods due to the eating disorder, at what age did it first occur? - not applicable",
             "description": "Flag that loss of periods is not applicable for this episode.",
             "type": [
               "integer",
@@ -521,7 +521,7 @@
           "R0_ED_LostPeriods_Yrs": {
             "questionID": 1457,
             "name": "R0_ED_LostPeriods_Yrs",
-            "question": "How long did you lose your periods during the [ordinal] eating disorder? - Years",
+            "question": "How long did you lose your periods during the eating disorder? - Years",
             "description": "Duration of lost periods during this episode, in years.",
             "type": [
               "integer",
@@ -532,7 +532,7 @@
           "R0_ED_LengthLostPeriod_Mnths": {
             "questionID": 1458,
             "name": "R0_ED_LengthLostPeriod_Mnths",
-            "question": "How long did you lose your periods during the [ordinal] eating disorder? - Months",
+            "question": "How long did you lose your periods during the eating disorder? - Months",
             "description": "Additional duration of lost periods during this episode, in months.",
             "type": [
               "integer",
@@ -544,7 +544,7 @@
           "R0_ED_PreWeight_st": {
             "questionID": 1459,
             "name": "ED_PreWeight_st",
-            "question": "What was your weight before the onset of the [ordinal] eating disorder? - Stone",
+            "question": "What was your weight before the onset of the eating disorder? - Stone",
             "description": "Weight in stone immediately prior to the onset of this episode.",
             "type": [
               "integer",
@@ -555,7 +555,7 @@
           "R0_ED_PreWeight_lb": {
             "questionID": 1460,
             "name": "R0_ED_PreWeight_lb",
-            "question": "What was your weight before the onset of the [ordinal] eating disorder? - Pounds",
+            "question": "What was your weight before the onset of the eating disorder? - Pounds",
             "description": "Pounds component of pre-onset weight (0-15).",
             "type": [
               "integer",
@@ -567,7 +567,7 @@
           "R0_ED_PreWeight_kg": {
             "questionID": 1461,
             "name": "R0_ED_PreWeight_kg",
-            "question": "What was your weight before the onset of the [ordinal] eating disorder? - Kilograms",
+            "question": "What was your weight before the onset of the eating disorder? - Kilograms",
             "description": "Weight in kilograms immediately prior to the onset of this episode.",
             "type": [
               "integer",
@@ -611,7 +611,7 @@
           "R0_ED_LowWeight_st": {
             "questionID": 1463,
             "name": "R0_ED_LowWeight_st",
-            "question": "If you lost weight during the [ordinal] eating disorder, what was your lowest weight during this period? - Stone",
+            "question": "If you lost weight during the eating disorder, what was your lowest weight during this period? - Stone",
             "description": "Lowest weight reached during this episode, stone component.",
             "type": [
               "integer",
@@ -622,7 +622,7 @@
           "R0_ED_LowWeight_lb": {
             "questionID": 1464,
             "name": "R0_ED_LowWeight_lb",
-            "question": "If you lost weight during the [ordinal] eating disorder, what was your lowest weight during this period? - Pounds",
+            "question": "If you lost weight during the eating disorder, what was your lowest weight during this period? - Pounds",
             "description": "Pounds component of lowest weight (0-15).",
             "type": [
               "integer",
@@ -634,7 +634,7 @@
           "R0_ED_LowWeight_kg": {
             "questionID": 1465,
             "name": "R0_ED_LowWeight_kg",
-            "question": "If you lost weight during the [ordinal] eating disorder, what was your lowest weight during this period? - Kilograms",
+            "question": "If you lost weight during the eating disorder, what was your lowest weight during this period? - Kilograms",
             "description": "Lowest weight reached during this episode, kilograms.",
             "type": [
               "integer",
@@ -645,7 +645,7 @@
           "R0_ED_HighWeight_st": {
             "questionID": 1466,
             "name": "ED_HighWeight_Stone",
-            "question": "If you gained weight during the [ordinal] eating disorder, what was your greatest weight during this period? - Stone",
+            "question": "If you gained weight during the eating disorder, what was your greatest weight during this period? - Stone",
             "description": "Highest weight reached during this episode, stone component.",
             "type": [
               "integer",
@@ -656,7 +656,7 @@
           "R0_ED_HighWeight_lb": {
             "questionID": 1467,
             "name": "R0_ED_HighWeight_lb",
-            "question": "If you gained weight during the [ordinal] eating disorder, what was your greatest weight during this period? - Pounds",
+            "question": "If you gained weight during the eating disorder, what was your greatest weight during this period? - Pounds",
             "description": "Pounds component of highest weight (0-15).",
             "type": [
               "integer",
@@ -668,7 +668,7 @@
           "R0_ED_HighWeight_kg": {
             "questionID": 1468,
             "name": "R0_ED_HighWeight_kg",
-            "question": "If you gained weight during the [ordinal] eating disorder, what was your greatest weight during this period? - Kilograms",
+            "question": "If you gained weight during the eating disorder, what was your greatest weight during this period? - Kilograms",
             "description": "Highest weight reached during this episode, kilograms.",
             "type": [
               "integer",
@@ -688,7 +688,7 @@
                 "R0_ED_ConsultDr": {
                   "questionID": 1470,
                   "name": "R0_ED_ConsultDr",
-                  "question": "Have you ever had the [ordinal] eating disorder for which you saw a doctor?",
+                  "question": "Have you ever had an eating disorder for which you saw a doctor?",
                   "description": "Flag that a doctor was consulted for this subsequent episode.",
                   "type": [
                     "integer",
@@ -712,7 +712,7 @@
                 "R0_ED_LostPeriods": {
                   "questionID": 1471,
                   "name": "R0_ED_LostPeriods",
-                  "question": "Have you ever had the [ordinal] eating disorder that caused you to temporarily lose your periods? (yes)",
+                  "question": "Have you ever had an eating disorder that caused you to temporarily lose your periods? (yes)",
                   "description": "Flag that periods were temporarily lost during this subsequent episode.",
                   "type": [
                     "integer",
@@ -736,7 +736,7 @@
                 "R0_ED_ConsultDrPeriods": {
                   "questionID": 1472,
                   "name": "R0_ED_ConsultDrPeriods",
-                  "question": "Have you ever had the [ordinal] eating disorder with both doctor consultation and temporary loss of periods? (yes)",
+                  "question": "Have you ever had an eating disorder with both doctor consultation and temporary loss of periods? (yes)",
                   "description": "Flag that both doctor consultation and loss of periods occurred for this episode.",
                   "type": [
                     "integer",
@@ -760,7 +760,7 @@
                 "R0_ED_General": {
                   "questionID": 1473,
                   "name": "ED_General",
-                  "question": "Have you ever had the [ordinal] eating disorder? (yes)",
+                  "question": "Have you ever had an eating disorder? (yes)",
                   "description": "General flag that a subsequent eating disorder episode occurred.",
                   "type": [
                     "integer",
@@ -797,7 +797,7 @@
                 "R0_ED_PeriodsMth": {
                   "questionID": 1481,
                   "name": "R0_ED_PeriodsMth",
-                  "question": "At what month did you lose your periods during the [ordinal] eating disorder?",
+                  "question": "At what month did you lose your periods during an eating disorder?",
                   "description": "Calendar month of onset of temporary loss of periods during this episode.",
                   "type": [
                     "integer",
@@ -809,7 +809,7 @@
                 "R0_ED_PeriodsYr": {
                   "questionID": 1482,
                   "name": "R0_ED_PeriodsYr",
-                  "question": "At what year did you lose your periods during the [ordinal] eating disorder?",
+                  "question": "At what year did you lose your periods during an eating disorder?",
                   "description": "Calendar year of onset of temporary loss of periods during this episode.",
                   "type": [
                     "integer",
@@ -820,7 +820,7 @@
                 "R0_ED_Age": {
                   "questionID": 1485,
                   "name": "R0_ED_Age",
-                  "question": "What age did the [ordinal] eating disorder happen?",
+                  "question": "What age did the eating disorder happen?",
                   "description": "Participant age (in years) when this episode occurred.",
                   "type": [
                     "integer",
@@ -831,7 +831,7 @@
                 "R0_ED_FromAge": {
                   "questionID": 1486,
                   "name": "R0_ED_FromAge",
-                  "question": "From what age did the [ordinal] eating disorder happen?",
+                  "question": "From what age did the eating disorder happen?",
                   "description": "Age (in years) at episode start.",
                   "type": [
                     "integer",
@@ -842,7 +842,7 @@
                 "R0_ED_ToAge": {
                   "questionID": 1487,
                   "name": "R0_ED_ToAge",
-                  "question": "To what age did the [ordinal] eating disorder happen?",
+                  "question": "To what age did the eating disorder happen?",
                   "description": "Age (in years) at episode end.",
                   "type": [
                     "integer",
@@ -853,7 +853,7 @@
                 "R0_ED_Ongoing": {
                   "questionID": 1488,
                   "name": "R0_ED_Ongoing",
-                  "question": "Still have the [ordinal] eating disorder?",
+                  "question": "Still have the eating disorder?",
                   "description": "Whether this eating disorder episode is ongoing.",
                   "type": [
                     "integer",
@@ -916,7 +916,7 @@
                 "R0_ED_ToYr": {
                   "questionID": 1494,
                   "name": "R0_ED_ToYr",
-                  "question": "To which year did the [ordinal] eating disorder happen?",
+                  "question": "To which year did the eating disorder happen?",
                   "description": "End year of episode.",
                   "type": [
                     "integer",
@@ -927,7 +927,7 @@
                 "R0_ED_WeightGain": {
                   "questionID": 1498,
                   "name": "R0_ED_WeightGain",
-                  "question": "Did you gain or lose weight during the [ordinal] eating disorder, or did your weight stay the same on average? - Gained",
+                  "question": "Did you gain or lose weight during the eating disorder, or did your weight stay the same on average? - Gained",
                   "description": "Flag indicating weight gain occurred during this episode.",
                   "type": [
                     "integer",
@@ -951,7 +951,7 @@
                 "R0_ED_WeightLoss": {
                   "questionID": 1499,
                   "name": "R0_ED_WeightLoss",
-                  "question": "Did you gain or lose weight during the [ordinal] eating disorder, or did your weight stay the same on average? - Lost",
+                  "question": "Did you gain or lose weight during the eating disorder, or did your weight stay the same on average? - Lost",
                   "description": "Flag indicating weight loss occurred during this episode.",
                   "type": [
                     "integer",
@@ -975,7 +975,7 @@
                 "R0_ED_WeightSame": {
                   "questionID": 1500,
                   "name": "R0_ED_WeightSame",
-                  "question": "Did you gain or lose weight during the [ordinal] eating disorder, or did your weight stay the same on average? - Stayed same",
+                  "question": "Did you gain or lose weight during the eating disorder, or did your weight stay the same on average? - Stayed same",
                   "description": "Flag indicating weight remained stable during this episode.",
                   "type": [
                     "integer",
@@ -999,7 +999,7 @@
                 "R0_ED_WeightFluctuate": {
                   "questionID": 1501,
                   "name": "R0_ED_WeightFluctuate",
-                  "question": "Did you gain or lose weight during the [ordinal] eating disorder, or did your weight stay the same on average? - Lost and gained weight",
+                  "question": "Did you gain or lose weight during the eating disorder, or did your weight stay the same on average? - Lost and gained weight",
                   "description": "Flag indicating both loss and gain occurred during this episode.",
                   "type": [
                     "integer",

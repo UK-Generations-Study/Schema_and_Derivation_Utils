@@ -702,7 +702,7 @@
       "questionID": 463,
       "name": "Q4_12_1",
       "question": "Did you any further surgeries on your ovaries or uterus (womb? (more than two)",
-      "description": "Flag field indcatin the participant had more than two operations on their ovaries or uterus.",
+      "description": "Flag field indicating the participant had more than two operations on their ovaries or uterus.",
       "type": [
         "integer",
         "null"
@@ -729,7 +729,7 @@
       "questionID": 544,
       "name": "morethan",
       "question": "Did you any further surgeries on your ovaries or uterus (womb? (more than four)",
-      "description": "Flag field indcatin the participant had more than four operations on their ovaries or uterus.",
+      "description": "Flag field indicating the participant had more than four operations on their ovaries or uterus.",
       "type": [
         "integer",
         "null"
@@ -776,7 +776,7 @@
             "questionID": 435,
             "name": "R0_OvaryUterusOp",
             "question": "Have you ever had an operation on your ovaries or uterus (womb)?",
-            "description": "Flag field whether or not the participant has ever had an operation on their overies or uterus.",
+            "description": "Flag field whether or not the participant has ever had an operation on their ovaries or uterus.",
             "type": [
               "integer",
               "null"

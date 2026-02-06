@@ -268,7 +268,7 @@
       ],
       "enumDescriptions": [
         "1: Checked.",
-        "null: No information on whether participant has had 6 or more pregnancies, or they have not had 6 or more pregnancies."
+        "null: Missing or invalid."
       ],
       "answerID": [
         712
@@ -401,7 +401,7 @@
             "questionID": 567,
             "name": "R0_Preg_SevereVomiting",
             "question": "Did you ever have severe vomiting in the first 3 months of pregnancy?",
-            "description": "Whether or not the paricipant suffered from severe vomiting in the first three months of their pregnancy.",
+            "description": "Whether or not the participant suffered from severe vomiting in the first three months of their pregnancy.",
             "type": [
               "integer",
               "null"
@@ -432,7 +432,7 @@
             "questionID": 568,
             "name": "R0_Preg_Eclampsia",
             "question": "Did you suffer from ecplampsia or pre-eclampsia during pregnancy?",
-            "description": "Whether or not the paricipant suffered from eclampsia or pre-eclampsia during their pregnancy.",
+            "description": "Whether or not the participant suffered from eclampsia or pre-eclampsia during their pregnancy.",
             "type": [
               "integer",
               "null"
@@ -543,8 +543,8 @@
           "R0_Preg_MilkSuppression": {
             "questionID": 574,
             "name": "R0_Preg_MilkSuppression",
-            "question": "Did you receive pills or hormone injection to dry up yout milk secretion after pregnancy?",
-            "description": "Whether or not the paricipant received pills or hormone injections to dry up their milk secretion after their pregnancy.",
+            "question": "Did you receive pills or hormone injection to dry up your milk secretion after pregnancy?",
+            "description": "Whether or not the participant received pills or hormone injections to dry up their milk secretion after their pregnancy.",
             "type": [
               "integer",
               "null"
@@ -626,7 +626,7 @@
       "questionID": 733,
       "name": "Q5_23_LB",
       "question": "What was your weight at the beginning of your first pregnancy? Pounds.",
-      "description": "The participant's weight in pounds at the start of their first pregnancy. This variale works in conjunction with stone. Every increase of 14 pounds is another stone.",
+      "description": "The participant's weight in pounds at the start of their first pregnancy. This variable works in conjunction with stone. Every increase of 14 pounds is another stone.",
       "type": [
         "integer",
         "null"
@@ -659,7 +659,7 @@
       "questionID": 736,
       "name": "Q5_24_LB",
       "question": "What was your weight at the beginning of your last pregnancy? Pounds.",
-      "description": "The participant's weight in pounds at the start of their last pregnancy. This variale works in conjunction with stone. Every increase of 14 pounds is another stone.",
+      "description": "The participant's weight in pounds at the start of their last pregnancy. This variable works in conjunction with stone. Every increase of 14 pounds is another stone.",
       "type": [
         "integer",
         "null"

@@ -115,8 +115,8 @@
           "R0_AlcoholBeer": {
             "questionID": 2154,
             "name": "R0_AlcoholBeer",
-            "question": "Amount of alcohol consumed at different periods of life, beer, lager, stout, cider (pints per week), ages [age range]",
-            "description": "Beer consumption during ages [age range]",
+            "question": "Amount of alcohol consumed at different periods of life, beer, lager, stout, cider (pints per week).",
+            "description": "Beer consumption during given age range.",
             "type": [
               "integer",
               "null"
@@ -126,8 +126,8 @@
           "R0_AlcoholWhiteWine": {
             "questionID": 2155,
             "name": "R0_AlcoholWhiteWine",
-            "question": "Amount of alcohol consumed at different periods of life, white wine (glasses per week) ages [age range]",
-            "description": "White wine consumption during ages [age range]",
+            "question": "Amount of alcohol consumed at different periods of life, white wine (glasses per week).",
+            "description": "White wine consumption during given age range.",
             "type": [
               "integer",
               "null"
@@ -137,8 +137,8 @@
           "R0_AlcoholRedWine": {
             "questionID": 2156,
             "name": "R0_AlcoholRedWine",
-            "question": "Amount of alcohol consumed at different periods of life, red wine (glasses per week) ages [age range]",
-            "description": "Red wine consumption during ages [age range]",
+            "question": "Amount of alcohol consumed at different periods of life, red wine (glasses per week).",
+            "description": "Red wine consumption during given age range.",
             "type": [
               "integer",
               "null"
@@ -148,8 +148,8 @@
           "R0_AlcoholLiqueur": {
             "questionID": 2157,
             "name": "R0_AlcoholLiqueur",
-            "question": "Amount of alcohol consumed at different periods of life, sherry, liqueurs, Martini, and other similar drinks (glasses per week) ages [age range]",
-            "description": "Sherry, liqueurs, Martini, and other similar drinks consumption during ages [age range]",
+            "question": "Amount of alcohol consumed at different periods of life, sherry, liqueurs, Martini, and other similar drinks (glasses per week).",
+            "description": "Sherry, liqueurs, Martini, and other similar drinks consumption during given age range.",
             "type": [
               "integer",
               "null"
@@ -159,8 +159,8 @@
           "R0_AlcoholSpirits": {
             "questionID": 2157,
             "name": "R0_AlcoholSpirits",
-            "question": "Amount of alcohol consumed at different periods of life, alcopops or spirits (glasses (singles) per week) ages [age range]",
-            "description": "Alcopops or spirits consumption during ages [age range]",
+            "question": "Amount of alcohol consumed at different periods of life, alcopops or spirits (glasses (singles) per week).",
+            "description": "Alcopops or spirits consumption during given age range.",
             "type": [
               "integer",
               "null"
@@ -170,8 +170,8 @@
           "R0_AlcoholOther": {
             "questionID": 2157,
             "name": "R0_AlcoholOther",
-            "question": "Other types of alcohol (glasses (singles) per week) ages [age range]",
-            "description": "Other alcohol types consumption during ages [age range]",
+            "question": "Other types of alcohol (glasses (singles) per week).",
+            "description": "Other alcohol types consumption during given age range.",
             "type": [
               "integer",
               "null"
@@ -302,7 +302,7 @@
     "R0_SmokingRestartUse": {
       "questionID": 2179,
       "name": "Q11_7_1",
-      "question": "Have you ever stopped smoking tmeporarily for a year and then restarted?",
+      "question": "Have you ever stopped smoking temporarily for a year and then restarted?",
       "description": "Whether the participant has every stopped smoking for over a year and then restarted smoking",
       "type": [
         "integer",
@@ -337,7 +337,7 @@
         "properties": {
           "R0_CigaretteConsumption_Num": {
             "name": "R0_CigaretteConsumption_Num",
-            "description": "Cigarette consmptoin entry index.",
+            "description": "Cigarette consumption entry index.",
             "type": [
               "string",
               "null"
@@ -351,8 +351,8 @@
           "R0_Cigarettes": {
             "questionID": 2180,
             "name": "R0_Cigarettes",
-            "question": "Average number of cigarettes smoked per day at ages [age range]",
-            "description": "Cigarette consumption during ages [age range]",
+            "question": "Average number of cigarettes smoked per day at a given age range.",
+            "description": "Cigarette consumption during given age range.",
             "type": [
               "integer",
               "null"

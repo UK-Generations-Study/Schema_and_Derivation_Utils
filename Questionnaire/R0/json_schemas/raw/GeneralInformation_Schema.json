@@ -101,7 +101,7 @@
             "questionID": 12,
             "name": "DayEvn1_1",
             "question": "when can you be contacted on telephone number 1?",
-            "description": "When can the particicipant be contacted on telephone number 1?",
+            "description": "When can the participant be contacted on telephone number 1?",
             "type": ["integer", "null"],
             "enum": [0, 1, 2, 3, 4, 5, 6, null],
             "enumDescriptions": [
@@ -134,7 +134,7 @@
             "questionID": 12,
             "name": "DayEvn2_1",
             "question": "when can you be contacted on telephone number 2?",
-            "description": "When can the particicipant be contacted on telephone number 2?",
+            "description": "When can the participant be contacted on telephone number 2?",
             "type": ["integer", "null"],
             "enum": [0, 1, 2, 3, 4, 5, 6, null],
             "enumDescriptions": [
@@ -188,7 +188,7 @@
             "enum": [1, null],
             "enumDescriptions": [
                 "1: Don't know GP name.",
-                "null: No information on not knowing the name of participant's GP."
+                "null: Missing or invalid."
             ],
             "answerID": [3]
         },
@@ -203,7 +203,7 @@
             "questionID": 21,
             "name": "NHSnum",
             "question": "What is your NHS number? (10 digit number on your GP registration card)",
-            "description": "Participan's NHS number.",
+            "description": "Participant's NHS number.",
             "type": ["string", "null"]
         },
         "R0_Occupation": {
@@ -277,7 +277,7 @@
             "questionID": 28,
             "name": "Q1_11_1_fast",
             "question": "To which ethnic group do you consider you belong? (single choice)",
-            "description": "Single choice question about wich ethnic group theparticipant belongs to.",
+            "description": "Single choice question about which ethnic group the participant belongs to.",
             "type": ["integer", "null"],
             "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, null],
             "enumDescriptions": [

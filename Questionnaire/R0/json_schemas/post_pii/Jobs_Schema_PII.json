@@ -215,7 +215,7 @@
           "R0_NightWorkDaysWeek": {
             "questionID": 2063,
             "name": "R0_NightWorkDaysWeek",
-            "question": "[ordinal] - Average number of days per week working at night",
+            "question": "Average number of days per week working at night",
             "description": "Weekly frequency of night work",
             "type": [
               "integer",
@@ -226,7 +226,7 @@
           "R0_NightWorkHrsWeek": {
             "questionID": 2064,
             "name": "R0_NightWorkHrsWeek",
-            "question": "[ordinal] - Average number of hours worked between 10pm and 7am on these days",
+            "question": "Average number of hours worked between 10pm and 7am on these days",
             "description": "Duration of nightly work hours",
             "type": [
               "integer",

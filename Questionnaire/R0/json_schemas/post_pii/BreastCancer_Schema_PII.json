@@ -250,8 +250,8 @@
           "R0_BCDrugTreatmentReceived": {
             "questionID": 1200,
             "name": "R0_BCDrugTreatmentReceived",
-            "question": "Did you receive any drug treatment for [ordinal] cancer or pre-cancer (e.g. Tamoxifen, chemotherapy)?",
-            "description": "Drug treatment status for the participant's [ordinal] cancer/pre-cancer",
+            "question": "Did you receive any drug treatment for the cancer or pre-cancer (e.g. Tamoxifen, chemotherapy)?",
+            "description": "Drug treatment status for the participant's cancer/pre-cancer",
             "type": [
               "integer",
               "null"
@@ -378,8 +378,8 @@
                 "R0_DrugRegimenName": {
                   "questionID": 1221,
                   "name": "R0_DrugRegimenName",
-                  "question": "Are you still using the [ordinal] drug or regimen used for drug therapy of [ordinal2] cancer or pre-cancer?",
-                  "description": "Name of the [ordinal] drug regimen the participant is currently using",
+                  "question": "Are you still using the drug or regimen used for drug therapy of the cancer or pre-cancer?",
+                  "description": "Name of the drug regimen the participant is currently using",
                   "type": [
                     "string",
                     "null"

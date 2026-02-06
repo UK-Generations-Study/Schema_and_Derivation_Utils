@@ -155,7 +155,7 @@
           },
           "OtherBreastSurgeriesExtra": {
             "name": "OtherBreastSurgeriesExtra",
-            "description": "Extra etails of breast surgeries undertaken for cosmetic or other non-cancer reasons.",
+            "description": "Extra details of breast surgeries undertaken for cosmetic or other non-cancer reasons.",
             "type": "array",
             "minItems": 0,
             "maxItems": 1,

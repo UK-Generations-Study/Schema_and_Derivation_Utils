@@ -326,7 +326,7 @@
                                     "questionID": 475,
                                     "name": "R0_TempStopFromMth",
                                     "question": "month when your periods stopped when stopping temporarily.",
-                                    "description": "Month of the year that periods stopped after stoping temporarily the previous time.",
+                                    "description": "Month of the year that periods stopped after stopping temporarily the previous time.",
                                     "type": ["integer", "null"],
                                     "minimum": 0
                                 },
@@ -334,7 +334,7 @@
                                     "questionID": 476,
                                     "name": "R0_TempStopFromYr",
                                     "question": "year when your periods stopped when stopping temporarily.",
-                                    "description": "Year that periods stopped after stoping temporarily the previous time.",
+                                    "description": "Year that periods stopped after stopping temporarily the previous time.",
                                     "type": ["integer", "null"],
                                     "minimum": 0
                                 },
@@ -342,7 +342,7 @@
                                     "questionID": 477,
                                     "name": "R0_TempStopToMth",
                                     "question": "month when your periods started after stopping temporarily.",
-                                    "description": "Month of the year that periods returned after stoping temporarily.",
+                                    "description": "Month of the year that periods returned after stopping temporarily.",
                                     "type": ["integer", "null"],
                                     "minimum": 0
                                 },
@@ -350,7 +350,7 @@
                                     "questionID": 478,
                                     "name": "R0_TempStopToYr",
                                     "question": "year when your periods started after stopping temporarily.",
-                                    "description": "Year that periods returned after stoping temporarily.",
+                                    "description": "Year that periods returned after stopping temporarily.",
                                     "type": ["integer", "null"],
                                     "minimum": 0
                                 }
@@ -496,7 +496,7 @@
             "questionID": 463,
             "name": "Q4_12_1",
             "question": "Did you any further surgeries on your ovaries or uterus (womb? (more than two)",
-            "description": "Flag field indcatin the participant had more than two operations on their ovaries or uterus.",
+            "description": "Flag field indicating the participant had more than two operations on their ovaries or uterus.",
             "type": ["integer", "null"],
             "enum": [0, 1, 2, null],
             "enumDescriptions": [
@@ -511,7 +511,7 @@
             "questionID": 544,
             "name": "morethan",
             "question": "Did you any further surgeries on your ovaries or uterus (womb? (more than four)",
-            "description": "Flag field indcatin the participant had more than four operations on their ovaries or uterus.",
+            "description": "Flag field indicating the participant had more than four operations on their ovaries or uterus.",
             "type": ["integer", "null"],
             "enum": [0, 1, null],
             "enumDescriptions": [
@@ -545,7 +545,7 @@
                         "questionID": 435,
                         "name": "R0_OvaryUterusOp",
                         "question": "Have you ever had an operation on your ovaries or uterus (womb)?",
-                        "description": "Flag field whether or not the participant has ever had an operation on their overies or uterus.",
+                        "description": "Flag field whether or not the participant has ever had an operation on their ovaries or uterus.",
                         "type": ["integer", "null"],
                         "enumDescriptions": [
                             "0: More than one option chosen",
@@ -733,7 +733,7 @@
                                     "questionID": 514,
                                     "name": "R0_OvaryOp_Mnth",
                                     "question": "Which month did the ovary operation occur in?",
-                                    "description": "Month of the year the ovary option occured during.",
+                                    "description": "Month of the year the ovary option occurred during.",
                                     "type": ["integer", "null"],
                                     "minimum": 0
                                 },
@@ -741,7 +741,7 @@
                                     "questionID": 515,
                                     "name": "R0_OvaryOp_Yr",
                                     "question": "Which year did the ovary operation occur in?",
-                                    "description": "Year the ovary option occured during.",
+                                    "description": "Year the ovary option occurred during.",
                                     "type": ["integer", "null"],
                                     "minimum": 0
                                 },

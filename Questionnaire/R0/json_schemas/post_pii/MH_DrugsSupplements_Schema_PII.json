@@ -251,7 +251,7 @@
       "questionID": 1612,
       "name": "Q8_15_1_1",
       "question": "Have you taken aspirin or any products containing aspirin in the last 7 days?",
-      "description": "Whether the participant has taken any aspirin or products contaiing aspirin in the 7 days pre-entry to the study.",
+      "description": "Whether the participant has taken any aspirin or products containing aspirin in the 7 days pre-entry to the study.",
       "type": [
         "integer",
         "null"
@@ -351,7 +351,7 @@
             "questionID": 1615,
             "name": "R0_AspirinStartAgeEp",
             "question": "Age at start for taking aspirin regularly.",
-            "description": "Participants starting age of taking aspirin regularly for this isntance.",
+            "description": "Participants starting age of taking aspirin regularly for this instance.",
             "type": [
               "integer",
               "null"
@@ -362,7 +362,7 @@
             "questionID": 1616,
             "name": "R0_AspirinEndAgeEp",
             "question": "Age at end for taking aspirin regularly.",
-            "description": "Participants ending age of taking aspirin regularly for this isntance.",
+            "description": "Participants ending age of taking aspirin regularly for this instance.",
             "type": [
               "integer",
               "null"
@@ -373,7 +373,7 @@
             "questionID": 1617,
             "name": "R0_AspirinOngoingEp",
             "question": "Still taking aspirin regularly.",
-            "description": "Participan is still taking aspiring reglarly during entry to study for this instance.",
+            "description": "Participant is still taking aspiring regularly during entry to study for this instance.",
             "type": [
               "integer",
               "null"
@@ -480,7 +480,7 @@
     "R0_AspirinMoreThanFive": {
       "questionID": 1649,
       "name": "morethan5Aspirin",
-      "question": "More than 5 occasions of Aspirin comsuption?",
+      "question": "More than 5 occasions of Aspirin consumption?",
       "description": "AspirinMoreThan5",
       "type": [
         "integer",

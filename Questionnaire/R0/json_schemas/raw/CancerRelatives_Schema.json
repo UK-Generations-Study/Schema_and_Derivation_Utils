@@ -1470,7 +1470,7 @@
       "questionID": 2704,
       "name": "Q14_15",
       "question": "If any more of your children had cancer, please provide details.",
-      "description": "Flag indicating whether thhas more children that have had cancer.",
+      "description": "Flag indicating whether the participant has more children that have had cancer.",
       "type": [
         "integer",
         "null"

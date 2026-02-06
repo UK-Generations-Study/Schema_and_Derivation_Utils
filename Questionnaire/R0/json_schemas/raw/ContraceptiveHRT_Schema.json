@@ -71,7 +71,7 @@
           "R0_ContracepPill_Name": {
             "questionID": 802,
             "name": "R0_ContracepPill_Name",
-            "question": "please give the name of the [ordinal] contraceptive pill",
+            "question": "please give the name of the contraceptive pill",
             "description": "Brand/formulation name provided by participant",
             "type": [
               "string",
@@ -81,7 +81,7 @@
           "R0_ContracepPill_Unknown": {
             "questionID": 803,
             "name": "R0_ContracepPill_Unknown",
-            "question": "cannot remember the name of the [ordinal] contraceptive pill",
+            "question": "cannot remember the name of the contraceptive pill",
             "description": "Participant's inability to recall pill name",
             "type": [
               "integer",
@@ -102,7 +102,7 @@
           "R0_ContracepPill_StartAge": {
             "questionID": 804,
             "name": "R0_ContracepPill_StartAge",
-            "question": "At what age did you start using [ordinal] contraceptive pill?",
+            "question": "At what age did you start using the contraceptive pill?",
             "description": "Age when participant began this contraceptive pill",
             "type": [
               "integer",
@@ -113,7 +113,7 @@
           "R0_ContracepPill_StopAge": {
             "questionID": 805,
             "name": "R0_ContracepPill_StopAge",
-            "question": "At what age did you stop using [ordinal] contraceptive pill?",
+            "question": "At what age did you stop using the contraceptive pill?",
             "description": "Age when participant discontinued this contraceptive pill",
             "type": [
               "integer",
@@ -124,7 +124,7 @@
           "R0_ContracepPill_CurrentUse": {
             "questionID": 806,
             "name": "ContracepPill_CurrentUse",
-            "question": "Are you still using the [ordinal] contraceptive pill?",
+            "question": "Are you still using the contraceptive pill?",
             "description": "Participant's current usage status of this pill",
             "type": [
               "integer",
@@ -157,7 +157,7 @@
                 "R0_ContracepPill_StartMnth": {
                   "questionID": 858,
                   "name": "R0_ContracepPill_StartMnth",
-                  "question": "At what month did you start using [ordinal] contraceptive pill?",
+                  "question": "At what month did you start using the contraceptive pill?",
                   "description": "Month participant began this contraceptive pill",
                   "type": [
                     "integer",
@@ -168,7 +168,7 @@
                 "R0_ContracepPill_StartYr": {
                   "questionID": 859,
                   "name": "R0_ContracepPill_StartYr",
-                  "question": "At what year did you start using [ordinal] contraceptive pill?",
+                  "question": "At what year did you start using the contraceptive pill?",
                   "description": "Year participant began this contraceptive pill",
                   "type": [
                     "integer",
@@ -179,7 +179,7 @@
                 "R0_ContracepPill_StopMnth": {
                   "questionID": 860,
                   "name": "R0_ContracepPill_StopMnth",
-                  "question": "At what month did you stop using [ordinal] contraceptive pill?",
+                  "question": "At what month did you stop using the contraceptive pill?",
                   "description": "Month participant discontinued this contraceptive pill",
                   "type": [
                     "integer",
@@ -190,7 +190,7 @@
                 "R0_ContracepPill_StopYr": {
                   "questionID": 861,
                   "name": "R0_ContracepPill_StopYr",
-                  "question": "At what year did you stop using [ordinal] contraceptive pill?",
+                  "question": "At what year did you stop using the contraceptive pill?",
                   "description": "Year participant discontinued this contraceptive pill",
                   "type": [
                     "integer",
@@ -302,7 +302,7 @@
           "R0_OtherContracep_Name": {
             "questionID": 819,
             "name": "R0_OtherContracep_Name",
-            "question": "please give the name of the [ordinal] contraception (contraception injected, implanted, or applied with a patch)",
+            "question": "please give the name of the contraception (contraception injected, implanted, or applied with a patch)",
             "description": "Name of non-pill contraceptive method used",
             "type": [
               "string",
@@ -312,7 +312,7 @@
           "R0_OtherContracep_StartAge": {
             "questionID": 820,
             "name": "R0_OtherContracep_StartAge",
-            "question": "At what age did you start using [ordinal] contraception (contraception injected, implanted, or applied with a patch)?",
+            "question": "At what age did you start using the contraception (contraception injected, implanted, or applied with a patch)?",
             "description": "Age participant began this contraceptive method",
             "type": [
               "integer",
@@ -323,7 +323,7 @@
           "R0_OtherContracep_StopAge": {
             "questionID": 821,
             "name": "R0_OtherContracep_StopAge",
-            "question": "At what age did you stop using [ordinal] contraception (contraception injected, implanted, or applied with a patch)?",
+            "question": "At what age did you stop using the contraception (contraception injected, implanted, or applied with a patch)?",
             "description": "Age participant discontinued this contraceptive method",
             "type": [
               "integer",
@@ -334,7 +334,7 @@
           "R0_OtherContracep_CurrentUse": {
             "questionID": 822,
             "name": "R0_OtherContracep_CurrentUse",
-            "question": "Are you still using the [ordinal] contraception (contraception injected, implanted, or applied with a patch)?",
+            "question": "Are you still using the contraception (contraception injected, implanted, or applied with a patch)?",
             "description": "Participant's current usage status of this method",
             "type": [
               "integer",
@@ -367,7 +367,7 @@
                 "R0_OtherContracep_StartMnth": {
                   "questionID": 912,
                   "name": "R0_OtherContracep_StartMnth",
-                  "question": "At what month did you start using [ordinal] contraception (contraception injected, implanted, or applied with a patch)?",
+                  "question": "At what month did you start using the contraception (contraception injected, implanted, or applied with a patch)?",
                   "description": "Month participant began this contraceptive method",
                   "type": [
                     "integer",
@@ -378,7 +378,7 @@
                 "R0_OtherContracep_StartYr": {
                   "questionID": 913,
                   "name": "R0_OtherContracep_StartYr",
-                  "question": "At what year did you start using [ordinal] contraception (contraception injected, implanted, or applied with a patch)?",
+                  "question": "At what year did you start using the contraception (contraception injected, implanted, or applied with a patch)?",
                   "description": "Year participant began this contraceptive method",
                   "type": [
                     "integer",
@@ -389,7 +389,7 @@
                 "R0_OtherContracep_StopMnth": {
                   "questionID": 914,
                   "name": "R0_OtherContracep_StopMnth",
-                  "question": "At what month did you stop using [ordinal] contraception (contraception injected, implanted, or applied with a patch)?",
+                  "question": "At what month did you stop using the contraception (contraception injected, implanted, or applied with a patch)?",
                   "description": "Month participant discontinued this contraceptive method",
                   "type": [
                     "integer",
@@ -400,7 +400,7 @@
                 "R0_OtherContracep_StopYr": {
                   "questionID": 915,
                   "name": "R0_OtherContracep_StopYr",
-                  "question": "At what year did you stop using [ordinal] contraception (contraception injected, implanted, or applied with a patch)?",
+                  "question": "At what year did you stop using the contraception (contraception injected, implanted, or applied with a patch)?",
                   "description": "Year participant discontinued this contraceptive method",
                   "type": [
                     "integer",
@@ -494,7 +494,7 @@
           "R0_HRT_Name": {
             "questionID": 829,
             "name": "R0_HRT_Name",
-            "question": "please give the name of the [ordinal] Hormone preparation",
+            "question": "please give the name of the Hormone preparation",
             "description": "Name of HRT preparation used by participant",
             "type": [
               "string",
@@ -504,7 +504,7 @@
           "R0_HRT_StartAge": {
             "questionID": 830,
             "name": "R0_HRT_StartAge",
-            "question": "At what age did you start using [ordinal] Hormone preparation?",
+            "question": "At what age did you start using the Hormone preparation?",
             "description": "Age participant began this HRT preparation",
             "type": [
               "integer",
@@ -515,7 +515,7 @@
           "R0_HRT_StopAge": {
             "questionID": 831,
             "name": "R0_HRT_StopAge",
-            "question": "At what age did you stop using [ordinal] Hormone preparation?",
+            "question": "At what age did you stop using the Hormone preparation?",
             "description": "Age participant discontinued this HRT preparation",
             "type": [
               "integer",
@@ -526,7 +526,7 @@
           "R0_HRT_CurrentUse": {
             "questionID": 832,
             "name": "R0_HRT_CurrentUse",
-            "question": "Are you still using the [ordinal] Hormone preparation?",
+            "question": "Are you still using the Hormone preparation?",
             "description": "Participant's current usage status of this HRT",
             "type": [
               "integer",
@@ -559,7 +559,7 @@
                 "R0_HRT_StartMnth": {
                   "questionID": 937,
                   "name": "R0_HRT_StartMnth",
-                  "question": "At what month did you start using [ordinal] HRT?",
+                  "question": "At what month did you start using the HRT?",
                   "description": "Month participant began this HRT preparation",
                   "type": [
                     "integer",
@@ -570,7 +570,7 @@
                 "R0_HRT_StartYr": {
                   "questionID": 938,
                   "name": "R0_HRT_StartYr",
-                  "question": "At what year did you start using [ordinal] HRT?",
+                  "question": "At what year did you start using the HRT?",
                   "description": "Year participant began this HRT preparation",
                   "type": [
                     "integer",
@@ -581,7 +581,7 @@
                 "R0_HRT_StopMnth": {
                   "questionID": 939,
                   "name": "R0_HRT_StopMnth",
-                  "question": "At what month did you stop using [ordinal] HRT?",
+                  "question": "At what month did you stop using the HRT?",
                   "description": "Month participant discontinued this HRT preparation",
                   "type": [
                     "integer",
@@ -592,7 +592,7 @@
                 "R0_HRT_StopYr": {
                   "questionID": 940,
                   "name": "R0_HRT_StopYr",
-                  "question": "At what year did you stop using [ordinal] HRT?",
+                  "question": "At what year did you stop using the HRT?",
                   "description": "Year participant discontinued this HRT preparation",
                   "type": [
                     "integer",
@@ -737,7 +737,7 @@
           "R0_OtherSexHrmn_Name": {
             "questionID": 844,
             "name": "R0_OtherSexHrmn_Name",
-            "question": "please give the name of the [ordinal] other type of sex hormone treatment or preparation",
+            "question": "please give the name of the other type of sex hormone treatment or preparation",
             "description": "Name of hormone preparation used",
             "type": [
               "string",
@@ -747,7 +747,7 @@
           "R0_OtherSexHrmn_StartAge": {
             "questionID": 845,
             "name": "R0_OtherSexHrmn_StartAge",
-            "question": "At what age did you start using [ordinal] other type of sex hormone treatment or preparation?",
+            "question": "At what age did you start using the other type of sex hormone treatment or preparation?",
             "description": "Age participant began this hormone treatment",
             "type": [
               "integer",
@@ -758,7 +758,7 @@
           "R0_OtherSexHrmn_StopAge": {
             "questionID": 846,
             "name": "R0_OtherSexHrmn_StopAge",
-            "question": "At what age did you stop using [ordinal] other type of sex hormone treatment or preparation?",
+            "question": "At what age did you stop using the other type of sex hormone treatment or preparation?",
             "description": "Age participant discontinued this hormone treatment",
             "type": [
               "integer",
@@ -769,7 +769,7 @@
           "R0_OtherSexHrmn_CurrentUse": {
             "questionID": 847,
             "name": "R0_OtherSexHrmn_CurrentUse",
-            "question": "Are you still using the [ordinal] other type of sex hormone treatment or preparation?",
+            "question": "Are you still using the other type of sex hormone treatment or preparation?",
             "description": "Participant's current usage status of this hormone treatment",
             "type": [
               "integer",
@@ -802,7 +802,7 @@
                 "R0_OtherSexHrmn_StartMnth": {
                   "questionID": 978,
                   "name": "R0_OtherSexHrmn_StartMnth",
-                  "question": "At what month did you start using [ordinal] other type of sex hormone treatment or preparation?",
+                  "question": "At what month did you start using other type of sex hormone treatment or preparation?",
                   "description": "Month participant began this hormone treatment",
                   "type": [
                     "integer",
@@ -813,7 +813,7 @@
                 "R0_OtherSexHrmn_StartYr": {
                   "questionID": 979,
                   "name": "R0_OtherSexHrmn_StartYr",
-                  "question": "At what year did you start using [ordinal] other type of sex hormone treatment or preparation?",
+                  "question": "At what year did you start using the other type of sex hormone treatment or preparation?",
                   "description": "Year participant began this hormone treatment",
                   "type": [
                     "integer",
@@ -824,7 +824,7 @@
                 "R0_OtherSexHrmn_StopMnth": {
                   "questionID": 980,
                   "name": "R0_OtherSexHrmn_StopMnth",
-                  "question": "At what month did you stop using [ordinal] other type of sex hormone treatment or preparation?",
+                  "question": "At what month did you stop using the other type of sex hormone treatment or preparation?",
                   "description": "Month participant discontinued this hormone treatment",
                   "type": [
                     "integer",
@@ -835,7 +835,7 @@
                 "R0_OtherSexHrmn_StopYr": {
                   "questionID": 981,
                   "name": "R0_OtherSexHrmn_StopYr",
-                  "question": "At what year did you stop using [ordinal] other type of sex hormone treatment or preparation?",
+                  "question": "At what year did you stop using the other type of sex hormone treatment or preparation?",
                   "description": "Year participant discontinued this hormone treatment",
                   "type": [
                     "integer",
