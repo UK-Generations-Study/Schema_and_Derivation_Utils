@@ -9,10 +9,7 @@
       "description": "Pseudo-anonymized 8-character study identifier.",
       "type": "string",
       "minLength": 8,
-      "maxLength": 8,
-      "x-derivedFrom": [
-
-      ]
+      "maxLength": 8
     },
     "R0_Ethnicity": {
       "description": "Ethnicity of the study participant.",
@@ -37,6 +34,13 @@
                     "9: Not known.",
                     "null: Left blank."
                 ],
+      "answerID": [
+        47,
+        3000,
+        3001,
+        13,
+        3
+      ],
       "x-derivedFrom": [
         "#/$defs/GeneralInformation/properties/R0_EthnGroupWhite",
         "#/$defs/GeneralInformation/properties/R0_EthnGroupJAshk",
@@ -69,6 +73,10 @@
                     "1: Yes.",
                     "null: Unknown."
                 ],
+      "answerID": [
+        2,
+        1
+      ],
       "x-derivedFrom": [
         "#/$defs/GeneralInformation/properties/R0_EthnGroupJAshk"
       ],
@@ -92,6 +100,11 @@
         "1: Yes.",
         "999: NA",
         "null: Unknown."
+      ],
+      "answerID": [
+        2,
+        1,
+        6
       ],
       "x-derivedFrom": [
         "#/$defs/Mailing/properties/DOB",
@@ -199,6 +212,10 @@
                     "1: Yes.",
                     "null: Unknown."
                 ],
+      "answerID": [
+        2,
+        1
+      ],
       "x-derivedFrom": [
         "#/$defs/PregnanciesPII/properties/R0_CurrentPreg"
       ],
@@ -373,6 +390,11 @@
         "2: Current.", 
         "null: Not known."
       ],
+      "answerID": [
+        2384,
+        3002,
+        3003
+      ],
       "x-derivedFrom": [
         "#/$defs/ContraceptiveHRT/properties/R0_ContracepPillUse",
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StartAge",
@@ -471,6 +493,9 @@
         "1: Parous (at least one pregnancy with a live birth before entry).",
         "9: Ever pregnant but parity unknown (e.g. only pregnancies with unknown outcome or incomplete episode data).",
         "null: Missing or inconsistent information."
+      ],
+      "answerID": [
+        3004
       ],
       "x-description": "Using questionnaire responses (R0_EverPregnant and R0_TotalPregnancies) and the pregnancy episodes table: (1) Parous (1) if any pregnancy has a live-birth outcome (e.g. singleton live, multiple with ≥1 liveborn; outcome codes 1, 2, 3, 5, 10). (2) Nulliparous (0) if there is evidence of pregnancies but no live-birth outcomes and no pregnancies with unknown outcome (14). (3) Never pregnant (-1) if questionnaire data indicate no pregnancies and there are no pregnancy episodes. (4) Ever pregnant, parity unknown (9) if there is evidence of pregnancies but no live-birth outcomes and at least one pregnancy with unknown outcome or if the pregnancy table is empty but the questionnaire suggests pregnancies. Null if pregnancy information is entirely missing or internally inconsistent.",
       "x-derivedFrom": [
