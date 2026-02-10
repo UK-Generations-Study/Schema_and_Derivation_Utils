@@ -1,4 +1,7 @@
 {
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/HistoPath_OvCa.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HistoPath_OvCa",
   "type": "object",
   "properties": {
     "StudyID": {

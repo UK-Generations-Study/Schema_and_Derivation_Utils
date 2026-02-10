@@ -74,7 +74,7 @@ for source, raw_schema in cf.casum_data_sources.items():
         logger.info('Invalid entry count - ' + source + ': '+ str(len(invalid_rows)))
         # sys.exit('Refer to Invalid rows')
     else:
-        logger.info("Validation complete. No erros")
+        logger.info("Validation complete. No errors")
 
 #%% 
 # get the updated dataframes
@@ -83,7 +83,7 @@ fl_cancers = all_data['FlaggingCancers']
 hist_Brca = all_data['Histopath_BrCa_GS_v1']
 hist_Ovca = all_data['OvCa_Histopath_II']
 ca_summary = all_data['casummary_v1']
-existing_casum = all_data['NewCancerSummary_v3']
+existing_casum = all_data['NewCancerSummary']
 
 # get the JSON schemas
 can_reg_schema = all_schemas['CancerRegistry']
@@ -91,7 +91,7 @@ fl_cancers_schema = all_schemas['FlaggingCancers']
 hist_Brca_schema = all_schemas['Histopath_BrCa_GS_v1']
 hist_Ovca_schema = all_schemas['OvCa_Histopath_II']
 ca_summary_schema = all_schemas['casummary_v1']
-target_schema = all_schemas['NewCancerSummary_v3']
+target_schema = all_schemas['NewCancerSummary']
 
 # select required columns
 can_reg.rename(columns={'STUDY_ID':'PersonID'}, inplace=True)
@@ -465,6 +465,8 @@ logger.info("Validating the result data using JSON schema")
 CaSumFiltered_7['TUMOUR_ID'] = pd.to_numeric(CaSumFiltered_7['TUMOUR_ID'], errors='coerce').astype('Int64')
 CaSumFiltered_7['TUMOUR_SIZE'] =  pd.to_numeric(CaSumFiltered_7['TUMOUR_SIZE'], errors='coerce')
 CaSumFiltered_7['MORPH_CODE'] = pd.to_numeric(CaSumFiltered_7['MORPH_CODE'], errors='coerce').astype('Int64')
+CaSumFiltered_7['NODES_POSITIVE'] = pd.to_numeric(CaSumFiltered_7['NODES_POSITIVE'], errors='coerce').astype('Int64')
+CaSumFiltered_7['NODES_TOTAL'] = pd.to_numeric(CaSumFiltered_7['NODES_TOTAL'], errors='coerce').astype('Int64')
 
 final_json, cleaned_data = cv.getCleanJsonData(CaSumFiltered_7.copy(), "NewCancerSummary")
 
@@ -472,7 +474,7 @@ invalid_rows = cv.dataValidation(final_json, target_schema)
 
 if len(invalid_rows)>=10:
     logger.warning("Invalid data found in Cancer Summary")
-    # sys.exit('Refer to Invalid rows')
+    sys.exit('Refer to Invalid rows')
     logger.info('Invalid entry count: '+ str(len(invalid_rows)))
 
 else:
@@ -487,11 +489,12 @@ sidcode['StudyID'] = pd.to_numeric(sidcode['StudyID'], errors='coerce').astype('
 
 CaSum_pseudo_anon = CaSumFiltered_7.merge(sidcode, left_on=['STUDY_ID'], right_on=['StudyID'], how='left')
 
-CaSum_pseudo_anon['DIAGNOSIS_DATE'] = CaSum_pseudo_anon['DIAGNOSIS_DATE'] + pd.to_timedelta(CaSum_pseudo_anon['Random'], unit='days')
+CaSum_pseudo_anon['DIAGNOSIS_DATE_SHIFTED'] = CaSum_pseudo_anon['DIAGNOSIS_DATE'] + pd.to_timedelta(CaSum_pseudo_anon['Random'], unit='days')
+CaSum_pseudo_anon.rename(columns={'S_STUDY_ID': 'S_TCode', 'S_DIAGNOSIS_DATE': 'S_DIAGNOSIS_DATE_SHIFTED'}, inplace=True) 
 
-CaSum_pseudo_anon = CaSum_pseudo_anon.drop(['StudyID', 'STUDY_ID', 'Random'], axis=1)
+CaSum_pseudo_anon = CaSum_pseudo_anon.drop(['StudyID', 'STUDY_ID', 'Random', 'DIAGNOSIS_DATE'], axis=1)
 
-CaSum_pseudo_anon['DIAGNOSIS_DATE'] = CaSum_pseudo_anon['DIAGNOSIS_DATE'].dt.strftime('%Y-%m-%d %H:%M:%S')
+CaSum_pseudo_anon['DIAGNOSIS_DATE_SHIFTED'] = CaSum_pseudo_anon['DIAGNOSIS_DATE_SHIFTED'].dt.strftime('%Y-%m-%d %H:%M:%S')
 CaSum_pseudo_anon['CREATED_TIME'] = CaSum_pseudo_anon['CREATED_TIME'].dt.strftime('%Y-%m-%d %H:%M:%S')
 CaSum_pseudo_anon = CaSum_pseudo_anon.replace(np.nan, None)
 
@@ -499,6 +502,5 @@ df_to_dict = CaSum_pseudo_anon.to_dict(orient='records')
 
 json_data = {**cf.casum_version_ts, "data": df_to_dict}
 
-with open(os.path.join(cf.casum_report_path, 
-                       'CancerSummary_' + cf.casum_version_ts['version'] + '.json'), 'w') as f:
+with open(os.path.join(cf.casum_report_path, 'CancerSummary.json'), 'w') as f:
     json.dump(json_data, f, indent=4)
