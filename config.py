@@ -345,7 +345,7 @@ r0_json_path = json_path + r'\derivation'
 
 r0_json_path_pii = json_path + r'\post_pii'
 
-derivation_json_schemas = json_path +r'\derivation'
+derivation_json_schemas = json_path + r'\derivation'
 
 out_json_path = data_loc + r'\v20260123\Questionnaire\R0'
 

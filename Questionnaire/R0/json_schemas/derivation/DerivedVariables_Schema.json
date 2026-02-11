@@ -286,6 +286,37 @@
       "x-formerName": "bmi_entry",
       "x-calculation": "R0_Weight / ((R0_Height / 100) ^ 2)"
     },
+    "R0_HighestWeight": {
+      "description": "Greatest non-pregnant weight since age 18 (kg).",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 700
+        }
+      ],
+      "x-description": "Derived using priority: 1) Imperial inputs converted to kg (st*6.350293 + lbs*0.45359237) 2) Direct metric input. Uses imperial conversion when both sources exist. If neither valid, defaults to null.",
+      "x-derivedFrom": [
+        "#/$defs/PhysicalDevelopment/properties/R0_HighestWght_St",
+        "#/$defs/PhysicalDevelopment/properties/R0_HighestWght_Lbs",
+        "#/$defs/PhysicalDevelopment/properties/R0_HighestWght_Kg"
+      ],
+      "x-formerName": "bodysizewtgreat",
+      "$comment": "Allow: positive kg value, OR null-missing"
+    },
+    "R0_HighestWeightAge": {
+      "type": ["integer", "null"],
+      "description": "Age at greatest non-pregnant weight since age 18, in whole years.",
+      "x-description": "Transfer from PhysicalDevelopment.R0_HighestWght_Age (no transformation).",
+      "x-derivedFrom": [
+        "#/$defs/PhysicalDevelopment/properties/R0_HighestWght_Age"
+      ],
+      "x-formerName": "bodysizewtgreatage",
+      "minimum": 0
+    },
     "R0_WaistCircum": {
       "description": "Waist circumference in centimeters at baseline.",
       "oneOf": [
