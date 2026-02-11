@@ -1,22 +1,17 @@
 {
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/NewCancerSummary_PseudoAnon.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NewCancerSummary_PseudoAnon",
   "type": "object",
   "properties": {
-    "STUDY_ID": {
-      "type": ["integer"],
-      "description": "Unique participant identifier",
-      "x-description": "Unique participant identifier in the Generations Study. Present in all source datasets as CancerRegistry.STUDY_ID, FlaggingCancers.STUDY_ID, HistoPath_BrCa.STUDY_ID, and HistoPath_OvCa.STUDY_ID. Values are identical across sources and serve as the primary key to link records between datasets. No transformation or source prioritisation required. These are renamed to STUDY_ID to link among the sources",
-      "x-sourcePriority": [
-        "CancerRegistry.STUDY_ID",
-        "FlaggingCancers.STUDY_ID",
-        "HistoPath_BrCa.STUDY_ID",
-        "HistoPath_OvCa.STUDY_ID"
-      ],
-      "minimum": 0,
-      "maximum": 499994
-    },
-    "S_STUDY_ID": {
+    "TCode": {
       "type": ["string"],
-      "description": "Source from which the Study ID is selected in the target dataset. It will be one of the sources from x-sourcePriority for STUDY_ID in order."
+      "description": "Unique participant identifier",
+      "x-description": "Pseudonymised Unique participant identifier in the Generations Study. The field has one to one mapping with STUDY_ID"
+    },
+    "S_TCode": {
+      "type": ["string"],
+      "description": "Source from which TCode is selected in the target dataset."
     },
     "TUMOUR_ID": {
       "type": ["number", "null"],
@@ -31,21 +26,14 @@
       "type": ["string", "null"],
       "description": "Source from which the Tumour ID is selected in the target dataset. It will be one of the sources from x-sourcePriority for TUMOUR_ID."
     },
-    "DIAGNOSIS_DATE": {
+    "DIAGNOSIS_DATE_SHIFTED": {
       "type": ["string"],
       "format": "date-time",
-      "description": "Best estimate of tumour diagnosis date (per tumour). The dates are shifted to psuedo-anonymise the data",
-      "x-description": "Best estimate of the tumour diagnosis date (YYYY-MM-DD). Each participant may have multiple diagnosis dates, one per distinct tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.DIAGNOSIS_DATE; 2)Flagging Cancers - use DIAGNOSIS_DATE; 3) Pathology reports — for breast use HistoPath_BrCa.DIAGNOSIS_DATE ; for ovarian use HistoPath_OvCa.DIAGNOSIS_DATE. These are renamed to DIAGNOSIS_DATE to link among the sources",
-      "x-sourcePriority": [
-        "CancerRegistry.DIAGNOSIS_DATE",
-        "FlaggingCancers.DIAGNOSIS_DATE",
-        "HistoPath_BrCa.DIAGNOSIS_DATE",
-        "HistoPath_OvCa.DIAGNOSIS_DATE"
-      ]
+      "description": "Best estimate of tumour diagnosis date (per tumour). The dates are shifted to pseudo-anonymise the PII data"
     },
-    "S_DIAGNOSIS_DATE": {
+    "S_DIAGNOSIS_DATE_SHIFTED": {
       "type": ["string"],
-      "description": "Source from which Diagnosis Date is selected in the target dataset. It will be one of the sources from x-sourcePriority for DIAGNOSIS_DATE."
+      "description": "Source from which shifted Diagnosis Date is selected in the target dataset."
     },
     "DIAGNOSIS_YEAR": {
       "type": ["integer", "null"],
@@ -62,7 +50,7 @@
     "ICD_CODE": {
       "type": ["string", "null"],
       "description": "ICD-10-O2 site code (4-character) for tumour site.",
-      "x-description": "Primary ICD-10-O2 site code (4-character) describing the site of origin of the neoplasm. Source priority: 1) CancerRegistry.SITE_ICD10_O2 (\"Describes site of origin of the neoplasm\"); 2) FlaggingCancers.CancerICD (\"Cancer ICD code\"). Use the code as provided by the source without recoding. This field is per tumour (TUMOUR_ID). The ICD 9 codes are converted to ICD 10 by referencing https://seer.cancer.gov/tools/conversion/2022/ICD9CM%20to%20ICD10CM.FY2023.11.18.22.pdf (Last access date: 23/10/2025). These are derived in Path report data to link tumours among the sources",
+      "x-description": "Primary ICD-10-O2 site code (4-character) describing the site of origin of the neoplasm. Source priority: 1) CancerRegistry.SITE_ICD10_O2 (\"Describes site of origin of the neoplasm\"); 2) FlaggingCancers.CancerICD (\"Cancer ICD code\"). Use the code as provided by the source without recoding. This field is per tumour (TUMOUR_ID). The ICD 9 codes are converted to ICD 10 by referencing https://seer.cancer.gov/tools/conversion/2022/ICD9CM%20to%20ICD10CM.FY2023.11.18.22.pdf (Last access date: 23/10/2025). ICD_CODE is derived in the program for Path data to link tumours across sources",
       "x-sourcePriority": [
         "CancerRegistry.SITE_ICD10_O2",
         "FlaggingCancers.CancerICD",
@@ -78,14 +66,12 @@
     "MORPH_CODE": {
       "type": ["number", "null"],
       "description": "ICD-O morphology code (tumour histology/behaviour).",
-      "x-description": "ICD-O morphology code describing the histological type/behaviour of the tumour (as provided by the source; may include the behaviour suffix, e.g., \"/2\", \"/3\"). Per tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.HISTOLOGY_CODED (renamed as MORPH_CODE) 2) FlaggingCancers.MORPH_CODE 3) HistoPath_BrCa.MORPH_CODE. Store the code exactly as provided (no recoding). These are renamed to MORPH_CODE to link among the sources",
+      "x-description": "ICD-O morphology code describing the histological type/behaviour of the tumour (as provided by the source; may include the behaviour suffix, e.g., \"/2\", \"/3\"). Per tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.HISTOLOGY_CODED 2) FlaggingCancers.Histology 3) HistoPath_BrCa.ICDMorphologyCode. Store the code exactly as provided (no recoding). These are renamed to MORPH_CODE to link across sources",
       "x-sourcePriority": [
         "CancerRegistry.MORPH_CODE",
         "FlaggingCancers.MORPH_CODE",
         "HistoPath_BrCa.MORPH_CODE"
-      ],
-      "minimum": 8000,
-      "maximum": 99999
+      ]
     },
     "S_MORPH_CODE": {
       "type": ["string", "null"],
@@ -148,7 +134,7 @@
       "description": "Source from which size of the tumour is selected in the target dataset. It will be one of the sources from x-sourcePriority for TUMOUR_SIZE."
     },
     "NODES_TOTAL": {
-      "type": ["number", "null"],
+      "type": ["integer", "null"],
       "description": "Number of lymph nodes examined.",
       "x-description": "Total number of local/regional lymph nodes examined (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.NODESINVOLVED — described in the registry schema as the \"number of local and regional nodes examined.\" Ovarian pathology does not provide node counts. Store as an integer; null if unavailable. 2) Breast pathology: NodesTotal = HistoPath_BrCa.AxillaryNodesTotal + HistoPath_BrCa.OtherNodesTotal (sum; treat nulls as 0 only if at least one component is non-null);",
       "x-sourcePriority": [
@@ -161,7 +147,7 @@
       "description": "Source from which total nodes are selected in the target dataset. It will be one of the sources from x-sourcePriority for NODES_TOTAL."
     },
     "NODES_POSITIVE": {
-      "type": ["number", "null"],
+      "type": ["integer", "null"],
       "description": "Number of lymph nodes positive for metastasis.",
       "x-description": "Number of local/regional lymph nodes positive for metastasis (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.NODESEXCISED — described in the registry schema as the \"number of local and regional nodes reported as being positive.\" Ovarian pathology does not provide node counts. Store as an integer; null if unavailable. 2) Breast pathology: NodesPositive = HistoPath_BrCa.AxillaryNodesPositive + HistoPath_BrCa.OtherNodesPositive (sum; treat nulls as 0 only if at least one component is non-null);",
       "x-sourcePriority": [
@@ -320,7 +306,7 @@
     "LATERALITY": {
       "type": ["string", "null"],
       "description": "Side of body affected (left, right, bilateral, unknown).",
-      "x-description": "Laterality of the tumour (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.LATERALITY (retain registry codes: L, R, M, B, 8, 9). Cancer Registry values take precedence when available; harmonise all values to registry coding. 2) HistoPath_BrCa.LATERALITY (map L/R as-is, U → '9'). These are renamed to STUDY_ID link among the sources",
+      "x-description": "Laterality of the tumour (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.LATERALITY (retain registry codes: L, R, M, B, 8, 9). Cancer Registry values take precedence when available; harmonise all values to registry coding. 2) HistoPath_BrCa.Side (map L/R as-is, U → '9'). These are renamed to LATERALITY link across sources",
       "x-sourcePriority": [
         "CancerRegistry.LATERALITY",
         "HistoPath_BrCa.LATERALITY"        

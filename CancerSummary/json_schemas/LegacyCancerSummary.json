@@ -1,4 +1,7 @@
 {
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/LegacyCancerSummary.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LegacyCancerSummary",
   "type": "object",
   "properties": {
     "firstatsite": {

@@ -1,3 +1,6 @@
+USE [UpLoads]
+GO
+
 SET ANSI_NULLS ON
 GO
 
@@ -6,7 +9,7 @@ GO
 
 CREATE TABLE [dbo].[NewCancerSummary](
 	[STUDY_ID] [int] NOT NULL,
-	[S_STUDY_ID] [nvarchar](100) NOT NULL,
+	[S_STUDY_ID] [nvarchar](100) NULL,
 	[TUMOUR_ID] [bigint] NULL,
 	[S_TUMOUR_ID] [nvarchar](100) NULL,
 	[DIAGNOSIS_DATE] [datetime] NULL,
@@ -44,15 +47,15 @@ CREATE TABLE [dbo].[NewCancerSummary](
 	[S_T_STAGE] [nvarchar](100) NULL,
 	[N_STAGE] [nvarchar](100) NULL,
 	[S_N_STAGE] [nvarchar](100) NULL,
-	[M_STAGE] [varchar](100) NULL,
-	[S_M_STAGE] [varchar](100) NULL,
+	[M_STAGE] [nvarchar](100) NULL,
+	[S_M_STAGE] [nvarchar](100) NULL,
 	[CREATED_TIME] [datetime] NULL,
 	[COMMENTS] [nvarchar](100) NULL,
-	[SUMMARY_ID] [int] IDENTITY(1,1) NOT NULL,
 	[GROUPED_SITE] [nvarchar](100) NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[SUMMARY_ID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+	[TUMOUR_COUNT] [int] NULL,
+	[REPORT_COUNT] [int] NULL,
+	[DIAGNOSIS_YEAR] [int] NULL
+)
 GO
+
+
