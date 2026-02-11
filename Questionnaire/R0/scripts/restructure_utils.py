@@ -437,7 +437,7 @@ def restructure_by_schema(
     has_preg = "Pregnancies" in toplevel_arrays
 
     if warm_resolver:
-        all_keys = {k for rec in (processed_data or []) for k in rec if k != "R0_StudyID"}
+        all_keys = {k for rec in (processed_data or []) for k in rec if k != "StudyID"}
         unresolved = [k for k in all_keys if k not in schema_leaves and k not in variable_mapping]
         try:
             if hasattr(nv, "build_resolver_cache_from_columns"):
@@ -449,7 +449,7 @@ def restructure_by_schema(
     resolved_meta: Dict[str, Tuple[List[str], List[int], Optional[str], Optional[Any]]] = {}
     for rec in (processed_data or []):
         for raw in rec.keys():
-            if raw == "R0_StudyID" or raw in schema_leaves or raw in variable_mapping or raw in resolved_meta:
+            if raw == "StudyID" or raw in schema_leaves or raw in variable_mapping or raw in resolved_meta:
                 continue
             try:
                 m = nv.rename_variable(raw)
@@ -536,11 +536,11 @@ def restructure_by_schema(
         if not isinstance(rec, dict):
             continue
 
-        obj: Dict[str, Any] = {"R0_StudyID": rec.get("R0_StudyID")}
+        obj: Dict[str, Any] = {"StudyID": rec.get("StudyID")}
         level1: Dict[str, Dict[int, dict]] = {arr: {} for arr in toplevel_arrays}
 
         for raw, val in rec.items():
-            if raw == "R0_StudyID":
+            if raw == "StudyID":
                 continue
 
             # Fast path: already a schema leaf (final name)

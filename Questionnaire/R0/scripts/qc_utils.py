@@ -121,7 +121,7 @@ def _deep_iter_fields(record: Any, prefix: str = "") -> Iterable[str]:
     """
     if isinstance(record, dict):
         for k, v in record.items():
-            if k == "R0_StudyID":
+            if k == "StudyID":
                 continue
             path = f"{prefix}.{k}" if prefix else k
             if isinstance(v, (dict, list)):
@@ -385,9 +385,9 @@ def qc_check_variables(
     accounted_dates = sorted([r for r in unmatched_raw if r in accounted_dates_raw])
 
     # StudyID is accounted if TCode present
-    # If the processed JSON contains R0_TCode, then any raw "StudyID" should be treated as accounted.
+    # If the processed JSON contains TCode, then any raw "StudyID" should be treated as accounted.
     accounted_ids: set[str] = set()
-    if "R0_TCode" in processed_leaves and "StudyID" in unmatched_raw:
+    if "TCode" in processed_leaves and "StudyID" in unmatched_raw:
         accounted_ids.add("StudyID")
 
     # Final unaccounted
@@ -449,7 +449,7 @@ def _collect_values_for_processed_leaf(
     If the array instance doesn't exist for a record, we treat the leaf
     as NULL for that record (so nulls are included in frequencies).
 
-    Ignores R0_StudyID / R0_TCode entirely.
+    Ignores StudyID / TCode entirely.
     """
     vals: List[Any] = []
 
@@ -526,7 +526,7 @@ def _collect_values_for_processed_leaf(
     def walk(node: Any):
         if isinstance(node, dict):
             for k, v in node.items():
-                if k in {"R0_StudyID", "R0_TCode"}:
+                if k in {"StudyID", "TCode"}:
                     continue
                 if isinstance(v, (dict, list)):
                     walk(v)
@@ -710,7 +710,7 @@ def _resolver_pairs_instance_expanded(resolver_index: dict) -> Dict[str, List[st
     """
     out: Dict[str, List[str]] = {}
     for r0_leaf, mapping in (resolver_index or {}).items():
-        if r0_leaf in {"R0_StudyID", "R0_TCode"}:
+        if r0_leaf in {"StudyID", "TCode"}:
             continue
         if not isinstance(mapping, dict):
             continue
@@ -981,7 +981,7 @@ def reconcile_value_frequencies(
             print(f"  [map] DATES raw {r} → proc {sorted(raw_to_proc.get(r, set()))}")
 
     # Filter leaves: exclude IDs / tcode
-    skip_proc = {"R0_StudyID", "R0_TCode"}
+    skip_proc = {"StudyID", "TCode"}
     skip_raw = {"StudyID", "TCode"}
 
     results: Dict[str, dict] = {}

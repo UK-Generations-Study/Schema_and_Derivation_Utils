@@ -331,6 +331,7 @@ newQuestionDict = {
     3001: "QuestionnaireCompletionDate"
 }
 
+# IN RDS
 data_loc = 'R:\\_JSON_Data'
 
 schemas_scripts = 'C:\\Users\\tcohen\\OneDrive - The Institute of Cancer Research\Documents\\Misc\\Schema_and_Derivation_Utils'
@@ -339,19 +340,35 @@ schema_derivation = schemas_scripts + r'\Questionnaire\R0'
 
 Delivery_log_path = data_loc + r'\Logs'
 
+schemas_path = schema_derivation + r'\json_schemas'
+
+r0_schemas_derivation = schemas_path + r'\derivation'
+
+r0_schemas_pseudo_anon = schemas_path + r'\pseudo_anon'
+
+derivation_json_schemas = schemas_path + r'\derivation'
+
+out_data_path = data_loc + r'\v20260123\Questionnaire\R0'
+
+derived_data = out_data_path + r'\derived'
+
+minimally_processed = out_data_path + r'\minimally_processed'
+
+
+# IN SAFEHAVEN
+delivery_process = 'N:\CancerEpidem\BrBreakthrough\DeliveryProcess'
+
+schema_derivation = delivery_process + r'\Schema_and_Derivation_utils\\Questionnaire\\R0'
+
+Delivery_log_path = delivery_process + r'\Logs'
+
 json_path = schema_derivation + r'\json_schemas'
 
-r0_json_path = json_path + r'\derivation'
+r0_json_path = json_path + r'\raw'
 
-r0_json_path_pii = json_path + r'\post_pii'
+r0_json_path_pii = json_path + r'\pseudo_anon'
 
-derivation_json_schemas = json_path + r'\derivation'
-
-out_json_path = data_loc + r'\v20260123\Questionnaire\R0'
-
-derived_data = out_json_path + r'\derived'
-
-minimally_processed = out_json_path + r'\minimally_processed'
+out_json_path = delivery_process + r'\Data_Output_Testing'
 
 mock_data_path = schema_derivation + r'\mock_data'
 

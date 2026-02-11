@@ -1,0 +1,443 @@
+{
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/OtherBreastSurgery.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OtherBreastSurgery",
+  "roundID": 1,
+  "type": "object",
+  "properties": {
+    "TCode": {
+      "name": "TCode",
+      "description": "Pseudo-anonymized 8-character study identifier.",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "OtherBreastSurgeries": {
+      "name": "OtherBreastSurgeries",
+      "description": "Details of up to four breast surgeries undertaken for cosmetic or other non-cancer reasons.",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_OtherBreastSurgery_Num": {
+            "name": "R0_OtherBreastSurgery_Num",
+            "description": "Breast surgery sequence number (1st, 2nd, 3rd, or 4th cosmetic/other surgery).",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "R0_CosmeticOther_Surgery": {
+            "questionID": 1309,
+            "name": "R0_CosmeticOther_Surgery",
+            "question": "Have you had the surgery to your breasts for cosmetic or other reasons?",
+            "description": "Indicates whether the participant had this specific cosmetic or other breast surgery episode.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              8,
+              null
+            ],
+            "enumDescriptions": [
+              "0: More than one option chosen.",
+              "1: Yes.",
+              "2: No.",
+              "8: Do not remember.",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              1,
+              2,
+              8
+            ]
+          },
+          "R0_CosmeticOther_Age": {
+            "questionID": 1312,
+            "name": "R0_CosmeticOther_Age",
+            "question": "How old were you when you had this cosmetic or other breast surgery?",
+            "description": "Age of the participant when this cosmetic or other breast surgery was performed.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_CosmeticOther_Type": {
+            "questionID": 1313,
+            "name": "R0_CosmeticOther_Type",
+            "question": "What type of breast operation was performed?",
+            "description": "Type of the cosmetic or other breast surgery.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              null
+            ],
+            "enumDescriptions": [
+              "0: More than one option chosen.",
+              "1: Breast reduction.",
+              "2: Part of breast removed (lump removed).",
+              "3: Breast enlargement.",
+              "4: The whole breast removed.",
+              "5: Aspiration of cyst or fluid drained.",
+              "6: Both breasts removed.",
+              "7: A small sample removed (biopsy).",
+              "8: Other type of breast operation.",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              1002,
+              968,
+              1004,
+              965,
+              1006,
+              967,
+              966,
+              13
+            ]
+          },
+          "R0_CosmeticOther_Breast": {
+            "questionID": 1315,
+            "name": "R0_CosmeticOther_Breast",
+            "question": "In which breast was the surgery performed?",
+            "description": "Which breast(s) the cosmetic or other surgery was performed on.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              null
+            ],
+            "enumDescriptions": [
+              "0: More than one option chosen.",
+              "1: Left.",
+              "2: Right.",
+              "3: Both.",
+              "null: Missing or invalid."
+            ],
+            "answerID": [
+              10,
+              959,
+              960,
+              961
+            ]
+          },
+          "OtherBreastSurgeriesExtra": {
+            "name": "OtherBreastSurgeriesExtra",
+            "description": "Extra details of breast surgeries undertaken for cosmetic or other non-cancer reasons.",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "R0_CosmeticOther_Mnth": {
+                  "questionID": 1321,
+                  "name": "R0_CosmeticOther_Mnth",
+                  "question": "In which month was this cosmetic or other breast surgery performed?",
+                  "description": "Calendar month in which this cosmetic or other breast surgery was performed.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 1,
+                  "maximum": 12
+                },
+                "R0_CosmeticOther_Yr": {
+                  "questionID": 1322,
+                  "name": "R0_CosmeticOther_Yr",
+                  "question": "In which year was this cosmetic or other breast surgery performed?",
+                  "description": "Calendar year in which this cosmetic or other breast surgery was performed.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "R0_CosmeticOther_Reduction": {
+                  "questionID": 1323,
+                  "name": "R0_CosmeticOther_Reduction",
+                  "question": "Was this cosmetic or other breast surgery a breast reduction?",
+                  "description": "Indicates whether the surgery involved breast reduction.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    0,
+                    1,
+                    null
+                  ],
+                  "enumDescriptions": [
+                    "0: No.",
+                    "1: Yes.",
+                    "null: Missing or invalid."
+                  ],
+                  "answerID": [
+                    2,
+                    1
+                  ]
+                },
+                "R0_CosmeticOther_Lump": {
+                  "questionID": 1323,
+                  "name": "R0_CosmeticOther_Lump",
+                  "question": "Did the cosmetic or other breast surgery involve part of the breast being removed (lumpectomy)?",
+                  "description": "Indicates whether the surgery involved part of the breast being removed (lumpectomy).",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    0,
+                    1,
+                    null
+                  ],
+                  "enumDescriptions": [
+                    "0: No.",
+                    "1: Yes.",
+                    "null: Missing or invalid."
+                  ],
+                  "answerID": [
+                    2,
+                    1
+                  ]
+                },
+                "R0_CosmeticOther_Enlargement": {
+                  "questionID": 1323,
+                  "name": "R0_CosmeticOther_Enlargement",
+                  "question": "Was the cosmetic or other breast surgery a breast enlargement?",
+                  "description": "Indicates whether the surgery involved breast enlargement.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    0,
+                    1,
+                    null
+                  ],
+                  "enumDescriptions": [
+                    "0: No.",
+                    "1: Yes.",
+                    "null: Missing or invalid."
+                  ],
+                  "answerID": [
+                    2,
+                    1
+                  ]
+                },
+                "R0_CosmeticOther_Removed": {
+                  "questionID": 1323,
+                  "name": "R0_CosmeticOther_Removed",
+                  "question": "Did the cosmetic or other breast surgery involve removal of the whole breast?",
+                  "description": "Indicates whether the surgery involved removal of the whole breast (mastectomy).",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    0,
+                    1,
+                    null
+                  ],
+                  "enumDescriptions": [
+                    "0: No.",
+                    "1: Yes.",
+                    "null: Missing or invalid."
+                  ],
+                  "answerID": [
+                    2,
+                    1
+                  ]
+                },
+                "R0_CosmeticOther_Aspiration": {
+                  "questionID": 1323,
+                  "name": "R0_CosmeticOther_Aspiration",
+                  "question": "Did the cosmetic or other breast surgery involve aspiration of a cyst or fluid drainage?",
+                  "description": "Indicates whether the surgery involved aspiration of a cyst or drainage of fluid.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    0,
+                    1,
+                    null
+                  ],
+                  "enumDescriptions": [
+                    "0: No.",
+                    "1: Yes.",
+                    "null: Missing or invalid."
+                  ],
+                  "answerID": [
+                    2,
+                    1
+                  ]
+                },
+                "R0_CosmeticOther_BothRemoved": {
+                  "questionID": 1323,
+                  "name": "R0_CosmeticOther_BothRemoved",
+                  "question": "Did the cosmetic or other breast surgery involve both breasts being removed?",
+                  "description": "Indicates whether the surgery involved both breasts being removed.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    0,
+                    1,
+                    null
+                  ],
+                  "enumDescriptions": [
+                    "0: No.",
+                    "1: Yes.",
+                    "null: Missing or invalid."
+                  ],
+                  "answerID": [
+                    2,
+                    1
+                  ]
+                },
+                "R0_CosmeticOther_SmallSample": {
+                  "questionID": 1323,
+                  "name": "R0_CosmeticOther_SmallSample",
+                  "question": "Did the cosmetic or other breast surgery involve a small sample of breast tissue being removed (biopsy)?",
+                  "description": "Indicates whether the surgery involved removal of a small sample of breast tissue (biopsy).",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    0,
+                    1,
+                    null
+                  ],
+                  "enumDescriptions": [
+                    "0: No.",
+                    "1: Yes.",
+                    "null: Missing or invalid."
+                  ],
+                  "answerID": [
+                    2,
+                    1
+                  ]
+                },
+                "R0_CosmeticOther_Other": {
+                  "questionID": 1323,
+                  "name": "R0_CosmeticOther_Other",
+                  "question": "Was the cosmetic or other breast surgery of another type not listed above?",
+                  "description": "Indicates whether the surgery was of another type not covered by the named procedure categories.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    0,
+                    1,
+                    null
+                  ],
+                  "enumDescriptions": [
+                    "0: No.",
+                    "1: Yes.",
+                    "null: Missing or invalid."
+                  ],
+                  "answerID": [
+                    2,
+                    1
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_CosmeticOther_MoreFour": {
+      "questionID": 1365,
+      "name": "brsurgmorex",
+      "question": "More than 4 cosmetic or other breast surgery?",
+      "description": "Indicates whether the participant has had more than four cosmetic or other breast surgeries in total.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: No.",
+        "1: Yes.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        2,
+        1
+      ]
+    },
+    "R0_CosmeticOther_Details": {
+      "questionID": 1316,
+      "name": "Q7_9_8",
+      "question": "If you have had any further breast operations for cosmetic or other reasons, please give details below for up to 4 operations.",
+      "description": "Free-text field capturing any additional information the participant provided about further cosmetic or other breast surgeries other than the first.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Yes.",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        1014
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "TCode"
+  ],
+  "$defs": {
+    "OtherBreastSurgery": {
+      "$ref": "../raw/OtherBreastSurgery_JSON.json"
+    }
+  }
+}

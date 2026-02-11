@@ -553,8 +553,8 @@
       ],
       "x-formerName": "pregparitycnt"
     },
-    "R0_AgeBirthFirst": {
-      "description": "Age at first live birth (years).",
+    "R0_AgeFFTP": {
+      "description": "Age at first full term pregnancy (years).",
       "oneOf": [
         {
           "type": "null"
@@ -577,8 +577,8 @@
       ],
       "x-formerName": "preg1birthage"
     },
-    "R0_AgeBirthLast": {
-      "description": "Age at last live birth (years).",
+    "R0_AgeLFTP": {
+      "description": "Age at last full term pregnancy (years).",
       "oneOf": [
         {
           "type": "null"

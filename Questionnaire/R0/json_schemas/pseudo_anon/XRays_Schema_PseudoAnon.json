@@ -1,0 +1,618 @@
+{
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/XRays.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "XRays",
+  "type": "object",
+  "properties": {
+    "TCode": {
+      "name": "TCode",
+      "description": "Pseudo-anonymized 8-character study identifier.",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "R0_ChestLungXray": {
+      "questionID": 1800,
+      "name": "Q9_1_1_1",
+      "question": "Have you ever had an X-ray to your chest or lungs (such as for asthma or tuberculosis)?",
+      "description": "Whether the participant has ever had a chest or lung X-ray",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "ChestXrayEvents": {
+      "name": "ChestXrayEvents",
+      "description": "Detailed history of chest X-rays",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_ChestXray_Num": {
+            "name": "R0_ChestXray_Num",
+            "description": "Number of X-ray examination or treatment that has been filled out in the questionnaire",
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "U20",
+              "20-39",
+              "40-59",
+              "60+"
+            ]
+          },
+          "R0_ChestXray": {
+            "questionID": 1801,
+            "name": "R0_ChestXray",
+            "question": "Number of chest X-rays",
+            "description": "Total chest X-rays the participant received at age range specified.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_SpineClavicleNeckXray": {
+      "questionID": 1805,
+      "name": "Q9_2_1_1",
+      "question": "Have you ever had an X-ray to your spine, collar bone, or neck?",
+      "description": "Whether the participant has had spine/collarbone/neck X-rays",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_BariumSwallowXray": {
+      "questionID": 1806,
+      "name": "Q9_2_2_1",
+      "question": "Have you ever had a barium swallow?",
+      "description": "Whether the participant has undergone a barium swallow X-ray",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_EsophagusStomachXray": {
+      "questionID": 1807,
+      "name": "Q9_2_3_1",
+      "question": "Have you had an X-ray to your oesophagus or stomach, without a barium swallow?",
+      "description": "Whether the participant has had esophageal/stomach X-rays without barium",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_CoronaryAngiogram": {
+      "questionID": 1808,
+      "name": "Q9_2_4_1",
+      "question": "Have you had a coronary angiogram or angioplasty?",
+      "description": "Whether the participant has undergone coronary angiography/angioplasty",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_LungStomachArteriogram": {
+      "questionID": 1809,
+      "name": "Q9_2_5_1",
+      "question": "Have you had an arteriogram of the lung or stomach?",
+      "description": "Whether the participant has had lung/stomach arteriograms",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_CTChestNeckScan": {
+      "questionID": 1810,
+      "name": "Q9_2_6_1",
+      "question": "Have you had a CT or CAT scan of the chest or neck?",
+      "description": "Whether the participant has had chest/neck CT/CAT scans",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_GallbladderXray": {
+      "questionID": 1811,
+      "name": "Q9_2_7_1",
+      "question": "Have you had an X-ray of your gall bladder (cholecystogram)?",
+      "description": "Whether the participant has had gallbladder X-rays",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_KidneyPyelogramXray": {
+      "questionID": 1812,
+      "name": "Q9_2_8_1",
+      "question": "Have you had an intravenous pyelogram X-ray of kidneys?",
+      "description": "Whether the participant has had kidney pyelogram X-rays",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_FullMouthDentalXray": {
+      "questionID": 1813,
+      "name": "Q9_2_9_1",
+      "question": "Have you had a full-mouth (panoramic) dental X-ray?",
+      "description": "Whether the participant has had panoramic dental X-rays",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_SingleSideDentalXray": {
+      "questionID": 1814,
+      "name": "Q9_2_10_1",
+      "question": "Have you had a large dental X-ray for all teeth on one side of your head?",
+      "description": "Whether the participant has had single-side dental X-rays",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_FluoroscopicChestXray": {
+      "questionID": 1815,
+      "name": "Q9_2_11_1",
+      "question": "Have you had a fluoroscopic chest X-ray after tuberculosis?",
+      "description": "Whether the participant has had post-TB fluoroscopic chest X-rays",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_ChestNeckRadiotherapy": {
+      "questionID": 1816,
+      "name": "Q9_3_1_1",
+      "question": "Have you had chest or neck radiotherapy for Hodgkins disease or other cancer?",
+      "description": "Whether the participant received chest/neck radiotherapy for cancer",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_ChestNeckRadiationOther": {
+      "questionID": 1817,
+      "name": "Q9_3_2_1",
+      "question": "Have you had radiation treatment to the chest or neck for other conditions?",
+      "description": "Whether the participant received chest/neck radiation for non-cancer conditions",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "minimum": 0,
+      "answerID": [
+        10,
+        1,
+        2
+      ]
+    },
+    "XrayEvents": {
+      "name": "XrayEvents",
+      "description": "Detailed history of X-ray examinations/treatments",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_Xray_Num": {
+            "name": "R0_Xray_Num",
+            "description": "Number of X-ray examination or treatment that has been filled out in the questionnaire",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ]
+          },
+          "XrayEventsExtra": {
+            "name": "XrayEventsExtra",
+            "description": "Additional details for X-ray events.",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "R0_XrayAge": {
+                  "questionID": 1839,
+                  "name": "R0_XrayAge",
+                  "question": "Age at time of X-ray",
+                  "description": "Age at time of X-ray for any extra X-ray",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "R0_XRayDate_Shifted": {
+                  "name": "R0_XRayDate_Shifted",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_XrayMonth",
+                    "R0_XrayYear"
+                  ]
+                },
+                "R0_XrayFromAge": {
+                  "questionID": 1841,
+                  "name": "R0_XrayFromAge",
+                  "question": "X-ray occurred from the age of",
+                  "description": "X-ray occurred from the age of for any extra X-ray",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "R0_XrayToAge": {
+                  "questionID": 1842,
+                  "name": "R0_XrayToAge",
+                  "question": "X-ray occurred to the age of",
+                  "description": "X-ray occurred to the age of for any extra X-ray",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "R0_XRay_RangeStart_Shifted": {
+                  "name": "R0_XRay_RangeStart_Shifted",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_XrayFromMth",
+                    "R0_XrayFromYr"
+                  ]
+                },
+                "R0_XRay_RangeEnd_Shifted": {
+                  "name": "R0_XRay_RangeEnd_Shifted",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "R0_XrayToMth",
+                    "R0_XrayToYr"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_XrayMoreEvents": {
+      "questionID": 1833,
+      "name": "Q9_4_more",
+      "question": "If you have done more X-ray examinations or radiation treatments, cross this box",
+      "description": "Whether the participant has additional X-ray events not listed",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Additional events exist",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        2009
+      ]
+    },
+    "R0_XrayMoreThanTwelve": {
+      "questionID": 1951,
+      "name": "xradmorethan",
+      "question": "Have had more than twelve x-ray events",
+      "description": "Whether the participant has had more than 12 X-ray events",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: More than 12 events",
+        "null: Missing or invalid."
+      ],
+      "answerID": [
+        2010
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "TCode"
+  ],
+  "$defs": {
+    "XRays": {
+      "$ref": "../raw/XRays_JSON.json"
+    }
+  }
+}
