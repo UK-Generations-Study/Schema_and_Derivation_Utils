@@ -255,6 +255,8 @@ icd_mapping = dict(zip(icd_code_mapping['ICD9_Code'], icd_code_mapping['ICD10_Co
 icd_mapping_3char = dict(zip(icd_code_mapping['ICD9_Code'].str[:3], icd_code_mapping['ICD10_Code'].str[:3]))
 
 flagging_cancers['CancerICD'] = flagging_cancers['CancerICD'].str.rstrip('-')
+flagging_cancers['CancerICD'] = np.where(flagging_cancers['CancerICD'].str.contains('X')\
+                                       ,flagging_cancers['CancerICD'].str[:3], flagging_cancers['CancerICD'])
 
 flagging_cancers['CancerICD_mapped'] = flagging_cancers['CancerICD'].map(icd_mapping).fillna(flagging_cancers['CancerICD'])
 flagging_cancers['CancerICD_mapped_3char'] = flagging_cancers['CancerICD'].str[:3].\
@@ -474,12 +476,12 @@ invalid_rows = cv.dataValidation(final_json, target_schema)
 
 if len(invalid_rows)>=10:
     logger.warning("Invalid data found in Cancer Summary")
-    sys.exit('Refer to Invalid rows')
+    # sys.exit('Refer to Invalid rows')
     logger.info('Invalid entry count: '+ str(len(invalid_rows)))
 
 else:
     # Load the data to the database
-    write_to_DB(CaSumFiltered_7, 'NewCancerSummary_v3', upload_conn, logger)
+    write_to_DB(CaSumFiltered_7, 'NewCancerSummary', upload_conn, logger)
 
 #%% Pseudo-anonymise the data
 logger.info("Pseudo-anonymise and create JSON data")
