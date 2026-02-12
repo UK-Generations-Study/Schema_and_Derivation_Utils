@@ -351,8 +351,8 @@ def process_dates(data, sid_df, schema, logger, dateDict):
     # Attach per-StudyID day-shift
     random_map = sid_df.set_index('StudyID')['Random'].astype(int).to_dict()
     for record in data:
-        record['R0_StudyID'] = int(record['R0_StudyID'])
-        record['Random'] = random_map.get(record['R0_StudyID'], 0)
+        record['StudyID'] = int(record['StudyID'])
+        record['Random'] = random_map.get(record['StudyID'], 0)
 
     # Utilities for navigating and writing
     def _common_container_prefix(paths):
@@ -492,16 +492,16 @@ def process_dates(data, sid_df, schema, logger, dateDict):
 
 def pseudo_anonymize_studyid(data, sid_df):
     """
-    Replace R0_StudyID with R0_TCode in the data records.
+    Replace StudyID with TCode in the data records.
 
     Uses the SIDCodes mapping to ensure there is a unique TCode per StudyID.
     """
     mapping = sid_df.set_index('StudyID')['TCode'].to_dict()
     new_data = []
     for record in data:
-        new_record = {'R0_TCode': mapping.get(record.get('R0_StudyID'))}
+        new_record = {'TCode': mapping.get(record.get('StudyID'))}
         for key, value in record.items():
-            if key not in ('R0_StudyID', 'R0_TCode'):
+            if key not in ('StudyID', 'TCode'):
                 new_record[key] = value
         new_data.append(new_record)
     return new_data
@@ -510,7 +510,7 @@ def apply_full_pseudo_anonymization(data, server, logger, schema=None, dateDict=
     sid_df = load_sid_codes(server, logger)
     if schema and dateDict:
         for record in data:
-            record['R0_StudyID'] = int(record['R0_StudyID'])
+            record['StudyID'] = int(record['StudyID'])
         data = process_dates(data, sid_df, schema, logger, dateDict)
     data = pseudo_anonymize_studyid(data, sid_df)
     
@@ -534,7 +534,7 @@ def update_schema(old_schema_path, new_schema_path, dateDict, pii_vars, section_
     - Inserts new derived date fields with format "date".
     - Removes PII fields and date components that will not appear in the
       pseudo-anonymised JSON.
-    - Replaces R0_StudyID with R0_TCode in definitions and required lists.
+    - Replaces StudyID with TCode in definitions and required lists.
     - Adds a back-reference to the raw schema under `$defs`.
 
     The resulting schema describes the final, privacy-protected output.
@@ -835,7 +835,7 @@ def update_schema(old_schema_path, new_schema_path, dateDict, pii_vars, section_
                 family_bases=family_bases,
                 preserve_keys=derived_names)
 
-    # Replace StudyID with R0_TCode at top
+    # Replace StudyID with TCode at top
     tcode_property = OrderedDict([
         ("name", "TCode"),
         ("description", "Pseudo-anonymized 8-character study identifier."),
@@ -846,17 +846,17 @@ def update_schema(old_schema_path, new_schema_path, dateDict, pii_vars, section_
 
     top_props = schema.get("properties", OrderedDict())
     new_top = OrderedDict()
-    new_top["R0_TCode"] = tcode_property
+    new_top["TCode"] = tcode_property
     for key, prop in top_props.items():
         if not ("name" in prop and prop["name"] == "StudyID"):
             new_top[key] = prop
     schema["properties"] = new_top
 
     req = schema.get("required", [])
-    if "R0_StudyID" in req:
-        req = [r for r in req if r != "R0_StudyID"]
-    if "R0_TCode" not in req:
-        req.append("R0_TCode")
+    if "StudyID" in req:
+        req = [r for r in req if r != "StudyID"]
+    if "TCode" not in req:
+        req.append("TCode")
     schema["required"] = req
 
     # Add $defs back-reference
@@ -882,29 +882,29 @@ dateDict = dateDict_new = {
     },
     "PhysicalDevelopment": {
         "dateDict": {
-            "R0_RecordedHeight": ["R0_RecHght_Day", "R0_RecHght_Mnth", "R0_RecHght_Yr"]
+            "R0_RecordedHeight_Shifted": ["R0_RecHght_Day", "R0_RecHght_Mnth", "R0_RecHght_Yr"]
         },
         "question_range": "BETWEEN 101 AND 187"
     },
     "Pregnancies": {
         "dateDict": {
-            "R0_PregnancyEndDate": ["R0_Preg_EndDay", "R0_Preg_EndMnth", "R0_Preg_EndYr"]
+            "R0_PregnancyEndDate_Shifted": ["R0_Preg_EndDay", "R0_Preg_EndMnth", "R0_Preg_EndYr"]
         },
         "question_range": "BETWEEN 550 AND 739"
     },
     "MenstrualMenopause": {
         "dateDict": {
-            "R0_TemporaryPeriodStop_Start": ["R0_TempStopFromMth", "R0_TempStopFromYr"],
-            "R0_TemporaryPeriodStop_End": ["R0_TempStopToMth", "R0_TempStopToYr"],
-            "R0_OvaryOperation_Date": ["R0_OvaryOp_Mnth", "R0_OvaryOp_Yr"],
-            "R0_OvaryOperation_RangeStart": ["R0_OvaryOp_StartMnth", "R0_OvaryOp_StartYr"],
-            "R0_OvaryOperation_RangeEnd": ["R0_OvaryOp_EndMnth", "R0_OvaryOp_EndYr"]
+            "R0_TemporaryPeriodStop_Start_Shifted": ["R0_TempStopFromMth", "R0_TempStopFromYr"],
+            "R0_TemporaryPeriodStop_End_Shifted": ["R0_TempStopToMth", "R0_TempStopToYr"],
+            "R0_OvaryOperation_Date_Shifted": ["R0_OvaryOp_Mnth", "R0_OvaryOp_Yr"],
+            "R0_OvaryOperation_RangeStart_Shifted": ["R0_OvaryOp_StartMnth", "R0_OvaryOp_StartYr"],
+            "R0_OvaryOperation_RangeEnd_Shifted": ["R0_OvaryOp_EndMnth", "R0_OvaryOp_EndYr"]
         },
         "question_range": "BETWEEN 400 AND 544"
     },
     "Mammograms": {
         "dateDict": {
-            "R0_Mammogram_Year": ["R0_Mammogram_Yr"]
+            "R0_Mammogram_Year_Shifted": ["R0_Mammogram_Yr"]
         },
         "question_range": "BETWEEN 1101 AND 1110"
     },
@@ -914,36 +914,36 @@ dateDict = dateDict_new = {
     },
     "XRays": {
         "dateDict": {
-            "R0_XRayDate": ["R0_XrayMonth", "R0_XrayYear"],
-            "R0_XRay_RangeStart": ["R0_XrayFromMth", "R0_XrayFromYr"],
-            "R0_XRay_RangeEnd": ["R0_XrayToMth", "R0_XrayToYr"]
+            "R0_XRayDate_Shifted": ["R0_XrayMonth", "R0_XrayYear"],
+            "R0_XRay_RangeStart_Shifted": ["R0_XrayFromMth", "R0_XrayFromYr"],
+            "R0_XRay_RangeEnd_Shifted": ["R0_XrayToMth", "R0_XrayToYr"]
         },
         "question_range": "BETWEEN 1800 AND 1951"
     },
     "BreastDisease": {
         "dateDict": {
-            "R0_BBD_Date": ["R0_BBD_Month", "R0_BBD_Year"],
-            "R0_BBD_RangeStart": ["R0_BBD_FromMnth", "R0_BBD_FromYr"],
-            "R0_BBD_RangeEnd": ["R0_BBD_ToMnth", "R0_BBD_ToYr"]
+            "R0_BBD_Date_Shifted": ["R0_BBD_Month", "R0_BBD_Year"],
+            "R0_BBD_RangeStart_Shifted": ["R0_BBD_FromMnth", "R0_BBD_FromYr"],
+            "R0_BBD_RangeEnd_Shifted": ["R0_BBD_ToMnth", "R0_BBD_ToYr"]
         },
         "question_range": "BETWEEN 1111 AND 1185 OR QuestionID BETWEEN 1366 AND 1370"
     },
     "BreastCancer": {
         "dateDict": {
-            "R0_BreastCancerDiagnosis": ["R0_CancerDiagnosisMonth", "R0_CancerDiagnosisYear"],
-            "R0_Radiotherapy_Start": ["R0_RadiotherapyStartMonth", "R0_RadiotherapyStartYear"],
-            "R0_Radiotherapy_End": ["R0_RadiotherapyEndMonth", "R0_RadiotherapyEndYear"],
-            "R0_BCDrugRegimen_Start": ["R0_BCDrugRegimenStartMonth", "R0_BCDrugRegimenStartYear"],
-            "R0_BCDrugRegimen_End": ["R0_BCDrugRegimenStopMonth", "R0_BCDrugRegimenStopYear"]
+            "R0_BreastCancerDiagnosis_Shifted": ["R0_CancerDiagnosisMonth", "R0_CancerDiagnosisYear"],
+            "R0_Radiotherapy_Start_Shifted": ["R0_RadiotherapyStartMonth", "R0_RadiotherapyStartYear"],
+            "R0_Radiotherapy_End_Shifted": ["R0_RadiotherapyEndMonth", "R0_RadiotherapyEndYear"],
+            "R0_BCDrugRegimen_Start_Shifted": ["R0_BCDrugRegimenStartMonth", "R0_BCDrugRegimenStartYear"],
+            "R0_BCDrugRegimen_End_Shifted": ["R0_BCDrugRegimenStopMonth", "R0_BCDrugRegimenStopYear"]
         },
         "question_range": "BETWEEN 1186 AND 1250"
     },
     "Jobs": {
         "dateDict": {
-            "R0_RadJobStartYear": ["R0_RadJobStartYr1"],
-            "R0_RadJobEndYear": ["R0_RadJobEndYr1"],
-            "R0_NightWorkStart": ["R0_NightWorkStartYr"],
-            "R0_NightWorkEnd": ["R0_NightWorkEndYr"]
+            "R0_RadJobStartYear_Shifted": ["R0_RadJobStartYr1"],
+            "R0_RadJobEndYear_Shifted": ["R0_RadJobEndYr1"],
+            "R0_NightWorkStart_Shifted": ["R0_NightWorkStartYr"],
+            "R0_NightWorkEnd_Shifted": ["R0_NightWorkEndYr"]
         },
         "question_range": "BETWEEN 2050 AND 2070"
     },
@@ -953,56 +953,56 @@ dateDict = dateDict_new = {
     },
     "ContraceptiveHRT": {
         "dateDict": {
-            "R0_ContracepPill_Start": ["R0_ContracepPill_StartMnth", "R0_ContracepPill_StartYr"],
-            "R0_ContracepPill_End":   ["R0_ContracepPill_StopMnth",  "R0_ContracepPill_StopYr"],
-            "R0_OtherContracep_Start": ["R0_OtherContracep_StartMnth", "R0_OtherContracep_StartYr"],
-            "R0_OtherContracep_End":   ["R0_OtherContracep_StopMnth",  "R0_OtherContracep_StopYr"],
-            "R0_HRT_Start": ["R0_HRT_StartMnth", "R0_HRT_StartYr"],
-            "R0_HRT_End":   ["R0_HRT_StopMnth", "R0_HRT_StopYr"],
-            "R0_OtherSexHormones_Start": ["R0_OtherSexHrmn_StartMnth", "R0_OtherSexHrmn_StartYr"],
-            "R0_OtherSexHormones_End": ["R0_OtherSexHrmn_StopMnth", "R0_OtherSexHrmn_StopYr"]
+            "R0_ContracepPill_Start_Shifted": ["R0_ContracepPill_StartMnth", "R0_ContracepPill_StartYr"],
+            "R0_ContracepPill_End_Shifted":   ["R0_ContracepPill_StopMnth",  "R0_ContracepPill_StopYr"],
+            "R0_OtherContracep_Start_Shifted": ["R0_OtherContracep_StartMnth", "R0_OtherContracep_StartYr"],
+            "R0_OtherContracep_End_Shifted":   ["R0_OtherContracep_StopMnth",  "R0_OtherContracep_StopYr"],
+            "R0_HRT_Start_Shifted": ["R0_HRT_StartMnth", "R0_HRT_StartYr"],
+            "R0_HRT_End_Shifted":   ["R0_HRT_StopMnth", "R0_HRT_StopYr"],
+            "R0_OtherSexHormones_Start_Shifted": ["R0_OtherSexHrmn_StartMnth", "R0_OtherSexHrmn_StartYr"],
+            "R0_OtherSexHormones_End_Shifted": ["R0_OtherSexHrmn_StopMnth", "R0_OtherSexHrmn_StopYr"]
         },
         "question_range": "BETWEEN 801 AND 1015"
     },
     "CancerRelatives": {
         "dateDict": {
-            "R0_FatherDOB": ["R0_FatherDOB_Day", "R0_FatherDOB_Month", "R0_FatherDOB_Year"],
-            "R0_FatherCancerDate": ["R0_FatherCancerYear"],
-            "R0_FatherDeathDate": ["R0_FatherDOD_Day", "R0_FatherDOD_Month", "R0_FatherDOD_Year"],
-            "R0_MotherDOB": ["R0_MotherDOB_Day", "R0_MotherDOB_Month", "R0_MotherDOB_Year"],
-            "R0_MotherCancerDate": ["R0_MotherCancerYear"],
-            "R0_MotherDeathDate": ["R0_MotherDOD_Day", "R0_MotherDOD_Month", "R0_MotherDOD_Year"],
-            "R0_SiblingDOB": ["R0_Sibling_DOB_Day", "R0_Sibling_DOB_Month", "R0_Sibling_DOB_Year"],
-            "R0_SiblingCancerYear": ["R0_Sibling_CancerYear"],
-            "R0_ChildCancerDOB": ["R0_Child_DOB_Day", "R0_Child_DOB_Month", "R0_Child_DOB_Year"],
-            "R0_ChildCancerDate": ["R0_Child_CancerYear"]
+            "R0_FatherDOB_Shifted": ["R0_FatherDOB_Day", "R0_FatherDOB_Month", "R0_FatherDOB_Year"],
+            "R0_FatherCancerDate_Shifted": ["R0_FatherCancerYear"],
+            "R0_FatherDeathDate_Shifted": ["R0_FatherDOD_Day", "R0_FatherDOD_Month", "R0_FatherDOD_Year"],
+            "R0_MotherDOB_Shifted": ["R0_MotherDOB_Day", "R0_MotherDOB_Month", "R0_MotherDOB_Year"],
+            "R0_MotherCancerDate_Shifted": ["R0_MotherCancerYear"],
+            "R0_MotherDeathDate_Shifted": ["R0_MotherDOD_Day", "R0_MotherDOD_Month", "R0_MotherDOD_Year"],
+            "R0_SiblingDOB_Shifted": ["R0_Sibling_DOB_Day", "R0_Sibling_DOB_Month", "R0_Sibling_DOB_Year"],
+            "R0_SiblingCancerYear_Shifted": ["R0_Sibling_CancerYear"],
+            "R0_ChildCancerDOB_Shifted": ["R0_Child_DOB_Day", "R0_Child_DOB_Month", "R0_Child_DOB_Year"],
+            "R0_ChildCancerDate_Shifted": ["R0_Child_CancerYear"]
         },
         "question_range": "BETWEEN 2500 AND 2734"
     },
     "MH_Illnesses": {
         "dateDict": {
-            "R0_HipFractureYear": ["R0_BrokenHip_Yr"],
-            "R0_EatingDisorderDoctor_Start": ["R0_ED_DrStartMth", "R0_ED_DrStartYr"],
-            "R0_EatingDisorder_2": ["R0_ED_StartMth", "R0_ED_StartYr"],
-            "R0_EatingDisorder_2_RangeStart": ["R0_ED_FromMth", "R0_ED_FromYr"],
-            "R0_EatingDisorder_2_RangeEnd": ["R0_ED_ToMth", "R0_ED_ToMthYr"]
+            "R0_HipFractureYear_Shifted": ["R0_BrokenHip_Yr"],
+            "R0_EatingDisorderDoctor_Start_Shifted": ["R0_ED_DrStartMth", "R0_ED_DrStartYr"],
+            "R0_EatingDisorder_2_Shifted": ["R0_ED_StartMth", "R0_ED_StartYr"],
+            "R0_EatingDisorder_2_RangeStart_Shifted": ["R0_ED_FromMth", "R0_ED_FromYr"],
+            "R0_EatingDisorder_2_RangeEnd_Shifted": ["R0_ED_ToMth", "R0_ED_ToMthYr"]
         },
         "question_range": "BETWEEN 1426 AND 1546"
     },
     "MH_CancersBenignTumors": {
         "dateDict": {
-            "R0_OtherCancerDiagnosisYear": ["R0_OtherCancerDiagnosisYr"]
+            "R0_OtherCancerDiagnosisYear_Shifted": ["R0_OtherCancerDiagnosisYr"]
         },
         "question_range": "BETWEEN 1400 AND 1416"
     },
     "MH_DrugsSupplements": {
         "dateDict": {
-            "R0_Aspirin_Start": ["R0_AspririnStartMthEp", "R0_AspirinStartYrEp"],
-            "R0_Aspirin_End": ["R0_AspririnEndMthEp", "R0_AspirinEndYrEp"],
-            "R0_Ibuprofen_Start": ["R0_IbuprofenStartMthEp", "R0_IbuprofenStartYrEp"],
-            "R0_Ibuprofen_End": ["R0_IbuprofenEndMthEp", "R0_IbuprofenEndYrEp"],
-            "R0_OtherPainkillers_Start": ["R0_OtherPainkillersStartMth", "R0_OtherPainkillersStartYr"],
-            "R0_OtherPainkillers_End": ["R0_OtherPainkillersEndMth", "R0_OtherPainkillersEndYr"]
+            "R0_Aspirin_Start_Shifted": ["R0_AspririnStartMthEp", "R0_AspirinStartYrEp"],
+            "R0_Aspirin_End_Shifted": ["R0_AspririnEndMthEp", "R0_AspirinEndYrEp"],
+            "R0_Ibuprofen_Start_Shifted": ["R0_IbuprofenStartMthEp", "R0_IbuprofenStartYrEp"],
+            "R0_Ibuprofen_End_Shifted": ["R0_IbuprofenEndMthEp", "R0_IbuprofenEndYrEp"],
+            "R0_OtherPainkillers_Start_Shifted": ["R0_OtherPainkillersStartMth", "R0_OtherPainkillersStartYr"],
+            "R0_OtherPainkillers_End_Shifted": ["R0_OtherPainkillersEndMth", "R0_OtherPainkillersEndYr"]
         },
         "question_range": "BETWEEN 1600 AND 1742"
     },
@@ -1012,8 +1012,8 @@ dateDict = dateDict_new = {
     },
     "OtherLifestyleFactors": {
         "dateDict": {
-            "R0_AircrewTravel_Start": ["R0_AricrewTravelStartYear"],
-            "R0_AircrewTravel_End": ["R0_AricrewTravelEndYear"]
+            "R0_AircrewTravel_Start_Shifted": ["R0_AricrewTravelStartYear"],
+            "R0_AircrewTravel_End_Shifted": ["R0_AricrewTravelEndYear"]
         },
         "question_range": "BETWEEN 2400 AND 2433"
     }

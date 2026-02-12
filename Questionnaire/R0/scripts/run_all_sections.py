@@ -168,7 +168,7 @@ def run_section(q_sect: str):
     save_output(pii_data, f"{q_sect}_piimask", logger, stage="s3_piimask")
 
     # -------------------- PII schema (once per section) --------------------
-    schema_pii_json = os.path.join(r0_json_path_pii, f"{q_sect}_Schema_PII.json")
+    schema_pii_json = os.path.join(r0_json_path_pii, f"{q_sect}_Schema_PseudoAnon.json")
 
     if not os.path.exists(schema_pii_json):
         update_schema(
@@ -179,7 +179,7 @@ def run_section(q_sect: str):
             q_sect,
         )
 
-    schema_pii = load_schema(r0_json_path_pii, f"{q_sect}_Schema_PII")
+    schema_pii = load_schema(r0_json_path_pii, f"{q_sect}_Schema_PseudoAnon")
     validate_data(pii_data, schema_pii, schema_pii_json)
 
     # -------------------- QC summaries --------------------
@@ -207,7 +207,7 @@ def run_section(q_sect: str):
     )
 
     # Final anon drop without PII mask label
-    save_output(anon_data, f"{q_sect}_anon", logger, stage="s4_anon")
+    save_output(anon_data, f"{q_sect}_PseudoAnon", logger, stage="s4_anon")
 
     logger.info(f"=== Finished section: {q_sect} ===\n")
 
