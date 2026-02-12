@@ -215,7 +215,7 @@
       "questionID": 559,
       "name": "Q5_3_2",
       "question": "If you have ever been pregnant, how many pregnancies have you had in total?",
-      "description": "The number of pregnancies the participant has had in total. Maximum is max number of pregnancies in cohort for baseline questionnaire.",
+      "description": "The number of pregnancies the participant has had in total.",
       "type": [
         "integer",
         "null"
@@ -390,7 +390,7 @@
             "questionID": 566,
             "name": "R0_Preg_DurationWks",
             "question": "Length of pregnancy (weeks).",
-            "description": "Length in weeks of the participant's pregnancy. Maximum set at 54 as longest pregnancy recorded in UK was 375 days.",
+            "description": "Length in weeks of the participant's pregnancy.",
             "type": [
               "integer",
               "null"
@@ -500,7 +500,7 @@
             "questionID": 570,
             "name": "R0_Preg_BirthWghtG",
             "question": "Birthweight of child from pregnancy, if known. Grams",
-            "description": "The birthweight of the child from the participant's pregnancy in grams. Maximum set to equivalent of grams for 15 pounds, 8 ounces.",
+            "description": "The birthweight of the child from the participant's pregnancy in grams.",
             "type": [
               "integer",
               "null"
@@ -511,7 +511,7 @@
             "questionID": 571,
             "name": "R0_Preg_BirthWghtlbs",
             "question": "Birthweight of child from pregnancy, if known. Pounds",
-            "description": "The birthweight of the child from the participant's pregnancy in pounds.. Maximum set at 15 pounds as heaviest recorded birth in UK was 15 pounds, 8 ounces.",
+            "description": "The birthweight of the child from the participant's pregnancy in pounds.",
             "type": [
               "integer",
               "null"
@@ -615,7 +615,7 @@
       "questionID": 732,
       "name": "Q5_23_ST",
       "question": "What was your weight at the beginning of your first pregnancy? Stone.",
-      "description": "The participant's weight in stone at the start of their first pregnancy. Maximum set at 48 as heaviest recorded woman UK was 48 stone.",
+      "description": "The participant's weight in stone at the start of their first pregnancy.",
       "type": [
         "integer",
         "null"
@@ -637,7 +637,7 @@
       "questionID": 734,
       "name": "Q5_23_KG",
       "question": "What was your weight at the beginning of your first pregnancy? Kilograms.",
-      "description": "The participant's weight in kilograms at the start of their first pregnancy. Maximum set at 305 as heaviest recorded woman UK was 48 stone.",
+      "description": "The participant's weight in kilograms at the start of their first pregnancy.",
       "type": [
         "integer",
         "null"
@@ -648,7 +648,7 @@
       "questionID": 735,
       "name": "Q5_24_ST",
       "question": "What was your weight at the beginning of your last pregnancy? Stone.",
-      "description": "The participant's weight in stone at the start of their last pregnancy. Maximum set at 48 as heaviest recorded woman UK was 48 stone.",
+      "description": "The participant's weight in stone at the start of their last pregnancy.",
       "type": [
         "integer",
         "null"
@@ -670,7 +670,7 @@
       "questionID": 737,
       "name": "Q5_24_KG",
       "question": "What was your weight at the beginning of your last pregnancy? Kilograms.",
-      "description": "The participant's weight in kilograms at the start of their last pregnancy. Maximum set at 305 as heaviest recorded woman UK was 48 stone.",
+      "description": "The participant's weight in kilograms at the start of their last pregnancy.",
       "type": [
         "integer",
         "null"

@@ -5,7 +5,7 @@
   "round": 1,
   "type": "object",
   "properties": {
-    "R0_TCode": {
+    "TCode": {
       "description": "Pseudo-anonymized 8-character study identifier.",
       "type": "string",
       "minLength": 8,
@@ -1337,7 +1337,7 @@
       "x-formerName": "famprostaten"
     }
   },
-  "required": ["R0_TCode"],
+  "required": ["TCode"],
   "additionalProperties": false,
   "$defs": {
     "Mailing": {
