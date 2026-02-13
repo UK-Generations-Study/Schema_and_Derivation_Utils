@@ -1,23 +1,19 @@
 {
-  "$id": "https://www.breakthroughgenerations.org.uk/schemas/DerivedVariables.json",
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/AdminEvents.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "DerivedVariables",
-  "round": 1,
+  "title": "AdminEvents",
   "type": "object",
   "properties": {
     "TCode": {
       "description": "Pseudo-anonymized 8-character study identifier.",
       "type": "string",
       "minLength": 8,
-      "maxLength": 8,
-      "x-derivedFrom": [
-
-      ]
+      "maxLength": 8
     },
     "AgeEntry": {
       "description": "Age at entry to study.",
       "type": [
-        "integer", 
+        "integer",
         "null"
       ],
       "x-description": "Using the best DOB, ADOB in the General table in Mailing, and when the questionnaire was received, values of 6 in the Events table, to create Age at Entry. This variable is derived directly from raw data and the references to variables it is derived from is not another schema, they are references to the SQL database->table->column.",
@@ -31,7 +27,7 @@
     "DOB_Shifted": {
       "description": "Shifted date of birth",
       "type": [
-        "string", 
+        "string",
         "null"
       ],
       "x-description": "Taken from the fields ADOB in the General SQL table in the Mailing database. This variable is derived directly from raw data and the references to variables it is derived from is not another schema, they are references to the SQL database->table->column.",
@@ -44,7 +40,7 @@
     "YOB": {
       "description": "Unshifted year of birth.",
       "type": [
-        "integer", 
+        "integer",
         "null"
       ],
       "x-description": "The year of the DOB before it is shifted for pseudo-anonymization. This variable is derived directly from raw data and the references to variables it is derived from is not another schema, they are references to the SQL database->table->column.",
@@ -56,7 +52,7 @@
     "EntryDate_Shifted": {
       "description": "Shifted date of entry into the study.",
       "type": [
-        "string", 
+        "string",
         "null"
       ],
       "x-description": "Shifted date of questionnaire completion, or if no date of completion, the date the questionnaire was received.",
@@ -69,7 +65,7 @@
     "EntryYear": {
       "description": "Actual year of entry into the study.",
       "type": [
-        "integer", 
+        "integer",
         "null"
       ],
       "x-description": "Actual year of questionnaire completion, or if no date of completion, the date the questionnaire was received.",
@@ -77,8 +73,118 @@
         "Mailing/Events/"
       ],
       "x-formerName": "date_entry_shifted"
+    },
+    "R1Completion": {
+      "description": "From Mailing.dbo.TrueYear.R1Completion.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
+      "x-derivedFrom": [
+        "Mailing/TrueYear/R1Completion"
+      ]
+    },
+    "R1Received": {
+      "description": "From Mailing.dbo.TrueYear.R1Received.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
+      "x-derivedFrom": [
+        "Mailing/TrueYear/R1Received"
+      ]
+    },
+    "R1BloodReceived": {
+      "description": "From Mailing.dbo.TrueYear.R1BloodReceived.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
+      "x-derivedFrom": [
+        "Mailing/TrueYear/R1BloodReceived"
+      ]
+    },
+    "R2Completion": {
+      "description": "From Mailing.dbo.TrueYear.R2Completion.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
+      "x-derivedFrom": [
+        "Mailing/TrueYear/R2Completion"
+      ]
+    },
+    "R2Received": {
+      "description": "From Mailing.dbo.TrueYear.R2Received.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
+      "x-derivedFrom": [
+        "Mailing/TrueYear/R2Received"
+      ]
+    },
+    "R3Completion": {
+      "description": "From Mailing.dbo.TrueYear.R3Completion.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
+      "x-derivedFrom": [
+        "Mailing/TrueYear/R3Completion"
+      ]
+    },
+    "R3Received": {
+      "description": "From Mailing.dbo.TrueYear.R3Received.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
+      "x-derivedFrom": [
+        "Mailing/TrueYear/R3Received"
+      ]
+    },
+    "R4Completion": {
+      "description": "From Mailing.dbo.TrueYear.R4Completion.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
+      "x-derivedFrom": [
+        "Mailing/TrueYear/R4Completion"
+      ]
+    },
+    "R4Received": {
+      "description": "From Mailing.dbo.TrueYear.R4Received.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
+      "x-derivedFrom": [
+        "Mailing/TrueYear/R4Received"
+      ]
     }
   },
-  "required": ["TCode"],
+  "required": [
+    "TCode"
+  ],
   "additionalProperties": false
 }
