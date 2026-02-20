@@ -1,0 +1,437 @@
+{
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/BreastTumourLink.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BreastTumourLink",
+  "type": "object",
+  "properties": {
+    "StudyID": {
+      "name": "StudyID",
+      "description": "Unique 6-digit identifier for each participant in the study.",
+      "type": [
+        "number"
+      ],
+      "minLength": 6,
+      "maxLength": 6
+    },
+    "TumourTracking": {
+      "name": "TumourTracking",
+      "description": "All data taken from the TumourTracking table in the Pathology database.",
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "properties": {
+          "TrackID": {
+            "name": "TrackID",
+            "description": "Unique number to track the tumours entry in the tumourTracking table.",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "RequestCount": {
+            "name": "RequestCount",
+            "description": "Number for tumour request.",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "TrackSide": {
+            "name": "TrackSide",
+            "description": "Log of laterality for bilaterals",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 10
+          },
+          "Material": {
+            "name": "Material",
+            "description": "Type of material received from hospital",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 255
+          },
+          "MaterialID": {
+            "name": "MaterialID",
+            "description": "Hospital tumour block ID",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 255
+          },
+          "BoxNo": {
+            "name": "BoxNo",
+            "description": "Box number holding tumour block",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 255
+          },
+          "LabID": {
+            "name": "LabID",
+            "description": "Study ID and Labno combined",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 255
+          },
+          "LabNo": {
+            "name": "LabNo",
+            "description": "Unique number for block or slide",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "BlockSide": {
+            "name": "BlockSide",
+            "description": "Laterality for the block",
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "L",
+              "R"
+            ],
+            "enumDescriptions": [
+              "L: Left",
+              "R: Right"
+            ],
+            "maxLength": 1
+          },
+          "TumourCount": {
+            "name": "TumourCount",
+            "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour, eg a patient with 2 tumours will have 2 rows with TumourCount=1 and TumourCount=2. No missing values allowed",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "ReportCount": {
+            "name": "ReportCount",
+            "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "BlockComments": {
+            "name": "BlockComments",
+            "description": "Comments on the block for lab purpose",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 255
+          },
+          "LabTracking": {
+            "name": "LabTracking",
+            "description": "All data taken from the LabTracking table in the Pathology database. This table is related to TumourTracking by the LabNo variable.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "type": "object",
+              "properties": {
+                "LabNo": {
+                  "name": "LabNo",
+                  "description": "Unique number for block or slide",
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "LabID": {
+                  "name": "LabID",
+                  "description": "Study ID and Labno combined",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 255
+                },
+                "LabSampleID": {
+                  "name": "LabSampleID",
+                  "description": "Unique sample ID",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 50
+                },
+                "LabSampleType": {
+                  "name": "LabSampleType",
+                  "description": "Type of the sample",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "enum": [
+                    "Core",
+                    "ThickSection",
+                    "ThinSection"
+                  ],
+                  "enumDescriptions": [
+                    "Core: Core needle biopsy",
+                    "ThickSection: Thick section",
+                    "ThinSection: Thin section"
+                  ],
+                  "maxLength": 20
+                },
+                "LabSampleDate": {
+                  "name": "LabSampleDate",
+                  "description": "Date sample created",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time",
+                  "maxLength": 23
+                },
+                "Scan": {
+                  "name": "Scan",
+                  "description": "Indicates completeness of Round1 scanned data",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 4
+                },
+                "ScanDate": {
+                  "name": "ScanDate",
+                  "description": "Date of scan",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time",
+                  "maxLength": 23
+                },
+                "LabComments": {
+                  "name": "LabComments",
+                  "description": "Comments from the lab",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 255
+                },
+                "ERIntensity": {
+                  "name": "ERIntensity",
+                  "description": "Pathology Lab ER intensity receptor result",
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "ER%Positive": {
+                  "name": "ER%Positive",
+                  "description": "Pathology Lab ER % positive recptor result",
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "Shipped": {
+                  "name": "Shipped",
+                  "description": "Sample shipped to collaborator",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 1
+                },
+                "DateShipped": {
+                  "name": "DateShipped",
+                  "description": "Date sample(s) shipped off site from BioDock",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time",
+                  "maxLength": 23
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "TMAs": {
+            "name": "TMAs",
+            "description": "All data taken from the TMAMapping table in the Pathology database. This table is related to TumourTracking by the LabNo variable.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "type": "object",
+              "properties": {
+                "ArrayIDFull": {
+                  "name": "ArrayIDFull",
+                  "description": "Full Tissue Microarray ID including section markers",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 100
+                },
+                "ArrayID": {
+                  "name": "ArrayID",
+                  "description": "Tissue Microarray ID",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 50
+                },
+                "ArrayNo": {
+                  "name": "ArrayNo",
+                  "description": "Tissue microarray ID identifying number",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 3
+                },
+                "ArraySister": {
+                  "name": "ArraySister",
+                  "description": "TMA sister identifier",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 1
+                },
+                "ArraySection": {
+                  "name": "ArraySection",
+                  "description": "TMA Section ID number",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 3
+                },
+                "XAxis": {
+                  "name": "XAxis",
+                  "description": "X axis coordinate",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 2
+                },
+                "YAxis": {
+                  "name": "YAxis",
+                  "description": "Y axis coordinate",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "TMACoreID": {
+                  "name": "TMACoreID",
+                  "description": "Unique core id, orientation core or 'empty' for each coordinate",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 50
+                },
+                "TMAMarker": {
+                  "name": "TMAMarker",
+                  "description": "Receptor marker",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 20
+                },
+                "LabNo": {
+                  "name": "LabNo",
+                  "description": "Unique number for block or slide",
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "SampleType": {
+                  "name": "SampleType",
+                  "description": "Type of sample received - blood or urine",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 50
+                },
+                    "TMAResult": {
+                  "name": "TMAResult",
+                  "description": "Quality check for TMAs with prefix BGS",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 100
+                },
+                "Annotation": {
+                  "name": "Annotation",
+                  "description": "Annotation for TMAs with prefix GS",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 10
+                },
+                "DonorCoreHeight": {
+                  "name": "DonorCoreHeight",
+                  "description": "Core height recorded by arrayer for TMAs with prefix GS excluding megas",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "StatusLog": {
+                  "name": "StatusLog",
+                  "description": "Status of the TMA",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 1
+                },
+                "TMANotes": {
+                  "name": "TMANotes",
+                  "description": "Notes added fot Tissue MicroArray",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 255
+                },
+                "TMADateAdded": {
+                  "name": "TMADateAdded",
+                  "description": "Date when TMA is added to the table",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time",
+                  "maxLength": 23
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "StudyID"
+  ],
+  "additionalProperties": false
+}

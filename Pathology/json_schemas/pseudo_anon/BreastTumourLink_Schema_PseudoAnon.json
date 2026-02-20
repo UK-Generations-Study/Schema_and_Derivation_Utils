@@ -1,0 +1,233 @@
+{
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/BreastTumourLink_PseudoAnon.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BreastTumourLink_PseudoAnon",
+  "type": "object",
+  "properties": {
+    "TCode": {
+      "name": "TCode",
+      "description": "Pseudoanonymised participant identifier (TCode) replacing StudyID. Derived from SIDCodes mapping.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-formerName": "StudyID"
+    },
+    "TumourTracking": {
+      "name": "TumourTracking",
+      "description": "All data taken from the TumourTracking table in the Pathology database.",
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "properties": {
+          "LabNo": {
+            "name": "LabNo",
+            "description": "Unique number for block or slide",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "LATERALITY": {
+            "name": "LATERALITY",
+            "description": "Laterality for the block",
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "L",
+              "R"
+            ],
+            "enumDescriptions": [
+              "L: Left",
+              "R: Right"
+            ],
+            "maxLength": 1,
+            "x-formerName": "BlockSide"
+          },
+          "TUMOUR_COUNT": {
+            "name": "TUMOUR_COUNT",
+            "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour, eg a patient with 2 tumours will have 2 rows with TumourCount=1 and TumourCount=2. No missing values allowed",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "x-formerName": "TumourCount"
+          },
+          "REPORT_COUNT": {
+            "name": "REPORT_COUNT",
+            "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "x-formerName": "ReportCount"
+          },
+          "CoreBiopsy_Flag": {
+            "name": "CoreBiopsy_Flag",
+            "description": "Flag indicating whether the block was core biopsy or not.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1,
+            "x-derivedFrom": [
+              "#/properties/TumourTracking/items/properties/BlockComments"
+            ],
+            "x-description": "Derived from TumourTracking.BlockComments using regex:\n^(?!.*(?i:with\\s+cores?|core.*missing|core.*rec['’]?d\\s+earlier))(?=.*(?i:core)).*$\nRule: BlockComments must contain 'core' (case-insensitive), but excludes text implying the core is elsewhere ('with core' / 'with cores'), missing ('core...missing'), or previously received ('core...rec'd earlier' / 'core...recd earlier')."
+          },
+          "MegaBlock_Flag": {
+            "name": "MegaBlock_Flag",
+            "description": "Flag indicating whether the block was mega block or not.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1,
+            "x-derivedFrom": [
+              "#/properties/TumourTracking/items/properties/BlockComments"
+            ],
+            "x-description": "Derived from TumourTracking.BlockComments: set to 1 if BlockComments contains substring 'mega' (case-insensitive), else 0."
+          },
+          "LymphNodes_Flag": {
+            "name": "LymphNodes_Flag",
+            "description": "Flag indicating whether the block was lymph node related or not.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1,
+            "x-derivedFrom": [
+              "#/properties/TumourTracking/items/properties/BlockComments"
+            ],
+            "x-description": "Derived from TumourTracking.BlockComments: set to 1 if BlockComments contains any of the following terms (case-insensitive): 'node', 'nodes', 'axillary clearance', 'axillary sample'; else 0."
+          },
+          "LabTracking": {
+            "name": "LabTracking",
+            "description": "All data taken from the LabTracking table in the Pathology database. This table is related to TumourTracking by the LabNo variable.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "type": "object",
+              "properties": {
+                "LabSampleType": {
+                  "name": "LabSampleType",
+                  "description": "Type of the sample",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "enum": [
+                    "Core",
+                    "ThickSection",
+                    "ThinSection"
+                  ],
+                  "enumDescriptions": [
+                    "Core: Core needle biopsy",
+                    "ThickSection: Thick section",
+                    "ThinSection: Thin section"
+                  ],
+                  "maxLength": 20
+                },
+                "Scan": {
+                  "name": "Scan",
+                  "description": "Indicates completeness of Round1 scanned data",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 4
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "TMAs": {
+            "name": "TMAs",
+            "description": "All data taken from the TMAMapping table in the Pathology database. This table is related to TumourTracking by the LabNo variable.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "type": "object",
+              "properties": {
+                "ArrayID": {
+                  "name": "ArrayID",
+                  "description": "Tissue Microarray ID",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 50
+                },
+                "ArrayNo": {
+                  "name": "ArrayNo",
+                  "description": "Tissue microarray ID identifying number",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 3
+                },
+                "ArraySister": {
+                  "name": "ArraySister",
+                  "description": "TMA sister identifier",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 1
+                },
+                "ArraySection": {
+                  "name": "ArraySection",
+                  "description": "TMA Section ID number",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 3
+                },
+                "XAxis": {
+                  "name": "XAxis",
+                  "description": "X axis coordinate",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 2
+                },
+                "YAxis": {
+                  "name": "YAxis",
+                  "description": "Y axis coordinate",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "TMACoreID": {
+                  "name": "TMACoreID",
+                  "description": "Unique core id, orientation core or 'empty' for each coordinate",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 50
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "TCode"
+  ],
+  "additionalProperties": false
+}
