@@ -435,6 +435,16 @@
               8
             ]
           },
+          "R0_HRT_Name": {
+            "questionID": 829,
+            "name": "R0_HRT_Name",
+            "question": "please give the name of the Hormone preparation",
+            "description": "Name of HRT preparation used by participant",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
           "R0_HRT_StartAge": {
             "questionID": 830,
             "name": "R0_HRT_StartAge",
@@ -648,6 +658,16 @@
               5,
               6,
               7
+            ]
+          },
+          "R0_OtherSexHrmn_Name": {
+            "questionID": 844,
+            "name": "R0_OtherSexHrmn_Name",
+            "question": "please give the name of the other type of sex hormone treatment or preparation",
+            "description": "Name of hormone preparation used",
+            "type": [
+              "string",
+              "null"
             ]
           },
           "R0_OtherSexHrmn_StartAge": {
