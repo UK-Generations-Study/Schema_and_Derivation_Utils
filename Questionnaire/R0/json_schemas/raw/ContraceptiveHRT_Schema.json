@@ -4,7 +4,7 @@
   "title": "ContraceptiveHRT",
   "type": "object",
   "properties": {
-    "R0_StudyID": {
+    "StudyID": {
       "name": "StudyID",
       "description": "Unique 6-digit identifier for each participant in the study.",
       "type": [

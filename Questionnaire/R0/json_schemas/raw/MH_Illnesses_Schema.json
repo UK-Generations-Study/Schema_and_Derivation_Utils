@@ -5,7 +5,7 @@
   "roundID": 1,
   "type": "object",
   "properties": {
-    "R0_StudyID": {
+    "StudyID": {
       "name": "StudyID",
       "description": "Unique 6-digit identifier for the participant.",
       "type": [
