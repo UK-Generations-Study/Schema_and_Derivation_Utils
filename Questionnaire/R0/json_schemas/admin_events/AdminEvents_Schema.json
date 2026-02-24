@@ -30,6 +30,7 @@
         "string",
         "null"
       ],
+      "format": "date",
       "x-description": "Taken from the fields ADOB in the General SQL table in the Mailing database. This variable is derived directly from raw data and the references to variables it is derived from is not another schema, they are references to the SQL database->table->column.",
       "x-derivedFrom": [
         "Mailing/General/ADOB",
@@ -55,6 +56,7 @@
         "string",
         "null"
       ],
+      "format": "date",
       "x-description": "Shifted date of questionnaire completion, or if no date of completion, the date the questionnaire was received.",
       "x-derivedFrom": [
         "Mailing/Events/EventDate",

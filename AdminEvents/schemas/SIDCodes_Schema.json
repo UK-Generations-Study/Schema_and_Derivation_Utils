@@ -1,0 +1,118 @@
+{
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/SIDCodes.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SIDCodes",
+  "type": "object",
+  "description": "Identifying codes table for participants in the study. Linked to Study ID in teh Safehaven SidCodes table in the Mailing database.",
+  "properties": {
+    "KCode": {
+      "name": "KCode",
+      "description": "Pseudo-anonymised ID for Mammographic images received via IEP CC study",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "JCode": {
+      "name": "JCode",
+      "description": "Pseudo-anonymised ID for BCAC",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "MCode": {
+      "name": "MCode",
+      "description": "Pseudo-anonymised ID for Mammographic images for BIRAS",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "LCode": {
+      "name": "LCode",
+      "description": "Pseudo-anonymised ID for GD datasets sent to UMass for B2Risk",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "NCode": {
+      "name": "NCode",
+      "description": "Pseudo-anonymised ID for Nightingale cohort collaboration",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "TCode": {
+      "name": "TCode",
+      "description": "Pseudo-anonymised ID for RDS work",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "PCode": {
+      "name": "PCode",
+      "description": "Pseudo-anonymised ID for Cambridge TMA project",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "QCode": {
+      "name": "QCode",
+      "description": "Pseudo-anonymised ID for Master Students RDS work",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "RCode": {
+      "name": "RCode",
+      "description": "Pseudo-anonymised ID for Endogenous Hormones and Breast Cancer Collaborative Group (EHBCCG) Oxford assay data",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "SCode": {
+      "name": "SCode",
+      "description": "Pseudo-anonymised ID for Regeneron Project",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "ICode": {
+      "name": "ICode",
+      "description": "Pseudo-anonymised ID for mammographic images",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "Ccode": {
+      "name": "CCode",
+      "description": "Pseudo-anonymised ID for ctDNA Study",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
+    }
+  },
+  "additionalProperties": false
+}
