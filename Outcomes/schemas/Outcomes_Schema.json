@@ -1,0 +1,480 @@
+{
+  "$id": "https://www.breakthroughgenerations.org.uk/schemas/Outcomes.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Outcomes",
+  "type": "object",
+  "description": "Combined outcomes dataset including follow up, deaths, recurrence and treatment variables.",
+  "properties": {
+    "StudyID": {
+      "name": "StudyID",
+      "description": "Unique 6-digit identifier for each participant in the study.",
+      "type": ["number"],
+      "minLength": 6,
+      "maxLength": 6
+    },
+    "fupca_start": {
+      "name": "fupca_start",
+      "description": "Date at start of follow-up for cohort analyses.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-description": "Date based on date of receipt of baseline questionnaire."
+    },
+    "fupca_end": {
+      "name": "fupca_end",
+      "description": "Date at end of follow-up.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-description": "In this version of the follow-up, the flagging is considered comprehensive for majority of cohort to 01-Jan-2023 (i.e. about a year before we received the flagging data because the flagging data in recent years is not complete).  Therefore majority of cohort are considered followed to 01-Jan-2023.  The others have end follow-up at death, embarkation, of questionnaire completion."
+    },
+    "fupca_end_reason": {
+      "name": "fupca_end_reason",
+      "description": "Reason for end of follow-up.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "x-description": "End of follow-up reason is either death of exit from the NHS (an embarkation), or completion of appropriate follow-up questionnaire (with end date based on date questionnaire was due back), or being covered by 'flagging' to 01-Jan-2023.  The order in which these are assigned is important, else follow-up is biased; the SAS code handles this.",
+      "enum": [
+        10,
+        20,
+        21,
+        22,
+        23,
+        30,
+        88,
+        null
+      ],
+      "enumDescriptions": [
+        "10: Full follow-up by questionnaire to due date",
+        "20: Full follow-up by flagging to due date (questionnaire not received)",
+        "21: Partial follow-up by flagging to flag date (questionnaire not received)",
+        "22: Full follow-up by flagging to death date (prior to due date)",
+        "23: Full follow-up by flagging to exit date (prior to due date)",
+        "30: Reduced follow-up to earlier questionnaire (no later flagging)",
+        "88: Excluded: no baseline questionnaire",
+        "null: Missing or invalid."
+      ]
+    },
+    "vital_status": {
+      "name": "vital_status",
+      "description": "Ever known to be deceased based on information available at processing date.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "x-description": "",
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Not known to be deceased",
+        "1: Deceased",
+        "null: Missing or invalid."
+      ]
+    },
+    "Confirmed_death": {
+      "name": "Confirmed_death",
+      "description": "Confirmed death via flagging.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Death reported by relative, not yet confirmed in flagging",
+        "1: Death confirmed in flagging",
+        "null: Missing or invalid."
+      ]
+    },
+    "DOD": {
+      "name": "DOD",
+      "description": "Date of death.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "UCCode": {
+      "name": "UCCode",
+      "description": "Underlying cause of death ICD-10 code.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "Reported_Cause_gs": {
+      "name": "Reported_Cause_gs",
+      "description": "Reported cause of death when death is not from flagging.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "Reported_source_gs": {
+      "name": "Reported_source_gs",
+      "description": "Source for reported deaths.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "date_received_death": {
+      "name": "date_received_death",
+      "description": "Received date of death notification.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "region_death": {
+      "name": "region_death",
+      "description": "Region of death.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "notes_death": {
+      "name": "notes_death",
+      "description": "Notes on the death.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "BC_death_confirmed": {
+      "name": "BC_death_confirmed",
+      "description": "Breast cancer death flag.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Death from other causes or reported by relative",
+        "1: Breast cancer death confirmed in flagging (ICD 10 C50)",
+        "null: Missing or invalid."
+      ],
+      "x-description": "UCCode = ICD10 C50 from confirmed deaths only."
+    },
+    "tumour_id": {
+      "name": "tumour_id",
+      "description": "Tumour identifier. Recurrence and treatment variables are related to this tumour ID.",
+      "type": [
+        "string",
+        "null"
+      ],
+       "x-description": "Source is newcasummary."
+    },
+    "recurrence_flag": {
+      "name": "recurrence_flag",
+      "description": "Breast Cancer Recurrence (local or distant) flag for particpants with first primary breast cancer (invasive and insitu).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Participant had distant or local recurrence of first primary breast cancer",
+        "null: Missing or invalid."
+      ],
+      "x-description": "Derived from routine collected health datasets using procedure from Kilburn et al 2025 doi: 10.1186/s13063-025-09085-1."
+    },
+    "date_firstrec": {
+      "name": "date_firstrec",
+      "description": "Date of first breast cancer recurrence (local or distant).",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "rec_both_flg": {
+      "name": "rec_both_flg",
+      "description": "Participant had both distant and local breast cancer recurrence flag.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Participant had both distant and local recurrence",
+        "null: Missing or invalid."
+      ]
+    },
+    "firstrec_type": {
+      "name": "firstrec_type",
+      "description": "Type of first breast cancer recurrence (local/distant).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        "Distant",
+        "Local",
+        null
+      ],
+      "enumDescriptions": [
+        "Distant: First recurrence was distant recurrence",
+        "Local: First recurrence was local recurrence",
+        "null: Missing or invalid."
+      ],
+      "x-description": "Distant recurrence was identified predominately by direct indicators of metastases (e.g. ICD10 codes C77X-79X). Local recurrence was identified via relevant surgeries' OPCS4 codes. See Kilburn et al 2025 for details."
+    },
+    "firstrec_local_flg": {
+      "name": "firstrec_local_flg",
+      "description": "First breast cancer recurrence was local local recurrence.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Flag for First recurrence was local recurrence",
+        "null: Missing or invalid."
+      ],
+      "x-description": "Note local recurrence is reported to have lower sensitivity. See Kilburn et al 2025 for details."
+    },
+    "date_locrec": {
+      "name": "date_locrec",
+      "description": "Date of local breast cancer recurrence.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "firstrec_dist_flg": {
+      "name": "firstrec_dist_flg",
+      "description": "First breast cancer recurrence was distant recurrence flag].",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "1: Flag for First recurrence was distant recurrence",
+        "null: Missing or invalid."
+      ],
+      "x-description": "See Kilburn et al 2025 for details."
+    },
+    "date_distrec": {
+      "name": "date_distrec",
+      "description": "Date of distant breast cancer recurrence.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "distrec_source": {
+      "name": "distrec_source",
+      "description": "Source of distant breast cancer recurrence.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-description": "See Kilburn et al 2025 for details."
+    },
+    "dg_to_firstrec": {
+      "name": "dg_to_firstrec",
+      "description": "Time from diagnosis to first breast cancer recurrence",
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "firstrec_5y_flag": {
+      "name": "firstrec_5y_flag",
+      "description": "Breast cancer recurrence was within 5 years of diagnosis flag.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: First recurrence was at least 5 years after diagnosis",
+        "1: First recurrence withing the first 5 years after diagnosis",
+        "null: Missing or invalid."
+      ]
+    },
+    "brca_surgery_type": {
+      "name": "brca_surgery_type",
+      "description": "Type of breast cancer surgery.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": [
+        "1: breast conserving surgery",
+        "2: Mastectomy",
+        "3: No/Not recorded cancer registry",
+        "null: Missing or invalid."
+      ]
+    },
+    "brca_surgery_date": {
+      "name": "brca_surgery_date",
+      "description": "Ever had radiotherapy for breast cancer.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "brca_surgery_year": {
+      "name": "brca_surgery_year",
+      "description": "Ever had chemotherapy for breast cancer.",
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "brca_radiotherapy": {
+      "name": "brca_radiotherapy",
+      "description": "Ever had hormone therapy for breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Did not have radiotherapy",
+        "1: Had radiotherapy",
+        "null: Missing or invalid."
+      ]
+    },
+    "brca_RT_start": {
+      "name": "brca_RT_start",
+      "description": "Ever had neoadjuvant chemotherapy for breast cancer.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "brca_RT_year": {
+      "name": "brca_RT_year",
+      "description": "Year of chemotherapy for breast cancer.",
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "brca_chemo": {
+      "name": "brca_chemo",
+      "description": "Year of first breast cancer surgery.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Did not have chemotherapy",
+        "1: Had chemotherapy",
+        "null: Missing or invalid."
+      ]
+    },
+    "brca_chemo_start": {
+      "name": "brca_chemo_start",
+      "description": "Year of radiotherapy for breast cancer.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "brca_chemo_start_year": {
+      "name": "brca_chemo_start_year",
+      "description": "Date of first radiotherapy treatment for breast cancer.",
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "brca_hormonetherapy": {
+      "name": "brca_hormonetherapy",
+      "description": "Date of first chemotherapy treatment for breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Did not have hormone therapy",
+        "1: Had hormone therapy",
+        "null: Missing or invalid."
+      ]
+    },
+    "brca_neoadju_chemo": {
+      "name": "brca_neoadju_chemo",
+      "description": "Date of first surgery for breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": [
+        "0: Did not have neoadjuvant chemotherapy",
+        "1: Had neoadjuvant chemotherapy",
+        "null: Missing or invalid."
+      ]
+    }
+  },
+  "additionalProperties": false
+}
