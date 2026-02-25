@@ -27,7 +27,7 @@
       "description": "Source from which the Tumour ID is selected in the target dataset. It will be one of the sources from x-sourcePriority for TUMOUR_ID."
     },
     "DIAGNOSIS_DATE_SHIFTED": {
-      "type": ["string"],
+      "type": ["string", "null"],
       "format": "date-time",
       "description": "Best estimate of tumour diagnosis date (per tumour). The dates are shifted to pseudo-anonymise the PII data"
     },

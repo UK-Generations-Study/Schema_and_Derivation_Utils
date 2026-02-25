@@ -5,16 +5,18 @@
   "type": "object",
   "description": "Combined outcomes dataset including follow up, deaths, recurrence and treatment variables.",
   "properties": {
-    "StudyID": {
-      "name": "StudyID",
-      "description": "Unique 6-digit identifier for each participant in the study.",
-      "type": ["number"],
-      "minLength": 6,
-      "maxLength": 6
+    "TCode": {
+      "name": "TCode",
+      "description": "Pseudo-anonymized 8-character study identifier.",
+      "type": [
+        "string"
+      ],
+      "minLength": 8,
+      "maxLength": 8
     },
-    "fupca_start": {
-      "name": "fupca_start",
-      "description": "Date at start of follow-up for cohort analyses.",
+    "fupca_start_shifted": {
+      "name": "fupca_start_shifted",
+      "description": "Shifted date at start of follow-up for cohort analyses.",
       "type": [
         "string",
         "null"
@@ -22,9 +24,9 @@
       "format": "date",
       "x-description": "Date based on date of receipt of baseline questionnaire."
     },
-    "fupca_end": {
-      "name": "fupca_end",
-      "description": "Date at end of follow-up.",
+    "fupca_end_shifted": {
+      "name": "fupca_end_shifted",
+      "description": "Shifted date at end of follow-up.",
       "type": [
         "string",
         "null"
@@ -98,9 +100,9 @@
         "null: Missing or invalid."
       ]
     },
-    "DOD": {
-      "name": "DOD",
-      "description": "Date of death.",
+    "DOD_shifted": {
+      "name": "DOD_shifted",
+      "description": "Shifted date of death.",
       "type": [
         "string",
         "null"
@@ -131,9 +133,9 @@
         "null"
       ]
     },
-    "date_received_death": {
-      "name": "date_received_death",
-      "description": "Received date of death notification.",
+    "date_received_death_shifted": {
+      "name": "date_received_death_shifted",
+      "description": "Shifted received date of death notification.",
       "type": [
         "string",
         "null"
@@ -179,7 +181,7 @@
       "name": "tumour_id",
       "description": "Tumour identifier. Recurrence and treatment variables are related to this tumour ID.",
       "type": [
-        "string",
+        "integer",
         "null"
       ],
        "x-description": "Source is newcasummary."
@@ -201,9 +203,9 @@
       ],
       "x-description": "Derived from routine collected health datasets using procedure from Kilburn et al 2025 doi: 10.1186/s13063-025-09085-1."
     },
-    "date_firstrec": {
-      "name": "date_firstrec",
-      "description": "Date of first breast cancer recurrence (local or distant).",
+    "date_firstrec_shifted": {
+      "name": "date_firstrec_shifted",
+      "description": "Shifted date of first breast cancer recurrence (local or distant).",
       "type": [
         "string",
         "null"
@@ -230,7 +232,7 @@
       "name": "firstrec_type",
       "description": "Type of first breast cancer recurrence (local/distant).",
       "type": [
-        "integer",
+        "string",
         "null"
       ],
       "enum": [
@@ -262,9 +264,9 @@
       ],
       "x-description": "Note local recurrence is reported to have lower sensitivity. See Kilburn et al 2025 for details."
     },
-    "date_locrec": {
-      "name": "date_locrec",
-      "description": "Date of local breast cancer recurrence.",
+    "date_locrec_shifted": {
+      "name": "date_locrec_shifted",
+      "description": "Shifted date of local breast cancer recurrence.",
       "type": [
         "string",
         "null"
@@ -288,9 +290,9 @@
       ],
       "x-description": "See Kilburn et al 2025 for details."
     },
-    "date_distrec": {
-      "name": "date_distrec",
-      "description": "Date of distant breast cancer recurrence.",
+    "date_distrec_shifted": {
+      "name": "date_distrec_shifted",
+      "description": "Shifted date of distant breast cancer recurrence.",
       "type": [
         "string",
         "null"
@@ -352,9 +354,9 @@
         "null: Missing or invalid."
       ]
     },
-    "brca_surgery_date": {
-      "name": "brca_surgery_date",
-      "description": "Ever had radiotherapy for breast cancer.",
+    "brca_surgery_date_shifted": {
+      "name": "brca_surgery_date_shifted",
+      "description": "Shifted date of first surgery for breast cancer.",
       "type": [
         "string",
         "null"
@@ -363,15 +365,15 @@
     },
     "brca_surgery_year": {
       "name": "brca_surgery_year",
-      "description": "Ever had chemotherapy for breast cancer.",
+      "description": "Year of first breast cancer surgery (real year).",
       "type": [
-        "number",
+        "integer",
         "null"
       ]
     },
     "brca_radiotherapy": {
       "name": "brca_radiotherapy",
-      "description": "Ever had hormone therapy for breast cancer.",
+      "description": "Ever had radiotherapy for breast cancer.",
       "type": [
         "integer",
         "null"
@@ -387,9 +389,9 @@
         "null: Missing or invalid."
       ]
     },
-    "brca_RT_start": {
-      "name": "brca_RT_start",
-      "description": "Ever had neoadjuvant chemotherapy for breast cancer.",
+    "brca_RT_start_shifted": {
+      "name": "brca_RT_start_shifted",
+      "description": "Shifted date of first radiotherapy treatment for breast cancer.",
       "type": [
         "string",
         "null"
@@ -398,15 +400,15 @@
     },
     "brca_RT_year": {
       "name": "brca_RT_year",
-      "description": "Year of chemotherapy for breast cancer.",
+      "description": "Year of radiotherapy for breast cancer (real year).",
       "type": [
-        "number",
+        "integer",
         "null"
       ]
     },
     "brca_chemo": {
       "name": "brca_chemo",
-      "description": "Year of first breast cancer surgery.",
+      "description": "Ever had chemotherapy for breast cancer.",
       "type": [
         "integer",
         "null"
@@ -422,9 +424,9 @@
         "null: Missing or invalid."
       ]
     },
-    "brca_chemo_start": {
-      "name": "brca_chemo_start",
-      "description": "Year of radiotherapy for breast cancer.",
+    "brca_chemo_start_shifted": {
+      "name": "brca_chemo_start_shifted",
+      "description": "Shifted date of first chemotherapy treatment for breast cancer.",
       "type": [
         "string",
         "null"
@@ -433,15 +435,15 @@
     },
     "brca_chemo_start_year": {
       "name": "brca_chemo_start_year",
-      "description": "Date of first radiotherapy treatment for breast cancer.",
+      "description": "Year of chemotherapy for breast cancer (real year).",
       "type": [
-        "number",
+        "integer",
         "null"
       ]
     },
     "brca_hormonetherapy": {
       "name": "brca_hormonetherapy",
-      "description": "Date of first chemotherapy treatment for breast cancer.",
+      "description": "Ever had hormone therapy for breast cancer.",
       "type": [
         "integer",
         "null"
@@ -459,7 +461,7 @@
     },
     "brca_neoadju_chemo": {
       "name": "brca_neoadju_chemo",
-      "description": "Date of first surgery for breast cancer.",
+      "description": "Ever had neoadjuvant chemotherapy for breast cancer.",
       "type": [
         "integer",
         "null"
