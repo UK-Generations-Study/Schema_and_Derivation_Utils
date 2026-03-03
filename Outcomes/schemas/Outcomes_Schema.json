@@ -16,7 +16,7 @@
     },
     "fupca_start_shifted": {
       "name": "fupca_start_shifted",
-      "description": "Shifted date at start of follow-up for cohort analyses.",
+      "description": "Shifted start of follow-up date.",
       "type": [
         "string",
         "null"
@@ -26,7 +26,7 @@
     },
     "fupca_end_shifted": {
       "name": "fupca_end_shifted",
-      "description": "Shifted date at end of follow-up.",
+      "description": "Shifted end of follow-up date.",
       "type": [
         "string",
         "null"
@@ -65,7 +65,7 @@
     },
     "vital_status": {
       "name": "vital_status",
-      "description": "Ever known to be deceased based on information available at processing date.",
+      "description": "Known to be deceased based on the information received.",
       "type": [
         "integer",
         "null"

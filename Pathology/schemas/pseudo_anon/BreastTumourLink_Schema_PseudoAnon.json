@@ -15,7 +15,7 @@
     },
     "TumourTracking": {
       "name": "TumourTracking",
-      "description": "All data taken from the TumourTracking table in the Pathology database.",
+      "description": "Tracking of all the tumour blocks and slides receive as part of a tumour block request.",
       "type": "array",
       "minItems": 0,
       "items": {
@@ -149,7 +149,7 @@
           },
           "TMAs": {
             "name": "TMAs",
-            "description": "All data taken from the TMAMapping table in the Pathology database. This table is related to TumourTracking by the LabNo variable.",
+            "description": "Details of arrays, TMA cores, and TMA samples created from tumour blocks.",
             "type": "array",
             "minItems": 0,
             "items": {
@@ -157,7 +157,7 @@
               "properties": {
                 "ArrayID": {
                   "name": "ArrayID",
-                  "description": "Tissue Microarray ID",
+                  "description": "Tissue Microarray ID without the section details",
                   "type": [
                     "string",
                     "null"
@@ -193,7 +193,7 @@
                 },
                 "XAxis": {
                   "name": "XAxis",
-                  "description": "X axis coordinate",
+                  "description": "X axis coordinate of TMA",
                   "type": [
                     "string",
                     "null"
@@ -202,7 +202,7 @@
                 },
                 "YAxis": {
                   "name": "YAxis",
-                  "description": "Y axis coordinate",
+                  "description": "Y axis coordinate of TMA",
                   "type": [
                     "number",
                     "null"
