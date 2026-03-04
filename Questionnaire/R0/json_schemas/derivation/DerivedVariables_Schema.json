@@ -98,7 +98,7 @@
       "enumDescriptions": [
         "0: No.",
         "1: Yes.",
-        "999: NA",
+        "9999: Not Applicable",
         "null: Unknown."
       ],
       "answerID": [
@@ -107,9 +107,9 @@
         6
       ],
       "x-derivedFrom": [
-        "#/$defs/Mailing/properties/DOB",
+        "#/$defs/AdminEvents/properties/DOB",
         "#/$defs/PregnanciesPII/properties/Pregnancies/R0_PregnancyEndDate",
-        "#/$defs/Mailing/properties/AgeEntry",
+        "#/$defs/AdminEvents/properties/AgeEntry",
         "#/$defs/PregnanciesPII/properties/R0_CurrentPreg"
       ],
       "x-formerName": ""
@@ -121,7 +121,7 @@
           "type": "null"
         },
         {
-          "const": 999,
+          "const": 9999,
           "description": "NA"
         },
         {
@@ -147,7 +147,7 @@
           "type": "null"
         },
         {
-          "const": 999,
+          "const": 9999,
           "description": "NA"
         },
         {
@@ -173,7 +173,7 @@
           "type": "null"
         },
         {
-          "const": 999,
+          "const": 9999,
           "description": "NA"
         },
         {
@@ -187,8 +187,8 @@
       "x-derivedFrom": [
         "#/properties/R0_Height20",
         "#/properties/R0_Weight20",
-        "#/$defs/Mailing/properties/Age_Entry",
-        "#/$defs/Mailing/properties/DOB",
+        "#/$defs/AdminEvents/properties/Age_Entry",
+        "#/$defs/AdminEvents/properties/DOB",
         "#/$defs/PregnanciesPII/properties/Pregnancies/R0_PregnancyEndDate",
         "#/$defs/PregnanciesPII/properties/Pregnancies/R0_Preg_DurationWks"
       ],
@@ -268,7 +268,7 @@
           "type": "null"
         },
         {
-          "const": 999,
+          "const": 9999,
           "description": "NA"
         },
         {
@@ -362,7 +362,7 @@
           "type": "null"
         },
         {
-          "const": 999,
+          "const": 9999,
           "description": "NA"
         },
         {
@@ -431,7 +431,7 @@
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StartAge",
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StopAge",
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_CurrentUse",
-        "#/$defs/Mailing/properties/Age_Entry"
+        "#/$defs/AdminEvents/properties/Age_Entry"
       ],
       "x-formerName": "ocstatus"
     },
@@ -442,7 +442,7 @@
           "type": "null"
         },
         {
-          "const": 999,
+          "const": 9999,
           "description": "NA"
         },
         {
@@ -464,7 +464,7 @@
           "type": "null"
         },
         {
-          "const": 999,
+          "const": 9999,
           "description": "NA"
         },
         {
@@ -476,7 +476,7 @@
       "x-description": "For former users, latest stop age across ContracepPill episodes that end on/before entry; for current, take age at entry, or never, null.",
       "x-derivedFrom": [
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StopAge",
-        "#/$defs/Mailing/properties/Age_Entry"
+        "#/$defs/AdminEvents/properties/Age_Entry"
       ],
       "x-formerName": "ocLage"
     },
@@ -487,7 +487,7 @@
           "type": "null"
         },
         {
-          "const": 999,
+          "const": 9999,
           "description": "NA"
         },
         {
@@ -501,7 +501,7 @@
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StartAge",
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_StopAge",
         "#/$defs/ContraceptiveHRT/properties/ContracepPill/items/properties/R0_ContracepPill_CurrentUse",
-        "#/$defs/Mailing/properties/Age_Entry"
+        "#/$defs/AdminEvents/properties/Age_Entry"
       ],
       "x-formerName": "oclength"
     },
@@ -560,7 +560,7 @@
           "type": "null"
         },
         {
-          "const": 999,
+          "const": 9999,
           "description": "NA"
         },
         {
@@ -571,7 +571,7 @@
       ],
       "x-description": "Computed from the participant's DOB and the earliest pregnancy end date among live-birth pregnancies: whole years at the date of that birth (subtract 1 if the birthday in that calendar year had not yet occurred). 999 (NA) if no live-birth pregnancies or dates.",
       "x-derivedFrom": [
-        "#/$defs/Mailing/properties/DOB",
+        "#/$defs/AdminEvents/properties/DOB",
         "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_PregnancyEndDate",
         "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_Outcome"
       ],
@@ -584,7 +584,7 @@
           "type": "null"
         },
         {
-          "const": 999,
+          "const": 9999,
           "description": "NA"
         },
         {
@@ -595,7 +595,7 @@
       ],
       "x-description": "Same calculation as age at first birth, but using the latest pregnancy end date among live-birth pregnancies. 999 (NA) if no live-birth pregnancies or dates.",
       "x-derivedFrom": [
-        "#/$defs/Mailing/properties/DOB",
+        "#/$defs/AdminEvents/properties/DOB",
         "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_PregnancyEndDate",
         "#/$defs/PregnanciesPII/properties/Pregnancies/items/properties/R0_Preg_Outcome"
       ],
@@ -639,7 +639,7 @@
       "enumDescriptions": [
         "0: No",
         "1: Yes",
-        "999: Not Applicable",
+        "9999: Not Applicable",
         "null: Missing or invalid."
       ],
       "x-description": "Set to 1 if the summed breastfeeding duration across live-birth pregnancies is > 0 months; 0 if explicitly reported as 0 weeks across all live-birth pregnancies; null if there is no breastfeeding information: 999 (NA) if never a live-birth.",
@@ -745,7 +745,7 @@
       "description": "Menopausal status at baseline.",
       "x-description": "Variable uses questionnaire variable.",
       "x-derivedFrom": [
-        "#/$defs/Mailing/properties/Age_Entry",
+        "#/$defs/AdminEvents/properties/Age_Entry",
         "#/$defs/MenstrualMenopause/properties/R0_EverHadPeriods",
         "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedPerm",
         "#/$defs/MenstrualMenopause/properties/R0_HRTPeriodsUnclear",
@@ -783,7 +783,7 @@
       "description": "Age at menopause (years).",
       "x-description": "Uses questionnaire variable as best answer, or if no answer available, variable takes into account reported operations, cancer treatments, HRT and OC use. Assumed age 51 years when menopause is masked by hysterectomy or HRT use.",
       "x-derivedFrom": [
-        "#/$defs/Mailing/properties/Age_Entry",
+        "#/$defs/AdminEvents/properties/Age_Entry",
         "#/$defs/MenstrualMenopause/properties/R0_EverHadPeriods",
         "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedPerm",
         "#/$defs/MenstrualMenopause/properties/R0_HRTPeriodsUnclear",
@@ -806,7 +806,7 @@
       "description": "Reason periods stopped.",
       "x-description": "Uses questionnaire variable. If no other information given then answer unknown.",
       "x-derivedFrom": [
-        "#/$defs/Mailing/properties/Age_Entry",
+        "#/$defs/AdminEvents/properties/Age_Entry",
         "#/$defs/MenstrualMenopause/properties/R0_EverHadPeriods",
         "#/$defs/MenstrualMenopause/properties/R0_PeriodsStoppedPerm",
         "#/$defs/MenstrualMenopause/properties/R0_HRTPeriodsUnclear",
@@ -876,7 +876,7 @@
         "#/$defs/ContraceptiveHRT/properties/HRT/items/properties/R0_HRT_StartAge",
         "#/$defs/ContraceptiveHRT/properties/HRT/items/properties/R0_HRT_StopAge",
         "#/$defs/ContraceptiveHRT/properties/HRT/items/properties/R0_HRT_CurrentUse",
-        "#/$defs/Mailing/properties/Age_Entry"
+        "#/$defs/AdminEvents/properties/Age_Entry"
       ],
       "x-formerName": "hrtstatus",
       "enum": [
@@ -951,7 +951,7 @@
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholSherry",
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholSpirits",
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholOther",
-        "#/$defs/Mailing/properties/Age_Entry"
+        "#/$defs/AdminEvents/properties/Age_Entry"
       ],
       "x-formerName": "R1alcoholstatus",
       "enum": [
@@ -1009,7 +1009,7 @@
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholSpirits",
         "#/$defs/AlcoholSmokingDiet/properties/AlcoholConsumption/items/properties/R0_AlcoholOther",
         "#/$defs/AlcoholSmokingDiet/properties/R0_AlcoholCurrentUse",
-        "#/$defs/Mailing/properties/Age_Entry"
+        "#/$defs/AdminEvents/properties/Age_Entry"
       ],
       "x-formerName": "R1alcoholunits",
       "minimum": 0
@@ -1028,7 +1028,7 @@
         "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingStopAge",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_CigaretteConsumption_Num",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_Cigarettes",
-        "#/$defs/Mailing/properties/Age_Entry"
+        "#/$defs/AdminEvents/properties/Age_Entry"
       ],
       "x-formerName": "R1smokingstatus",
       "enum": [
@@ -1081,7 +1081,7 @@
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_CigaretteConsumption_Num",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_Cigarettes",
         "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingCurrentUse",
-        "#/$defs/Mailing/properties/Age_Entry"
+        "#/$defs/AdminEvents/properties/Age_Entry"
       ],
       "x-formerName": "R1smokingcigs",
       "minimum": 0
@@ -1098,7 +1098,7 @@
         "#/$defs/AlcoholSmokingDiet/properties/R0_SmokingStopAge",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_CigaretteConsumption_Num",
         "#/$defs/AlcoholSmokingDiet/properties/CigaretteConsumption/items/properties/R0_Cigarettes",
-        "#/$defs/Mailing/properties/Age_Entry"
+        "#/$defs/AdminEvents/properties/Age_Entry"
       ],
       "x-formerName": "R1smokingpackyears",
       "minimum": 0,
@@ -1340,8 +1340,8 @@
   "required": ["TCode"],
   "additionalProperties": false,
   "$defs": {
-    "Mailing": {
-      "$ref": "Mailing_Schema.json"
+    "AdminEvents": {
+      "$ref": "AdminEvents_Schema.json"
     },
     "GeneralInformation": { 
       "$ref": "GeneralInformation_Schema.json"
