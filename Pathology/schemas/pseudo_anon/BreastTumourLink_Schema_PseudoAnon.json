@@ -6,24 +6,45 @@
   "properties": {
     "TCode": {
       "name": "TCode",
-      "description": "Pseudoanonymised participant identifier (TCode) replacing StudyID. Derived from SIDCodes mapping.",
+      "description": "Pseudoanonymised unique participant identifier.",
       "type": [
         "string",
         "null"
       ],
+      "x-description": "Replaces StudyID. Derived using SIDCodes mapping.",
       "x-formerName": "StudyID"
     },
     "TumourTracking": {
       "name": "TumourTracking",
-      "description": "Tracking of all the tumour blocks and slides receive as part of a tumour block request.",
+      "description": "Tumour- and specimen-level pathology tracking records. Each item corresponds to a tissue block/slide linked to a tumour and pathology report.",
       "type": "array",
+      "x-description": "Source: TumourTracking table in Pathology DB.",
       "minItems": 0,
       "items": {
         "type": "object",
         "properties": {
+          "Material": {
+            "name": "Material",
+            "description": "Type of material received from hospital",
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "Slide",
+              "Block",
+              null
+            ],
+            "enumDescriptions": [
+              "Slide: Microscope slide",
+              "Block: Tissue block",
+              "null: Missing or invalid"
+            ],
+            "maxLength": 255
+          },
           "LabNo": {
             "name": "LabNo",
-            "description": "Unique number for block or slide",
+            "description": "Laboratory accession number uniquely identifying a tissue block or slide.",
             "type": [
               "integer",
               "null"
@@ -31,49 +52,51 @@
           },
           "LATERALITY": {
             "name": "LATERALITY",
-            "description": "Laterality for the block",
+            "description": "Breast laterality from which the specimen originated.",
             "type": [
               "string",
               "null"
             ],
             "enum": [
               "L",
-              "R"
+              "R",
+              null
             ],
             "enumDescriptions": [
               "L: Left",
-              "R: Right"
+              "R: Right",
+              "null: None"
             ],
             "maxLength": 1,
             "x-formerName": "BlockSide"
           },
           "TUMOUR_COUNT": {
             "name": "TUMOUR_COUNT",
-            "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour, eg a patient with 2 tumours will have 2 rows with TumourCount=1 and TumourCount=2. No missing values allowed",
+            "description": "Sequential tumour identifier within a participant (used to distinguish multiple tumours recorded for the same participant; not a biological ordering).",
             "type": [
               "integer",
               "null"
             ],
+            "x-description": "Sequentially coded 1..N within participant; dataset may contain multiple records per participant when multiple tumours are recorded.",
             "x-formerName": "TumourCount"
           },
           "REPORT_COUNT": {
             "name": "REPORT_COUNT",
-            "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual",
+            "description": "Sequential identifier for pathology reports within a participant. Multiple tumours may relate to the same report.",
             "type": [
               "integer",
               "null"
             ],
+            "x-description": "Sequentially coded 1..N within participant.",
             "x-formerName": "ReportCount"
           },
           "CoreBiopsy_Flag": {
             "name": "CoreBiopsy_Flag",
-            "description": "Flag indicating whether the block was core biopsy or not.",
+            "description": "Indicator that the specimen originates from a core needle biopsy.",
             "type": [
-              "integer",
+              "boolean",
               "null"
             ],
-            "minimum": 0,
-            "maximum": 1,
             "x-derivedFrom": [
               "#/properties/TumourTracking/items/properties/BlockComments"
             ],
@@ -81,43 +104,49 @@
           },
           "MegaBlock_Flag": {
             "name": "MegaBlock_Flag",
-            "description": "Flag indicating whether the block was mega block or not.",
+            "description": "Indicator that the specimen is a large-format ('mega') histology block.",
             "type": [
-              "integer",
+              "boolean",
               "null"
             ],
-            "minimum": 0,
-            "maximum": 1,
             "x-derivedFrom": [
               "#/properties/TumourTracking/items/properties/BlockComments"
             ],
-            "x-description": "Derived from TumourTracking.BlockComments: set to 1 if BlockComments contains substring 'mega' (case-insensitive), else 0."
+            "x-description": "Derived from TumourTracking.BlockComments: set to TRUE if BlockComments contains substring 'mega' (case-insensitive), else FALSE."
           },
           "LymphNodes_Flag": {
             "name": "LymphNodes_Flag",
-            "description": "Flag indicating whether the block was lymph node related or not.",
+            "description": "Indicator that the specimen corresponds to lymph node tissue (e.g., axillary sampling/clearance). Does not indicate nodal involvement.",
             "type": [
-              "integer",
+              "boolean",
               "null"
             ],
-            "minimum": 0,
-            "maximum": 1,
             "x-derivedFrom": [
               "#/properties/TumourTracking/items/properties/BlockComments"
             ],
-            "x-description": "Derived from TumourTracking.BlockComments: set to 1 if BlockComments contains any of the following terms (case-insensitive): 'node', 'nodes', 'axillary clearance', 'axillary sample'; else 0."
+            "x-description": "Derived from TumourTracking.BlockComments: set to TRUE if BlockComments contains any of the following terms (case-insensitive): 'node', 'nodes', 'axillary clearance', 'axillary sample'; else FALSE."
           },
           "LabTracking": {
             "name": "LabTracking",
-            "description": "All data taken from the LabTracking table in the Pathology database. This table is related to TumourTracking by the LabNo variable.",
+            "description": "Laboratory processing and digitisation metadata for the specimen.",
             "type": "array",
+            "x-description": "Source: LabTracking table; linked by LabNo.",
             "minItems": 0,
             "items": {
               "type": "object",
               "properties": {
+                "LabSampleID": {
+                  "name": "LabSampleID",
+                  "description": "Unique sample ID",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 50
+                },
                 "LabSampleType": {
                   "name": "LabSampleType",
-                  "description": "Type of the sample",
+                  "description": "Histological preparation type of the laboratory specimen.",
                   "type": [
                     "string",
                     "null"
@@ -125,23 +154,26 @@
                   "enum": [
                     "Core",
                     "ThickSection",
-                    "ThinSection"
+                    "ThinSection",
+                    null
                   ],
                   "enumDescriptions": [
                     "Core: Core needle biopsy",
                     "ThickSection: Thick section",
-                    "ThinSection: Thin section"
+                    "ThinSection: Thin section",
+                    "null: None"
                   ],
                   "maxLength": 20
                 },
                 "Scan": {
                   "name": "Scan",
-                  "description": "Indicates completeness of Round1 scanned data",
+                  "description": "Status of digital slide scanning for the first digitisation round.",
                   "type": [
                     "string",
                     "null"
                   ],
-                  "maxLength": 4
+                  "x-description": "As recorded in the source system; originally described as completeness of 'Round1' scanned data.",
+                  "maxLength": 50
                 }
               },
               "additionalProperties": false
@@ -149,15 +181,16 @@
           },
           "TMAs": {
             "name": "TMAs",
-            "description": "Details of arrays, TMA cores, and TMA samples created from tumour blocks.",
+            "description": "Tissue Microarray (TMA) mapping records describing array identifiers and grid positions of sampled tissue cores.",
             "type": "array",
+            "x-description": "Source: TMAMapping table; linked by LabNo.",
             "minItems": 0,
             "items": {
               "type": "object",
               "properties": {
                 "ArrayID": {
                   "name": "ArrayID",
-                  "description": "Tissue Microarray ID without the section details",
+                  "description": "Tissue Microarray ID",
                   "type": [
                     "string",
                     "null"
@@ -166,7 +199,7 @@
                 },
                 "ArrayNo": {
                   "name": "ArrayNo",
-                  "description": "Tissue microarray ID identifying number",
+                  "description": "Short identifier distinguishing arrays within a TMA series (as recorded in the source system).",
                   "type": [
                     "string",
                     "null"
@@ -175,7 +208,7 @@
                 },
                 "ArraySister": {
                   "name": "ArraySister",
-                  "description": "TMA sister identifier",
+                  "description": "Identifier indicating a paired/replicate ('sister') TMA block constructed from the same source material.",
                   "type": [
                     "string",
                     "null"
@@ -184,7 +217,7 @@
                 },
                 "ArraySection": {
                   "name": "ArraySection",
-                  "description": "TMA Section ID number",
+                  "description": "Section number cut from the TMA block (as recorded in the source system).",
                   "type": [
                     "string",
                     "null"
@@ -193,7 +226,7 @@
                 },
                 "XAxis": {
                   "name": "XAxis",
-                  "description": "X axis coordinate of TMA",
+                  "description": "Column coordinate of the core position within the TMA grid.",
                   "type": [
                     "string",
                     "null"
@@ -202,15 +235,15 @@
                 },
                 "YAxis": {
                   "name": "YAxis",
-                  "description": "Y axis coordinate of TMA",
+                  "description": "Row coordinate of the core position within the TMA grid.",
                   "type": [
-                    "number",
+                    "integer",
                     "null"
                   ]
                 },
                 "TMACoreID": {
                   "name": "TMACoreID",
-                  "description": "Unique core id, orientation core or 'empty' for each coordinate",
+                  "description": "Identifier of the individual tissue core placed at the specified TMA grid coordinate (may include orientation/control labels).",
                   "type": [
                     "string",
                     "null"

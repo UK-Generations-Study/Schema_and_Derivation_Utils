@@ -20,12 +20,12 @@ from pseudo_anon_utils import load_sid_codes, pseudo_anonymize_studyid
 KEEP_FIELDS_TUMOUR = {
     "StudyID", "LabNo", "BlockSide", "TumourCount", "ReportCount",
     "CoreBiopsy_Flag", "MegaBlock_Flag", "LymphNodes_Flag",
-    "LabTracking", "TMAs"
+    "LabTracking", "TMAs", "Material"
 }
 
 
 KEEP_FIELDS_LAB = {
-    "LabSampleType", "Scan"
+    "LabSampleID", "LabSampleType", "Scan"
 }
 
 KEEP_FIELDS_TMA = {
@@ -141,28 +141,24 @@ def _filter_dict_inplace(d: dict, keep: set[str]):
 
 
 def _derive_blockcomment_flags(blockcomments):
-    """Return (core_flag, mega_flag, lymph_flag) as integers 0/1.
+    """Return (core_flag, mega_flag, lymph_flag) as booleans."""
 
-    CoreBiopsy_Flag uses this regex (case-insensitive logic is embedded):
-      ^(?!.*(?i:with\s+cores?|core.*missing|core.*rec['’]?d\s+earlier))(?=.*(?i:core)).*$
-
-    Meaning: the text must contain the word "core", but excludes text implying the core
-    is elsewhere ("with core(s)"), was received previously ("rec'd earlier" / "recd earlier"),
-    or is missing.
-    """
     if blockcomments is None:
-        return 0, 0, 0
+        return False, False, False
+
     s = str(blockcomments)
     low = s.lower()
-    # Regex supplied by user; DOTALL makes '.*' span newlines just in case.
+
     core_regex = re.compile(
         r"^(?!.*(?i:with\s+cores?|core.*missing|core.*rec['’]?d\s+earlier))(?=.*(?i:core)).*$",
         flags=re.DOTALL,
     )
-    core_flag = 1 if core_regex.search(s) else 0
-    mega_flag = 1 if "mega" in low else 0
+
+    core_flag = bool(core_regex.search(s))
+    mega_flag = "mega" in low
     lymph_terms = ["node", "nodes", "axillary clearance", "axillary sample"]
-    lymph_flag = 1 if any(t in low for t in lymph_terms) else 0
+    lymph_flag = any(t in low for t in lymph_terms)
+
     return core_flag, mega_flag, lymph_flag
 
 
@@ -272,13 +268,12 @@ def _build_tumour_props_with_flags(original_tt_props: dict, keep: set[str]) -> O
     out = OrderedDict()
     inserted = False
 
+
     def _flag_schema(name: str, short_desc: str, xdesc: str) -> dict:
         return {
             "name": name,
             "description": short_desc,
-            "type": ["integer", "null"],
-            "minimum": 0,
-            "maximum": 1,
+            "type": ["boolean", "null"],
             "x-derivedFrom": [BLOCKCOMMENTS_POINTER],
             "x-description": xdesc,
         }
@@ -290,7 +285,7 @@ def _build_tumour_props_with_flags(original_tt_props: dict, keep: set[str]) -> O
 
             out["CoreBiopsy_Flag"] = _flag_schema(
                 "CoreBiopsy_Flag",
-                "Flag indicating whether the block was core biopsy or not.",
+                "Indicator that the specimen originates from a core needle biopsy.",
                 (
                     "Derived from TumourTracking.BlockComments using regex:\n"
                     f"{core_regex}\n"
@@ -301,19 +296,19 @@ def _build_tumour_props_with_flags(original_tt_props: dict, keep: set[str]) -> O
 
             out["MegaBlock_Flag"] = _flag_schema(
                 "MegaBlock_Flag",
-                "Flag indicating whether the block was mega block or not.",
+                "Indicator that the specimen is a large-format ('mega') histology block.",
                 (
-                    "Derived from TumourTracking.BlockComments: set to 1 if BlockComments contains substring 'mega' "
-                    "(case-insensitive), else 0."
+                    "Derived from TumourTracking.BlockComments: set to TRUE if BlockComments contains substring 'mega' "
+                    "(case-insensitive), else FALSE."
                 ),
             )
 
             out["LymphNodes_Flag"] = _flag_schema(
                 "LymphNodes_Flag",
-                "Flag indicating whether the block was lymph node related or not.",
+                "Indicator that the specimen corresponds to lymph node tissue (e.g., axillary sampling/clearance). Does not indicate nodal involvement.",
                 (
-                    "Derived from TumourTracking.BlockComments: set to 1 if BlockComments contains any of the following terms "
-                    "(case-insensitive): 'node', 'nodes', 'axillary clearance', 'axillary sample'; else 0."
+                    "Derived from TumourTracking.BlockComments: set to TRUE if BlockComments contains any of the following terms "
+                    "(case-insensitive): 'node', 'nodes', 'axillary clearance', 'axillary sample'; else FALSE."
                 ),
             )
             inserted = True
@@ -333,9 +328,7 @@ def _build_tumour_props_with_flags(original_tt_props: dict, keep: set[str]) -> O
                 out[fk] = {
                     "name": fk,
                     "description": fd,
-                    "type": ["integer", "null"],
-                    "minimum": 0,
-                    "maximum": 1,
+                    "type": ["boolean", "null"],
                 }
 
     return out
@@ -376,8 +369,9 @@ def update_schema_for_pseudoanon(schema: dict) -> dict:
         if key == "StudyID":
             new_props["TCode"] = {
                 "name": "TCode",
-                "description": "Pseudoanonymised participant identifier (TCode) replacing StudyID. Derived from SIDCodes mapping.",
+                "description": "Pseudoanonymised unique participant identifier.",
                 "type": ["string", "null"],
+                "x-description": "Replaces StudyID. Derived using SIDCodes mapping."
             }
         else:
             new_props[key] = value
