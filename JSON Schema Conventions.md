@@ -6,25 +6,25 @@
 
 ## Contents
 
-1. [File Naming & Purpose](#file-naming--purpose)  
-2. [Root Structure & Mandatory Keys](#root-structure--mandatory-keys)  
-3. [The Identifier Field (TCode / StudyID)](#the-identifier-field-tcode--studyid)  
-4. [Type Declarations & Nullability](#type-declarations--nullability)  
-5. [Enums and Descriptions](#enums-and-descriptions)  
-6. [Numeric Constraints & Units](#numeric-constraints--units)  
-7. [Dates and Privacy](#dates-and-privacy)  
-8. [Advanced Patterns (oneOf & Arrays)](#advanced-patterns-oneof--arrays)  
-9. [Custom Extensions (x-*)](#custom-extensions-x-)  
-10. [Questionnaire-specific Fields](#questionnaire-specific-fields)  
-11. [additionalProperties](#additionalproperties)  
-12. [Versioning and provenance](#versioning-and-provenance)  
-13. [Canonical $id URLs](#canonical-id-urls)  
-14. [Common mistakes](#common-mistakes)  
-15. [Validation](#validation)  
+1. [File Naming and Purpose](#1-file-naming-and-purpose)
+2. [Root Structure and Mandatory Keys](#2-root-structure-and-mandatory-keys)
+3. [The Identifier Field TCode / StudyID](#3-the-identifier-field-tcode--studyid)
+4. [Type Declarations and Nullability](#4-type-declarations-and-nullability)
+5. [Enums and Descriptions](#5-enums-and-descriptions)
+6. [Numeric Constraints and Units](#6-numeric-constraints-and-units)
+7. [Dates and Privacy](#7-dates-and-privacy)
+8. [Advanced Patterns oneOf and Arrays](#8-advanced-patterns-oneof-and-arrays)
+9. [Custom Extensions x-*](#9-custom-extensions-x-)
+10. [Questionnaire-specific Fields](#10-questionnaire-specific-fields)
+11. [additionalProperties](#11-additionalproperties)
+12. [Versioning and Provenance](#12-versioning-and-provenance)
+13. [Canonical $id URLs](#13-canonical-id-urls)
+14. [Common Mistakes](#14-common-mistakes)
+15. [Validation](#15-validation)
 
 ---
 
-## 1. File Naming & Purpose
+## 1. File Naming and Purpose
 
 Use **PascalCase** for topic names. No spaces or special characters.
 
@@ -39,7 +39,7 @@ Use **PascalCase** for topic names. No spaces or special characters.
 
 ---
 
-## 2. Root Structure & Mandatory Keys
+## 2. Root Structure and Mandatory Keys
 
 Every schema must contain these keys in **exact order**. Do not add non-standard root keys (like `roundID`); use `x-provenance` instead.
 
@@ -153,7 +153,7 @@ Every schema must include a **participant identifier** in:
 - `StudyID` length: 6 characters  
 - Both must be included in the `required` array, with `TCode` listed first
 
-## 4. Type Declarations & Nullability
+## 4. Type Declarations and Nullability
 
 ### Scalar Form
 
@@ -254,7 +254,7 @@ Nullable:
 
 ---
 
-## 6. Numeric Constraints & Units
+## 6. Numeric Constraints and Units
 
 - Minimums: `"minimum": 0` for counts, sizes, durations, ages unless negative allowed  
 - Age: `"minimum": 0`, `"maximum": 120` maximum to be put only if known 
@@ -281,7 +281,7 @@ Nullable:
 
 ---
 
-## 8. Advanced Patterns (oneOf & Arrays)
+## 8. Advanced Patterns (oneOf and Arrays)
 
 - **oneOf + sentinel values:** distinguish `null` from `9999` (not applicable)  
 - **Arrays:** repeated records (minItems, maxItems), description should state `(one record per {thing})`  
