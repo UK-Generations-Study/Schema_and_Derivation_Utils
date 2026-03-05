@@ -214,13 +214,13 @@ Nullable:
 ### Rules
 
 - `enum`: list allowed values; `null` **always last**  
-- `enumDescriptions`: human-readable, one entry per code  
+- `x-enumDescriptions`: human-readable, one entry per code  
 
 **Correct example:**
 
 ```json
 "enum": [1,2,null],
-"enumDescriptions": [
+"x-enumDescriptions": [
   "1: Yes.",
   "2: No.",
   "null: Missing or invalid."
@@ -475,14 +475,14 @@ https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Ca
 | Date field `"format": "date-time"` | Use `"format": "date"` for date-only |
 | `_Shifted` field missing `"format"` | Always add `"format"` |
 | `_Shifted` field missing `x-description` | Add standard privacy note |
-| `enumDescriptions` has orphan code | Remove or add to `enum` |
-| Grouped enumDescriptions | One per code only |
-| `"name"` key in property | Remove; key identity suffices |
+| `x-enumDescriptions` has orphan code | Remove or add to `enum` |
+| Grouped x-enumDescriptions | One per code only |
+| `"name"` key in property | Remove if not applicable; key identity suffices |
 | Non-standard root field | Use `x-provenance.dataRound` |
 | `x-derivedFrom` narrative string | Must be an array |
 | `x-description` duplicates `description` | Remove redundancy |
 | Missing `x-version` or `x-provenance` | Add both |
-| Age field missing upper bound | Add `"maximum": 120` |
+| Age field missing upper bound | Add `"maximum": 120` only if known |
 | Unit buried in description | Include `"unit"` key |
 
 ---
