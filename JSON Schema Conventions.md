@@ -46,18 +46,18 @@ Every schema must contain these keys in **exact order**. Do not add non-standard
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://www.breakthroughgenerations.org.uk/schemas/{Filename}.json",
-  "title": "Human-readable name",
-  "description": "Plain English summary.",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/path_to_schema.json",
+  "title": "Human-readable name e.g. 'General information from R0 questionnaire'",
+  "description": "Single line in plain English. No codes, no derivation logic.",
   "type": "object",
   "required": ["TCode"],
   "additionalProperties": false,
   "x-version": "1.0.0",
   "x-provenance": {
-    "dataRound": "R0",
-    "lastModified": "YYYY-MM-DD",
-    "repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
-    "maintainer": "UK Generations Study"
+    "x-dataRound": "R0",
+    "x-lastModified": "YYYY-MM-DD",
+    "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+    "x-maintainer": "UK Generations Study"
   },
   "properties": { ... }
 }
