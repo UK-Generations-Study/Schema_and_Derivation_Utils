@@ -79,10 +79,10 @@ Every schema must contain these keys in **exact order**. Do not add non-standard
   "additionalProperties": false,
   "x-version": "1.0.0",
   "x-provenance": {
-    "dataRound": "R0",
-    "lastModified": "YYYY-MM-DD",
-    "repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
-    "maintainer": "UK Generations Study"
+    "x-dataRound": "R0",
+    "x-lastModified": "YYYY-MM-DD",
+    "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+    "x-maintainer": "UK Generations Study"
   },
   "properties": { ... },
   "$defs": {
