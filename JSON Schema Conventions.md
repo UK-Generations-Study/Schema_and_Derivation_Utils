@@ -439,11 +439,12 @@ Two reference formats are permitted.
 
 ## 12. Versioning and provenance
 
-1. Update `x-provenance.lastModified` to today (`YYYY-MM-DD`)  
-2. Increment `x-version` according to change severity (MAJOR/MINOR/PATCH)  
-3. If a field is renamed, add `x-formerName`  
-4. If a field is removed, note it in PR, do **not** leave a stub  
-
+1. Update `x-provenance.lastModified` to today (`YYYY-MM-DD`)
+2. Increment `x-version` according to change severity (MAJOR/MINOR/PATCH)
+3. If a field is renamed, add `x-formerName`
+4. If a field is removed, note it in PR, do **not** leave a stub
+5. Always have a last modified time field in the dataset for audit purpose
+6. Git Commit message must contain the x-version and x-lastModified to track history and find data from a specific version
 ---
 
 ## 13. Canonical $id URLs
