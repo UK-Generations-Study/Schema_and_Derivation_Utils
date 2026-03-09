@@ -1,62 +1,62 @@
 {
-  "$id": "https://www.breakthroughgenerations.org.uk/schemas/HistoPath_OvCa.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/CancerSummary/json_schemas/HistoPath_OvCa.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "HistoPath_OvCa",
+  "title": "Histopathology ovarian cancer schema",
+  "description": "Schema for variables from Histopathology data (Uploads.OvCa_Histopath_II) for ovarian cancer to produce new Cancer Summary",
   "type": "object",
+  "required": ["StudyID"],
+  "x-version": "1.0.0",
+  "x-provenance": {
+    "x-lastModified": "2026-03-09",
+    "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+    "x-maintainer": "UK Generations Study"
+  },
   "properties": {
     "StudyID": {
-      "description": "Genrations Study ID",
-      "type": ["integer"],
-      "minimum": 0,
+      "description": "Genrations Study ID which is unique for every participant",
+      "type": "integer",
+      "minimum": 100000,
       "maximum": 499994
     },
     "TumourCount": {
       "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour.",
-      "type": ["integer"],
-      "minimum": 1, 
-      "maximum": 8
+      "type": "integer",
+      "minimum": 1
     },
     "ReportCount": {
       "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual",
-      "type": ["integer"],
-      "minimum": 1, 
-      "maximum": 8
+      "type": "integer",
+      "minimum": 1
     },
     "Edat": {
       "description": "Date Data Entered by coder extracting data from the pathology report.",
-      "type": ["string"],
-      "format": "date-time",
-      "maxLength": 23
+      "type": "string",
+      "format": "date-time"
     },
     "ReportDat": {
       "description": "Date of Report. Missing information is null (blank)",
       "type": ["string", "null"],
-      "format": "date-time",
-      "maxLength": 23
+      "format": "date-time"
     },
     "CoreDat": {
       "description": "Date of Core biopsy. Missing information is null (blank)",
       "type": ["string", "null"],
-      "format": "date-time",
-      "maxLength": 23
+      "format": "date-time"
     },
     "DiagDat": {
       "description": "Date of diagnosis derived in the order: 1. CoreDat; 2. DateSpecimenTaken; 3.DateSpecimenReceived; 4.ReportDat",
       "type": ["string", "null"],
-      "format": "date-time",
-      "maxLength": 23
+      "format": "date-time"
     },
     "DateSpecimenTaken": {
       "description": "Specimen taken date. Missing is coded as null (blank)",
       "type": ["string", "null"],
-      "format": "date-time",
-      "maxLength": 23
+      "format": "date-time"
     },
     "DateSpecimenReceived": {
       "description": "Specimen received in hospital laboratory. Missing is coded as null (blank)",
       "type": ["string", "null"],
-      "format": "date-time",
-      "maxLength": 23
+      "format": "date-time"
     },
     "Primary_Site": {
       "description": "Primary site of the cancer. Missing or not applicable is coded as null",
@@ -68,49 +68,49 @@
       "description": "FIGO tumour stage (any edition). Missing is coded as null (blank).",
       "type": ["string", "null"],
       "enum": ["1", "2", "3", "4", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "1: Stage 1",
         "2: Stage 2",
         "3: Stage 3",
         "4: Stage 4",
-        "null: Missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "Stage_UICC": {
       "description": "UICC tumour stage (any edition). Missing is coded as null (blank)",
       "type": ["string", "null"],
       "enum": ["1", "2", "3", "4", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "1: Stage 1",
         "2: Stage 2",
         "3: Stage 3",
         "4: Stage 4",
-        "null: Missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "Stage_Other_Not_Reported": {
       "description": "Tumour stage where system is not reported or is other",
       "type": ["string", "null"],
       "enum": ["1", "2", "3", "4", "N", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "1: Stage 1",
         "2: Stage 2",
         "3: Stage 3",
         "4: Stage 4",
         "N: Not reported",
-        "null: Missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "Stage_Best": {
       "description": "Tumour stage to be used in analysis. Where multiple stage systems reported, FIGO to be prioritised. Missing is coded as null (blank)",
       "type": ["string", "null"],
       "enum": ["1", "2", "3", "4", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "1: Stage 1",
         "2: Stage 2",
         "3: Stage 3",
         "4: Stage 4",
-        "null: Missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "Benign_Tumour": {
@@ -127,10 +127,10 @@
       "description": "Invasive. Missing is coded as null (blank)",
       "type": ["string", "null"],
       "enum": ["P", "N", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "P: Present",
         "N: Not Present",
-        "null: Missing or not applicable" 
+        "null: if the report does not contain this information." 
       ]
     },
     "Epithelium": {
@@ -145,23 +145,23 @@
       "description": "Grade differentiation. Missing is coded as null (blank)",
       "type": ["string", "null"],
       "enum": ["H", "L", "N", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "H: High Grade",
         "L: Low Grade",
         "N: Not Given",
-        "null: Missing in the report"
+        "null: if the report does not contain this information."
       ]
     },
     "Grade_I_II_III": {
       "description": "Tumour Grade",
       "type": ["string", "null"],
       "enum": ["1", "2", "3", "N", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "1: Low Grade (well differentiated)",
         "2: Moderate Grade (moderately differentiated)",
         "3: High Grade (poorly differentiated)",
         "N: Not Given",
-        "null: Missing in the report"
+        "null: if the report does not contain this information."
       ]
     },
     "Primary_Germ_Cells": {
@@ -178,10 +178,10 @@
       "description": "Specimen taken after treatment (Chemotherapy)",
       "type": ["string", "null"],
       "enum": ["C", "PC", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "C: Chemotherapy",
         "PC: Possible Chemotherapy",
-        "null: Missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     }
   }

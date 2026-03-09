@@ -343,8 +343,8 @@ except Exception as e:
 #%% Populate other remaining fields
 logger.info("Deriving Age at diagnosis, Diagnosis Year and SITE")
 
-CancerSummary['CREATED_TIME'] = datetime.now()
-CancerSummary['CREATED_TIME'] = pd.to_datetime(CancerSummary['CREATED_TIME'], errors="coerce").dt.tz_localize(None)
+CancerSummary['LAST_MODIFIED_TIME'] = datetime.now()
+CancerSummary['LAST_MODIFIED_TIME'] = pd.to_datetime(CancerSummary['LAST_MODIFIED_TIME'], errors="coerce").dt.tz_localize(None)
 
 CancerSummary['COMMENTS'] = None
 
@@ -387,7 +387,7 @@ CancerSummary['GROUPED_SITE'] = CancerSummary['ICD_CODE'].apply(sm.group_sites)
 
 total_count = len(CancerSummary)
 
-logger.warning("Total count of tumours: " + str(len(CancerSummary)))
+logger.info("Total count of tumours: " + str(len(CancerSummary)))
 
 # filter out the benign cases
 CancerSummary = CancerSummary[(CancerSummary['GROUPED_SITE']!='Benign') & (CancerSummary['GROUPED_SITE']!='Unknown')]
@@ -474,14 +474,14 @@ final_json, cleaned_data = cv.getCleanJsonData(CaSumFiltered_7.copy(), "NewCance
 
 invalid_rows = cv.dataValidation(final_json, target_schema)
 
-if len(invalid_rows)>=10:
+if len(invalid_rows)>0:
     logger.warning("Invalid data found in Cancer Summary")
-    # sys.exit('Refer to Invalid rows')
+    sys.exit('Refer to Invalid rows')
     logger.info('Invalid entry count: '+ str(len(invalid_rows)))
 
-else:
+# else:
     # Load the data to the database
-    write_to_DB(CaSumFiltered_7, 'NewCancerSummary', upload_conn, logger)
+    # write_to_DB(CaSumFiltered_7, 'NewCancerSummary', upload_conn, logger)
 
 #%% Pseudo-anonymise the data
 logger.info("Pseudo-anonymise and create JSON data")
@@ -496,13 +496,21 @@ CaSum_pseudo_anon.rename(columns={'S_STUDY_ID': 'S_TCode', 'S_DIAGNOSIS_DATE': '
 
 CaSum_pseudo_anon = CaSum_pseudo_anon.drop(['StudyID', 'STUDY_ID', 'Random', 'DIAGNOSIS_DATE'], axis=1)
 
-CaSum_pseudo_anon['DIAGNOSIS_DATE_SHIFTED'] = CaSum_pseudo_anon['DIAGNOSIS_DATE_SHIFTED'].dt.strftime('%Y-%m-%d %H:%M:%S')
-CaSum_pseudo_anon['CREATED_TIME'] = CaSum_pseudo_anon['CREATED_TIME'].dt.strftime('%Y-%m-%d %H:%M:%S')
-CaSum_pseudo_anon = CaSum_pseudo_anon.replace(np.nan, None)
+CaSum_pseudo_anon['DIAGNOSIS_DATE_SHIFTED'] = CaSum_pseudo_anon['DIAGNOSIS_DATE_SHIFTED'].dt.strftime('%Y-%m-%dT%H:%M:%SZ')
+CaSum_pseudo_anon['LAST_MODIFIED_TIME'] = CaSum_pseudo_anon['LAST_MODIFIED_TIME'].dt.strftime('%Y-%m-%dT%H:%M:%SZ')
 
-df_to_dict = CaSum_pseudo_anon.to_dict(orient='records')
+with open(os.path.join(cf.casum_json_path, "NewCancerSummary_PseudoAnon.json"), 'r') as schema:
+    pseudo_schema = json.load(schema)
+    
+pseudo_json, pseudo_data = cv.getCleanJsonData(CaSum_pseudo_anon.copy(), "Pseudo_CancerSummary")
 
-json_data = {**cf.casum_version_ts, "data": df_to_dict}
+invalid_rows = cv.dataValidation(pseudo_json, pseudo_schema)
 
-with open(os.path.join(cf.casum_report_path, 'CancerSummary.json'), 'w') as f:
-    json.dump(json_data, f, indent=4)
+if len(invalid_rows)>0:
+    logger.warning("Invalid data found in Pseudonymised data")
+    sys.exit('Refer to Invalid rows')
+    logger.info('Invalid entry count: '+ str(len(invalid_rows)))
+
+else:
+    with open(os.path.join(cf.casum_report_path, 'CancerSummary.json'), 'w') as f:
+        json.dump(pseudo_json, f, indent=4)

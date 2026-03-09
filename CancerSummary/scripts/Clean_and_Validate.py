@@ -12,7 +12,7 @@ import sys
 sys.path.append(os.path.abspath('N:\CancerEpidem\BrBreakthrough\SHegde\Schema_and_Derivation_utils'))
 
 import pandas as pd
-from jsonschema import FormatChecker, Draft7Validator
+from jsonschema import FormatChecker, Draft202012Validator
 import numpy as np
 import config as cf
 
@@ -138,13 +138,13 @@ def dataValidation(data_dict, schema):
     invalid_rows = {}
 
     #create the validator object to compile the schema
-    validator = Draft7Validator(schema, format_checker=FormatChecker())
+    validator = Draft202012Validator(schema, format_checker=FormatChecker())
 
     for i,record in enumerate(data_dict):
         errors = list(validator.iter_errors(record))
 
         if errors:
-            error_details = [[e.schema_path[1], e.validator_value, e.message] for e in errors]
+            error_details = [[e.validator, e.message] for e in errors]
         
             invalid_rows[i] = {"record": record, "errors": error_details}
 

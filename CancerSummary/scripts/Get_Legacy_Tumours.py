@@ -50,7 +50,7 @@ def prepare_legacy_data(ca_summary, ca_summary_schema, target_schema, logger, ex
                                          'grade':'GRADE', 'stage':'STAGE', 'T':'T_STAGE', 'N':'N_STAGE', 'M':'M_STAGE', \
                                          'nodes_tot':'NODES_TOTAL', 'nodes_pos':'NODES_POSITIVE',\
                                          'Tsize':'TUMOUR_SIZE', 'Screen_Detected':'SCREEN_DETECTED', \
-                                         'LastUploadDate': 'CREATED_TIME', 'comments':'COMMENTS', 'Tnum': 'TUMOUR_ID',\
+                                         'LastUploadDate': 'LAST_MODIFIED_TIME', 'comments':'COMMENTS', 'Tnum': 'TUMOUR_ID',\
                                          'S_side':'S_LATERALITY', 'S_regdate':'S_DIAGNOSIS_DATE',\
                                          'S_ICDt':'S_ICD_CODE', 'S_ICDm':'S_MORPH_CODE',\
                                          'S_er_status': 'S_ER_STATUS', 'S_pr_status': 'S_PR_STATUS', 'S_her2_status': 'S_HER2_STATUS',\
@@ -107,7 +107,7 @@ def prepare_legacy_data(ca_summary, ca_summary_schema, target_schema, logger, ex
     
     legacy_filtered['TUMOUR_ID'] = pd.to_numeric(legacy_filtered['TUMOUR_ID'], errors='coerce').astype('Int64')
     legacy_filtered['TUMOUR_SIZE'] =  pd.to_numeric(legacy_filtered['TUMOUR_SIZE'], errors='coerce')
-    legacy_filtered['CREATED_TIME'] = pd.to_datetime(legacy_filtered['CREATED_TIME'], errors="coerce").dt.tz_localize(None)
+    legacy_filtered['LAST_MODIFIED_TIME'] = pd.to_datetime(legacy_filtered['LAST_MODIFIED_TIME'], errors="coerce").dt.tz_localize(None)
     legacy_filtered['NODES_TOTAL'] = pd.to_numeric(legacy_filtered['NODES_TOTAL'], errors='coerce').astype('Int64')
     legacy_filtered['NODES_POSITIVE'] = pd.to_numeric(legacy_filtered['NODES_POSITIVE'], errors='coerce').astype('Int64')
     

@@ -1,20 +1,27 @@
 {
-  "$id": "https://www.breakthroughgenerations.org.uk/schemas/FlaggingCancers.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/CancerSummary/json_schemas/FlaggingCancers.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "FlaggingCancers",
+  "title": "Flagging cancers schema",
+  "description": "Schema for variables from NHS Flagging cancers (NOBACKUP.FlaggingCancers) to produce new Cancer Summary",
   "type": "object",
+  "required": ["StudyID"],
+  "x-version": "1.0.0",
+  "x-provenance": {
+    "x-lastModified": "2026-03-09",
+    "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+    "x-maintainer": "UK Generations Study"
+  },
   "properties": {
     "StudyID": {
-      "description": "Internal Study ID",
-      "type": ["integer"],
-      "minimum": 0,
+      "description": "Internal Study ID which is unique for every participant",
+      "type": "integer",
+      "minimum": 100000,
       "maximum": 499994
     },
     "DCancer": {
       "description": "Cancer diagnosis date",
       "type": ["string", "null"],
-      "format": "date-time",
-      "maxLength": 23
+      "format": "date-time"
     },
     "CancerICD": {
       "description": "Cancer ICD code",
@@ -33,21 +40,19 @@
     },
     "DReceived": {
       "description": "Date received | This date will match to a folder N:\\CancerEpidem\\BrBreakthrough\\Janeh\\Flagging\\CEN\\yyyymmdd containing the source data received.",
-      "type": ["string"],
-      "format": "date-time",
-      "maxLength": 23
+      "type": "string",
+      "format": "date-time"
     },
     "Region": {
       "description": "Region | England and Wales: Received from HSCIC (Health & Social Care Information Centre) or earlier equivalent. Scotland: Received from GRO NHSCR (General Register Office for Scotland, NHS Central Register)",
-      "type": ["string"],
+      "type": "string",
       "maxLength": 50,
       "enum":["Scotland", "England and Wales"]
     },
     "DCreated": {
       "description": "Date record created",
-      "type": ["string"],
-      "format": "date-time",
-      "maxLength": 23
+      "type": "string",
+      "format": "date-time"
     },
     "CreatedBy": {
       "description": "Record created by | 'CEN' if automated import, Network login ID of user if manually entered",
@@ -57,8 +62,7 @@
     "DUpdated": {
       "description": "Date record updated",
       "type": ["string", "null"],
-      "format": "date-time",
-      "maxLength": 23
+      "format": "date-time"
     },
     "UpdatedBy": {
       "description": "Record updated by | Network Login ID of user performing the update",
@@ -68,8 +72,7 @@
     "DCancelled": {
       "description": "Date cancellation of registration received | This date will match to a folder N:\\CancerEpidem\\BrBreakthrough\\Janeh\\Flagging\\CEN\\yyyymmdd containing the source data received.",
       "type": ["string", "null"],
-      "format": "date-time",
-      "maxLength": 23
+      "format": "date-time"
     },
     "Notes": {
       "description": "Additional notes",
@@ -77,8 +80,8 @@
       "maxLength": 255
     },
     "PersonId": {
-      "description": "BGS PersonID",
-      "type": ["integer"],
+      "description": "BGS PersonID which is unique for every participant",
+      "type": "integer",
       "minimum":1,
       "maximum": 777656
     }

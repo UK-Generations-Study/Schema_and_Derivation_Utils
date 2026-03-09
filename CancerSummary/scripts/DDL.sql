@@ -49,7 +49,7 @@ CREATE TABLE [dbo].[NewCancerSummary](
 	[S_N_STAGE] [nvarchar](100) NULL,
 	[M_STAGE] [nvarchar](100) NULL,
 	[S_M_STAGE] [nvarchar](100) NULL,
-	[CREATED_TIME] [datetime] NULL,
+	[LAST_MODIFIED_TIME] [datetime] NULL,
 	[COMMENTS] [nvarchar](100) NULL,
 	[GROUPED_SITE] [nvarchar](100) NULL,
 	[TUMOUR_COUNT] [int] NULL,

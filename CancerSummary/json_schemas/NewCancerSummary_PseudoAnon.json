@@ -1,16 +1,26 @@
 {
-  "$id": "https://www.breakthroughgenerations.org.uk/schemas/NewCancerSummary_PseudoAnon.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/CancerSummary/json_schemas/NewCancerSummary_PseudoAnon.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "NewCancerSummary_PseudoAnon",
+  "title": "New cancer summary schema for Pseudonymised data",
+  "description": "Schema for variables from new cancer summary pseudonymised dataset produced using other sources",
   "type": "object",
+  "required": ["TCode", "TUMOUR_ID", "DIAGNOSIS_DATE_SHIFTED"],
+  "x-version": "1.0.0",
+  "x-provenance": {
+    "x-lastModified": "2026-03-09",
+    "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+    "x-maintainer": "UK Generations Study"
+  },
   "properties": {
     "TCode": {
-      "type": ["string"],
+      "type": "string",
       "description": "Unique participant identifier",
-      "x-description": "Pseudonymised Unique participant identifier in the Generations Study. The field has one to one mapping with STUDY_ID"
+      "x-description": "Pseudonymised Unique participant identifier in the Generations Study. The field has one to one mapping with STUDY_ID",
+      "minLength": 8,
+      "maxLength": 8
     },
     "S_TCode": {
-      "type": ["string"],
+      "type": "string",
       "description": "Source from which TCode is selected in the target dataset."
     },
     "TUMOUR_ID": {
@@ -27,25 +37,26 @@
       "description": "Source from which the Tumour ID is selected in the target dataset. It will be one of the sources from x-sourcePriority for TUMOUR_ID."
     },
     "DIAGNOSIS_DATE_SHIFTED": {
-      "type": ["string", "null"],
+      "type": "string",
       "format": "date-time",
-      "description": "Best estimate of tumour diagnosis date (per tumour). The dates are shifted to pseudo-anonymise the PII data"
+      "description": "Best estimate of tumour diagnosis date-time (YYYY-MM-DDTHH:MM:SSZ) per tumour. The dates are shifted with a random shift from SIDCodes table in Mailng database to pseudo-anonymise PII data"
     },
     "S_DIAGNOSIS_DATE_SHIFTED": {
-      "type": ["string"],
+      "type": "string",
       "description": "Source from which shifted Diagnosis Date is selected in the target dataset."
     },
     "DIAGNOSIS_YEAR": {
-      "type": ["integer", "null"],
+      "type": "integer",
       "description": "Best estimate of tumour diagnosis year (per tumour). Real year from the diagnosis dates",
+      "minimum": 1900,
       "x-description": "Best estimate of tumour diagnosis year calculated separately for each tumour using DIAGNOSIS_DATE"
     },
     "AGE_AT_DIAGNOSIS": {
-      "type": ["number"],
+      "type": "integer",
       "description": "Age of the patient when they were diagnosed with the tumour in years. (per tumour).",
-      "x-description": "Age in whole years at diagnosis, calculated separately for each tumour using DOB from People table and the DIAGNOSIS_DATE for that tumour. Derived as floor((DIAGNOSIS_DATE – DOB) / 365.25).",
+      "x-description": "Refer to the raw schema (NewCancerSummary.json) to understand how the field is derived as this is actual age at diagnosis",
       "minimum": 0,
-      "maximum": 200
+      "x-unit": "years"
     },
     "ICD_CODE": {
       "type": ["string", "null"],
@@ -66,7 +77,7 @@
     "MORPH_CODE": {
       "type": ["number", "null"],
       "description": "ICD-O morphology code (tumour histology/behaviour).",
-      "x-description": "ICD-O morphology code describing the histological type/behaviour of the tumour (as provided by the source; may include the behaviour suffix, e.g., \"/2\", \"/3\"). Per tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.HISTOLOGY_CODED 2) FlaggingCancers.Histology 3) HistoPath_BrCa.ICDMorphologyCode. Store the code exactly as provided (no recoding). These are renamed to MORPH_CODE to link across sources",
+      "x-description": "ICD-O morphology code describing the histological type/behaviour of the tumour (as provided by the source). Per tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.HISTOLOGY_CODED 2) FlaggingCancers.Histology 3) HistoPath_BrCa.ICDMorphologyCode. Store the code exactly as provided (no recoding). These are renamed to MORPH_CODE to link across sources",
       "x-sourcePriority": [
         "CancerRegistry.MORPH_CODE",
         "FlaggingCancers.MORPH_CODE",
@@ -98,7 +109,7 @@
         "HistoPath_OvCa.Grade_I_II_III"        
       ],
       "enum": ["GX", "G0", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "GL", "GH", "GI", "G", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "GX: Grade of differentiation is not appropriate or cannot be assessed",
         "G0: Borderline malignancy",
         "G1: Well differentiated",
@@ -111,8 +122,8 @@
         "GL: Low",
         "GH: High",
         "GI: Intermediate",
-        "G:",
-        "null: Missing in the report"
+        "G: Grade recorded without further specification",
+        "null: Missing or not applicable"
       ]
     },
     "S_GRADE": {
@@ -127,7 +138,8 @@
         "CancerRegistry.TUMOURSIZE",
         "HistoPath_BrCa.SizeInvasiveTumour",
         "HistoPath_BrCa.SizeDCISOnly"
-      ]
+      ],
+      "x-unit": "millimetres"
     },
     "S_TUMOUR_SIZE": {
       "type": ["string", "null"],
@@ -136,7 +148,7 @@
     "NODES_TOTAL": {
       "type": ["integer", "null"],
       "description": "Number of lymph nodes examined.",
-      "x-description": "Total number of local/regional lymph nodes examined (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.NODESINVOLVED — described in the registry schema as the \"number of local and regional nodes examined.\" Ovarian pathology does not provide node counts. Store as an integer; null if unavailable. 2) Breast pathology: NodesTotal = HistoPath_BrCa.AxillaryNodesTotal + HistoPath_BrCa.OtherNodesTotal (sum; treat nulls as 0 only if at least one component is non-null);",
+      "x-description": "Total number of local/regional lymph nodes examined (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.NODESEXCISED — described in the registry schema as the \"number of local and regional nodes examined.\" Ovarian pathology does not provide node counts. Store as an integer; null if unavailable. 2) Breast pathology: NodesTotal = HistoPath_BrCa.AxillaryNodesTotal + HistoPath_BrCa.OtherNodesTotal (sum; treat nulls as 0 only if at least one component is non-null);",
       "x-sourcePriority": [
         "CancerRegistry.NODESEXCISED",
         "HistoPath_BrCa.NodesTotal"
@@ -149,7 +161,7 @@
     "NODES_POSITIVE": {
       "type": ["integer", "null"],
       "description": "Number of lymph nodes positive for metastasis.",
-      "x-description": "Number of local/regional lymph nodes positive for metastasis (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.NODESEXCISED — described in the registry schema as the \"number of local and regional nodes reported as being positive.\" Ovarian pathology does not provide node counts. Store as an integer; null if unavailable. 2) Breast pathology: NodesPositive = HistoPath_BrCa.AxillaryNodesPositive + HistoPath_BrCa.OtherNodesPositive (sum; treat nulls as 0 only if at least one component is non-null);",
+      "x-description": "Number of local/regional lymph nodes positive for metastasis (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.NODESINVOLVED — described in the registry schema as the \"number of local and regional nodes reported as being positive.\" Ovarian pathology does not provide node counts. Store as an integer; null if unavailable. 2) Breast pathology: NodesPositive = HistoPath_BrCa.AxillaryNodesPositive + HistoPath_BrCa.OtherNodesPositive (sum; treat nulls as 0 only if at least one component is non-null);",
       "x-sourcePriority": [
         "CancerRegistry.NODESINVOLVED",
         "HistoPath_BrCa.NodesPositive"       
@@ -160,10 +172,7 @@
       "description": "Source from which positive nodes are selected in the target dataset. It will be one of the sources from x-sourcePriority for NODES_POSITIVE."
     },
     "STAGE": {
-      "type": [
-        "string",
-        "null"
-      ],
+      "type": ["string", "null"],
       "description": "Best overall tumour stage.",
       "x-description": "Best tumour stage at diagnosis (harmonised to Cancer Registry coding). Source priority: 1) CancerRegistry.STAGE_BEST. Cancer Registry stage takes precedence when available; all values must be expressed in the Cancer Registry coding system.; 2) Pathology staging (Breast: HistoPath_BrCa.Stage, Derived using Tstage, Nstage, Mstage; Ovarian: HistoPath_OvCa.Stage_FIGO), mapped to Cancer Registry stage format;",
       "x-sourcePriority": [
@@ -171,139 +180,20 @@
         "HistoPath_BrCa.Stage",
         "HistoPath_OvCa.Stage_FIGO"
       ],
-      "enum": [
-        "0",
-        "0A",
-        "0B",
-        "0C",
-        "0IS",
-        "1",
-        "1C3",
-        "1A",
-        "1A1",
-        "1A2",
-        "1A3",
-        "1AE",
-        "1AES",
-        "1AEX",
-        "1AEXS",
-        "1AS",
-        "1AX",
-        "1B",
-        "1B1",
-        "1B2",
-        "1BE",
-        "1BES",
-        "1BEX",
-        "1BS",
-        "1BX",
-        "1C",
-        "1C1",
-        "1C2",
-        "IC3",
-        "1E",
-        "1ES",
-        "1EX",
-        "1S",
-        "1X",
-        "1XS",
-        "2",
-        "2A",
-        "2A1",
-        "2A2",
-        "2AE",
-        "2AES",
-        "2AEX",
-        "2AS",
-        "2AX",
-        "2B",
-        "2BE",
-        "2BEX",
-        "2BS",
-        "2BX",
-        "2C",
-        "2E",
-        "2ES",
-        "2EX",
-        "2S",
-        "2X",
-        "3",
-        "3A",
-        "3A1",
-        "3A1i",
-        "3A1ii",
-        "3A2",
-        "3AE",
-        "3AES",
-        "3AEX",
-        "3AS",
-        "3AX",
-        "3B",
-        "3BE",
-        "3BES",
-        "3BEX",
-        "3BEXS",
-        "3BS",
-        "3BX",
-        "3BXS",
-        "3C",
-        "3C1",
-        "3C2",
-        "3D",
-        "3E",
-        "3ES",
-        "3EX",
-        "3S",
-        "3X",
-        "3XS",
-        "4",
-        "4A",
-        "4AE",
-        "4AES",
-        "4AEX",
-        "4AEXS",
-        "4AS",
-        "4AX",
-        "4AXS",
-        "4B",
-        "4BE",
-        "4BES",
-        "4BEX",
-        "4BEXS",
-        "4BS",
-        "4BX",
-        "4BXS",
-        "4C",
-        "4E",
-        "4ES",
-        "4EX",
-        "4EXS",
-        "4S",
-        "4X",
-        "A",
-        "B",
-        "C",
-        "5",
-        "6",
-        "NA",
-        "?",
-        "U",
-        "X",
-        null
-      ],
-      "enumDescriptions": [
+      "enum": ["0", "0A", "0B", "0C", "0IS", "1", "1C3", "1A", "1A1", "1A2", "1A3", "1AE", "1AES", "1AEX", "1AEXS", "1AS", "1AX", "1B", "1B1", "1B2", "1BE", "1BES", "1BEX", "1BS", "1BX", "1C", "1C1", "1C2", "IC3", "1E", "1ES", "1EX", "1S", "1X", "1XS", "2", "2A", "2A1", "2A2", "2AE", "2AES", "2AEX", "2AS", "2AX", "2B", "2BE", "2BEX", "2BS", "2BX", "2C", "2E", "2ES", "2EX", "2S", "2X", "3", "3A", "3A1", "3A1i", "3A1ii", "3A2", "3AE", "3AES", "3AEX", "3AS", "3AX", "3B", "3BE", "3BES", "3BEX", "3BEXS", "3BS", "3BX", "3BXS", "3C", "3C1", "3C2", "3D", "3E", "3ES", "3EX", "3S", "3X", "3XS", "4", "4A", "4AE", "4AES", "4AEX", "4AEXS", "4AS", "4AX", "4AXS", "4B", "4BE", "4BES", "4BEX", "4BEXS", "4BS", "4BX", "4BXS", "4BS", "4BX", "4BXS", "4C", "4E", "4ES", "4EX", "4EXS", "4S", "4X", "A", "B", "C", "5", "6", "NA", "?", "U", "X", null],
+      "x-enumDescriptions": [
         "Stage 0: 0, 0A, 0B, 0C, 0IS",
         "Stage 1: 1, 1A, 1A1, 1A2, 1A3, 1AE, 1AES, 1AEX, 1AEXS, 1AS, 1AX, 1B, 1B1, 1B2, 1BE, 1BES, 1BEX, 1BS, 1BX, 1C, 1C1, 1C2, IC3, 1E, 1ES, 1EX, 1S, 1X, 1XS",
         "Stage 2: 2, 2A, 2A1, 2A2, 2AE, 2AES, 2AEX, 2AS, 2AX, 2B, 2BE, 2BEX, 2BS, 2BX, 2C, 2E, 2ES, 2EX, 2S, 2X",
         "Stage 3: 3, 3A, 3A1, 3A1i, 3A1ii, 3A2, 3AE, 3AES, 3AEX, 3AS, 3AX, 3B, 3BE, 3BES, 3BEX, 3BEXS, 3BS, 3BX, 3BXS, 3C, 3C1, 3C2, 3D,  3E, 3ES, 3EX, 3S, 3X, 3XS",
-        "Stage 4: 4, 4A, 4AE, 4AES, 4AEX, 4AEXS, 4AS, 4AX, 4AXS, 4B, 4BE, 4BES, 4BEX, 4BEXS, 4BS, 4BX, 4BXS, 4C, 4E, 4ES, 4EX, 4EXS, 4S, 4X",
+        "Stage 4: 4, 4A, 4AE, 4AES, 4AEX, 4AEXS, 4AS, 4AX, 4AXS, 4B, 4BE, 4BES, 4BEX, 4BEXS, 4BS, 4BX, 4BXS, 4BS, 4BX, 4BXS, 4C, 4E, 4ES, 4EX, 4EXS, 4S, 4X",
         "A, B, C: RaiBinet stage",
         "5: Outdated or invalid code",
         "6: not stageable",
         "NA/?: insufficient information",
         "U: unstageable",
         "X: not staged",
-        "null: Missing in the report"
+        "null: Missing or not applicable"
       ]
     },
     "S_STAGE": {
@@ -319,7 +209,7 @@
         "HistoPath_BrCa.ER_Status"
       ],
       "enum": ["N", "P", "X", "B", "U", null],
-      "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U:", "null: Not applicable"]
+      "x-enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U: Unknown", "null: Missing or not applicable"]
     },
     "S_ER_STATUS": {
       "type": ["string", "null"],
@@ -334,7 +224,7 @@
         "HistoPath_BrCa.PR_Status"
       ],
       "enum": ["N", "P", "X", "B", "U", null],
-      "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B : Borderline", "U: ", "null: Not applicable"]
+      "x-enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B : Borderline", "U: Unknown", "null: Missing or not applicable"]
     },
     "S_PR_STATUS": {
       "type": ["string", "null"],
@@ -349,7 +239,7 @@
         "HistoPath_BrCa.HER2_Status"
       ],
       "enum": ["N", "P", "X", "B", "U", null],
-      "enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U:", "null: Not applicable"]
+      "x-enumDescriptions": ["N: Negative", "P: Positive", "X: Not Performed", "B: Borderline", "U: Unknown", "null: Missing or not applicable"]
     },
     "S_HER2_STATUS": {
       "type": ["string", "null"],
@@ -363,7 +253,7 @@
         "HistoPath_BrCa.HER2_FISH"
       ],
       "enum": ["A", "N", "POS", "NEG", "NP", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "A: if the HER2 FISH/ISH test result/significance is described as Amplified in the report.",
         "N: if the HER2 FISH/ISH test result/significance is described as Non-Amplified in the report.",
         "POS: if the HER2 FISH/ISH test result/significance is described as Positive in the report.",
@@ -380,7 +270,8 @@
         "HistoPath_BrCa.Ki67"
       ],
       "minimum": 1,
-      "maximum": 100
+      "maximum": 100,
+      "x-unit": "%"
     },
     "SCREEN_DETECTED": {
       "type": ["string", "null"],
@@ -391,7 +282,7 @@
         "HistoPath_BrCa.ScreenDetected"
       ],
       "enum": ["N", "Y", "8", "9", null],
-      "enumDescriptions": ["N : No", "Y : Yes", "8 : Not applicable", "9 : Not known", "null: missing"]
+      "x-enumDescriptions": ["N: No", "Y: Yes", "8: Not applicable", "9: Not known", "null: Missing or not applicable"]
     },
     "S_SCREEN_DETECTED": {
       "type": ["string", "null"],
@@ -405,16 +296,16 @@
         "CancerRegistry.SCREENINGSTATUSCOSD_CODE"
       ],
       "enum": ["1", "2", "4", "5", "6", "7", "9", "NM", null],
-      "enumDescriptions": [
-        "1 : Screen-detected",
-        "2 : Interval Cancer",
-        "4 : Lapsed Attender",
-        "5 : Never Attended",
-        "6 : Never Invited",
-        "7 : Other",
-        "9 : Not Known",
-        "NM : Not Mapped",
-        "null: missing"
+      "x-enumDescriptions": [
+        "1: Screen-detected",
+        "2: Interval Cancer",
+        "4: Lapsed Attender",
+        "5: Never Attended",
+        "6: Never Invited",
+        "7: Other",
+        "9: Not Known",
+        "NM: Not Mapped",
+        "null: Missing or not applicable"
       ]
     },
     "SCREENINGSTATUSFULL_CODE": {
@@ -434,7 +325,7 @@
         "HistoPath_BrCa.LATERALITY"        
       ],
       "enum": ["L", "R", "M", "B", "8", "9", null],
-      "enumDescriptions": ["L: Left", "R: Right", "M: Midline", "B: Bilateral", "8: Not applicable", "9: Not Known", "null: Missing"]
+      "x-enumDescriptions": ["L: Left", "R: Right", "M: Midline", "B: Bilateral", "8: Not applicable", "9: Not Known", "null: Missing or not applicable"]
     },
     "S_LATERALITY": {
       "type": ["string", "null"],
@@ -484,29 +375,29 @@
 	  "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual",
       "x-description": "This field is carried to final dataset to match the tissue blocks received as part of pathology process. ",
       "x-sourcePriority": [
-        "HistoPath_BrCa.ReportCount"        
-      ]
+        "HistoPath_BrCa.ReportCount"
+      ],
+      "minimum": 1
     },
 	"TUMOUR_COUNT": {
       "type": ["integer", "null"],
 	  "description": "Tumour identifier coded sequencially from 1 to max number of tumours per pathology report. Dataset has one row per tumour, eg a patient with 2 tumours will have 2 rows with TumourCount=1 and TumourCount=2. No missing values allowed",
       "x-description": "This field is carried to final dataset to match the tissue blocks received as part of pathology process. ",
       "x-sourcePriority": [
-        "HistoPath_BrCa.TumourCount"        
-      ]
+        "HistoPath_BrCa.TumourCount"     
+      ],
+      "minimum": 1
     },
-    "CREATED_TIME": {
-      "type": ["string"],
+    "LAST_MODIFIED_TIME": {
+      "type": "string",
       "format": "date-time",
-      "description": "Time when cancer summary record was created.",
-      "x-description": "Timestamp (YYYY-MM-DD or date-time) when this cancer summary record was created. Set by the integration process; not sourced from clinical data.",
-      "x-sourcePriority": []
+      "description": "Time when cancer summary record was last updated.",
+      "x-description": "Timestamp (YYYY-MM-DDTHH:MM:SSZ) when this cancer summary record was last updated. Set by the integration process; not sourced from clinical data."
     },
     "COMMENTS": {
       "type": ["string", "null"],
       "description": "Free-text notes about tumour record.",
-      "x-description": "Free-text notes about data integration decisions or anomalies for this tumour record.",
-      "x-sourcePriority": []
+      "x-description": "Free-text notes about data integration decisions or anomalies for this tumour record."
     }
   }
 }

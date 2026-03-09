@@ -1,28 +1,38 @@
 {
-  "$id": "https://www.breakthroughgenerations.org.uk/schemas/HistoPath_BrCa.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/CancerSummary/json_schemas/HistoPath_BrCa.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "HistoPath_BrCa",
+  "title": "Histopathology breast cancer schema",
+  "description": "Schema for variables from Histopathology data (Uploads.Histopath_BrCa_GS_v1) for breast cancer to produce new Cancer Summary",
   "type": "object",
+  "required": ["StudyID"],
+  "x-version": "1.0.0",
+  "x-provenance": {
+    "x-lastModified": "2026-03-09",
+    "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+    "x-maintainer": "UK Generations Study"
+  },
   "properties": {
     "ExcisionMargin": {
       "description": "Surgical margin in (mm)",
       "type": ["string", "null"],
       "enum": ["RRM", "NRM", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "RRM: tumour reaches the relevant margin in the excision",
         "NRM: tumour does not reach the relevant margin in the excision",
         "null: no mention about the tumour reaching the relevant margins in the excision and neither 'RRM' nor 'NRM' is applicable."
-      ]
+      ],
+      "x-unit": "millimetres"
     },
     "ClosestRelevantMargin": {
       "description": "Closest Relevant Margin in (mm)",
-      "type": ["number", "null"]
+      "type": ["number", "null"],
+      "x-unit": "millimetres"
     },
     "ER_Status": {
       "description": "Estrogen Receptor (ER) Status as indicated in report",
       "type": ["string", "null"],
       "enum": ["P", "N", "NP", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "P: ER status is positive",
         "N: ER status is negative",
         "NP: if the ER status test is explicitly specified as Not Performed in the report",
@@ -33,7 +43,7 @@
       "description": "ER Scoring system used to immunohistochemistry test score for estrogen receptor (ER)",
       "type": ["string", "null"],
       "enum": ["QS", "IP", "MD", "I", "P", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "QS: reporting an Allred score or a quick score (QS) for ER status. Its value ranges from 0-8",
         "IP: reporting a H-score or a combined score obtained by multiplying the intensity of staining and the percentage of positive cells for ER status. Its value ranges from 0-300",
         "MD: reporting the Mitch Dowsett score for ER status. Its value ranges from 0-18",
@@ -46,7 +56,7 @@
       "description": "Progesterone Receptor (PR) Status as indicated in report",
       "type": ["string", "null"],
       "enum": ["P", "N", "NP", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "P: ER status is positive",
         "N: ER status is negative",
         "NP: if the ER status test is explicitly specified as Not Performed in the report",
@@ -57,7 +67,7 @@
       "description": "PR Scoring system used to immunohistochemistry test score for progesterone receptor (PR)",
       "type": ["string", "null"],
       "enum": ["QS", "IP", "MD", "I", "P", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "QS: reporting an Allred score or a quick score (QS) for PR status. Its value ranges from 0-8",
         "IP: reporting a H-score or a combined score obtained by multiplying the intensity of staining and the percentage of positive cells for PR status. Its value ranges from 0-300",
         "MD: reporting the Mitch Dowsett score for PR status. Its value ranges from 0-18",
@@ -70,7 +80,7 @@
       "description": "HER2 Receptor Status as indicated in report",
       "type": ["string", "null"],
       "enum": ["N", "B", "P", "NP", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "N: if the HER2 status is specified as Negative in the report.",
         "B: if the HER2 status is specified as Borderline in the report.",
         "P: if the HER2 status is specified as Positive in the report.",
@@ -82,19 +92,19 @@
       "description": "HER2 ImmunoHistoChemistry Score as reported. There are combinations of these scores eg. 2/3+",
       "type": ["string", "null"],
       "enum": ["0", "1+", "2+", "3+", null],
-      "enumDescriptions":[
+      "x-enumDescriptions":[
         "0: Negative",
         "1+: Negative",
         "2+: Borderline",
         "3+: Positive",
-        "null: Missing information or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "HER2_FISH": {
       "description": "Fluorescence in situ hybridisation test for HER2 as reported",
       "type": ["string", "null"],
       "enum": ["A", "N", "POS", "NEG", "NP", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "A: if the HER2 FISH/ISH test result/significance is described as Amplified in the report.",
         "N: if the HER2 FISH/ISH test result/significance is described as Non-Amplified in the report.",
         "POS: if the HER2 FISH/ISH test result/significance is described as Positive in the report.",
@@ -107,7 +117,8 @@
       "description": "Ki67 % Positive nuclei as indicated in report",
       "type": ["number", "null"],
       "minimum": 1,
-      "maximum": 100
+      "maximum": 100,
+      "x-unit": "%"
     },
     "ICDMorphologyCode": {
       "description": "Intl Classification of Diseases Morphology Code (ICD_O) when indicated in report. Missing information or not applicable is coded as Null",
@@ -118,97 +129,101 @@
       "description": "status to represent Malignant Cancer",
       "type": ["string", "null"],
       "enum": ["N", "X", "U", "B", "Y", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "N: Not Malignant",
         "X: Not breast primary",
         "U: Not Known",
         "B: Borderline",
-        "Y: Yes Malignant"
+        "Y: Yes Malignant",
+        "null: if the report does not contain this information."
       ]
     },
     "BrCa1": {
       "description": "BrCa 1 gene present when indicated in report",
       "type": ["string", "null"],
-      "enum": ["Y", null]
+      "enum": ["Y", null],
+      "x-enumDescriptions": [
+        "Y: Present",
+        "null: if the report does not contain this information."
+      ]
     },
     "BrCa2": {
       "description": "BrCa 2 gene present when indicated in report",
       "type": ["string", "null"],
-      "enum": ["Y", null]
+      "enum": ["Y", null],
+      "x-enumDescriptions": [
+        "Y: Present",
+        "null: if the report does not contain this information."
+      ]
     },
     "MitoticActivity": {
       "description": "Presence of proliferating cells for assessing Grade",
       "type": ["integer", "null"],
-      "enum": [1,2,3, null]
+      "enum": [1,2,3, null],
+      "x-enumDescriptions": [
+        "1: Low (0-9 at x 25)",
+        "2: Moderate (10 -19 at x 25)",
+        "3: High (>19 at x 25)",
+        "null: if the report does not contain this information."
+      ]
     },
     "StudyID": {
-      "description": "Generations Study ID",
-      "type": ["integer"],
-      "minimum": 0,
+      "description": "Generations Study ID which is unique for every participant",
+      "type": "integer",
+      "minimum": 100000,
       "maximum": 499994
     },
     "Side": {
       "description": "The laterality of the breast from which the main tissue specimen was collected",
-      "type": ["string"],
+      "type": "string",
       "enum": ["L", "R", "U"],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "L: if the specimen was collected from the left breast.",
         "R: if the specimen was collected from the right breast.",
         "U: Unknown laterality"
       ]
     },
-    "TumourCount": {
-      "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour",
-      "type": ["integer"],
-      "minimum": 1, 
-      "maximum": 8
-    },
     "ReportDat": {
       "description": "Date of Report. Missing information is null (blank)",
       "type": ["string", "null"],
-      "format": "date-time",
-      "maxLength": 23
+      "format": "date-time"
     },
     "CoreDat": {
       "description": "Date of Core Biopsy (if previously performed and indicated in the report or if the report is for a core biopsy - in this case ReportDat = CoreDat). Missing is coded null.",
       "type": ["string", "null"],
-      "format": "date-time",
-      "maxLength": 23
+      "format": "date-time"
     },
     "DiagDat": {
       "description": "Date of diagnosis derived in the order: 1. CoreDat; 2. DateSpecimenTaken; 3.DateSpecimenReceived; 4.ReportDat",
       "type": ["string", "null"],
-      "format": "date-time",
-      "maxLength": 23
+      "format": "date-time"
     },
     "DateSpecimenTaken": {
       "description": "Specimen taken date. Missing is coded as null (blank)",
       "type": ["string", "null"],
-      "format": "date-time",
-      "maxLength": 23
+      "format": "date-time"
     },
     "DateSpecimenReceived": {
       "description": "Specimen received in hospital laboratory. Missing is coded as null (blank)",
       "type": ["string", "null"],
-      "format": "date-time",
-      "maxLength": 23
+      "format": "date-time"
     },
     "ScreenDetected": {
       "description": "Screen Detection Report about tumour/abnormality detection",
       "type": ["string", "null"],
       "enum": ["Y", "N", "NK", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "Y: if the report mentions that the tumour/abnormality was detected through cancer screening.",
         "N: if the report explicitly mentions that the tumour/abnormality was not detected through cancer screening.",
         "NK: Not known about the screen detection",
-        "null: missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "SpecimenType": {
       "description": "Surgical procedure performed to opbtain the main issue specimen described in the report",
       "type": ["string", "null"],
       "enum": ["WBB", "WLE", "M", "NBO", "OB", "REX", "SE", "TMP", "FNA", "LB", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "WBB: if Wide Bore Needle Biopsy (also called Core Biopsy or Mammotome Biopsy) was performed.",
         "WLE: if Wide Local Excision was performed.",
         "M: if Mastectomy was performed.",
@@ -224,26 +239,27 @@
     },
     "SpecimenWeight": {
       "description": "Weight of specimen (grams). Missing is coded as null (blank)",
-      "type": ["number", "null"]
+      "type": ["number", "null"],
+      "x-unit": "grams"
     },
     "AxillaryProcedure": {
       "description": "Axillary Procedure indicates the procedures performed during surgery to remove or sample axillary lymph nodes. If the same procedure for multiple tumours in a report, information is repeated for each tumour.",
       "type": ["string", "null"],
       "enum": ["ANC", "ANS", "NLN", "OSNA", "SNB", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "ANC: if Axillary Node Clearance was done.",
         "ANS: if Axillary Node Sample was collected.",
         "NLN: if the report explicitly mentions that no Lymph node procedure was done",
         "OSNA: if One-Step Nucleic Acid Amplification (OSNA) assessment was performed.",
         "SNB: if Sentinel Node Biopsy.",
-        "null: Missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "PostNeoadjuvantChemo": {
       "description": "Specimen taken after treatment (Chemotherapy or Endocrine)",
       "type": ["string", "null"],
       "enum": ["C", "E", "PC", "PE", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "C: if the report explicitly mentions that the patient received chemotherapy.",
         "E: if the report explicitly mentions that the patient received endocrine therapy.",
         "PC: Possible Chemotherapy",
@@ -255,27 +271,27 @@
       "description": "In situ Carcinoma is present or not in the report",
       "type": ["string", "null"],
       "enum": ["P", "N", null],
-      "enumDescriptions":[
+      "x-enumDescriptions":[
         "P: In situ Carcinoma is present",
         "N: In situ Carcinoma not present",
-        "null: Missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "DuctalCarcinomaInsitu": {
       "description": "In situ Ductal Carcinoma is present or not in the report",
       "type": ["string", "null"],
       "enum": ["P", "N", null],
-      "enumDescriptions":[
+      "x-enumDescriptions":[
         "P: In situ Ductal Carcinoma is present",
         "N: In situ Ductal Carcinoma not present",
-        "null: Missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "DCISGrade": {
       "description": "DCIS grade mentioned in the report",
       "type": ["string", "null"],
       "enum": ["L", "IL", "I", "HI", "H", "N", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "L: if the report specifies a low grade DCIS.",
         "IL: if the report specifies an intermediate and low grade DCIS.",
         "I: if the report specifies an intermediate grade DCIS.",
@@ -289,7 +305,7 @@
       "description": "Solid DCIS growth pattern is described in the report or not",
       "type": ["string", "null"],
       "enum": ["Y", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "Y: Solid DCIS Growth Pattern mentioned in the report",
         "null: No Solid DCIS Growth Pattern mentioned"
       ]
@@ -298,7 +314,7 @@
       "description": "Cribiform DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "Y: Cribiform DCIS Growth Pattern mentioned in the report",
         "null: No Cribiform DCIS Growth Pattern mentioned"
       ]
@@ -307,7 +323,7 @@
       "description": "Micropapillary DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "Y: Micropapillary DCIS Growth Pattern mentioned in the report",
         "null: No Micropapillary DCIS Growth Pattern mentioned"
       ]
@@ -316,7 +332,7 @@
       "description": "Papillary DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "Y: Papillary DCIS Growth Pattern mentioned in the report",
         "null: No Papillary DCIS Growth Pattern mentioned"
       ]
@@ -325,7 +341,7 @@
       "description": "Apocrine DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "Y: Apocrine DCIS Growth Pattern mentioned in the report",
         "null: No Apocrine DCIS Growth Pattern mentioned"
       ]
@@ -334,7 +350,7 @@
       "description": "Flat DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "Y: Flat DCIS Growth Pattern mentioned in the report",
         "null: No Flat DCIS Growth Pattern mentioned"
       ]
@@ -343,7 +359,7 @@
       "description": "Comedo DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "Y: Comedo DCIS Growth Pattern mentioned in the report",
         "null: No Comedo DCIS Growth Pattern mentioned"
       ]
@@ -352,7 +368,7 @@
       "description": "Clinging DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "Y: Clinging DCIS Growth Pattern mentioned in the report",
         "null: No Clinging DCIS Growth Pattern mentioned"
       ]
@@ -361,7 +377,7 @@
       "description": "Comedo Necrosis characteristics of DCIS",
       "type": ["string", "null"],
       "enum": ["Y", "N", "Mil", "Mod", "Mar", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "Y: if the report specifies that comedo necrosis is present in DCIS but the extent is not specified.",
         "N: if the report explicitly specifies that comedo necrosis is not present in DCIS.",
         "Mil: if the report specifies that comedo necrosis is present in DCIS and the extent is mild.",
@@ -372,71 +388,74 @@
     },
     "SizeDCISOnly": {
       "description": "Size of in situ carcinoma only (mm). Missing information or not applicable is coded as null.",
-      "type": ["number", "null"]
+      "type": ["number", "null"],
+      "x-unit": "millimetres"
     },
     "LobularCarcinomaInsitu": {
       "description": "In situ Lobular Carcinoma is present or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", "N", null],
-      "enumDescriptions":[
+      "x-enumDescriptions":[
         "Y: In situ Lobular Carcinoma is present",
         "N: In situ Lobular Carcinoma not present",
-        "null: Missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "PleomorphicLCIS": {
       "description": "Pleomorphic LCIS is present or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", "N", null],
-      "enumDescriptions":[
+      "x-enumDescriptions":[
         "Y: Pleomorphic LCIS is present",
         "N: Pleomorphic LCIS is not present",
-        "null: Missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "PagetsDisease": {
       "description": "Paget's Disease is present or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", "N", null],
-      "enumDescriptions":[
+      "x-enumDescriptions":[
         "Y: Paget's Disease of the breast is present",
         "N: Paget's Disease of the breast is not present",
-        "null: Missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "Microinvasion": {
       "description": "Microinvasive breast cancer is present or not in the report",
       "type": ["string", "null"],
       "enum": ["P", "N", null],
-      "enumDescriptions":[
+      "x-enumDescriptions":[
         "P: Microinvasive breast cancer is present",
         "N: Microinvasive breast cancer is not present",
-        "null: Missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "InvasiveCarcinoma": {
       "description": "Invasive carcinoma is present in the report or not",
       "type": ["string", "null"],
       "enum": ["P", "N", null],
-      "enumDescriptions":[
+      "x-enumDescriptions":[
         "P: Invasive Carcinoma is present",
         "N: Invasive Carcinoma is not present",
-        "null: Missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "SizeInvasiveTumour": {
       "description": "Largest dimension of dominant invasive tumour (mm). Missing information or not applicable is coded null.",
-      "type": ["number", "null"]
+      "type": ["number", "null"],
+      "x-unit": "millimetres"
     },
     "SizeWholeTumour": {
       "description": "Invasive plus surrounding DCIS if DCIS extends >1mm (mm). Missing information or not applicable is coded null.",
-      "type": ["number", "null"]
+      "type": ["number", "null"],
+      "x-unit": "millimetres"
     },
     "Type": {
       "description": "Type of Invasive Carcinoma",
       "type": ["string", "null"],
       "enum": ["NST", "PST", "MTT", "MIX", "OTH", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "NST: if the invasive carcinoma type is specified as of 'No Special Type' (NST). When there is no mixed tumour component, invasive/infiltrating ductal carcinoma (IDC) implies No Special Type.",
         "PST: if the invasive carcinoma type is specified as of 'Pure Special Type'. When there is no mixed tumour component and the tumour type is not described as type other, a single invasive component such as— only invasive lobular carcinoma (ILC), only invasive tubular carcinoma, only invasive cribriform carcinoma, only invasive mucinous carcinoma, only papillary carcinoma, only medullary breast cancer, etc.— each imply that the invasive carcinoma is of Pure Special Type.",
         "MTT: if the invasive carcinoma type is specified as of 'Mixed' type, and the mixed components were specifically ductal (NST) and lobular.",
@@ -449,7 +468,7 @@
       "description": "Type of Component that describes invasive carcinoma type in the report",
       "type": ["string", "null"],
       "enum": ["Lob", "Pap", "Tub", "Crb", "Muc", "Med", "T/C", "Oth", "D/L", "Tul", "Mic", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "Lob': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Lobular'.",
         "Pap': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Papillary'.",
         "Tub': if the invasive carcinoma type is specified as 'Pure Special Type' and the component type is specified as 'Tubular'.",
@@ -468,18 +487,25 @@
       "description": "Invasive Grade assigned for invasive carcinoma in the report",
       "type": ["string", "null"],
       "enum": ["1", "2", "3", "NA", null],
-      "enumDescriptions":[
+      "x-enumDescriptions":[
         "1: Grade 1 or well differentiated", 
         "2: Grade 2 or moderately differentiated", 
         "3: Grade 3 or poorly differentiated",
         "NA: Not assessable",
-        "null: Missing or not applicable"
+        "null: if the report does not contain this information."
       ]
     },
     "Tubules": {
       "description": "Percentage of cells in the tumour that have tube shaped structures for assessing Grade",
       "type": ["integer", "null"],
-      "enum": [1, 2, 3, null]
+      "enum": [1, 2, 3, null],
+      "x-enumDescriptions":[
+        "1: >75%", 
+        "2: >=10% to 75%", 
+        "3: <10%",
+        "null: if the report does not contain this information."
+      ],
+      "x-unit": "%"
     },
     "Pleomorphism": {
       "description": "Variability in size and shape for assessing Grade",
@@ -490,7 +516,7 @@
       "description": "Description of Extent of Tumour in the report",
       "type": ["string", "null"],
       "enum": ["LOC", "MIF", "UNI", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "LOC: if the tumour extent is explicitly described as 'Localised' in the report.",
         "MIF: if the tumour extent is explicitly described as 'Multifocal' (or Multiple foci, Multi invasive foci, etc.) in the report.",
         "UNI: if the tumour extent is explicitly described as 'Unifocal' in the report",
@@ -501,7 +527,7 @@
       "description": "Status of lymphatic or vascular invasion",
       "type": ["string", "null"],
       "enum": ["Pres", "Poss", "NS", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "Pres: if the pathologist has reported that lymphatic or vascular invasion is present.",
         "Poss: if the pathologist has reported that lymphatic or vascular invasion is possible or probable.",
         "NS: if the pathologist has reported that lymphatic or vascular invasion is not seen.",
@@ -512,7 +538,7 @@
       "description": "Details on Axillary lymph nodes are present/sampled or not",
       "type": ["string", "null"],
       "enum": ["Y", "N", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "Y: if the report clearly indicates that axillary lymph nodes are present/sampled for analysis.",
         "N: if the report explicitly specifies that axillary lymph nodes are not present/sampled for analysis. Note 1: If the total number of axillary nodes is specified as 0, assign 'N'. Note 2: If only nodes of type 'other' are mentioned in the report, assign 'N'.",
         "null: if the report does not contain this information."
@@ -530,7 +556,7 @@
       "description": "Nodes other than axillary present or not",
       "type": ["string", "null"],
       "enum": ["Y", "N", null],
-      "enumDescriptions": [
+      "x-enumDescriptions": [
         "Y: if the report clearly indicates that lymph nodes of type 'other' are present/sampled",
         "N: if the report clearly indicates that lymph nodes of type 'other' are not present/sampled",
         "null: if the report does not contain this information."
@@ -561,11 +587,13 @@
     },
 	"ReportCount": {
       "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual",
-      "type": ["integer"]
+      "type": "integer",
+      "minimum": 1
     },
 	"TumourCount": {
       "description": "Tumour identifier coded sequencially from 1 to max number of tumours per pathology report. Dataset has one row per tumour, eg a patient with 2 tumours will have 2 rows with TumourCount=1 and TumourCount=2. No missing values allowed",
-      "type": ["integer"]
+      "type": "integer",
+      "minimum": 1
     }
   }
 }
