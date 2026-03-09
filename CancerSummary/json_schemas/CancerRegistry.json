@@ -83,7 +83,7 @@
         "S: Any other ethnic group",
         "Z: Not stated",
         "X: Not Known",
-        "null: Missing or not applicable"
+        "null(NA): Missing or not applicable"
       ]
     },
     "ETHNICITYNAME": {
