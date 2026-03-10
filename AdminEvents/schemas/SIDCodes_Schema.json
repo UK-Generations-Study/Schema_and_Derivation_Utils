@@ -1,9 +1,16 @@
 {
-  "$id": "https://www.breakthroughgenerations.org.uk/schemas/SIDCodes.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "SIDCodes",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/AdminEvents/schemas/SIDCodes_Schema.json",
+  "title": "Study ID Codes",
+  "description": "This data set can be used as a related table to apply pseudo-anonymised study IDs to resultant datasets for analyis.",
   "type": "object",
-  "description": "Identifying codes table for participants in the study. Linked to Study ID in teh Safehaven SidCodes table in the Mailing database.",
+  "x-version": "1.0.0",
+  "x-provenance": {
+      "x-dataRound": "R0",
+      "x-lastModified": "2026-03-05",
+      "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+      "x-maintainer": "UK Generations Study"
+  },
   "properties": {
     "KCode": {
       "name": "KCode",
@@ -105,7 +112,7 @@
       "maxLength": 8
     },
     "Ccode": {
-      "name": "CCode",
+      "name": "Ccode",
       "description": "Pseudo-anonymised ID for ctDNA Study",
       "type": [
         "string"

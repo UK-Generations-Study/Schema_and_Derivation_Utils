@@ -1,11 +1,19 @@
 {
-  "$id": "https://www.breakthroughgenerations.org.uk/schemas/BreastTumourLink.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "BreastTumourLink",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/AdminEvents/schemas/BreastTumourLink_Schema.json",
+  "title": "Pathology and Linking",
+  "description": "This data set contains information on pathology specific to tumour samples and thier lab results and can be linked to individuals.",
   "type": "object",
+  "x-version": "1.0.0",
+  "x-provenance": {
+      "x-dataRound": "R0",
+      "x-lastModified": "2026-03-05",
+      "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+      "x-maintainer": "UK Generations Study"
+  },
   "properties": {
     "StudyID": {
-      "name": "StudyID",
+      "x-name": "StudyID",
       "description": "Unique 6-digit identifier for each participant in the study.",
       "type": [
         "number"
@@ -14,7 +22,7 @@
       "maxLength": 6
     },
     "TumourTracking": {
-      "name": "TumourTracking",
+      "x-name": "TumourTracking",
       "description": "Tumour- and specimen-level pathology tracking records. Each item corresponds to a tissue block/slide linked to a tumour and pathology report.",
       "type": "array",
       "x-description": "Source: TumourTracking table in Pathology DB.",
@@ -23,7 +31,7 @@
         "type": "object",
         "properties": {
           "TrackID": {
-            "name": "TrackID",
+            "x-name": "TrackID",
             "description": "Unique number to track the tumours entry in the tumourTracking table.",
             "type": [
               "integer",
@@ -31,7 +39,7 @@
             ]
           },
           "RequestCount": {
-            "name": "RequestCount",
+            "x-name": "RequestCount",
             "description": "Number for tumour request.",
             "type": [
               "integer",
@@ -39,7 +47,7 @@
             ]
           },
           "TrackSide": {
-            "name": "TrackSide",
+            "x-name": "TrackSide",
             "description": "Log of laterality for bilaterals",
             "type": [
               "string",
@@ -48,7 +56,7 @@
             "maxLength": 10
           },
           "Material": {
-            "name": "Material",
+            "x-name": "Material",
             "description": "Type of material received from hospital",
             "type": [
               "string",
@@ -59,16 +67,16 @@
               "Block",
               null
             ],
-            "enumDescriptions": [
-              "Slide: permanent form of preserving a thin slice of tissue previously cut from a block.",
-              "Block: formalin-fixed paraffin-embedded tissue in the form of block; original preserved specimen that serves as the source material from which sections are cut to produce microscope slides.",
+            "x-enumDescriptions": [
+              "Slide: Permanent form of preserving a slice of tissue previously cut from a block.",
+              "Block: Formalin-fixed paraffin-embedded tissue in the form of a block; original preserved specimen that serves as the source material from which sections are cut to produce microscope slides.",
               "null: Missing or invalid"
             ],
             "maxLength": 255
           },
           "MaterialID": {
-            "name": "MaterialID",
-            "description": "Hospital tumour block ID",
+            "x-name": "MaterialID",
+            "description": "Hospital tumour block ID read on the material and/or on the path report",
             "type": [
               "string",
               "null"
@@ -76,7 +84,7 @@
             "maxLength": 255
           },
           "BoxNo": {
-            "name": "BoxNo",
+            "x-name": "BoxNo",
             "description": "Box number holding tumour block",
             "type": [
               "string",
@@ -85,7 +93,7 @@
             "maxLength": 255
           },
           "LabID": {
-            "name": "LabID",
+            "x-name": "LabID",
             "description": "Study ID and Labno combined",
             "type": [
               "string",
@@ -94,7 +102,7 @@
             "maxLength": 255
           },
           "LabNo": {
-            "name": "LabNo",
+            "x-name": "LabNo",
             "description": "Laboratory accession number uniquely identifying a tissue block or slide.",
             "type": [
               "integer",
@@ -102,7 +110,7 @@
             ]
           },
           "BlockSide": {
-            "name": "BlockSide",
+            "x-name": "BlockSide",
             "description": "Breast laterality from which the specimen originated.",
             "type": [
               "string",
@@ -113,7 +121,7 @@
               "R",
               null
             ],
-            "enumDescriptions": [
+            "x-enumDescriptions": [
               "L: Left",
               "R: Right",
               "null: None"
@@ -121,7 +129,7 @@
             "maxLength": 1
           },
           "TumourCount": {
-            "name": "TumourCount",
+            "x-name": "TumourCount",
             "description": "Sequential tumour identifier within a participant (used to distinguish multiple tumours recorded for the same participant; not a biological ordering).",
             "type": [
               "integer",
@@ -130,7 +138,7 @@
             "x-description": "Sequentially coded 1..N within participant; dataset may contain multiple records per participant when multiple tumours are recorded."
           },
           "ReportCount": {
-            "name": "ReportCount",
+            "x-name": "ReportCount",
             "description": "Sequential identifier for pathology reports within a participant. Multiple tumours may relate to the same report.",
             "type": [
               "integer",
@@ -139,7 +147,7 @@
             "x-description": "Sequentially coded 1..N within participant."
           },
           "BlockComments": {
-            "name": "BlockComments",
+            "x-name": "BlockComments",
             "description": "Comments on the block for lab purpose",
             "type": [
               "string",
@@ -148,7 +156,7 @@
             "maxLength": 255
           },
           "LabTracking": {
-            "name": "LabTracking",
+            "x-name": "LabTracking",
             "description": "Laboratory processing and digitisation metadata for the specimen.",
             "type": "array",
             "x-description": "Source: LabTracking table; linked by LabNo.",
@@ -157,7 +165,7 @@
               "type": "object",
               "properties": {
                 "LabNo": {
-                  "name": "LabNo",
+                  "x-name": "LabNo",
                   "description": "Unique number for block or slide",
                   "type": [
                     "integer",
@@ -165,7 +173,7 @@
                   ]
                 },
                 "LabID": {
-                  "name": "LabID",
+                  "x-name": "LabID",
                   "description": "Study ID and Labno combined",
                   "type": [
                     "string",
@@ -174,7 +182,7 @@
                   "maxLength": 255
                 },
                 "LabSampleID": {
-                  "name": "LabSampleID",
+                  "x-name": "LabSampleID",
                   "description": "Unique sample ID",
                   "type": [
                     "string",
@@ -183,8 +191,8 @@
                   "maxLength": 50
                 },
                 "LabSampleType": {
-                  "name": "LabSampleType",
-                  "description": "Histological preparation type of the laboratory specimen.",
+                  "x-name": "LabSampleType",
+                  "description": "Type of histological preparation performed on the specimen by the laboratory.",
                   "type": [
                     "string",
                     "null"
@@ -196,16 +204,16 @@
                     null
                   ],
                   "enumDescriptions": [
-                    "Core: Core needle biopsy",
-                    "ThickSection: Thick section",
-                    "ThinSection: Thin section",
+                    "Core: Cylindrical material that is extracted from a donor formalin-fixed paraffin-embedded tissue block with a tissue micro-arrayer needle",
+                    "ThickSection: Slice of tissue approximately 10 micron-thick taken from a formalin-fixed paraffin-embedded tissue block",
+                    "ThinSection: Slice of tissue 4 micron-thick taken from a formalin-fixed paraffin-embedded tissue block ",
                     "null: None"
                   ],
                   "maxLength": 20
                 },
                 "LabSampleDate": {
-                  "name": "LabSampleDate",
-                  "description": "Date sample created",
+                  "x-name": "LabSampleDate",
+                  "description": "Date when sample was created in the laboratory.",
                   "type": [
                     "string",
                     "null"
@@ -214,8 +222,8 @@
                   "maxLength": 23
                 },
                 "Scan": {
-                  "name": "Scan",
-                  "description": "Status of digital slide scanning for the first digitisation round.",
+                  "x-name": "Scan",
+                  "description": "Digitised microscopy image of a stained tissue section, for the first digitisation round.",
                   "type": [
                     "string",
                     "null"
@@ -224,8 +232,8 @@
                   "maxLength": 50
                 },
                 "ScanDate": {
-                  "name": "ScanDate",
-                  "description": "Date of scan",
+                  "x-name": "ScanDate",
+                  "description": "Date when scan was acquired",
                   "type": [
                     "string",
                     "null"
@@ -234,7 +242,7 @@
                   "maxLength": 23
                 },
                 "LabComments": {
-                  "name": "LabComments",
+                  "x-name": "LabComments",
                   "description": "Comments from the lab",
                   "type": [
                     "string",
@@ -243,7 +251,7 @@
                   "maxLength": 255
                 },
                 "ERIntensity": {
-                  "name": "ERIntensity",
+                  "x-name": "ERIntensity",
                   "description": "Pathology Lab ER intensity receptor result",
                   "type": [
                     "integer",
@@ -251,7 +259,7 @@
                   ]
                 },
                 "ER%Positive": {
-                  "name": "ER%Positive",
+                  "x-name": "ER%Positive",
                   "description": "Pathology Lab ER % positive recptor result",
                   "type": [
                     "integer",
@@ -259,7 +267,7 @@
                   ]
                 },
                 "Shipped": {
-                  "name": "Shipped",
+                  "x-name": "Shipped",
                   "description": "Sample shipped to collaborator",
                   "type": [
                     "string",
@@ -268,7 +276,7 @@
                   "maxLength": 1
                 },
                 "DateShipped": {
-                  "name": "DateShipped",
+                  "x-name": "DateShipped",
                   "description": "Date sample(s) shipped off site from BioDock",
                   "type": [
                     "string",
@@ -282,7 +290,7 @@
             }
           },
           "TMAs": {
-            "name": "TMAs",
+            "x-name": "TMAs",
             "description": "Tissue Microarray (TMA) mapping records describing array identifiers and grid positions of sampled tissue cores.",
             "type": "array",
             "x-description": "Source: TMAMapping table; linked by LabNo.",
@@ -291,7 +299,7 @@
               "type": "object",
               "properties": {
                 "ArrayIDFull": {
-                  "name": "ArrayIDFull",
+                  "x-name": "ArrayIDFull",
                   "description": "Full Tissue Microarray ID including section markers",
                   "type": [
                     "string",
@@ -300,7 +308,7 @@
                   "maxLength": 100
                 },
                 "ArrayID": {
-                  "name": "ArrayID",
+                  "x-name": "ArrayID",
                   "description": "Tissue Microarray ID",
                   "type": [
                     "string",
@@ -309,7 +317,7 @@
                   "maxLength": 50
                 },
                 "ArrayNo": {
-                  "name": "ArrayNo",
+                  "x-name": "ArrayNo",
                   "description": "Short identifier distinguishing arrays within a TMA series (as recorded in the source system).",
                   "type": [
                     "string",
@@ -318,7 +326,7 @@
                   "maxLength": 3
                 },
                 "ArraySister": {
-                  "name": "ArraySister",
+                  "x-name": "ArraySister",
                   "description": "Identifier indicating a paired/replicate ('sister') TMA block constructed from the same source material.",
                   "type": [
                     "string",
@@ -327,7 +335,7 @@
                   "maxLength": 1
                 },
                 "ArraySection": {
-                  "name": "ArraySection",
+                  "x-name": "ArraySection",
                   "description": "Section number cut from the TMA block (as recorded in the source system).",
                   "type": [
                     "string",
@@ -336,7 +344,7 @@
                   "maxLength": 3
                 },
                 "XAxis": {
-                  "name": "XAxis",
+                  "x-name": "XAxis",
                   "description": "Column coordinate of the core position within the TMA grid.",
                   "type": [
                     "string",
@@ -345,7 +353,7 @@
                   "maxLength": 2
                 },
                 "YAxis": {
-                  "name": "YAxis",
+                  "x-name": "YAxis",
                   "description": "Row coordinate of the core position within the TMA grid.",
                   "type": [
                     "integer",
@@ -353,7 +361,7 @@
                   ]
                 },
                 "TMACoreID": {
-                  "name": "TMACoreID",
+                  "x-name": "TMACoreID",
                   "description": "Identifier of the individual tissue core placed at the specified TMA grid coordinate (may include orientation/control labels).",
                   "type": [
                     "string",
@@ -362,8 +370,8 @@
                   "maxLength": 50
                 },
                 "TMAMarker": {
-                  "name": "TMAMarker",
-                  "description": "Receptor marker",
+                  "x-name": "TMAMarker",
+                  "description": "Receptor marker tested on the a particular tissue section taken from a TMA block",
                   "type": [
                     "string",
                     "null"
@@ -371,7 +379,7 @@
                   "maxLength": 20
                 },
                 "LabNo": {
-                  "name": "LabNo",
+                  "x-name": "LabNo",
                   "description": "Unique number for block or slide",
                   "type": [
                     "integer",
@@ -379,7 +387,7 @@
                   ]
                 },
                 "SampleType": {
-                  "name": "SampleType",
+                  "x-name": "SampleType",
                   "description": "Type of sample received - blood or urine",
                   "type": [
                     "string",
@@ -388,7 +396,7 @@
                   "maxLength": 50
                 },
                 "TMAResult": {
-                  "name": "TMAResult",
+                  "x-name": "TMAResult",
                   "description": "Quality check for TMAs with prefix BGS",
                   "type": [
                     "string",
@@ -397,7 +405,7 @@
                   "maxLength": 100
                 },
                 "Annotation": {
-                  "name": "Annotation",
+                  "x-name": "Annotation",
                   "description": "Annotation for TMAs with prefix GS",
                   "type": [
                     "string",
@@ -406,7 +414,7 @@
                   "maxLength": 10
                 },
                 "DonorCoreHeight": {
-                  "name": "DonorCoreHeight",
+                  "x-name": "DonorCoreHeight",
                   "description": "Core height recorded by arrayer for TMAs with prefix GS excluding megas",
                   "type": [
                     "number",
@@ -414,7 +422,7 @@
                   ]
                 },
                 "StatusLog": {
-                  "name": "StatusLog",
+                  "x-name": "StatusLog",
                   "description": "Status of the TMA",
                   "type": [
                     "string",
@@ -423,7 +431,7 @@
                   "maxLength": 1
                 },
                 "TMANotes": {
-                  "name": "TMANotes",
+                  "x-name": "TMANotes",
                   "description": "Notes added fot Tissue MicroArray",
                   "type": [
                     "string",
@@ -432,7 +440,7 @@
                   "maxLength": 255
                 },
                 "TMADateAdded": {
-                  "name": "TMADateAdded",
+                  "x-name": "TMADateAdded",
                   "description": "Date when TMA is added to the table",
                   "type": [
                     "string",

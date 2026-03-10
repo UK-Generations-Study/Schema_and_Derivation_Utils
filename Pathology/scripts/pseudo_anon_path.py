@@ -4,6 +4,7 @@ import pandas as pd
 import copy
 import json
 import re
+from datetime import datetime
 from collections import OrderedDict
 
 sys.path.append(os.path.abspath(
@@ -47,11 +48,62 @@ BLOCKCOMMENTS_POINTER = "#/properties/TumourTracking/items/properties/BlockComme
 # Variables renamed in the pseudo-anonymised output (new_name -> former_name).
 # (We handle both title-case and any accidental upper-case variants to be robust.)
 FORMER_NAME_MAP = {
-    "TCode": "StudyID",
     "LATERALITY": "BlockSide",
     "TUMOUR_COUNT": "TumourCount",
     "REPORT_COUNT": "ReportCount"
 }
+
+
+
+def _prefix_schema_title(title: str) -> str:
+    if not isinstance(title, str):
+        return title
+    prefix = "Pseudo Anonymised "
+    return title if title.startswith(prefix) else f"{prefix}{title}"
+
+
+def _append_pseudoanon_sentence(description: str) -> str:
+    sentence = (
+        "This data has been pseudo-anonymised by removing any personal identifiable "
+        "information (PII) and shifting dates from their original data."
+    )
+    if not isinstance(description, str) or not description.strip():
+        return sentence
+    return description if sentence in description else f"{description} {sentence}"
+
+
+def _update_schema_metadata(schema: dict) -> dict:
+    if not isinstance(schema, dict):
+        return schema
+
+    schema_id = schema.get("$id")
+    if isinstance(schema_id, str):
+        if schema_id.endswith("_PseudoAnon.json"):
+            schema["$id"] = schema_id
+        elif schema_id.endswith(".json"):
+            schema["$id"] = schema_id[:-5] + "_PseudoAnon.json"
+        else:
+            schema["$id"] = schema_id + "_PseudoAnon"
+
+    if "title" in schema:
+        schema["title"] = _prefix_schema_title(schema["title"])
+
+    schema["description"] = _append_pseudoanon_sentence(schema.get("description"))
+
+    if isinstance(schema.get("x-provenance"), dict):
+        schema["x-provenance"]["x-lastModified"] = datetime.today().strftime("%Y-%m-%d")
+
+    return schema
+
+
+def _copy_title_annotations(source_field: dict, target_field: dict) -> dict:
+    if not isinstance(target_field, dict):
+        return target_field
+
+    for key in ("title", "x-title", "x-displayName", "x-shortTitle"):
+        if isinstance(source_field, dict) and key in source_field and key not in target_field:
+            target_field[key] = copy.deepcopy(source_field[key])
+    return target_field
 
 def _add_or_update(d: dict, key: str, value):
     if isinstance(d, dict):
@@ -66,10 +118,7 @@ def apply_provenance_annotations_to_schema(schema: dict) -> dict:
     if not isinstance(schema, dict):
         return schema
 
-    # Top-level: TCode former name
     props = schema.get("properties", {})
-    if "TCode" in props and isinstance(props["TCode"], dict):
-        _add_or_update(props["TCode"], "x-formerName", FORMER_NAME_MAP["TCode"])
 
     # TumourTracking level
     try:
@@ -354,25 +403,22 @@ def update_schema_for_pseudoanon(schema: dict) -> dict:
     s = copy.deepcopy(schema)
 
     # Metadata
-    if "$id" in s and isinstance(s["$id"], str):
-        if s["$id"].endswith(".json"):
-            s["$id"] = s["$id"].replace(".json", "_PseudoAnon.json")
-        else:
-            s["$id"] = s["$id"] + "_PseudoAnon"
-    if "title" in s:
-        s["title"] = f"{s['title']}_PseudoAnon"
+    s = _update_schema_metadata(s)
 
     # Replace StudyID -> TCode in properties order
     original_props = s["properties"]
     new_props = OrderedDict()
     for key, value in original_props.items():
         if key == "StudyID":
-            new_props["TCode"] = {
+            tcode_field = {
                 "name": "TCode",
                 "description": "Pseudoanonymised unique participant identifier.",
-                "type": ["string", "null"],
-                "x-description": "Replaces StudyID. Derived using SIDCodes mapping."
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 8
             }
+            tcode_field = _copy_title_annotations(value, tcode_field)
+            new_props["TCode"] = tcode_field
         else:
             new_props[key] = value
     s["properties"] = new_props

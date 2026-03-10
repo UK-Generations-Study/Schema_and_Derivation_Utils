@@ -1,8 +1,16 @@
 {
-  "$id": "https://www.breakthroughgenerations.org.uk/schemas/AdminEvents.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "AdminEvents",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/AdminEvents/schemas/AdminEvents_Schema.json",
+  "title": "Administrative Events per Participant",
+  "description": "This data set outlines participant-level administrative events that can be used to derive variables, like date of birth, study entry, questionnaire completion data, etc.",
   "type": "object",
+  "x-version": "1.0.0",
+  "x-provenance": {
+      "x-dataRound": "R0",
+      "x-lastModified": "2026-03-05",
+      "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+      "x-maintainer": "UK Generations Study"
+  },
   "properties": {
     "TCode": {
       "description": "Pseudo-anonymized 8-character study identifier.",
@@ -30,6 +38,7 @@
         "string",
         "null"
       ],
+      "format": "date",
       "x-description": "Taken from the fields ADOB in the General SQL table in the Mailing database. This variable is derived directly from raw data and the references to variables it is derived from is not another schema, they are references to the SQL database->table->column.",
       "x-derivedFrom": [
         "Mailing/General/ADOB",
@@ -55,6 +64,7 @@
         "string",
         "null"
       ],
+      "format": "date",
       "x-description": "Shifted date of questionnaire completion, or if no date of completion, the date the questionnaire was received.",
       "x-derivedFrom": [
         "Mailing/Events/EventDate",
