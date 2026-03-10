@@ -195,6 +195,11 @@ def load_and_pivot_data(question_range, logger):
     }
     
     df = read_data(queries['main'], dm_conn, logger)
+    
+    #ensure study id is string
+    if "StudyID" in df.columns:
+        df["StudyID"] = df["StudyID"].astype(str)
+
     dfQuest = read_data(queries['questions'], dm_conn, logger)
     dfPII = read_data(queries['pii'], dm_conn, logger)
     

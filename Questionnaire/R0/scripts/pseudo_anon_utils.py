@@ -51,10 +51,11 @@ def load_sid_codes(server, logger):
 
 def build_name_to_fieldkey(schema_node, include_nested=False, prefix=''):
     """
-    Build a mapping from JSON Schema 'name' attributes to JSON pointer keys.
+    Build a mapping from JSON Schema field identifiers to nested key paths.
 
-    This allows us to locate fields in the nested data structure using the
-    original variable names (e.g. R0_XrayDay) rather than their full path.
+    This allows us to locate fields in the nested data structure using either
+    the JSON property key or schema metadata attributes such as ``name`` and
+    ``x-name``.
     """
     name_to_key = {}
     properties = schema_node.get("properties", {})
@@ -65,9 +66,10 @@ def build_name_to_fieldkey(schema_node, include_nested=False, prefix=''):
         name_to_key[key] = full_key
 
         if isinstance(val, dict):
-            # Also map the "name" (SQL/Questionnaire variable) if present
-            if "name" in val:
-                name_to_key[val["name"]] = full_key
+            # Also map common schema naming attributes if present
+            for attr in ("name", "x-name"):
+                if attr in val and val[attr]:
+                    name_to_key[val[attr]] = full_key
 
             if include_nested:
                 if "properties" in val:
@@ -650,6 +652,37 @@ def update_schema(old_schema_path, new_schema_path, dateDict, pii_vars, section_
     # Load
     schema = ordered_load(old_schema_path)
 
+    def prefixed_text(value, prefix):
+        value = (value or "").strip()
+        return value if value.lower().startswith(prefix.lower()) else f"{prefix}{value}"
+
+    # Description handling
+    pii_sentence = (
+        "This data has been pseudo-anonymised by removing any personal identifiable "
+        "information (PII) and shifting dates from their original data."
+    )
+
+    def schema_path_to_ref_path(section, schema_path):
+        cleaned = normalize_path(schema_path).replace("[]", "")
+        return f"{section}/properties/{cleaned.replace('.', '/properties/')}"
+
+    # Bring general questionnaire metadata changes across
+    if "$id" in schema and isinstance(schema["$id"], str):
+        schema_id = schema["$id"]
+        schema_id = schema_id.replace("/raw/", "/pseudo_anon/")
+        schema_id = re.sub(r'([^/]+)\.json$', r'\1_PseudoAnon.json', schema_id)
+        schema["$id"] = schema_id
+
+    if "title" in schema:
+        schema["title"] = prefixed_text(schema["title"], "Pseudo Anonymised ")
+
+    if "description" in schema and isinstance(schema["description"], str):
+        if pii_sentence not in schema["description"]:
+            schema["description"] = f"{schema['description']} {pii_sentence}"
+
+    if isinstance(schema.get("x-provenance"), dict):
+        schema["x-provenance"]["x-lastModified"] = datetime.now().strftime("%Y-%m-%d")
+
     # Inputs
     if section_name not in dateDict:
         raise ValueError(f"Section '{section_name}' not found in dateDict")
@@ -736,7 +769,7 @@ def update_schema(old_schema_path, new_schema_path, dateDict, pii_vars, section_
             # Year-only: require YYYY
             base_items.append(("pattern", r"^[0-9]{4}$"))
 
-        base_items.append(("x-derivedFrom", components))
+        base_items.append(("x-derivedFrom", [schema_path_to_ref_path(section_name, name_to_key[c]) for c in components if c in name_to_key]))
         derived_field = OrderedDict(base_items)
 
         # component keys at this level
@@ -839,7 +872,7 @@ def update_schema(old_schema_path, new_schema_path, dateDict, pii_vars, section_
     tcode_property = OrderedDict([
         ("name", "TCode"),
         ("description", "Pseudo-anonymized 8-character study identifier."),
-        ("type", ["string"]),
+        ("type", "string"),
         ("minLength", 8),
         ("maxLength", 8),
     ])
@@ -848,15 +881,16 @@ def update_schema(old_schema_path, new_schema_path, dateDict, pii_vars, section_
     new_top = OrderedDict()
     new_top["TCode"] = tcode_property
     for key, prop in top_props.items():
-        if not ("name" in prop and prop["name"] == "StudyID"):
-            new_top[key] = prop
+        prop_name = prop.get("name") if isinstance(prop, dict) else None
+        prop_x_name = prop.get("x-name") if isinstance(prop, dict) else None
+        if key == "StudyID" or prop_name == "StudyID" or prop_x_name == "StudyID":
+            continue
+        new_top[key] = prop
     schema["properties"] = new_top
 
     req = schema.get("required", [])
-    if "StudyID" in req:
-        req = [r for r in req if r != "StudyID"]
-    if "TCode" not in req:
-        req.append("TCode")
+    req = [r for r in req if r not in {"StudyID", "TCode"}]
+    req.insert(0, "TCode")
     schema["required"] = req
 
     # Add $defs back-reference

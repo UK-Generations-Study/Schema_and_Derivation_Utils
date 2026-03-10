@@ -340,13 +340,13 @@ schema_derivation = schemas_scripts + r'\Questionnaire\R0'
 
 Delivery_log_path = data_loc + r'\Logs'
 
-schemas_path = schema_derivation + r'\json_schemas'
+schemas_path = schema_derivation + r'\schemas'
 
-r0_schemas_derivation = schemas_path + r'\derivation'
+r0_schemas_derivation = schemas_path + r'\derived'
 
 r0_schemas_pseudo_anon = schemas_path + r'\pseudo_anon'
 
-derivation_json_schemas = schemas_path + r'\derivation'
+derivation_json_schemas = schemas_path + r'\derived'
 
 out_data_path = data_loc + r'\v20260123\Questionnaire\R0'
 
