@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/MH_CancersBenignTumor_Schema.json",
+  "title": "Medical History of Cancers or Benign Tumors from Questionnaire R0",
+  "description": "Variables from the medical history section of the first round of questionnaire for The Generations Study about the participant's history of other cancers and benign tumors.",
+  "type": "object",
+  "x-version": "1.0.0",
+  "x-provenance": {
+      "x-dataRound": "R0",
+      "x-lastModified": "2026-03-05",
+      "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+      "x-maintainer": "UK Generations Study"
+  },
+  "properties": {
+    "StudyID": {
+      "x-name": "StudyID",
+      "description": "Unique 6-digit identifier for each participant in the study.",
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 6
+    },
+    "OtherCancersBenignTumors": {
+      "x-name": "OtherCancersBenignTumors",
+      "description": "Other (non-breast) cancers and benign tumours reported by the participant (up to 3).",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_OtherCancerBenignTumors_Num": {
+            "x-name": "R0_OtherCancerBenignTumors_Num",
+            "description": "Number of other benign cancer tumors instances.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2,
+              3
+            ]
+          },
+          "R0_OtherCancerBenignTumor": {
+            "x-questionID": 1400,
+            "x-name": "R0_OtherCancerBenignTumor",
+            "x-question": "Have you ever been diagnosed with this other type of cancer or benign tumour (not including breast cancer), including leukaemia, Hodgkin’s disease or other lymphoma?",
+            "description": "Whether the participant was diagnosed with this other (non-breast) cancer or benign tumour.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              null
+            ],
+            "x-enumDescriptions": [
+              "0: Multiple responses",
+              "1: Yes",
+              "2: No",
+              "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+              1,
+              2,
+              10
+            ]
+          },
+          "R0_OtherCancerDiagnosisYr": {
+            "x-questionID": 1401,
+            "x-name": "R0_OtherCancerDiagnosisYr",
+            "x-question": "If yes, in which year was this other type of cancer or benign tumour diagnosed?",
+            "description": "Calendar year when this other (non-breast) cancer or benign tumour was diagnosed.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_OtherCancerDiagnosisAge": {
+            "x-questionID": 1402,
+            "x-name": "R0_OtherCancer_Age",
+            "x-question": "If yes, at what age was this other type of cancer or benign tumour diagnosed?",
+            "description": "Participant's age at diagnosis of this other (non-breast) cancer or benign tumour.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_OtherCancerBodyPart": {
+            "x-questionID": 1403,
+            "x-name": "R0_OtherCancerBodyPart",
+            "x-question": "What other type of cancer or benign tumour was it? - Part of body",
+            "description": "Body site affected by this other (non-breast) cancer or benign tumour, as described by the participant.",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "R0_OtherCancerType": {
+            "x-questionID": 1404,
+            "x-name": "R0_OtherCancerType",
+            "x-question": "What other type of cancer or benign tumour was it? - Type of cancer or tumour",
+            "description": "Type of cancer or benign tumour for this other (non-breast) diagnosis, as described by the participant.",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "R0_OtherCancerHospital": {
+            "x-questionID": 1405,
+            "x-name": "R0_OtherCancerHospital",
+            "x-question": "At which hospital were you treated for this other type of cancer or benign tumour?",
+            "description": "Hospital where treatment for this other (non-breast) cancer or benign tumour took place (PII).",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "R0_OtherCancerTown": {
+            "x-questionID": 1406,
+            "x-name": "R0_OtherCancerTown",
+            "x-question": "In which town were you treated for this other type of cancer or benign tumour?",
+            "description": "Town where treatment for this other (non-breast) cancer or benign tumour took place (PII).",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "OtherCancersBenignTumorsExtra": {
+            "x-name": "OtherCancersBenignTumorsExtra",
+            "description": "Other (non-breast) cancers and benign tumours reported by the participant extra information.",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "R0_OtherCancerOtherBodyPart": {
+                  "x-questionID": 1415,
+                  "x-name": "R0_OtherCancerOtherBodyPart",
+                  "x-question": "What other type of cancer or benign tumor was it? - 2nd body part",
+                  "description": "Additional body site description for the other (non-breast) cancer/benign tumour.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "R0_OtherCancerOtherType": {
+                  "x-questionID": 1416,
+                  "x-name": "R0_OtherCancerOtherType",
+                  "x-question": "What other type of cancer or benign tumor was it? - 2nd type of cancer or tumor",
+                  "description": "Additional type description for the other (non-breast) cancer/benign tumour.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_MoreNonBreastCancers": {
+      "x-questionID": 1407,
+      "x-name": "Q8_1_more",
+      "x-question": "If you have been diagnosed with non-breast cancer more than once, please provide details.",
+      "description": "Flag indicating the participant has had more than one non-breast cancer/benign tumour diagnosis.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "x-enumDescriptions": [
+        "1: Checked",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        1206
+      ]
+    }
+  },
+    "additionalProperties": false,
+    "required": [
+        "StudyID"
+    ]
+}

@@ -1,0 +1,432 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/pseudo_anon/BreastCancer_Schema_PseudoAnon.json",
+  "title": "Pseudo Anonymised Breast Cancer from Questionnaire R0",
+  "description": "Variables from the breast cancer section of the first round of questionnaire for The Generations Study about the participant's history of breast cancer. This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
+  "type": "object",
+  "x-version": "1.0.0",
+  "x-provenance": {
+    "x-dataRound": "R0",
+    "x-lastModified": "2026-03-09",
+    "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+    "x-maintainer": "UK Generations Study"
+  },
+  "properties": {
+    "TCode": {
+      "name": "TCode",
+      "description": "Pseudo-anonymized 8-character study identifier.",
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "BreastCancers": {
+      "x-name": "BreastCancers",
+      "description": "Participant's history of breast cancer or pre-cancer (DCIS or in situ).",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_BreastCancer_Num": {
+            "x-name": "R0_BreastCancer_Num",
+            "description": "Breast cancer incident array number.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              1,
+              2,
+              3
+            ]
+          },
+          "R0_BreastCancer": {
+            "x-questionID": 1186,
+            "x-name": "R0_BreastCancer",
+            "x-question": "Have you ever had breast cancer or pre-cancer (DCIS or in situ)?",
+            "description": "Participant's history of breast cancer or pre-cancer (DCIS or in situ)",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              null
+            ],
+            "x-enumDescriptions": [
+              "0: Multiple responses",
+              "1: Yes",
+              "2: No",
+              "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+              10,
+              1,
+              2
+            ]
+          },
+          "R0_CancerType": {
+            "x-questionID": 1187,
+            "x-name": "R0_CancerType",
+            "x-question": "If yes, what type was it? (Cancer, Pre-cancer)",
+            "description": "Type of cancer or pre-cancer diagnosed",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              null
+            ],
+            "x-enumDescriptions": [
+              "0: Multiple responses",
+              "1: Cancer",
+              "2: Pre-cancer",
+              "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+              10,
+              971,
+              972
+            ]
+          },
+          "R0_AgeAtDiagnosis": {
+            "x-questionID": 1188,
+            "x-name": "R0_AgeAtDiagnosis",
+            "x-question": "How old were you when Cancer or pre-cancer was diagnosed?",
+            "description": "Participant's age at diagnosis of cancer/pre-cancer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_CancerBreastLocation": {
+            "x-questionID": 1189,
+            "x-name": "R0_CancerBreastLocation",
+            "x-question": "In which breast was Cancer or pre-cancer? (Left, Right, Both)",
+            "description": "Location of cancer/pre-cancer in the participant's breast(s)",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              null
+            ],
+            "x-enumDescriptions": [
+              "0: Multiple responses",
+              "1: Left",
+              "2: Right",
+              "3: Both",
+              "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+              10,
+              959,
+              960,
+              961
+            ]
+          },
+          "R0_BreastCancerSurgery": {
+            "x-questionID": 1190,
+            "x-name": "R0_BreastCancerSurgery",
+            "x-question": "Did you have surgery for this breast cancer or pre-cancer?",
+            "description": "Surgery status for the participant's breast cancer/pre-cancer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              null
+            ],
+            "x-enumDescriptions": [
+              "0: Multiple responses",
+              "1: Yes",
+              "2: No",
+              "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+              10,
+              1,
+              2
+            ]
+          },
+          "R0_SurgeryType": {
+            "x-questionID": 1191,
+            "x-name": "R0_SurgeryType",
+            "x-question": "What type of surgery was performed for Cancer or pre-cancer? (Biopsy, Lump removal, Full breast removal, Both breasts removed, Other)",
+            "description": "Type of surgery performed for the participant's cancer/pre-cancer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              null
+            ],
+            "x-enumDescriptions": [
+              "0: Multiple responses",
+              "1: Biopsy",
+              "2: Full breast removal",
+              "3: Lump removal",
+              "4: Both breasts removed",
+              "5: Other",
+              "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+              10,
+              966,
+              965,
+              968,
+              967,
+              13
+            ]
+          },
+          "R0_RadiotherapyReceived": {
+            "x-questionID": 1193,
+            "x-name": "R0_RadiotherapyReceived",
+            "x-question": "Did you receive radiotherapy (radiation treatment) for this cancer or pre-cancer?",
+            "description": "Radiotherapy status for the participant's cancer/pre-cancer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              null
+            ],
+            "x-enumDescriptions": [
+              "0: Multiple responses",
+              "1: Yes",
+              "2: No",
+              "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+              10,
+              1,
+              2
+            ]
+          },
+          "R0_Radiotherapy_Start_Shifted": {
+            "name": "R0_Radiotherapy_Start_Shifted",
+            "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+            "x-derivedFrom": [
+              "BreastCancer/properties/BreastCancers/properties/R0_RadiotherapyStartMonth",
+              "BreastCancer/properties/BreastCancers/properties/R0_RadiotherapyStartYear"
+            ]
+          },
+          "R0_Radiotherapy_End_Shifted": {
+            "name": "R0_Radiotherapy_End_Shifted",
+            "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+            "x-derivedFrom": [
+              "BreastCancer/properties/BreastCancers/properties/R0_RadiotherapyEndMonth",
+              "BreastCancer/properties/BreastCancers/properties/R0_RadiotherapyEndYear"
+            ]
+          },
+          "R0_BCDrugTreatmentReceived": {
+            "x-questionID": 1200,
+            "x-name": "R0_BCDrugTreatmentReceived",
+            "x-question": "Did you receive any drug treatment for the cancer or pre-cancer (e.g. Tamoxifen, chemotherapy)?",
+            "description": "Drug treatment status for the participant's cancer/pre-cancer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              null
+            ],
+            "x-enumDescriptions": [
+              "0: Multiple responses",
+              "1: Yes",
+              "2: No",
+              "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+              10,
+              1,
+              2
+            ]
+          },
+          "BreastCancersExtra": {
+            "x-name": "BreastCancersExtra",
+            "description": "Additional details about the participant's breast cancer/pre-cancer history",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "R0_BreastCancerDiagnosis_Shifted": {
+                  "name": "R0_BreastCancerDiagnosis_Shifted",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "BreastCancer/properties/BreastCancers/properties/BreastCancersExtra/properties/R0_CancerDiagnosisMonth",
+                    "BreastCancer/properties/BreastCancers/properties/BreastCancersExtra/properties/R0_CancerDiagnosisYear"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "DrugTreatment": {
+            "x-name": "DrugTreatment",
+            "description": "Drug regimens used for the participant's cancer/pre-cancer treatment",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 6,
+            "items": {
+              "type": "object",
+              "properties": {
+                "R0_DrugTreatment_Num": {
+                  "x-name": "R0_DrugTreatment_Num",
+                  "description": "Drug treatment for cancer array number.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ]
+                },
+                "R0_BCDrugRegimen_Start_Shifted": {
+                  "name": "R0_BCDrugRegimen_Start_Shifted",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "BreastCancer/properties/BreastCancers/properties/DrugTreatment/properties/R0_BCDrugRegimenStartMonth",
+                    "BreastCancer/properties/BreastCancers/properties/DrugTreatment/properties/R0_BCDrugRegimenStartYear"
+                  ]
+                },
+                "R0_BCDrugRegimen_End_Shifted": {
+                  "name": "R0_BCDrugRegimen_End_Shifted",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "BreastCancer/properties/BreastCancers/properties/DrugTreatment/properties/R0_BCDrugRegimenStopMonth",
+                    "BreastCancer/properties/BreastCancers/properties/DrugTreatment/properties/R0_BCDrugRegimenStopYear"
+                  ]
+                },
+                "R0_BCDrugRegimenOngoing": {
+                  "x-questionID": 1221,
+                  "x-name": "R0_BCDrugRegimenOngoing",
+                  "x-question": "Are you still using the drug or regimen for drug therapy of cancer or pre-cancer?",
+                  "description": "Flag whether the participant is still using the drug or regimen for drug therapy of cancer or pre-cancer.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "enum": [
+                    -1,
+                    1,
+                    null
+                  ],
+                  "x-enumDescriptions": [
+                    "-1: Ticked, extra info.",
+                    "1: Yes, still using.",
+                    "null: Missing or invalid."
+                  ],
+                  "x-answerIDs": [
+                    1,
+                    804
+                  ]
+                },
+                "R0_DrugRegimenName": {
+                  "x-questionID": 1221,
+                  "x-name": "R0_DrugRegimenName",
+                  "x-question": "Are you still using the drug or regimen used for drug therapy of the cancer or pre-cancer?",
+                  "description": "Name of the drug regimen the participant is currently using",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_MoreDrugEpisodesFirstBC": {
+      "x-questionID": 1213,
+      "x-name": "Q7_7_14",
+      "x-question": "More than two episodes of drug treatment for 1st cancer or pre-cancer.",
+      "description": "Flag whether the participant had more than two episodes of drug treatment for 1st cancer or pre-cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "x-enumDescriptions": [
+        "1: Yes, more episodes",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        810
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "TCode"
+  ],
+  "$defs": {
+    "BreastCancer": {
+      "$ref": "../raw/BreastCancer_JSON.json"
+    }
+  }
+}

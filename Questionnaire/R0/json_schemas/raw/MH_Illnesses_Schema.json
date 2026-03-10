@@ -1,0 +1,1144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/MH_Illnesses_Schema.json",
+  "title": "Medical History of Illnesses from Questionnaire R0",
+  "description": "Variables from the medical history section of the first round of questionnaire for The Generations Study about the participant's history of other chronic illnesses.",
+  "type": "object",
+  "x-version": "1.0.0",
+  "x-provenance": {
+      "x-dataRound": "R0",
+      "x-lastModified": "2026-03-05",
+      "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+      "x-maintainer": "UK Generations Study"
+  },
+  "properties": {
+    "StudyID": {
+      "x-name": "StudyID",
+      "description": "Unique 6-digit identifier for each participant in the study.",
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 6
+    },
+    "R0_Diabetes": {
+      "x-questionID": 1426,
+      "x-name": "Q8_2_1_1",
+      "x-question": "Have you ever been diagnosed with diabetes?",
+      "description": "Indicates whether the participant reports a medical diagnosis of diabetes at any time prior to questionnaire completion.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_DiabetesAge": {
+      "x-questionID": 1427,
+      "x-name": "Q8_2_2",
+      "x-question": "If yes, at what age was diabetes diagnosed?",
+      "description": "Participant's age (in completed years) when diabetes was first diagnosed (if applicable).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_TreatedWithInsulin": {
+      "x-questionID": 1428,
+      "x-name": "Q8_2_3_1",
+      "x-question": "Are you treated with insulin?",
+      "description": "Whether the participant is currently receiving insulin treatment.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_ThyroidDisease": {
+      "x-questionID": 1429,
+      "x-name": "Q8_3_1",
+      "x-question": "Have you ever been diagnosed with any thyroid disease or thyroid problems?",
+      "description": "Indicates whether the participant reports any thyroid condition diagnosed by a clinician.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_ThyroidDiseaseType": {
+      "x-questionID": 1430,
+      "x-name": "Q8_3_Yes_1",
+      "x-question": "If yes, what was the disease or problem? (Hyperthyroidism, Hypothyroidism, Thyroid cyst(s), Other)",
+      "description": "Coded type of thyroid disease reported by the participant, when thyroid disease is present.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Hyperthyroidism",
+        "2: Hypothyroidism",
+        "3: Thyroid cyst(s)",
+        "4: Other",
+        "5: Both hyperthyroidism and hypothyroidism",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1209,
+        1210,
+        1211,
+        13,
+        1253
+      ]
+    },
+    "R0_ThyroidDiseaseOther": {
+      "x-questionID": 1431,
+      "x-name": "Q8_3_other",
+      "x-question": "Please specify the other thyroid disease, if applicable.",
+      "description": "Free-text specification when the thyroid disease type is ‘Other'.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ThyroidTreatment": {
+        "x-name": "ThyroidTreatment",
+        "description": "Per-episode details for thyroid drug treatment (up to 2 episodes as captured in the instrument).",
+        "type": "array",
+        "minItems": 0,
+        "maxItems": 2,
+        "items": {
+            "type": "object",
+            "properties": {
+                "R0_ThyroidTreatment_Num": {
+                    "x-name": "R0_ThyroidTreatment_Num",
+                    "description": "Instance of thyroid treatment.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "enum": [
+                      1,
+                      2
+                    ]
+                },
+                "R0_ThyroidDisease_Med": {
+                    "x-questionID": 1432,
+                    "x-name": "R0_ThyroidDisease_Med",
+                    "x-question": "What is the name of the drug treatment for thyroid disease? (Brand names, Generic names)",
+                    "description": "Name of the medication used during this thyroid treatment episode (brand or generic).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "R0_ThyroidTreatment_Age": {
+                    "x-questionID": 1433,
+                    "x-name": "R0_ThyroidTreatment_Age",
+                    "x-question": "At what age did you start the thyroid treatment?",
+                    "description": "Age (in years) when this thyroid treatment episode began.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0
+                },
+                "R0_ThyroidTreatment_Yrs": {
+                    "x-questionID": 1434,
+                    "x-name": "R0_ThyroidTreatment_Yrs",
+                    "x-question": "How long did you take the treatment for thyroid? - Years",
+                    "description": "Duration of this thyroid treatment episode in whole years.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0
+                },
+                "R0_ThyroidTreatment_Mnths": {
+                    "x-questionID": 1435,
+                    "x-name": "R0_ThyroidTreatment_Mnths",
+                    "x-question": "How long did you take the treatment for thyroid? - Months",
+                    "description": "Additional duration of this thyroid treatment episode in whole months.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 12
+                },
+                "R0_ThyroidTreatment_Still": {
+                    "x-questionID": 1436,
+                    "x-name": "R0_ThyroidTreatment_Still",
+                    "x-question": "Are you still using the treatment for thyroid?",
+                    "description": "Whether this thyroid treatment episode is ongoing at the time of questionnaire completion.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "enum": [
+                        1,
+                        null
+                    ],
+                    "x-enumDescriptions": [
+                        "1: Still using treatment for thyroid",
+                        "null: Missing or invalid."
+                    ],
+                    "x-answerIDs": [
+                        804
+                    ]
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "R0_ThyroidTreatment_MoreTwo": {
+      "x-questionID": 1442,
+      "x-name": "Q8_3_more",
+      "x-question": "Have you taken more than two thyroid drug treatments or used them in more than two episodes?",
+      "description": "Indicator that the participant's thyroid treatment history exceeds two distinct treatment episodes.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "x-enumDescriptions": [
+        "1: More than two thyroid drug treatments or used them in more than two episodes",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        810
+      ]
+    },
+    "R0_Blind": {
+      "x-questionID": 1443,
+      "x-name": "Q8_4_1",
+      "x-question": "Are you registered as blind or partially sighted?",
+      "description": "Self-report of registration status for blindness or partial sight.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_Gallstones": {
+      "x-questionID": 1444,
+      "x-name": "Q8_5_1_1",
+      "x-question": "Have you ever been diagnosed with gallstones?",
+      "description": "Self-reported history of medically diagnosed gallstones.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_Gallstones_Age": {
+      "x-questionID": 1445,
+      "x-name": "Q8_5_2",
+      "x-question": "If yes, at what age were you diagnosed with gallstones?",
+      "description": "Age (in completed years) when gallstones were first diagnosed.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_Cholecystectomy": {
+      "x-questionID": 1446,
+      "x-name": "Q8_6_1_1",
+      "x-question": "Have you ever had your gallbladder removed (cholecystectomy)?",
+      "description": "Self-reported history of cholecystectomy.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_Cholecystectomy_Age": {
+      "x-questionID": 1447,
+      "x-name": "Q8_6_2",
+      "x-question": "If yes, at what age was your gallbladder removed?",
+      "description": "Age (in completed years) at the time of cholecystectomy.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_BrokenHip": {
+      "x-questionID": 1448,
+      "x-name": "Q8_7_1_1",
+      "x-question": "Have you ever been told by a doctor that you had a broken (fractured) hip?",
+      "description": "Self-reported history of a doctor-diagnosed hip fracture.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_BrokenHip_Yr": {
+      "x-questionID": 1449,
+      "x-name": "Q8_7_2",
+      "x-question": "If yes, which year did you break your hip for the first time?",
+      "description": "Calendar year of the first hip fracture (if known).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_BrokenHip_Age": {
+      "x-questionID": 1450,
+      "x-name": "Q8_7_3",
+      "x-question": "If yes, at what age did you break your hip for the first time?",
+      "description": "Age (in completed years) at the first hip fracture.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_EatingDisorder": {
+      "x-questionID": 1451,
+      "x-name": "Q8_8_1_1",
+      "x-question": "Have you ever had an eating disorder for which you saw your doctor or that caused you to temporarily lose your periods?",
+      "description": "Categorical indicator of eating disorder history, including whether it involved medical consultation and/or temporary amenorrhea.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: Multiple responses selected",
+        "1: No",
+        "2: Yes, consulted a doctor",
+        "3: Yes, periods temporarily stopped",
+        "4: Consulted a doctor and periods temporarily stopped",
+        "5: Yes, but did not consult a doctor or lose periods (or not stated)",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        2,
+        1224,
+        1225,
+        1226,
+        1254
+      ]
+    },
+    "EatingDisorderEpisodes": {
+        "x-name": "EatingDisorderEpisodes",
+        "description": "Per-episode details for eating disorders (up to 3 episodes captured).",
+        "type": "array",
+        "minItems": 0,
+        "maxItems": 3,
+        "items": {
+            "type": "object",
+            "properties": {
+                "R0_EatingDisorder_Num": {
+                    "x-name": "R0_EatingDisorder_Num",
+                    "description": "Instance of eating disorder.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ]
+                },
+                "R0_ED_Type": {
+                    "x-questionID": 1452,
+                    "x-name": "R0_ED_Type",
+                    "x-question": "If yes, what was the eating disorder?",
+                    "description": "Free-text eating disorder type for this episode.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "R0_ED_DrAge": {
+                    "x-questionID": 1453,
+                    "x-name": "R0_ED_DrAge",
+                    "x-question": "If you saw a doctor for the eating disorder, at what age did this first happen?",
+                    "description": "Age (in years) at first medical consultation for this eating disorder episode (if applicable).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0
+                },
+                "R0_ED_DrAgeNA": {
+                    "x-questionID": 1454,
+                    "x-name": "R0_ED_DrAgeNA",
+                    "x-question": "If you saw a doctor for the eating disorder, at what age did this first happen? - not applicable",
+                    "description": "Flag that doctor consultation is not applicable for this episode.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "enum": [
+                        1,
+                        null
+                    ],
+                    "x-enumDescriptions": [
+                        "1: Not applicable",
+                        "null: Missing or invalid."
+                    ],
+                    "x-answerIDs": [
+                        6
+                    ]
+                },
+                "R0_ED_LostPeriods_Age": {
+                    "x-questionID": 1455,
+                    "x-name": "R0_ED_LostPeriods_Age",
+                    "x-question": "If you lost your periods due to the eating disorder, at what age did it first occur?",
+                    "description": "Age (in years) at onset of temporary absence of periods for this episode (if applicable).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0
+                },
+                "R0_ED_LostPeriods_AgeNA": {
+                    "x-questionID": 1456,
+                    "x-name": "R0_ED_LostPeriods_AgeNA",
+                    "x-question": "If you lost your periods due to the eating disorder, at what age did it first occur? - not applicable",
+                    "description": "Flag that loss of periods is not applicable for this episode.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "enum": [
+                        1,
+                        null
+                    ],
+                    "x-enumDescriptions": [
+                        "1: Not applicable",
+                        "null: Missing or invalid."
+                    ],
+                    "x-answerIDs": [
+                        6
+                    ]
+                },
+                "R0_ED_LostPeriods_Yrs": {
+                    "x-questionID": 1457,
+                    "x-name": "R0_ED_LostPeriods_Yrs",
+                    "x-question": "How long did you lose your periods during the eating disorder? - Years",
+                    "description": "Duration of lost periods during this episode, in years.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0
+                },
+                "R0_ED_LengthLostPeriod_Mnths": {
+                    "x-questionID": 1458,
+                    "x-name": "R0_ED_LengthLostPeriod_Mnths",
+                    "x-question": "How long did you lose your periods during the eating disorder? - Months",
+                    "description": "Additional duration of lost periods during this episode, in months.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 11
+                },
+                "R0_ED_PreWeight_st": {
+                    "x-questionID": 1459,
+                    "x-name": "ED_PreWeight_st",
+                    "x-question": "What was your weight before the onset of the eating disorder? - Stone",
+                    "description": "Weight in stone immediately prior to the onset of this episode.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0
+                },
+                "R0_ED_PreWeight_lb": {
+                    "x-questionID": 1460,
+                    "x-name": "R0_ED_PreWeight_lb",
+                    "x-question": "What was your weight before the onset of the eating disorder? - Pounds",
+                    "description": "Pounds component of pre-onset weight (0-15).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 13
+                },
+                "R0_ED_PreWeight_kg": {
+                    "x-questionID": 1461,
+                    "x-name": "R0_ED_PreWeight_kg",
+                    "x-question": "What was your weight before the onset of the eating disorder? - Kilograms",
+                    "description": "Weight in kilograms immediately prior to the onset of this episode.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0
+                },
+                "R0_ED_GainLoss": {
+                    "x-questionID": 1462,
+                    "x-name": "R0_ED_GainLoss",
+                    "x-question": "Did you gain or lose weight during your 1st eating disorder, or did your weight stay the same on average? (Gained, Lost, Stayed same)",
+                    "description": "Self-reported weight change pattern during the first eating disorder episode.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "enum": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        null
+                    ],
+                    "x-enumDescriptions": [
+                        "0: Multiple responses selected",
+                        "1: Gained",
+                        "2: Lost",
+                        "3: Stayed the same",
+                        "4: Both gained and lost weight",
+                        "null: Missing or invalid."
+                    ],
+                    "x-answerIDs": [
+                        10,
+                        1235,
+                        1236,
+                        1237,
+                        1252
+                    ]
+                },
+                "R0_ED_LowWeight_st": {
+                    "x-questionID": 1463,
+                    "x-name": "R0_ED_LowWeight_st",
+                    "x-question": "If you lost weight during the eating disorder, what was your lowest weight during this period? - Stone",
+                    "description": "Lowest weight reached during this episode, stone component.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0
+                },
+                "R0_ED_LowWeight_lb": {
+                    "x-questionID": 1464,
+                    "x-name": "R0_ED_LowWeight_lb",
+                    "x-question": "If you lost weight during the eating disorder, what was your lowest weight during this period? - Pounds",
+                    "description": "Pounds component of lowest weight (0-15).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 13
+                },
+                "R0_ED_LowWeight_kg": {
+                    "x-questionID": 1465,
+                    "x-name": "R0_ED_LowWeight_kg",
+                    "x-question": "If you lost weight during the eating disorder, what was your lowest weight during this period? - Kilograms",
+                    "description": "Lowest weight reached during this episode, kilograms.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0
+                },
+                "R0_ED_HighWeight_st": {
+                    "x-questionID": 1466,
+                    "x-name": "ED_HighWeight_Stone",
+                    "x-question": "If you gained weight during the eating disorder, what was your greatest weight during this period? - Stone",
+                    "description": "Highest weight reached during this episode, stone component.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0
+                },
+                "R0_ED_HighWeight_lb": {
+                    "x-questionID": 1467,
+                    "x-name": "R0_ED_HighWeight_lb",
+                    "x-question": "If you gained weight during the eating disorder, what was your greatest weight during this period? - Pounds",
+                    "description": "Pounds component of highest weight (0-15).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 15
+                },
+                "R0_ED_HighWeight_kg": {
+                    "x-questionID": 1468,
+                    "x-name": "R0_ED_HighWeight_kg",
+                    "x-question": "If you gained weight during the eating disorder, what was your greatest weight during this period? - Kilograms",
+                    "description": "Highest weight reached during this episode, kilograms.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0
+                },
+                "EatingDisorderExtra": {
+                    "x-name": "EatingDisorderExtra",
+                    "description": "Additional flags and timing for subsequent eating disorder episodes (allows up to 2).",
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 2,
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "R0_ED_ConsultDr": {
+                            "x-questionID": 1470,
+                            "x-name": "R0_ED_ConsultDr",
+                            "x-question": "Have you ever had an eating disorder for which you saw a doctor?",
+                            "description": "Flag that a doctor was consulted for this subsequent episode.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "enum": [
+                                0,
+                                1,
+                                null
+                            ],
+                            "x-enumDescriptions": [
+                                "0: No",
+                                "1: Yes",
+                                "null: Missing or invalid."
+                            ],
+                            "x-answerIDs": [
+                                2,
+                                1
+                            ]
+                            },
+                            "R0_ED_LostPeriods": {
+                            "x-questionID": 1471,
+                            "x-name": "R0_ED_LostPeriods",
+                            "x-question": "Have you ever had an eating disorder that caused you to temporarily lose your periods? (yes)",
+                            "description": "Flag that periods were temporarily lost during this subsequent episode.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "enum": [
+                                0,
+                                1,
+                                null
+                            ],
+                            "x-enumDescriptions": [
+                                "0: No",
+                                "1: Yes",
+                                "null: Missing or invalid."
+                            ],
+                            "x-answerIDs": [
+                                2,
+                                1
+                            ]
+                            },
+                            "R0_ED_ConsultDrPeriods": {
+                            "x-questionID": 1472,
+                            "x-name": "R0_ED_ConsultDrPeriods",
+                            "x-question": "Have you ever had an eating disorder with both doctor consultation and temporary loss of periods? (yes)",
+                            "description": "Flag that both doctor consultation and loss of periods occurred for this episode.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "enum": [
+                                0,
+                                1,
+                                null
+                            ],
+                            "x-enumDescriptions": [
+                                "0: No",
+                                "1: Yes",
+                                "null: Missing or invalid."
+                            ],
+                            "x-answerIDs": [
+                                2,
+                                1
+                            ]
+                            },
+                            "R0_ED_General": {
+                            "x-questionID": 1473,
+                            "x-name": "ED_General",
+                            "x-question": "Have you ever had an eating disorder? (yes)",
+                            "description": "General flag that a subsequent eating disorder episode occurred.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "enum": [
+                                0,
+                                1,
+                                null
+                            ],
+                            "x-enumDescriptions": [
+                                "0: No",
+                                "1: Yes",
+                                "null: Missing or invalid."
+                            ],
+                            "x-answerIDs": [
+                                2,
+                                1
+                            ]
+                            },
+                            "R0_ED_DrStartMth": {
+                            "x-questionID": 1477,
+                            "x-name": "R0_ED_DrStartMth",
+                            "x-question": "If you saw a doctor for the eating disorder, at what month did this first happen?",
+                            "description": "Calendar month number for the first doctor visit related to this episode.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 1,
+                            "maximum": 12
+                            },
+                            "R0_ED_DrStartYr": {
+                            "x-questionID": 1478,
+                            "x-name": "R0_ED_DrStartYr",
+                            "x-question": "If you saw a doctor for the eating disorder, at what year did this first happen?",
+                            "description": "Calendar year for the first doctor visit related to this episode.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 0
+                            },
+                            "R0_ED_PeriodsMth": {
+                            "x-questionID": 1481,
+                            "x-name": "R0_ED_PeriodsMth",
+                            "x-question": "At what month did you lose your periods during the eating disorder?",
+                            "description": "Calendar month of onset of temporary loss of periods during this episode.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 1,
+                            "maximum": 12
+                            },
+                            "R0_ED_PeriodsYr": {
+                            "x-questionID": 1482,
+                            "x-name": "R0_ED_PeriodsYr",
+                            "x-question": "At what year did you lose your periods during the eating disorder?",
+                            "description": "Calendar year of onset of temporary loss of periods during this episode.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 0
+                            },
+                            "R0_ED_Age": {
+                            "x-questionID": 1485,
+                            "x-name": "R0_ED_Age",
+                            "x-question": "What age did the eating disorder happen?",
+                            "description": "Participant age (in years) when this episode occurred.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 0
+                            },
+                            "R0_ED_FromAge": {
+                            "x-questionID": 1486,
+                            "x-name": "R0_ED_FromAge",
+                            "x-question": "From what age did the eating disorder happen?",
+                            "description": "Age (in years) at episode start.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 0
+                            },
+                            "R0_ED_ToAge": {
+                            "x-questionID": 1487,
+                            "x-name": "R0_ED_ToAge",
+                            "x-question": "To what age did the eating disorder happen?",
+                            "description": "Age (in years) at episode end.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 0
+                            },
+                            "R0_ED_Ongoing": {
+                            "x-questionID": 1488,
+                            "x-name": "R0_ED_Ongoing",
+                            "x-question": "Still have the eating disorder?",
+                            "description": "Whether this eating disorder episode is ongoing.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "enum": [
+                                0,
+                                1,
+                                null
+                            ],
+                            "x-enumDescriptions": [
+                                "0: No",
+                                "1: Yes",
+                                "null: Missing or invalid."
+                            ],
+                            "x-answerIDs": [
+                                2,
+                                1
+                            ]
+                            },
+                            "R0_ED_StartMth": {
+                            "x-questionID": 1489,
+                            "x-name": "R0_ED_StartMth",
+                            "x-question": "What month did the eating disorder happen?",
+                            "description": "Calendar month at episode start.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 1,
+                            "maximum": 12
+                            },
+                            "R0_ED_StartYr": {
+                            "x-questionID": 1490,
+                            "x-name": "R0_ED_StartYr",
+                            "x-question": "What year did the eating disorder happen?",
+                            "description": "Calendar year at episode start.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 0
+                            },
+                            "R0_ED_FromMth": {
+                            "x-questionID": 1491,
+                            "x-name": "R0_ED_FromMth",
+                            "x-question": "From which month did the eating disorder happen?",
+                            "description": "Start month of episode (if separately captured).",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 1,
+                            "maximum": 12
+                            },
+                            "R0_ED_FromYr": {
+                            "x-questionID": 1492,
+                            "x-name": "R0_ED_FromYr",
+                            "x-question": "From which year did the eating disorder happen?",
+                            "description": "Start year of episode (if separately captured).",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 0
+                            },
+                            "R0_ED_ToMth": {
+                            "x-questionID": 1493,
+                            "x-name": "R0_ED_ToMth",
+                            "x-question": "To which month did the eating disorder happen?",
+                            "description": "End month of episode.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 1,
+                            "maximum": 12
+                            },
+                            "R0_ED_ToYr": {
+                            "x-questionID": 1494,
+                            "x-name": "R0_ED_ToYr",
+                            "x-question": "To which year did the eating disorder happen?",
+                            "description": "End year of episode.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 0
+                            },
+                            "R0_ED_WeightGain": {
+                            "x-questionID": 1498,
+                            "x-name": "R0_ED_WeightGain",
+                            "x-question": "Did you gain or lose weight during the eating disorder, or did your weight stay the same on average? - Gained",
+                            "description": "Flag indicating weight gain occurred during this episode.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "enum": [
+                                0,
+                                1,
+                                null
+                            ],
+                            "x-enumDescriptions": [
+                                "0: No",
+                                "1: Yes",
+                                "null: Missing or invalid."
+                            ],
+                            "x-answerIDs": [
+                                2,
+                                1
+                            ]
+                            },
+                            "R0_ED_WeightLoss": {
+                            "x-questionID": 1499,
+                            "x-name": "R0_ED_WeightLoss",
+                            "x-question": "Did you gain or lose weight during the eating disorder, or did your weight stay the same on average? - Lost",
+                            "description": "Flag indicating weight loss occurred during this episode.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "enum": [
+                                0,
+                                1,
+                                null
+                            ],
+                            "x-enumDescriptions": [
+                                "0: No",
+                                "1: Yes",
+                                "null: Missing or invalid."
+                            ],
+                            "x-answerIDs": [
+                                2,
+                                1
+                            ]
+                            },
+                            "R0_ED_WeightSame": {
+                            "x-questionID": 1500,
+                            "x-name": "R0_ED_WeightSame",
+                            "x-question": "Did you gain or lose weight during the eating disorder, or did your weight stay the same on average? - Stayed same",
+                            "description": "Flag indicating weight remained stable during this episode.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "enum": [
+                                0,
+                                1,
+                                null
+                            ],
+                            "x-enumDescriptions": [
+                                "0: No",
+                                "1: Yes",
+                                "null: Missing or invalid."
+                            ],
+                            "x-answerIDs": [
+                                2,
+                                1
+                            ]
+                            },
+                            "R0_ED_WeightFluctuate": {
+                            "x-questionID": 1501,
+                            "x-name": "R0_ED_WeightFluctuate",
+                            "x-question": "Did you gain or lose weight during the eating disorder, or did your weight stay the same on average? - Lost and gained weight",
+                            "description": "Flag indicating both loss and gain occurred during this episode.",
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "enum": [
+                                0,
+                                1,
+                                null
+                            ],
+                            "x-enumDescriptions": [
+                                "0: No",
+                                "1: Yes",
+                                "null: Missing or invalid."
+                            ],
+                            "x-answerIDs": [
+                                2,
+                                1
+                            ]
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                }  
+            },
+            "additionalProperties": false
+        }
+    },
+    "R0_ED_MoreEpisodes": {
+      "x-questionID": 1469,
+      "x-name": "Q8_10_more",
+      "x-question": "If you had further separate episodes of eating disorder, please provide details.",
+      "description": "Indicator that additional eating disorder episodes exist beyond those captured above.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "x-enumDescriptions": [
+        "1: Yes (additional detail provided elsewhere)",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        1238
+      ]
+    },
+    "R0_ED_MoreThanThree": {
+      "x-questionID": 1546,
+      "x-name": "eatingdis_morethan",
+      "x-question": "Are there more than 3 episodes of eating disorder?",
+      "description": "Flag indicating the participant experienced more than three distinct eating disorder episodes.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: No",
+        "1: Yes",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        2,
+        1
+      ]
+    }
+  },
+    "additionalProperties": false,
+    "required": [
+        "StudyID"
+    ]
+}

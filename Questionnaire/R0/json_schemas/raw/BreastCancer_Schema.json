@@ -1,0 +1,535 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/BreastCancer_Schema.json",
+    "title": "Breast Cancer from Questionnaire R0",
+    "description": "Variables from the breast cancer section of the first round of questionnaire for The Generations Study about the participant's history of breast cancer.",
+    "type": "object",
+    "x-version": "1.0.0",
+    "x-provenance": {
+        "x-dataRound": "R0",
+        "x-lastModified": "2026-03-05",
+        "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+        "x-maintainer": "UK Generations Study"
+    },
+    "properties": {
+        "StudyID": {
+            "x-name": "StudyID",
+            "description": "Unique 6-digit identifier for each participant in the study.",
+            "type": "string",
+            "minLength": 6,
+            "maxLength": 6
+        },
+        "BreastCancers": {
+            "x-name": "BreastCancers",
+            "description": "Participant's history of breast cancer or pre-cancer (DCIS or in situ).",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 3,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "R0_BreastCancer_Num": {
+                        "x-name": "R0_BreastCancer_Num",
+                        "description": "Breast cancer incident array number.",
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "enum": [
+                            1,
+                            2,
+                            3
+                        ]
+                    },
+                    "R0_BreastCancer": {
+                        "x-questionID": 1186,
+                        "x-name": "R0_BreastCancer",
+                        "x-question": "Have you ever had breast cancer or pre-cancer (DCIS or in situ)?",
+                        "description": "Participant's history of breast cancer or pre-cancer (DCIS or in situ)",
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "enum": [
+                            0,
+                            1,
+                            2,
+                            null
+                        ],
+                        "x-enumDescriptions": [
+                            "0: Multiple responses",
+                            "1: Yes",
+                            "2: No",
+                            "null: Missing or invalid."
+                        ],
+                        "x-answerIDs": [
+                            10,
+                            1,
+                            2
+                        ]
+                    },
+                    "R0_CancerType": {
+                        "x-questionID": 1187,
+                        "x-name": "R0_CancerType",
+                        "x-question": "If yes, what type was it? (Cancer, Pre-cancer)",
+                        "description": "Type of cancer or pre-cancer diagnosed",
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "enum": [
+                            0,
+                            1,
+                            2,
+                            null
+                        ],
+                        "x-enumDescriptions": [
+                            "0: Multiple responses",
+                            "1: Cancer",
+                            "2: Pre-cancer",
+                            "null: Missing or invalid."
+                        ],
+                        "x-answerIDs": [
+                            10,
+                            971,
+                            972
+                        ]
+                    },
+                    "R0_AgeAtDiagnosis": {
+                        "x-questionID": 1188,
+                        "x-name": "R0_AgeAtDiagnosis",
+                        "x-question": "How old were you when Cancer or pre-cancer was diagnosed?",
+                        "description": "Participant's age at diagnosis of cancer/pre-cancer",
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "minimum": 0
+                    },
+                    "R0_CancerBreastLocation": {
+                        "x-questionID": 1189,
+                        "x-name": "R0_CancerBreastLocation",
+                        "x-question": "In which breast was Cancer or pre-cancer? (Left, Right, Both)",
+                        "description": "Location of cancer/pre-cancer in the participant's breast(s)",
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            null
+                        ],
+                        "x-enumDescriptions": [
+                            "0: Multiple responses",
+                            "1: Left",
+                            "2: Right",
+                            "3: Both",
+                            "null: Missing or invalid."
+                        ],
+                        "x-answerIDs": [
+                            10,
+                            959,
+                            960,
+                            961
+                        ]
+                    },
+                    "R0_BreastCancerSurgery": {
+                        "x-questionID": 1190,
+                        "x-name": "R0_BreastCancerSurgery",
+                        "x-question": "Did you have surgery for this breast cancer or pre-cancer?",
+                        "description": "Surgery status for the participant's breast cancer/pre-cancer",
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "enum": [
+                            0,
+                            1,
+                            2,
+                            null
+                        ],
+                        "x-enumDescriptions": [
+                            "0: Multiple responses",
+                            "1: Yes",
+                            "2: No",
+                            "null: Missing or invalid."
+                        ],
+                        "x-answerIDs": [
+                            10,
+                            1,
+                            2
+                        ]
+                    },
+                    "R0_SurgeryType": {
+                        "x-questionID": 1191,
+                        "x-name": "R0_SurgeryType",
+                        "x-question": "What type of surgery was performed for Cancer or pre-cancer? (Biopsy, Lump removal, Full breast removal, Both breasts removed, Other)",
+                        "description": "Type of surgery performed for the participant's cancer/pre-cancer",
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            null
+                        ],
+                        "x-enumDescriptions": [
+                            "0: Multiple responses",
+                            "1: Biopsy",
+                            "2: Full breast removal",
+                            "3: Lump removal",
+                            "4: Both breasts removed",
+                            "5: Other",
+                            "null: Missing or invalid."
+                        ],
+                        "x-answerIDs": [
+                            10,
+                            966,
+                            965,
+                            968,
+                            967,
+                            13
+                        ]
+                    },
+                    "R0_SurgeryOtherSpecify": {
+                        "x-questionID": 1192,
+                        "x-name": "R0_SurgeryOtherSpecify",
+                        "x-question": "Specify if there was any other surgery for Cancer or pre-cancer",
+                        "description": "Details of other surgeries for the participant's cancer/pre-cancer",
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "R0_RadiotherapyReceived": {
+                        "x-questionID": 1193,
+                        "x-name": "R0_RadiotherapyReceived",
+                        "x-question": "Did you receive radiotherapy (radiation treatment) for this cancer or pre-cancer?",
+                        "description": "Radiotherapy status for the participant's cancer/pre-cancer",
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "enum": [
+                            0,
+                            1,
+                            2,
+                            null
+                        ],
+                        "x-enumDescriptions": [
+                            "0: Multiple responses",
+                            "1: Yes",
+                            "2: No",
+                            "null: Missing or invalid."
+                        ],
+                        "x-answerIDs": [
+                            10,
+                            1,
+                            2
+                        ]
+                    },
+                    "R0_RadiotherapyStartMonth": {
+                        "x-questionID": 1194,
+                        "x-name": "R0_RadiotherapyStartMonth",
+                        "x-question": "If yes, which month did the radiotherapy start for the cancer or pre-cancer?",
+                        "description": "Start month of radiotherapy for the participant's cancer/pre-cancer",
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "minimum": 0,
+                        "maximum": 12
+                    },
+                    "R0_RadiotherapyStartYear": {
+                        "x-questionID": 1195,
+                        "x-name": "R0_RadiotherapyStartYear",
+                        "x-question": "If yes, which year did the radiotherapy start for the cancer or pre-cancer?",
+                        "description": "Start year of radiotherapy for the participant's cancer/pre-cancer",
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "minimum": 0
+                    },
+                    "R0_RadiotherapyEndMonth": {
+                        "x-questionID": 1196,
+                        "x-name": "R0_RadiotherapyEndMonth",
+                        "x-question": "If yes, which month did the radiotherapy finish for the cancer or pre-cancer?",
+                        "description": "End month of radiotherapy for the participant's cancer/pre-cancer",
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "minimum": 0,
+                        "maximum": 12
+                    },
+                    "R0_RadiotherapyEndYear": {
+                        "x-questionID": 1197,
+                        "x-name": "R0_RadiotherapyEndYear",
+                        "x-question": "If yes, which year did the radiotherapy finish for the cancer or pre-cancer?",
+                        "description": "End year of radiotherapy for the participant's cancer/pre-cancer",
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "minimum": 0
+                    },
+                    "R0_RadiotherapyHospital": {
+                        "x-questionID": 1198,
+                        "x-name": "R0_RadiotherapyHospital",
+                        "x-question": "At which hospital were you treated for radiotherapy of the cancer or pre-cancer?",
+                        "description": "Hospital where radiotherapy was administered for the participant's cancer/pre-cancer",
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "R0_RadiotherapyTown": {
+                        "x-questionID": 1199,
+                        "x-name": "R0_RadiotherapyTown",
+                        "x-question": "At which town were you treated for radiotherapy of the cancer or pre-cancer?",
+                        "description": "Town where radiotherapy was administered for the participant's cancer/pre-cancer",
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "R0_BCDrugTreatmentReceived": {
+                        "x-questionID": 1200,
+                        "x-name": "R0_BCDrugTreatmentReceived",
+                        "x-question": "Did you receive any drug treatment for the cancer or pre-cancer (e.g. Tamoxifen, chemotherapy)?",
+                        "description": "Drug treatment status for the participant's cancer/pre-cancer",
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "enum": [
+                            0,
+                            1,
+                            2,
+                            null
+                        ],
+                        "x-enumDescriptions": [
+                            "0: Multiple responses",
+                            "1: Yes",
+                            "2: No",
+                            "null: Missing or invalid."
+                        ],
+                        "x-answerIDs": [
+                            10,
+                            1,
+                            2
+                        ]
+                    },
+                    "BreastCancersExtra": {
+                        "x-name": "BreastCancersExtra",
+                        "description": "Additional details about the participant's breast cancer/pre-cancer history",
+                        "type": "array",
+                        "minItems": 0,
+                        "maxItems": 1,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "R0_CancerDiagnosisMonth": {
+                                    "x-questionID": 1249,
+                                    "x-name": "R0_CancerDiagnosisMonth",
+                                    "x-question": "Which month the breast cancer or pre-cancer was diagnosed?",
+                                    "description": "Diagnosis month of the participant's breast cancer/pre-cancer",
+                                    "type": [
+                                        "integer",
+                                        "null"
+                                    ],
+                                    "minimum": 0,
+                                    "maximum": 12
+                                },
+                                "R0_CancerDiagnosisYear": {
+                                    "x-questionID": 1250,
+                                    "x-name": "R0_CancerDiagnosisYear",
+                                    "x-question": "Which year the breast cancer or pre-cancer was diagnosed?",
+                                    "description": "Diagnosis year of the participant's breast cancer/pre-cancer",
+                                    "type": [
+                                        "integer",
+                                        "null"
+                                    ],
+                                    "minimum": 0
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "DrugTreatment": {
+                        "x-name": "DrugTreatment",
+                        "description": "Drug regimens used for the participant's cancer/pre-cancer treatment",
+                        "type": "array",
+                        "minItems": 0,
+                        "maxItems": 6,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "R0_DrugTreatment_Num": {
+                                    "x-name": "R0_DrugTreatment_Num",
+                                    "description": "Drug treatment for cancer array number.",
+                                    "type": [
+                                        "integer",
+                                        "null"
+                                    ],
+                                    "enum": [
+                                        1,
+                                        2,
+                                        3,
+                                        4,
+                                        5,
+                                        6
+                                    ]
+                                },
+                                "R0_BCDrugTherapyHospital": {
+                                    "x-questionID": 1201,
+                                    "x-name": "R0_BCDrugTherapyHospital",
+                                    "x-question": "If yes, at which hospital were you treated for drug therapy of the cancer or pre-cancer?",
+                                    "description": "Hospital for the participant's cancer/pre-cancer drug therapy",
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                },
+                                "R0_BCDrugTherapyTown": {
+                                    "x-questionID": 1202,
+                                    "x-name": "R0_BCDrugTherapyTown",
+                                    "x-question": "If yes, at which town were you treated for drug therapy of the cancer or pre-cancer?",
+                                    "description": "Town for the participant's cancer/pre-cancer drug therapy",
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                },
+                                "R0_BCDrugRegimenName": {
+                                    "x-questionID": 1203,
+                                    "x-name": "R0_BCDrugRegimenName",
+                                    "x-question": "Please provide the name of the drug or regimen used for drug therapy of the cancer or pre-cancer",
+                                    "description": "Name of the drug regimen used for the participant's treatment",
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                },
+                                "R0_BCDrugRegimenStartMonth": {
+                                    "x-questionID": 1204,
+                                    "x-name": "R0_BCDrugRegimenStartMonth",
+                                    "x-question": "What month did you start taking the drug or regimen used for drug therapy of the cancer or pre-cancer?",
+                                    "description": "Start month of the participant's drug regimen",
+                                    "type": [
+                                        "integer",
+                                        "null"
+                                    ],
+                                    "minimum": 0
+                                },
+                                "R0_BCDrugRegimenStartYear": {
+                                    "x-questionID": 1205,
+                                    "x-name": "R0_BCDrugRegimenStartYear",
+                                    "x-question": "What year did you start taking the drug or regimen used for drug therapy of the cancer or pre-cancer?",
+                                    "description": "Start year of the participant's drug regimen",
+                                    "type": [
+                                        "integer",
+                                        "null"
+                                    ],
+                                    "minimum": 0
+                                },
+                                "R0_BCDrugRegimenStopMonth": {
+                                    "x-questionID": 1206,
+                                    "x-name": "R0_BCDrugRegimenStopMonth",
+                                    "x-question": "What month did you stop taking the drug or regimen used for drug therapy of the cancer or pre-cancer?",
+                                    "description": "Stop month of the participant's drug regimen",
+                                    "type": [
+                                        "integer",
+                                        "null"
+                                    ],
+                                    "minimum": 0
+                                },
+                                "R0_BCDrugRegimenStopYear": {
+                                    "x-questionID": 1207,
+                                    "x-name": "R0_BCDrugRegimenStopYear",
+                                    "x-question": "What year did you stop taking the drug or regimen used for drug therapy of the cancer or pre-cancer?",
+                                    "description": "Stop year of the participant's drug regimen",
+                                    "type": [
+                                        "integer",
+                                        "null"
+                                    ],
+                                    "minimum": 0
+                                },
+                                "R0_BCDrugRegimenOngoing": {
+                                    "x-questionID": 1221,
+                                    "x-name": "R0_BCDrugRegimenOngoing",
+                                    "x-question": "Are you still using the drug or regimen for drug therapy of cancer or pre-cancer?",
+                                    "description": "Flag whether the participant is still using the drug or regimen for drug therapy of cancer or pre-cancer.",
+                                    "type": [
+                                        "integer",
+                                        "null"
+                                    ],
+                                    "enum": [
+                                        -1,
+                                        1,
+                                        null
+                                    ],
+                                    "x-enumDescriptions": [
+                                        "-1: Ticked, extra info.",
+                                        "1: Yes, still using.",
+                                        "null: Missing or invalid."
+                                    ],
+                                    "x-answerIDs": [
+                                        1,
+                                        804
+                                    ]
+                                },
+                                "R0_DrugRegimenName": {
+                                    "x-questionID": 1221,
+                                    "x-name": "R0_DrugRegimenName",
+                                    "x-question": "Are you still using the drug or regimen used for drug therapy of the cancer or pre-cancer?",
+                                    "description": "Name of the drug regimen the participant is currently using",
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "R0_MoreDrugEpisodesFirstBC": {
+            "x-questionID": 1213,
+            "x-name": "Q7_7_14",
+            "x-question": "More than two episodes of drug treatment for 1st cancer or pre-cancer.",
+            "description": "Flag whether the participant had more than two episodes of drug treatment for 1st cancer or pre-cancer.",
+            "type": [
+                "integer",
+                "null"
+            ],
+            "enum": [
+                1,
+                null
+            ],
+            "x-enumDescriptions": [
+                "1: Yes, more episodes",
+                "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+                810
+            ]
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "StudyID"
+    ]
+}

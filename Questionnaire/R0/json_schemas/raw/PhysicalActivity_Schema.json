@@ -1,0 +1,609 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/PhysicalActivity_Schema.json",
+  "title": "Physical Activity from Questionnaire R0",
+  "description": "Variables from the physical activity section of the first round of questionnaire for The Generations Study about the participant's history of exercise throughout different stages of life.",
+  "type": "object",
+  "x-version": "1.0.0",
+  "x-provenance": {
+      "x-dataRound": "R0",
+      "x-lastModified": "2026-03-05",
+      "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+      "x-maintainer": "UK Generations Study"
+  },
+  "properties": {
+    "StudyID": {
+      "x-name": "StudyID",
+      "description": "Unique 6-digit identifier for each participant in the study.",
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 6
+    },
+    "R0_ChildhoodSportParticipation": {
+      "x-questionID": 2300,
+      "x-name": "Q12_1_1_1",
+      "x-question": "Did you participate regularly in sporting activities outside school as a child?",
+      "description": "Participant's childhood sports participation status",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        9,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: Multiple options chosen",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        1,
+        2,
+        10
+      ]
+    },
+    "R0_ChildhoodSportDaysWeek": {
+      "x-questionID": 2301,
+      "x-name": "Q12_1_2",
+      "x-question": "If you participated regularly in sporting events outside school, on average, how many days per week did you participate in sports as a child? - days",
+      "description": "Days per week spent on childhood sports",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_ChildhoodSportHoursWeek": {
+      "x-questionID": 2302,
+      "x-name": "Q12_1_3",
+      "x-question": "If you participated regularly in sporting events outside school, on average, how many days per week did you participate in sports as a child? - hours",
+      "description": "Hours per week spent on childhood sports",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 23
+    },
+    "R0_ChildhoodSportMinutesWeek": {
+      "x-questionID": 2303,
+      "x-name": "Q12_1_4",
+      "x-question": "If you participated regularly in sporting events outside school, on average, how many days per week did you participate in sports as a child? - minutes",
+      "description": "Minutes per week spent on childhood sports",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 59
+    },
+    "StrenuousExercise": {
+      "x-name": "StrenuousExercise",
+      "description": "Adult strenuous exercise history by age group",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_StrenuousExercise_Num": {
+            "x-name": "R0_StrenuousExercise_Num",
+            "description": "Instance of strenuous exercise.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "18-29",
+              "30-49",
+              "50+"
+            ]
+          },
+          "R0_StrenuousExerciseDays": {
+            "x-questionID": 2304,
+            "x-name": "R0_StrenuousExerciseDays",
+            "x-question": "As an adult, on how many days per week do you do strenuous exercise, ages [age range]?",
+            "description": "Weekly days of strenuous exercise ages [age range]",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "x-answerIDs": []
+          },
+          "R0_StrenuousExerciseHours": {
+            "x-questionID": 2305,
+            "x-name": "R0_StrenuousExerciseHours",
+            "x-question": "Total time per week spent on strenuous exercise, ages [age range]? - hours",
+            "description": "Weekly hours of strenuous exercise ages [age range]",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 23,
+            "x-answerIDs": []
+          },
+          "R0_StrenuousExerciseMinutes": {
+            "x-questionID": 2306,
+            "x-name": "R0_StrenuousExerciseMinutes",
+            "x-question": "Total time per week spent on strenuous exercise, ages [age range]? - minutes",
+            "description": "Weekly minutes of strenuous exercise ages [age range]",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 59,
+            "x-answerIDs": []
+          },
+          "R0_LightExerciseDays": {
+            "x-questionID": 2313,
+            "x-name": "R0_LightExerciseDays",
+            "x-question": "As an adult, on how many days per week do you do light exercise, ages [age range]?",
+            "description": "Weekly days of light exercise ages [age range]",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "x-answerIDs": []
+          },
+          "R0_LightExerciseHours": {
+            "x-questionID": 2314,
+            "x-name": "R0_LightExerciseHours",
+            "x-question": "Total time per week spent on light exercise, ages [age range] - hours",
+            "description": "Weekly hours of light exercise ages [age range]",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 23,
+            "x-answerIDs": []
+          },
+          "R0_LightExerciseMinutes": {
+            "x-questionID": 2315,
+            "x-name": "R0_LightExerciseMinutes",
+            "x-question": "Total time per week spent on light exercise, ages [age range]? - minutes",
+            "description": "Weekly minutes of light exercise ages [age range]",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 59,
+            "x-answerIDs": []
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_SportsSweatDays": {
+      "x-questionID": 2322,
+      "x-name": "Q12_4_D_1",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend on sports or training that made you sweat? - days",
+      "description": "Weekly days of sweat-inducing sports",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_SportsSweatHours": {
+      "x-questionID": 2323,
+      "x-name": "Q12_4_H_1",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend on sports or training that made you sweat? - hours",
+      "description": "Weekly hours of sweat-inducing sports",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 23
+    },
+    "R0_SportsSweatMinutes": {
+      "x-questionID": 2324,
+      "x-name": "Q12_4_M_1",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend on sports or training that made you sweat? - minutes",
+      "description": "Weekly minutes of sweat-inducing sports",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 59
+    },
+    "R0_WorkSweatDays": {
+      "x-questionID": 2325,
+      "x-name": "Q12_4_D_2",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend at work doing activities that made you sweat? - days",
+      "description": "Weekly days of sweat-inducing work",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_WorkSweatHours": {
+      "x-questionID": 2326,
+      "x-name": "Q12_4_H_2",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend at work doing activities that made you sweat? - hours",
+      "description": "Weekly hours of sweat-inducing work",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 23
+    },
+    "R0_WorkSweatMinutes": {
+      "x-questionID": 2327,
+      "x-name": "Q12_4_M_2",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend at work doing activities that made you sweat? - minutes",
+      "description": "Weekly minutes of sweat-inducing work",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 59
+    },
+    "R0_OtherSweatDays": {
+      "x-questionID": 2328,
+      "x-name": "Q12_4_D_3",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend doing other activities that made you sweat? - days",
+      "description": "Weekly days of sweat-inducing other activities",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_OtherSweatHours": {
+      "x-questionID": 2329,
+      "x-name": "Q12_4_H_3",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend doing other activities that made you sweat? - hours",
+      "description": "Weekly hours of sweat-inducing other activities",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 23
+    },
+    "R0_OtherSweatMinutes": {
+      "x-questionID": 2330,
+      "x-name": "Q12_4_M_3",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend doing other activities that made you sweat? - minutes",
+      "description": "Weekly minutes of sweat-inducing other activities",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 59
+    },
+    "R0_ExerciseWinterComparison": {
+      "x-questionID": 2331,
+      "x-name": "Q12_5_1",
+      "x-question": "Do you exercise more, less, or the same in winter?",
+      "description": "Participant's seasonal exercise comparison",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: Multiple responses",
+        "1: More",
+        "2: About the same",
+        "3: Less",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        203,
+        2277,
+        2279
+      ]
+    },
+    "R0_ActiveHouseworkDays": {
+      "x-questionID": 2332,
+      "x-name": "Q12_6_D_1",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend doing active housework? - days",
+      "description": "Weekly days of active housework",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_ActiveHouseworkHours": {
+      "x-questionID": 2333,
+      "x-name": "Q12_6_H_1",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend doing active housework? - hours",
+      "description": "Weekly hours of active housework",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 23
+    },
+    "R0_ActiveHouseworkMinutes": {
+      "x-questionID": 2334,
+      "x-name": "Q12_6_M_1",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend doing active housework? - minutes",
+      "description": "Weekly minutes of active housework",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 59
+    },
+    "R0_ManualLaborDays": {
+      "x-questionID": 2335,
+      "x-name": "Q12_6_D_2",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend in manual labor (gardening, decorating, etc.)? - days",
+      "description": "Weekly days spent on manual labor",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_ManualLaborHours": {
+      "x-questionID": 2336,
+      "x-name": "Q12_6_H_2",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend in manual labor (gardening, decorating, etc.)? - hours",
+      "description": "Weekly hours spent on manual labor",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 23
+    },
+    "R0_ManualLaborMinutes": {
+      "x-questionID": 2337,
+      "x-name": "Q12_6_M_2",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend in manual labor (gardening, decorating, etc.)? - minutes",
+      "description": "Weekly minutes spent on manual labor",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 59
+    },
+    "R0_WalkingDays": {
+      "x-questionID": 2338,
+      "x-name": "Q12_6_D_3",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend walking? - days",
+      "description": "Weekly days spent walking",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_WalkingHours": {
+      "x-questionID": 2339,
+      "x-name": "Q12_6_H_3",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend walking? - hours",
+      "description": "Weekly hours spent walking",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 23
+    },
+    "R0_WalkingMinutes": {
+      "x-questionID": 2340,
+      "x-name": "Q12_6_M_3",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend walking? - minutes",
+      "description": "Weekly minutes spent walking",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 59
+    },
+    "R0_CyclingDays": {
+      "x-questionID": 2341,
+      "x-name": "Q12_6_D_4",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend cycling? - days",
+      "description": "Weekly days spent cycling",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_CyclingHours": {
+      "x-questionID": 2342,
+      "x-name": "Q12_6_H_4",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend cycling? - hours",
+      "description": "Weekly hours spent cycling",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 23
+    },
+    "R0_CyclingMinutes": {
+      "x-questionID": 2343,
+      "x-name": "Q12_6_M_4",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend cycling? - minutes",
+      "description": "Weekly minutes spent cycling",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 59
+    },
+    "R0_DancingDays": {
+      "x-questionID": 2344,
+      "x-name": "Q12_6_D_5",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend dancing? - days",
+      "description": "Weekly days spent dancing",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_DancingHours": {
+      "x-questionID": 2345,
+      "x-name": "Q12_6_H_5",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend dancing? - hours",
+      "description": "Weekly hours spent dancing",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 23
+    },
+    "R0_DancingMinutes": {
+      "x-questionID": 2346,
+      "x-name": "Q12_6_M_5",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend dancing? - minutes",
+      "description": "Weekly minutes spent dancing",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 59
+    },
+    "R0_OtherModerateExerciseDays": {
+      "x-questionID": 2347,
+      "x-name": "Q12_6_D_6",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend engaged in other moderate or light exercise? -days",
+      "description": "Weekly days of other moderate exercise",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_OtherModerateExerciseHours": {
+      "x-questionID": 2348,
+      "x-name": "Q12_6_H_6",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend engaged in other moderate or light exercise? -hours",
+      "description": "Weekly hours of other moderate exercise",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 23
+    },
+    "R0_OtherModerateExerciseMinutes": {
+      "x-questionID": 2349,
+      "x-name": "Q12_6_M_6",
+      "x-question": "In a typical week from April to September of last year, how much time did you spend engaged in other moderate or light exercise? -minutes",
+      "description": "Weekly minutes of other moderate exercise",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 59
+    },
+    "R0_ExerciseSeasonalComparison": {
+      "x-questionID": 2331,
+      "x-name": "Q12_7_1",
+      "x-question": "Do you exercise more, less, or the same in winter, as compared to April to September?",
+      "description": "Participant's seasonal exercise comparison",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: Multiple responses",
+        "1: More",
+        "2: About the same",
+        "3: Less",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        203,
+        2277,
+        2279
+      ]
+    },
+    "R0_PulseRate": {
+      "x-questionID": 2351,
+      "x-name": "Q12_8",
+      "x-question": "Pulse rate per minute.",
+      "description": "Participant's resting pulse rate",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 30,
+      "maximum": 200
+    },
+    "R0_PulseMedication": {
+      "x-questionID": 2352,
+      "x-name": "Q12_9_1",
+      "x-question": "Currently taking any medication that may affect your pulse rate?",
+      "description": "Medication affecting pulse rate",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3, 
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: Multiple responses",
+        "1: Yes",
+        "2: No",
+        "3: Don't know",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        1,
+        2,
+        3,
+        10
+      ]
+    }
+  },
+    "additionalProperties": false,
+    "required": [
+        "StudyID"
+    ]
+}

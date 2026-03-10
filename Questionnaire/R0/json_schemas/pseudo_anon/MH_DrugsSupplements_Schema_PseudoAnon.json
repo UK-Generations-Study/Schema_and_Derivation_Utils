@@ -1,0 +1,1272 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/pseudo_anon/MH_DrugsSupplements_Schema_PseudoAnon.json",
+  "title": "Pseudo Anonymised Medical History of Drugs and Supplements from Questionnaire R0",
+  "description": "Variables from the medical history section of the first round of questionnaire for The Generations Study about the participant's history of medical drugs and other supplements. This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
+  "type": "object",
+  "x-version": "1.0.0",
+  "x-provenance": {
+    "x-dataRound": "R0",
+    "x-lastModified": "2026-03-09",
+    "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+    "x-maintainer": "UK Generations Study"
+  },
+  "properties": {
+    "TCode": {
+      "name": "TCode",
+      "description": "Pseudo-anonymized 8-character study identifier.",
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "R0_NonBCTamoxRaloxUse": {
+      "x-questionID": 1600,
+      "x-name": "Q8_11_1_1",
+      "x-question": "Other than for the treatment of breast cancer, have you ever used or are you currently using the drugs tamoxifen (Soltamox, Nolvadex-D, or Tamofen) or raloxifene (Evista)?",
+      "description": "Participant's use of tamoxifen (Soltamox, Nolvadex-D, or Tamofen) or raloxifene (Evista).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        0,
+        1,
+        2
+      ],
+      "x-enumDescriptions": [
+        "0: More than 1 option",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_NonBCDrugType": {
+      "x-questionID": 1601,
+      "x-name": "Q8_11_2_1",
+      "x-question": "If yes, which drug did you use? (Tamoxifen, Raloxifene)",
+      "description": "Which drug, tamoxifen or raloxifene, the participant used.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        0,
+        1,
+        2
+      ],
+      "x-enumDescriptions": [
+        "0: Tamoxifen more than 1 option",
+        "1: Tamoxifen",
+        "2: Raloxifene",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1300,
+        1301
+      ]
+    },
+    "R0_NonBCDrugStartAge": {
+      "x-questionID": 1602,
+      "x-name": "Q8_11_3",
+      "x-question": "At what age did you first use it?",
+      "description": "At what age the participant began using the drug.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_NonBCDrugDurationYrs": {
+      "x-questionID": 1603,
+      "x-name": "Q8_11_4",
+      "x-question": "For how long in total did you use it? - Years",
+      "description": "The duration, in years, that the participant was using the drug.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_NonBCDrugDurationMnths": {
+      "x-questionID": 1604,
+      "x-name": "Q8_11_5",
+      "x-question": "For how long in total did you use it? - Months",
+      "description": "If years were not round, how many months of top of the year the participant was using the drug.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_NonBCDrugOngoing": {
+      "x-questionID": 1605,
+      "x-name": "Q8_11_6",
+      "x-question": "For how long in total did you use it? - Still using",
+      "description": "Indicator that the participant is still using the drug.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        1
+      ],
+      "x-enumDescriptions": [
+        "1: Still using tamoxifen/raloxifene",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        804
+      ]
+    },
+    "R0_NonBCDrugEpisodes": {
+      "x-questionID": 1606,
+      "x-name": "Q8_11_7",
+      "x-question": "If you have used these drugs for more than one episode, please provide details.",
+      "description": "Indicator whether the participant has used these drugs for more than one episode.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        1
+      ],
+      "x-enumDescriptions": [
+        "1: If you have used these drugs for more than one episode, please provide details.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        1307
+      ]
+    },
+    "R0_GrowthHormoneUse": {
+      "x-questionID": 1607,
+      "x-name": "Q8_12_1",
+      "x-question": "Have you ever been treated with growth hormone?",
+      "description": "Whether the participant has ever been treated by growth hormones.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        0,
+        1,
+        2
+      ],
+      "x-enumDescriptions": [
+        "0: More than 1 option",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_AcneMedsPrescribed": {
+      "x-questionID": 1608,
+      "x-name": "Q8_13_1_1",
+      "x-question": "Have you ever been prescribed tablets or pills by a doctor for acne?",
+      "description": "Whether the participant has ever been prescribed acne pills or tablets.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        0,
+        1,
+        2
+      ],
+      "x-enumDescriptions": [
+        "0: More than 1 option",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_AcneMedsStartAge": {
+      "x-questionID": 1609,
+      "x-name": "Q8_13_2",
+      "x-question": "If yes, at what age did you start treatment?",
+      "description": "Starting age of the participant for taking acne pills or tablets.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_AntibioticsRecentUse": {
+      "x-questionID": 1610,
+      "x-name": "Q8_14_1_1",
+      "x-question": "In the last 12 months, have you taken antibiotics by mouth or injection (not mouthwash or topical treatments)?",
+      "description": "If the participant has taken antibiotics by mouth or injection in the 12 months pre-entry into the study.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        0,
+        1,
+        2
+      ],
+      "x-enumDescriptions": [
+        "0: More than 1 option",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_AntibioticsDays": {
+      "x-questionID": 1611,
+      "x-name": "Q8_14_2",
+      "x-question": "If yes, on how many days in the last 12 months did you take antibiotics?",
+      "description": "Number of days that the participant took antibiotics in the 12 months pre-entry into the study.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 11
+    },
+    "R0_AspirinRecentUse": {
+      "x-questionID": 1612,
+      "x-name": "Q8_15_1_1",
+      "x-question": "Have you taken aspirin or any products containing aspirin in the last 7 days?",
+      "description": "Whether the participant has taken any aspirin or products containing aspirin in the 7 days pre-entry to the study.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 7,
+      "enum": [
+        null,
+        0,
+        1,
+        2
+      ],
+      "x-enumDescriptions": [
+        "0: More than 1 option",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_AspirinDays": {
+      "x-questionID": 1613,
+      "x-name": "Q8_15_2",
+      "x-question": "If yes, on how many days did you take aspirin in the last 7 days?",
+      "description": "Number of days that the participant took aspirin in the 7 days pre-entry into the study.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 7,
+      "enum": [
+        null,
+        1
+      ],
+      "x-answerIDs": [
+        1310
+      ]
+    },
+    "AspirinRegularUse": {
+      "x-name": "AspirinRegularUse",
+      "description": "Occurrences where participant took aspirin regularly (daily or almost daily for 6 months).",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_AspirinOccasion_Num": {
+            "x-name": "R0_AspirinOccasion_Num",
+            "description": "Aspirin regular use occasion number.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              null,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "R0_AspirinRegularEp": {
+            "x-questionID": 1614,
+            "x-name": "R0_AspirinRegularEp",
+            "x-question": "Have you ever taken aspirin or products containing aspirin regularly (every day or almost every day for 6 months or longer)?",
+            "description": "Whether the participant has taken aspirin regularly over a period of time of at least 6 months.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              null,
+              0,
+              1,
+              2
+            ],
+            "x-enumDescriptions": [
+              "0: More than 1 option",
+              "1: Yes",
+              "2: No",
+              "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+              10,
+              1,
+              2
+            ]
+          },
+          "R0_AspirinStartAgeEp": {
+            "x-questionID": 1615,
+            "x-name": "R0_AspirinStartAgeEp",
+            "x-question": "Age at start for taking aspirin regularly.",
+            "description": "Participants starting age of taking aspirin regularly for this instance.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_AspirinEndAgeEp": {
+            "x-questionID": 1616,
+            "x-name": "R0_AspirinEndAgeEp",
+            "x-question": "Age at end for taking aspirin regularly.",
+            "description": "Participants ending age of taking aspirin regularly for this instance.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_AspirinOngoingEp": {
+            "x-questionID": 1617,
+            "x-name": "R0_AspirinOngoingEp",
+            "x-question": "Still taking aspirin regularly.",
+            "description": "Participant is still taking aspiring regularly during entry to study for this instance.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              null,
+              0,
+              1
+            ],
+            "x-enumDescriptions": [
+              "0: No",
+              "1: Still taking aspirin regularly",
+              "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+              2,
+              804
+            ]
+          },
+          "AspirinRegularUseExtra": {
+            "x-name": "AspirinRegularUseExtra",
+            "description": "Extra information on occurrences where participant took aspirin regularly (daily or almost daily for 6 months).",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "R0_AspirinStartMnth": {
+                  "x-questionID": 1626,
+                  "x-name": "R0_AspirinStartMnth",
+                  "x-question": "Month of start for taking aspirin regularly",
+                  "description": "Month of the year in which the participant started taking aspirin regularly for this instance.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 1,
+                  "maximum": 12
+                },
+                "R0_AspirinStartYr": {
+                  "x-questionID": 1627,
+                  "x-name": "R0_AspirinStartYr",
+                  "x-question": "Year of start for taking aspirin regularly",
+                  "description": "Year in which the participant started taking aspirin regularly for this instance.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "R0_AspirinEndMnth": {
+                  "x-questionID": 1628,
+                  "x-name": "R0_AspirinEndMnth",
+                  "x-question": "Month when stopped taking aspirin regularly",
+                  "description": "Month of the year in which the participant stopped taking aspirin regularly for this instance.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 1,
+                  "maximum": 12
+                },
+                "R0_AspirinEndYr": {
+                  "x-questionID": 1629,
+                  "x-name": "R0_AspirinEndYr",
+                  "x-question": "Year when stopped taking aspirin regularly",
+                  "description": "Year in which the participant stopped taking aspirin regularly for this instance.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_AspirinMoreEpisodes": {
+      "x-questionID": 1649,
+      "x-name": "Q8_16_more",
+      "x-question": "If there were other periods in your life where you took aspirin regularly, please provide details.",
+      "description": "Whether the participant had more than 2 episode of taking aspiring regularly.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        1
+      ],
+      "x-enumDescriptions": [
+        "1: Yes, there were more than two periods of taking aspirin.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        1314
+      ]
+    },
+    "R0_AspirinMoreThanFive": {
+      "x-questionID": 1649,
+      "x-name": "morethan5Aspirin",
+      "x-question": "More than 5 occasions of Aspirin consumption?",
+      "description": "AspirinMoreThan5",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        0,
+        1
+      ],
+      "x-enumDescriptions": [
+        "0: No",
+        "1: Yes",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        2,
+        1
+      ]
+    },
+    "R0_IbuprofenRecentUse": {
+      "x-questionID": 1650,
+      "x-name": "Q8_17_1_1",
+      "x-question": "Have you taken any products containing ibuprofen in the last 7 days?",
+      "description": "IbuprofenRecentUse",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        0,
+        1,
+        2
+      ],
+      "x-enumDescriptions": [
+        "0: More than 1 option",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ],
+      "maximum": 7
+    },
+    "R0_IbuprofenDays": {
+      "x-questionID": 1651,
+      "x-name": "Q8_17_2",
+      "x-question": "If yes, on how many days did you take ibuprofen in the last 7 days?",
+      "description": "IbuprofenDays",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "maximum": 7
+    },
+    "IbuprofenRegularUse": {
+      "x-name": "IbuprofenRegularUse",
+      "description": "Occurrences where participant took ibuprofen-containing medication regularly (daily or almost daily for \u22656 months).",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_IbuprofenOccasion_Num": {
+            "x-name": "R0_IbuprofenOccasion_Num",
+            "description": "IbuprofenOccasion regular use occasion number.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              null,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "R0_IbuprofenRegularEp": {
+            "x-questionID": 1652,
+            "x-name": "R0_IbuprofenRegularEp",
+            "x-question": "Have you ever taken ibuprofen or medication containing ibuprofen regularly (every day or almost every day for 6 months or longer)?",
+            "description": "Whether the participant has ever taken ibuprofen regularly for at least 6 months.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              null,
+              0,
+              1,
+              2
+            ],
+            "x-enumDescriptions": [
+              "0: More than 1 option",
+              "1: Yes",
+              "2: No",
+              "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+              10,
+              1,
+              2
+            ]
+          },
+          "R0_IbuprofenStartAgeEp": {
+            "x-questionID": 1653,
+            "x-name": "R0_IbuprofenStartAgeEp",
+            "x-question": "Age at start of taking medication containing Ibuprofen.",
+            "description": "Age participant started taking ibuprofen regularly for this instance.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_IbuprofenEndAgeEp": {
+            "x-questionID": 1654,
+            "x-name": "R0_IbuprofenEndAgeEp",
+            "x-question": "Age at end of taking medication containing Ibuprofen",
+            "description": "Age participant stopped taking ibuprofen regularly for this instance.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_IbuprofenOngoingEp": {
+            "x-questionID": 1655,
+            "x-name": "R0_IbuprofenOngoingEp",
+            "x-question": "Still taking medication containing Ibuprofen",
+            "description": "Whether the participant is still taking ibuprofen regularly at entry to study.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              null,
+              0,
+              1
+            ],
+            "x-enumDescriptions": [
+              "0: No",
+              "1: Still taking medication containing ibuprofen",
+              "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+              2,
+              804
+            ]
+          },
+          "IbuprofenRegularUseExtra": {
+            "x-name": "IbuprofenRegularUseExtra",
+            "description": "Extra information on occurrences where participant took ibuprofen-containing medication regularly (daily or almost daily for 6 months).",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "R0_IbuprofenStartMnthEp": {
+                  "x-questionID": 1664,
+                  "x-name": "R0_IbuprofenStartMnthEp",
+                  "x-question": "Month of start for taking Ibuprofen regularly",
+                  "description": "Month of the year that the participant started taking ibuprofen regularly.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 1,
+                  "maximum": 12
+                },
+                "R0_IbuprofenEndMnthEp": {
+                  "x-questionID": 1666,
+                  "x-name": "R0_IbuprofenEndMnthEp",
+                  "x-question": "Month when stopped taking Ibuprofen regularly",
+                  "description": "Month of the year that the participant stopped taking ibuprofen regularly.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 1,
+                  "maximum": 12
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_IbuprofenMoreEpisodes": {
+      "x-questionID": 1659,
+      "x-name": "Q8_18_more",
+      "x-question": "If there were other periods in your life where you took ibuprofen regularly, please provide details.",
+      "description": "Indicator if there were more than two occasions when the participant took ibuprofen regularly.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        1
+      ],
+      "x-enumDescriptions": [
+        "1: Yes, more than two occasions.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        1324
+      ]
+    },
+    "R0_OtherPainkillersRecentUse": {
+      "x-questionID": 1688,
+      "x-name": "Q8_19_1_1",
+      "x-question": "Have you taken any other painkillers in the last 7 days?",
+      "description": "Whether the participant has taken painkillers in the 7 days pre-study entry.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        0,
+        1,
+        2
+      ],
+      "x-enumDescriptions": [
+        "0: More than 1 option",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_OtherPainkillersDays": {
+      "x-questionID": 1689,
+      "x-name": "Q8_19_2",
+      "x-question": "If yes, on how many days did you take painkillers in the last 7 days?",
+      "description": "How many of those 7 days pre-study entry did the participant take other painkillers.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 7
+    },
+    "OtherPainkillersRegularUse": {
+      "x-name": "OtherPainkillersRegularUse",
+      "description": "Occurrences where participant took other painkillers regularly (daily or almost daily for 6 months).",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_PainkillersOccasion_Num": {
+            "x-name": "R0_PainkillersOccasion_Num",
+            "description": "Other painkillers regular use occasion number.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              null,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "R0_OtherPainkillersRegular": {
+            "x-questionID": 1691,
+            "x-name": "R0_OtherPainkillersRegular",
+            "x-question": "Have you ever taken other painkillers regularly (every day or almost every day for 6 months or longer)?",
+            "description": "Whether the participant has taken other painkillers regularly over at least 6 months.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              null,
+              0,
+              1,
+              2
+            ],
+            "x-enumDescriptions": [
+              "0: More than 1 option",
+              "1: Yes",
+              "2: No",
+              "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+              10,
+              1,
+              2
+            ]
+          },
+          "R0_OtherPainkillersStartAge": {
+            "x-questionID": 1692,
+            "x-name": "R0_OtherPainkillersStartAge",
+            "x-question": "Age at start for taking other painkillers regularly",
+            "description": "Age the participant started taking other painkillers regularly.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_OtherPainkillersEndAge": {
+            "x-questionID": 1693,
+            "x-name": "R0_OtherPainkillersEndAge",
+            "x-question": "Age at end for taking other painkillers regularly",
+            "description": "Age the participant stopped taking other painkillers regularly.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "R0_OtherPainkillersOngoing": {
+            "x-questionID": 1694,
+            "x-name": "R0_OtherPainkillersOngoing",
+            "x-question": "Still taking other painkillers regularly",
+            "description": "Whether the participant is still taking other painkillers at study entry.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              null,
+              0,
+              1
+            ],
+            "x-enumDescriptions": [
+              "0: No",
+              "1: Still taking other painkillers regularly",
+              "null: Missing or invalid."
+            ],
+            "x-answerIDs": [
+              2,
+              804
+            ]
+          },
+          "OtherPainkillersRegularUseExtra": {
+            "x-name": "OtherPainkillersRegularUseExtra",
+            "description": "Extra information on occurrences where participant took other painkillers regularly (daily or almost daily for 6 months).",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "R0_OtherPainkillers_Start_Shifted": {
+                  "name": "R0_OtherPainkillers_Start_Shifted",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "MH_DrugsSupplements/properties/OtherPainkillersRegularUse/properties/OtherPainkillersRegularUseExtra/properties/R0_OtherPainkillersStartMth",
+                    "MH_DrugsSupplements/properties/OtherPainkillersRegularUse/properties/OtherPainkillersRegularUseExtra/properties/R0_OtherPainkillersStartYr"
+                  ]
+                },
+                "R0_OtherPainkillers_End_Shifted": {
+                  "name": "R0_OtherPainkillers_End_Shifted",
+                  "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+                  "x-derivedFrom": [
+                    "MH_DrugsSupplements/properties/OtherPainkillersRegularUse/properties/OtherPainkillersRegularUseExtra/properties/R0_OtherPainkillersEndMth",
+                    "MH_DrugsSupplements/properties/OtherPainkillersRegularUse/properties/OtherPainkillersRegularUseExtra/properties/R0_OtherPainkillersEndYr"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_OtherPainkillersMoreEpisodes": {
+      "x-questionID": 1700,
+      "x-name": "Q8_20_more",
+      "x-question": "If there were other periods in your life where you took other painkillers regularly, please provide details.",
+      "description": "Indicator if there were more than two occasions when the participant took other painkillers regularly.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        1
+      ],
+      "x-enumDescriptions": [
+        "1: Yes, more than two occasions.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        1336
+      ]
+    },
+    "R0_OtherPainkillersMoreThanFive": {
+      "x-questionID": 1728,
+      "x-name": "morethan5Painkillers",
+      "x-question": "More than 5 occasions consuming painkillers.",
+      "description": "Indicator if there were more than five occasions when the participant took other painkillers regularly.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        1,
+        0
+      ],
+      "x-enumDescriptions": [
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        1,
+        2
+      ]
+    },
+    "R0_FolicAcidSuppUse": {
+      "x-questionID": 1729,
+      "x-name": "Q8_21_A_1_1",
+      "x-question": "Have you ever taken folic acid or folate supplements?",
+      "description": "Whether the participant has every taken folic acid supplements.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        0,
+        1,
+        2
+      ],
+      "x-enumDescriptions": [
+        "0: More than 1 option",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_FolicAcidDurationYrs": {
+      "x-questionID": 1730,
+      "x-name": "Q8_21_B_1",
+      "x-question": "If yes, for how many years in total did you take folic acid or folate?",
+      "description": "How many years the participant has taken folic acid supplements, if they have.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_VitaminDSuppUse": {
+      "x-questionID": 1731,
+      "x-name": "Q8_21_A_2_1",
+      "x-question": "Have you ever taken vitamin D supplements?",
+      "description": "Whether the participant has ever taken vitamin D supplements.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        0,
+        1,
+        2
+      ],
+      "x-enumDescriptions": [
+        "0: More than 1 option",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_VitaminDDurationYrs": {
+      "x-questionID": 1732,
+      "x-name": "Q8_21_B_2",
+      "x-question": "If yes, for how many years in total did you take vitamin D?",
+      "description": "How many years the participant has taken vitamin D supplements, if they have.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_CalciumSuppUse": {
+      "x-questionID": 1733,
+      "x-name": "Q8_21_A_3_1",
+      "x-question": "Have you ever taken calcium supplements?",
+      "description": "Whether the participant has ever taken calcium supplements.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        0,
+        1,
+        2
+      ],
+      "x-enumDescriptions": [
+        "0: More than 1 option",
+        "1: Yes",
+        "2: Yes",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_CalciumDurationYrs": {
+      "x-questionID": 1734,
+      "x-name": "Q8_21_B_3",
+      "x-question": "If yes, for how many years in total did you take calcium?",
+      "description": "How many years the participant has taken calcium supplements, if they have.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "R0_VitaminSuppRecentUse": {
+      "x-questionID": 1735,
+      "x-name": "Q8_22_1_1",
+      "x-question": "In the last 7 days, have you taken any vitamin or other supplements?",
+      "description": "In the 7 days before study entry, whether the participant has taken any other vitamin or supplements.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        0,
+        1,
+        2
+      ],
+      "x-enumDescriptions": [
+        "0: More than 1 option",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ],
+      "maximum": 7
+    },
+    "R0_VitaminSuppMultivitamin": {
+      "x-questionID": 1736,
+      "x-name": "Q8_22_2_1",
+      "x-question": "If yes, which supplement did you take? - Multivitamin",
+      "description": "If the participant took a multivitamin.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        1
+      ],
+      "x-enumDescriptions": [
+        "1: Multivitamin",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        1344
+      ]
+    },
+    "R0_VitaminSuppCodLiverOil": {
+      "x-questionID": 1737,
+      "x-name": "Q8_22_2_2",
+      "x-question": "If yes, which supplement did you take? - Cod liver oil",
+      "description": "If the participant took cod liver oil.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        2
+      ],
+      "x-enumDescriptions": [
+        "2: Cod liver oil",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        1345
+      ]
+    },
+    "R0_VitaminSuppOther": {
+      "x-questionID": 1738,
+      "x-name": "Q8_22_2_3",
+      "x-question": "other vitamin supplement.",
+      "description": "If the participant took any other vitamin supplement.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        3
+      ],
+      "x-enumDescriptions": [
+        "3: Other vitamin supplement.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        13
+      ]
+    },
+    "VitaminSuppOther": {
+      "x-name": "VitaminSuppOther",
+      "description": "Occurrences where participant took other vitamins and the names of those other vitamins.",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_VitaminSuppOther_Num": {
+            "x-name": "R0_VitaminSuppOther_Num",
+            "description": "Other vitamins use occasion number.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              null,
+              1,
+              2
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_MelatoninUse": {
+      "x-questionID": 1741,
+      "x-name": "Q8_23_1",
+      "x-question": "Have you ever taken a drug called melatonin?",
+      "description": "Whether the participant has ever taken melatonin.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        0,
+        1,
+        2
+      ],
+      "x-enumDescriptions": [
+        "0: More than 1 option",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_StatinUse": {
+      "x-questionID": 1742,
+      "x-name": "Q8_24_1",
+      "x-question": "Have you ever taken cholesterol-lowering drugs called 'statins'? (Simvastatin, Pravastatin, Atorvastatin, Fluvastatin, Rosuvastatin)",
+      "description": "Whether the participant has ever taken statins.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        null,
+        0,
+        1,
+        2
+      ],
+      "x-enumDescriptions": [
+        "0: More than 1 option",
+        "1: Yes",
+        "2: No",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        10,
+        1,
+        2
+      ]
+    },
+    "R0_Aspirin_Start_Shifted": {
+      "name": "R0_Aspirin_Start_Shifted",
+      "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+      "x-derivedFrom": []
+    },
+    "R0_Aspirin_End_Shifted": {
+      "name": "R0_Aspirin_End_Shifted",
+      "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+      "x-derivedFrom": []
+    },
+    "R0_Ibuprofen_Start_Shifted": {
+      "name": "R0_Ibuprofen_Start_Shifted",
+      "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+      "x-derivedFrom": [
+        "MH_DrugsSupplements/properties/IbuprofenRegularUse/properties/IbuprofenRegularUseExtra/properties/R0_IbuprofenStartYrEp"
+      ]
+    },
+    "R0_Ibuprofen_End_Shifted": {
+      "name": "R0_Ibuprofen_End_Shifted",
+      "description": "Derived and pseudo-anonymised month/year. Month and year components are combined into a date with day 15, then shifted by a participant-specific offset, and only the year and month of the shifted date are stored. If the month component is missing (and a year is present) the date is anchored at 1 July (day 1, month 7) of that year before shifting. If the year component is missing the derived value is null.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+      "x-derivedFrom": [
+        "MH_DrugsSupplements/properties/IbuprofenRegularUse/properties/IbuprofenRegularUseExtra/properties/R0_IbuprofenEndYrEp"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "TCode"
+  ],
+  "$defs": {
+    "MH_DrugsSupplements": {
+      "$ref": "../raw/MH_DrugsSupplements_JSON.json"
+    }
+  }
+}

@@ -1,0 +1,482 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/OtherLifestyleFactors_Schema.json",
+  "title": "Other Lifestyle Factors from Questionnaire R0",
+  "description": "Variables from the other lifestyle factors section of the first round of questionnaire for The Generations Study about the participant's history of other activities including exercise and travel.",
+  "type": "object",
+  "x-version": "1.0.0",
+  "x-provenance": {
+      "x-dataRound": "R0",
+      "x-lastModified": "2026-03-05",
+      "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+      "x-maintainer": "UK Generations Study"
+  },
+  "properties": {
+    "StudyID": {
+      "x-name": "StudyID",
+      "description": "Unique 6-digit identifier for each participant in the study.",
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 6
+    },
+    "R0_SleepTimeWeekdayHour": {
+      "x-questionID": 2400,
+      "x-name": "Q13_1_H",
+      "x-question": "Over the last year, what time do you usually go to sleep on weekdays? - hour",
+      "description": "Usual hour of going to sleep on weekdays in the last year.",
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "maximum": 23
+    },
+    "R0_SleepTimeWeekdayMinute": {
+      "x-questionID": 2401,
+      "x-name": "Q13_1_M",
+      "x-question": "Over the last year, what time do you usually go to sleep on weekdays? - minute",
+      "description": "Usual minute of going to sleep on weekdays in the last year.",
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "maximum": 59
+    },
+    "R0_SleepTimeAMPM": {
+      "x-questionID": 2402,
+      "x-name": "Q13_1_ampm_1",
+      "x-question": "Cross the box indicating AM PM or Midnight for when you usually go to sleep on weekdays.",
+      "description": "Clock period (AM, PM, or midnight) for usual weekday bedtime in the last year.",
+      "type": ["integer", "null"],
+      "enum": [0, 1, 2, 3, 4, 5, 6, 7, null],
+      "x-enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: AM (after midnight).",
+        "2: PM (before midnight).",
+        "3: Midnight.",
+        "4: AM and PM.",
+        "5: AM and Midnight.",
+        "6: PM and Midnight.",
+        "7: AM, PM and Midnight.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [10, 2352, 2353, 2354, 2355, 2356, 2357, 2358],
+      "minimum": 0
+    },
+    "R0_WakeTimeHour": {
+      "x-questionID": 2403,
+      "x-name": "Q13_2_H",
+      "x-question": "Over the last year, what time do you usually wake up? - hour",
+      "description": "Usual hour of waking up on weekdays in the last year.",
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "maximum": 23
+    },
+    "R0_WakeTimeMinute": {
+      "x-questionID": 2404,
+      "x-name": "Q13_2_M",
+      "x-question": "Over the last year, what time do you usually wake up? - minute",
+      "description": "Usual minute of waking up on weekdays in the last year.",
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "maximum": 59
+    },
+    "R0_WakeTimeAMPM": {
+      "x-questionID": 2405,
+      "x-name": "Q13_2_ampm_1",
+      "x-question": "Cross the box indicating AM PM or Midnight for when you usually wake up on weekdays.",
+      "description": "Clock period (AM, PM, or noon) for usual weekday wake-up time in the last year.",
+      "type": ["integer", "null"],
+      "enum": [0, 1, 2, 3, 4, 5, 6, 7, null],
+      "x-enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: AM (before noon).",
+        "2: PM (after noon).",
+        "3: Noon.",
+        "4: AM and PM.",
+        "5: AM and Noon.",
+        "6: PM and Noon.",
+        "7: AM, PM and Noon.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [10, 2361, 2362, 2363, 2355, 2365, 2366, 2367],
+      "minimum": 0
+    },
+    "R0_SleepDurationHours": {
+      "x-questionID": 2406,
+      "x-name": "Q13_3_H",
+      "x-question": "Over the last year, how many hours do you usually sleep per night? - hours",
+      "description": "Typical number of hours slept per night over the last year.",
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "maximum": 23
+    },
+    "R0_SleepDurationMinutes": {
+      "x-questionID": 2407,
+      "x-name": "Q13_3_M",
+      "x-question": "Over the last year, how many hours do you usually sleep per night? - minutes",
+      "description": "Additional minutes slept per night over the last year, beyond whole hours.",
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "maximum": 59
+    },
+    "R0_RoomDarkness": {
+      "x-questionID": 2408,
+      "x-name": "Q13_4",
+      "x-question": "How dark is the room when you sleep?",
+      "description": "Usual level of darkness in the participant’s bedroom while sleeping at their current age.",
+      "type": ["integer", "null"],
+      "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, null],
+      "x-enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Light enough to read.",
+        "2: Light enough to see across the room, but not read.",
+        "3: Light enough to see your hand in front of you, but not across the room.",
+        "4: Too dark to see your hand, or you wear a mask.",
+        "5: Light enough to read AND light enough to see across the room, but not read.",
+        "6: Light enough to read AND light enough to see your hand in front of you, but not across the room.",
+        "7: Light enough to see your hand in front of you, but not across the room AND too dark to see your hand, or you wear a mask.",
+        "8: Light enough to see across the room, but not read AND too dark to see your hand, or you wear a mask.",
+        "9: Light enough to read AND too dark to see your hand, or you wear a mask.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [10, 2370, 2371, 2372, 2373, 2374, 2375, 2376, 2377, 2378],
+      "minimum": 0
+    },
+    "R0_RoomDarknessAge20": {
+      "x-questionID": 2409,
+      "x-name": "Q13_5",
+      "x-question": "How dark was the room when you slept when you were 20 years old?",
+      "description": "Reported level of darkness in the bedroom when the participant was about 20 years old.",
+      "type": ["integer", "null"],
+      "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, null],
+      "x-enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Not yet 20 years old.",
+        "2: Light enough to read.",
+        "3: Light enough to see across the room, but not read.",
+        "4: Light enough to see your hand in front of you, but not across the room.",
+        "5: Too dark to see your hand, or you wore a mask.",
+        "6: Light enough to read AND light enough to see across the room, but not read.",
+        "7: Light enough to see your hand in front of you, but not across the room AND too dark to see your hand, or you wore a mask.",
+        "8: Light enough to see across the room, but not read AND too dark to see your hand, or you wore a mask.",
+        "9: Light enough to read AND too dark to see your hand, or you wore a mask.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [10, 2379, 2370, 2371, 2372, 2373, 2374, 2375, 2376, 2377],
+      "minimum": 0
+    },
+    "NightWakeups": {
+      "x-name": "NightWakeups",
+      "description": "Details of night wakeups at study entry and age 20.",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "properties": {
+          "R0_NightWakeup_Num": {
+            "x-name": "R0_NightWakeup_Num",
+            "description": "Instance of either recent in reference to study entry or when the particpant was 20 years old.",
+            "type": [
+                "string",
+                "null"
+            ],
+            "enum": [
+                "Rec",
+                "20"
+            ]
+          },
+          "R0_NightWakeups": {
+            "x-questionID": 2410,
+            "x-name": "R0_NightWakeups",
+            "x-question": "How many times per night did you wake up and put the lighs on or go into a bright room?",
+            "description": "Average number of times per night in recent months, or at age 20, the participant woke up and went into bright light.",
+            "type": ["integer", "null"],
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "R0_PerceivedStress": {
+      "x-questionID": 2412,
+      "x-name": "Q13_8_1",
+      "x-question": "Do you feel that you have experienced stress over the last 5 years?",
+      "description": "Participant’s overall perception of how much stress they have experienced in the last 5 years.",
+      "type": ["integer", "null"],
+      "enum": [0, 1, 2, 3, 4, null],
+      "x-enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Never.",
+        "2: Occasionally.",
+        "3: Frequently.",
+        "4: Continuously.",
+        "null: Unknown or invalid."
+      ],
+      "x-answerIDs": [10, 2384, 2385, 2386, 2387],
+      "minimum": 0
+    },
+    "R0_StressEventDeathPartner": {
+      "x-questionID": 2413,
+      "x-name": "Q13_9_1",
+      "x-question": "Have you experienced any major stressful life events in the last 5 years? - Death of a husband or long-term partner",
+      "description": "Whether the participant experienced the death of a husband or long-term partner in the last 5 years.",
+      "type": ["integer", "null"],
+      "enum": [1, null],
+      "x-enumDescriptions": [
+        "1: Death of a husband or long-term partner.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [2388]
+    },
+    "R0_StressEventPersonalIllness": {
+      "x-questionID": 2413,
+      "x-name": "Q13_9_2",
+      "x-question": "Have you experienced any major stressful life events in the last 5 years? - Serious personal illness or injury",
+      "description": "Whether the participant experienced a serious personal illness or injury in the last 5 years.",
+      "type": ["integer", "null"],
+      "enum": [2, null],
+      "x-enumDescriptions": [
+        "2: Serious personal illness or injury.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [2389]
+    },
+    "R0_StressEventDeathRelative": {
+      "x-questionID": 2413,
+      "x-name": "Q13_9_3",
+      "x-question": "Have you experienced any major stressful life events in the last 5 years? - Death of a child, parent or other close relative",
+      "description": "Whether the participant experienced the death of a child, parent or other close relative in the last 5 years.",
+      "type": ["integer", "null"],
+      "enum": [3, null],
+      "x-enumDescriptions": [
+        "3: Death of a child, parent or other close relative.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [2390]
+    },
+    "R0_StressEventJobLoss": {
+      "x-questionID": 2413,
+      "x-name": "Q13_9_4",
+      "x-question": "Have you experienced any major stressful life events in the last 5 years? - Loss of a job",
+      "description": "Whether the participant experienced loss of a job in the last 5 years.",
+      "type": ["integer", "null"],
+      "enum": [4, null],
+      "x-enumDescriptions": [
+        "4: Loss of a job.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [2391]
+    },
+    "R0_StressEventDivorce": {
+      "x-questionID": 2413,
+      "x-name": "Q13_9_5",
+      "x-question": "Have you experienced any major stressful life events in the last 5 years? - Divorce or separation",
+      "description": "Whether the participant experienced divorce or separation in the last 5 years.",
+      "type": ["integer", "null"],
+      "enum": [5, null],
+      "x-enumDescriptions": [
+        "5: Divorce or separation.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [2392]
+    },
+    "R0_StressEventOther": {
+      "x-questionID": 2413,
+      "x-name": "Q13_9_6",
+      "x-question": "Have you experienced any major stressful life events in the last 5 years? - Other life event that you found very stressful",
+      "description": "Whether the participant experienced another major life event they found very stressful in the last 5 years.",
+      "type": ["integer", "null"],
+      "enum": [6, null],
+      "x-enumDescriptions": [
+        "6: Other life event that was very stressful.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [2393]
+    },
+    "R0_StressEventDeathFriend": {
+      "x-questionID": 2413,
+      "x-name": "Q13_9_7",
+      "x-question": "Have you experienced any major stressful life events in the last 5 years? - Death of a close friend",
+      "description": "Whether the participant experienced the death of a close friend in the last 5 years.",
+      "type": ["integer", "null"],
+      "enum": [7, null],
+      "x-enumDescriptions": [
+        "7: Death of a close friend.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [2394]
+    },
+    "R0_AircrewTravelHistory": {
+      "x-questionID": 2420,
+      "x-name": "Q13_10_1",
+      "x-question": "Have you worked as aircrew or traveled frequently by air for a year or more?",
+      "description": "Whether the participant has ever worked as aircrew or travelled frequently by air for at least one year.",
+      "type": ["integer", "null"],
+      "enum": [0, 1, 2, null],
+      "x-enumDescriptions": [
+        "0: More than one option chosen.",
+        "1: Yes.",
+        "2: No.",
+        "null: Unknown or invalid."
+      ],
+      "x-answerIDs": [10, 1, 2],
+      "minimum": 0
+    },
+    "R0_AircrewTravelStartYear": {
+      "x-questionID": 2421,
+      "x-name": "Q13_10from",
+      "x-question": "If yes, what years did work as aircrew or travel frequently by air? - from year",
+      "description": "Calendar year the participant started working as aircrew or travelling frequently by air.",
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "R0_AircrewTravelEndYear": {
+      "x-questionID": 2422,
+      "x-name": "Q13_10to",
+      "x-question": "If yes, what years did work as aircrew or travel frequently by air? - to year",
+      "description": "Calendar year the participant stopped working as aircrew or travelling frequently by air.",
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "R0_AircrewTravelCurrent": {
+      "x-questionID": 2423,
+      "x-name": "Q13_10still",
+      "x-question": "Check this if you are still working as aircrew or travelling frequently by air?",
+      "description": "Indicator that the participant is currently working as aircrew or travelling frequently by air.",
+      "type": ["integer", "null"],
+      "enum": [1, null],
+      "x-enumDescriptions": [
+        "1: Still working as aircrew or travelling frequently by air.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [2397]
+    },
+
+    "R0_AirborneHoursWeek": {
+      "x-questionID": 2424,
+      "x-name": "Q13_11wk",
+      "x-question": "On average, how many hours per week or month were you airborne during this period? - hours per week",
+      "description": "Average number of hours per week the participant was airborne during the aircrew/travel period.",
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "R0_AirborneHoursMonth": {
+      "x-questionID": 2425,
+      "x-name": "Q13_11month",
+      "x-question": "On average, how many hours per week or month were you airborne during this period? - hours per month",
+      "description": "Average number of hours per month the participant was airborne during the aircrew/travel period.",
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+
+    "R0_MediumFlightsMonth": {
+      "x-questionID": 2426,
+      "x-name": "Q13_12_1",
+      "x-question": "During this period, how many flights per month did you make that lasted between 5 and 9 hours?",
+      "description": "Average number of 5-9 hour flights per month during the aircrew/travel period.",
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "R0_LongFlightsMonth": {
+      "x-questionID": 2427,
+      "x-name": "Q13_12_2",
+      "x-question": "During this period, how many flights per month did you make that lasted 10 or more hours?",
+      "description": "Average number of flights lasting 10 or more hours per month during the aircrew/travel period.",
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "R0_FlightsCrossEquatorMonth": {
+      "x-questionID": 2428,
+      "x-name": "Q13_13_1",
+      "x-question": "During this period, how many flights per month did you make that were crossing the equator?",
+      "description": "Average number of monthly flights crossing the equator during the aircrew/travel period.",
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "R0_TransAtlanticFlightsMonthly": {
+      "x-questionID": 2429,
+      "x-name": "Q13_13_2",
+      "x-question": "During this period, how many flights per month did you make that were Trans-Atlantic but not crossing the equator?",
+      "description": "Average number of monthly Trans-Atlantic flights (not crossing the equator) during the aircrew/travel period.",
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "R0_TransPacificFlightsMonthly": {
+      "x-questionID": 2430,
+      "x-name": "Q13_13_3",
+      "x-question": "During this period, how many flights per month did you make that were Trans-Pacific but not crossing the equator?",
+      "description": "Average number of monthly Trans-Pacific flights (not crossing the equator) during the aircrew/travel period.",
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "R0_MediumTimeDiffFlights": {
+      "x-questionID": 2431,
+      "x-name": "Q13_14_1",
+      "x-question": "During this period, how many journeys per month did you make that had a time difference between 5 and 9 hours?",
+      "description": "Average number of monthly journeys with a 5-9 hour time difference during the aircrew/travel period.",
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "R0_LargeTimeDiffFlights": {
+      "x-questionID": 2432,
+      "x-name": "Q13_14_2",
+      "x-question": "During this period, how many journeys per month did you make that had a time difference of 10 or more hours?",
+      "description": "Average number of monthly journeys with a time difference of 10 hours or more during the aircrew/travel period.",
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "R0_AntiperspirantDeodorantUse": {
+      "x-questionID": 2433,
+      "x-name": "Q13_15_1",
+      "x-question": "Have you ever regularly used antiperspirants or deodorants? - Anti-perspirant deodorant",
+      "description": "Whether the participant has ever regularly used anti-perspirant deodorant products under the arms.",
+      "type": ["integer", "null"],
+      "enum": [1, null],
+      "x-enumDescriptions": [
+        "1: Anti-perspirant deodorant used regularly.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [2407]
+    },
+    "R0_AntiperspirantOnlyUse": {
+      "x-questionID": 2433,
+      "x-name": "Q13_15_2",
+      "x-question": "Have you ever regularly used antiperspirants or deodorants? - Anti-perspirant only",
+      "description": "Whether the participant has ever regularly used anti-perspirant products only (not combined with deodorant).",
+      "type": ["integer", "null"],
+      "enum": [2, null],
+      "x-enumDescriptions": [
+        "2: Anti-perspirant only used regularly.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [2408]
+    },
+    "R0_DeodorantOnlyUse": {
+      "x-questionID": 2433,
+      "x-name": "Q13_15_3",
+      "x-question": "Have you ever regularly used antiperspirants or deodorants? - Deoderant only",
+      "description": "Whether the participant has ever regularly used deodorant-only products under the arms.",
+      "type": ["integer", "null"],
+      "enum": [3, null],
+      "x-enumDescriptions": [
+        "3: Deodorant only used regularly.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [2409]
+    },
+    "R0_TalcUse": {
+      "x-questionID": 2433,
+      "x-name": "Q13_15_4",
+      "x-question": "Have you ever regularly used antiperspirants or deodorants? - Talc products",
+      "description": "Whether the participant has ever regularly used talc products under the arms.",
+      "type": ["integer", "null"],
+      "enum": [4, null],
+      "x-enumDescriptions": [
+        "4: Talc products used regularly.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [2410]
+    }
+  },
+    "additionalProperties": false,
+    "required": [
+        "StudyID"
+    ]
+}

@@ -1,0 +1,125 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/Mammograms_Schema.json",
+    "title": "Mammograms from Questionnaire R0",
+    "description": "Variables from the mammograms section of the first round of questionnaire for The Generations Study about the participant's history of receivign mammograms.",
+    "type": "object",
+    "x-version": "1.0.0",
+    "x-provenance": {
+        "x-dataRound": "R0",
+        "x-lastModified": "2026-03-05",
+        "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+        "x-maintainer": "UK Generations Study"
+    },
+    "properties": {
+        "StudyID": {
+            "x-name": "StudyID",
+            "description": "Unique 6-digit identifier for each participant in the study.",
+            "type": "string",
+            "minLength": 6,
+            "maxLength": 6
+        },
+        "R0_Mammogram": {
+            "x-questionID": 1101,
+            "x-name": "Q7_1_1_1",
+            "x-question": "Have you ever had an X-ray of your breast (mammogram)?",
+            "description": "Participant's history of mammogram screening",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, null],
+            "x-enumDescriptions": [
+                "0: Multiple responses",
+                "1: Yes",
+                "2: No",
+                "null: Missing or invalid."
+            ],
+            "x-answerIDs": [10, 1, 2]
+        },
+        "R0_Mammogram_Number": {
+            "x-questionID": 1102,
+            "x-name": "Q7_1_2",
+            "x-question": "If yes, how many times have you been for a mammogram?",
+            "description": "Number of mammograms attended",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_Mammogram_Age1": {
+            "x-questionID": 1103,
+            "x-name": "Q7_1_3",
+            "x-question": "At what age was your first mammogram?",
+            "description": "Age at first mammogram",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_Mammogram_Details": {
+            "x-questionID": 1104,
+            "x-name": "Q7_2_1_1",
+            "x-question": "Please give details of the mammogram you had most recently. Was this for screening?",
+            "description": "Purpose of most recent mammogram",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, null],
+            "x-enumDescriptions": [
+                "0: Multiple responses",
+                "1: Yes",
+                "2: No",
+                "null: Missing or invalid."
+            ],
+            "x-answerIDs": [10, 1, 2]
+        },
+        "R0_Mammogram_WhereL1": {
+            "x-questionID": 1105,
+            "x-name": "Q7_2_2",
+            "x-question": "Where was your most recent mammogram done? - line 1",
+            "description": "Location line 1 of recent mammogram",
+            "type": ["string", "null"]
+        },
+        "R0_Mammogram_WhereL2": {
+            "x-questionID": 1106,
+            "x-name": "Q7_2_3",
+            "x-question": "Where was your most recent mammogram done? - line 2",
+            "description": "Location line 2 of recent mammogram",
+            "type": ["string", "null"]
+        },
+        "R0_Mammogram_Yr": {
+            "x-questionID": 1107,
+            "x-name": "Q7_2_4",
+            "x-question": "In what year was your most recent mammogram done?",
+            "description": "Year of most recent mammogram",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_Mammogram_Abnormal": {
+            "x-questionID": 1108,
+            "x-name": "Q7_3_1_1",
+            "x-question": "Have you had a mammogram where the result was abnormal?",
+            "description": "Abnormal mammogram result status",
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, null],
+            "x-enumDescriptions": [
+                "0: Multiple responses",
+                "1: Yes",
+                "2: No",
+                "null: Missing or invalid."
+            ],
+            "x-answerIDs": [10, 1, 2]
+        },
+        "R0_Mammogram_AbnormalAge": {
+            "x-questionID": 1109,
+            "x-name": "Q7_3_2",
+            "x-question": "If yes, at what age did you have an abnormal mammogram?",
+            "description": "Age at abnormal mammogram",
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "R0_Mammogram_AbnormalDesc": {
+            "x-questionID": 1110,
+            "x-name": "Q7_3_3",
+            "x-question": "Please describe the abnormality found in your mammogram.",
+            "description": "Description of mammogram abnormality",
+            "type": ["string", "null"]
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "StudyID"
+    ]
+}
