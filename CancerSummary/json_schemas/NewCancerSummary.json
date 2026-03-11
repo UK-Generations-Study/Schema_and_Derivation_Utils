@@ -65,7 +65,7 @@
       "x-description": "Best estimate of tumour diagnosis year calculated separately for each tumour using DIAGNOSIS_DATE"
     },
     "AGE_AT_DIAGNOSIS": {
-      "type": ["integer", "null"],
+      "type": "integer",
       "description": "Age of the patient when they were diagnosed with the tumour in years. (per tumour).",
       "x-description": "Age in whole years at diagnosis, calculated separately for each tumour using DOB from People table and the DIAGNOSIS_DATE for that tumour. Derived as floor((DIAGNOSIS_DATE – cast(DATEFROMPARTS(DOBYear, DOBMonth, DOBDay) as date)as DOB) / 365.25).",
       "minimum": 0,
