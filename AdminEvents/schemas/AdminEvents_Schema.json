@@ -6,14 +6,13 @@
   "type": "object",
   "x-version": "1.0.0",
   "x-provenance": {
-      "x-dataRound": "R0",
       "x-lastModified": "2026-03-05",
       "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
       "x-maintainer": "UK Generations Study"
   },
   "properties": {
     "TCode": {
-      "description": "Pseudo-anonymized 8-character study identifier.",
+      "description": "Pseudo-anonymised 8-character study identifier.",
       "type": "string",
       "minLength": 8,
       "maxLength": 8
@@ -26,9 +25,9 @@
       ],
       "x-description": "Using the best DOB, ADOB in the General table in Mailing, and when the questionnaire was received, values of 6 in the Events table, to create Age at Entry. This variable is derived directly from raw data and the references to variables it is derived from is not another schema, they are references to the SQL database->table->column.",
       "x-derivedFrom": [
-        "Mailing/General/ADOB",
-        "Mailing/Events/Event",
-        "Mailing/Events/Cancelled"
+        "Mailing.General.ADOB",
+        "Mailing.Events.Event",
+        "Mailing.Events.Cancelled"
       ],
       "x-formerName": "age_entry"
     },
@@ -41,8 +40,8 @@
       "format": "date",
       "x-description": "Taken from the fields ADOB in the General SQL table in the Mailing database. This variable is derived directly from raw data and the references to variables it is derived from is not another schema, they are references to the SQL database->table->column.",
       "x-derivedFrom": [
-        "Mailing/General/ADOB",
-        "Mailing/SIDCodes/Random"
+        "Mailing.General.ADOB",
+        "Mailing.SIDCodes.Random"
       ],
       "x-formerName": "dob_shifted"
     },
@@ -52,9 +51,9 @@
         "integer",
         "null"
       ],
-      "x-description": "The year of the DOB before it is shifted for pseudo-anonymization. This variable is derived directly from raw data and the references to variables it is derived from is not another schema, they are references to the SQL database->table->column.",
+      "x-description": "The year of the DOB before it is shifted for pseudo-anonymisation. This variable is derived directly from raw data and the references to variables it is derived from is not another schema, they are references to the SQL database->table->column.",
       "x-derivedFrom": [
-        "Mailing/General/ADOB"
+        "Mailing.General.ADOB"
       ],
       "x-formerName": "yrdob"
     },
@@ -65,10 +64,10 @@
         "null"
       ],
       "format": "date",
-      "x-description": "Shifted date of questionnaire completion, or if no date of completion, the date the questionnaire was received.",
+      "x-description": "Shifted date of study entry derived from EventDate where Event = 6, pseudo-anonymised by adding Random.",
       "x-derivedFrom": [
-        "Mailing/Events/EventDate",
-        "Mailing/SIDCodes/Random"
+        "Mailing.Events.EventDate",
+        "Mailing.SIDCodes.Random"
       ],
       "x-formerName": "date_entry_shifted"
     },
@@ -80,7 +79,7 @@
       ],
       "x-description": "Actual year of questionnaire completion, or if no date of completion, the date the questionnaire was received.",
       "x-derivedFrom": [
-        "Mailing/Events/"
+        "Mailing.Events.EventDate"
       ],
       "x-formerName": "date_entry_shifted"
     },
@@ -93,7 +92,7 @@
       "minimum": 0,
       "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
       "x-derivedFrom": [
-        "Mailing/TrueYear/R1Completion"
+        "Mailing.TrueYear.R1Completion"
       ]
     },
     "R1Received": {
@@ -105,7 +104,7 @@
       "minimum": 0,
       "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
       "x-derivedFrom": [
-        "Mailing/TrueYear/R1Received"
+        "Mailing.TrueYear.R1Received"
       ]
     },
     "R1BloodReceived": {
@@ -117,7 +116,7 @@
       "minimum": 0,
       "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
       "x-derivedFrom": [
-        "Mailing/TrueYear/R1BloodReceived"
+        "Mailing.TrueYear.R1BloodReceived"
       ]
     },
     "R2Completion": {
@@ -129,7 +128,7 @@
       "minimum": 0,
       "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
       "x-derivedFrom": [
-        "Mailing/TrueYear/R2Completion"
+        "Mailing.TrueYear.R2Completion"
       ]
     },
     "R2Received": {
@@ -141,7 +140,7 @@
       "minimum": 0,
       "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
       "x-derivedFrom": [
-        "Mailing/TrueYear/R2Received"
+        "Mailing.TrueYear.R2Received"
       ]
     },
     "R3Completion": {
@@ -153,7 +152,7 @@
       "minimum": 0,
       "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
       "x-derivedFrom": [
-        "Mailing/TrueYear/R3Completion"
+        "Mailing.TrueYear.R3Completion"
       ]
     },
     "R3Received": {
@@ -165,7 +164,7 @@
       "minimum": 0,
       "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
       "x-derivedFrom": [
-        "Mailing/TrueYear/R3Received"
+        "Mailing.TrueYear.R3Received"
       ]
     },
     "R4Completion": {
@@ -177,7 +176,7 @@
       "minimum": 0,
       "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
       "x-derivedFrom": [
-        "Mailing/TrueYear/R4Completion"
+        "Mailing.TrueYear.R4Completion"
       ]
     },
     "R4Received": {
@@ -189,7 +188,7 @@
       "minimum": 0,
       "x-description": "Loaded directly from the TrueYear table; cast from SQL REAL to integer for schema compatibility.",
       "x-derivedFrom": [
-        "Mailing/TrueYear/R4Received"
+        "Mailing.TrueYear.R4Received"
       ]
     }
   },

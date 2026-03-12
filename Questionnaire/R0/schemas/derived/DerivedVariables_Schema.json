@@ -551,7 +551,7 @@
         },
         {
           "type": "integer", 
-          "minimum": -1
+          "minimum": 0
         }
       ],
       "x-description": "Count of pregnancies with a live-birth outcome (each pregnancy counts once; multiple births still count as 1 pregnancy). Excludes miscarriages, terminations, ectopic, stillbirth, molar, and unknown outcomes.",
