@@ -2,7 +2,7 @@
 
 Repo for maintaining JSON schemas, scripts, and non-PII quality check (QC) outputs to produce derived datasets for Generations Study (GS) data.
 
-This README was last updated 12/11/2025.
+This README was last updated 11/03/2026.
 
 # 2. Overview & Background
 
@@ -12,7 +12,7 @@ This ETL creates data and metadata in JSON and JSON schema, respectively. It is 
 
 # 3. Data Scope
 
-As of the last update this ETL applies to all Baseline (R0) questionnaire data. There are 19 raw sections in the ETL, plus an additional raw derivation section for variables that need to be derived within the secure server (Trusted Research Environment, TRE) to preserve participant identities. The raw data read in covers over 1,850 different questions from the SQL database they are stored in, while the output processed data covers over 950 variables in JSON format due to aggregation of date fields and teh removal of variables that potentially contain Personally Identifying Information (PII). Following is the list of all raw sections of baseline data:
+As of the last update this ETL applies to all Baseline (R0) questionnaire data. There are 19 raw and pseudo-anonymised sections in the ETL, plus an additional core derived variables section for variables that are often used by analysts. All data that is maintained outside of the Trusted Research Environment (TRE) has been pseudon-anonymised to preserve identities of the participants. The raw data read in covers over 1,850 different questions from the SQL database they are stored in, while the output processed pseudo-anonymised data covers over 950 variables in JSON format due to aggregation of date fields and the removal of variables that potentially contain Personally Identifying Information (PII). Following is the list of all raw sections of baseline data, plus the core derived data set below:
 - Alcohol, Smoking & Diet
 - Birth Details
 - Breast Cancer
@@ -33,21 +33,23 @@ As of the last update this ETL applies to all Baseline (R0) questionnaire data. 
 - Pregnancies
 - X-Rays
 
-The raw derivation step uses the Mailing database (with variables `ADOB`, `EventDate`, `Random` and `TCode`) to create a small set of entry variables that are safe to export: shifted date of birth (`DOB`), unshifted year of birth (`YOB`), shifted date of entry (`EntryDate`), unshifted year of entry (`EntryYear`), and age in whole years at entry (`AgeEntry`)
+- Core Derived Variables
+
+The core variable derivatios use the outputs from the pseudo-anonymisation process, and information from the AdminEvents data. AdminEvents uses the SQL Mailing database (with variables `ADOB`, `EventDate`, `Random` and `TCode`) to create a small set of event variables that are safe to export: shifted date of birth (`DOB_Shifted`), unshifted year of birth (`YOB`), shifted date of entry (`EntryDate_Shifted`), unshifted year of entry (`EntryYear`), and age in whole years at entry (`AgeEntry`), along with other helpful administrative variables. Details on Admin Events can be found here: LINK TO README ON ADMIN EVENTS.
 
 # 4. Repository Structure
         Questionnaire/
             └───R0/
-                ├───json_schemas/
-                │   ├───post_pii/
+                ├───schemas/
+                │   ├───pseudo_anon/
                 │   └───raw/
                 ├───scripts/
                 └───validation/
                     └───<SectionName>_ValidationSummary/
 
-- `json_schemas/`
+- `schemas/`
 
-  Schemas that define the expected JSON structure for each questionnaire and document the provenance of the variable.
+  Schemas that define the expected JSON structure for each questionnaire section and document the provenance of the variable.
 
   - `raw/`
            
@@ -55,34 +57,28 @@ The raw derivation step uses the Mailing database (with variables `ADOB`, `Event
         
   - `post_pii/`
            
-    Post-processing schemas that describe the final pseudo-anonymised output of R0 non-derived variables:
-        
-    - `StudyID` -> `TCode`.   
-    - Raw date components aggregated to pseudo-anonymised complete dates.
-    - PII fields dropped.
+    Post-processing schemas that describe the final pseudo-anonymised output of R0 non-derived variables to be used in analyses and to derive core variables:
 
 - `scripts/`
   
-  Code to run the ETL and the raw derivation step (both executed in the TRE, but independent of each other):
+  Code to run the ETL and derivation steps. Raw data processing, and pseudo-anonymised processing are executed in the TRE, and variable derivation occurs outside the TRE:
 
   - Questionnaire ETL consists of `run_all_sections.py` plus helper modules (`cleaning_utils.py`, `nested_utils.py`, `pseudo_anon_utils.py`, `schema_utils.py`, `qc_utils.py`, etc.) to:
 
     - extract from SQL
     - pivot/clean
     - restructure to nested JSON
-    - pseudo-anonymise and validate against the post-PII schemas.
+    - pseudo-anonymise and validate against the pseudo-anonymised schemas.
 
-  - Raw derivation – RawDerivation.ipynb uses the Mailing database to derive a small set of pseudo-anonymised sensitive entry variables before export:
+  - Derivation – Derivation.ipynb uses the outputs from the above ETL and consists of a series of functions that derive a single variable or group of similarly derived variables:
   
-    - DOB (shifted date of birth, YYYY-MM-DD)
-    - YOB (unshifted year of birth)
-    - EntryDate (shifted entry date, YYYY-MM-DD)
-    - EntryYear (unshifted entry year)
-    - AgeEntry (age in whole years at entry)
+    - extract from pseudo-anonymised data and AdminEvents
+    - process and manipulate data
+    - write to flat json
  
-      These are written to a JSON keyed and linked by TCode and then used alongside the section-level questionnaire outputs.
+      These are written to a JSON keyed and linked by TCode and then used alongside the other data outputs, like Pathology, Cancer Summaries, Outcomes, etc.
 
-- validation/
+- `validation/`
 
   Per-section QC outputs:
 
@@ -102,7 +98,7 @@ Raw processing ETL step-by-step:
 6. Validate against new PII JSON schemas.
 7. Output and QC reports.
 
-Runing `RawDerivation.ipynb` occurs separately as its own task and is self contained in one script.
+Runing `Derivation.ipynb` occurs separately as its own task and is self contained in one script. THis also occurs after the pseudo-anonymised data are brought out of the TRE.
 
 # 6. Installation & Prerequisites
 
@@ -114,12 +110,13 @@ Before running the ETL, ensure you have:
   - Recommended: Python 3.11 or later.
   - Dependencies are listed in `requirements.txt`, and are:
 
-          pandas==2.3.3
-          numpy==2.3.4
-          matplotlib==3.10.7
-          SQLAlchemy==2.0.44
-          jsonschema==4.25.1
-          pyodbc==5.3.0
+        jsonschema==4.26.0
+        matplotlib==3.10.8
+        numpy==2.4.3
+        pandas==3.0.1
+        pyodbc==5.3.0
+        scipy==1.17.1
+        SQLAlchemy==2.0.48
  
 **Operating system and environment**
 
@@ -135,7 +132,7 @@ Before running the ETL, ensure you have:
     - Microsoft Access Driver for SQL.
 
 # 7. Configuration
-The paths for schemas, output data, QC, etc. are in `config_utils.py` which can all be updated by adjusting the base `delivery_process` string variable. You must also make sure you have a SQL account that you can connect through a Microsoft Access Driver. 
+The paths for schemas, output data, QC, etc. are in `config_utils.py` which can all be updated. You must also make sure you have a SQL account that you can connect through a Microsoft Access Driver. 
 
 # 8. Running the ETL
 Run the `run_all_sections.py` script, and that will run the full ETL. For example, in VS Code, press the play button when opening the Python script. Or, using a Command Line Interface (CLI), `python run_all_sections.py`.
@@ -143,7 +140,7 @@ Run the `run_all_sections.py` script, and that will run the full ETL. For exampl
 On current infrastructure, a full run for all sections takes on the order of a few hours. Runtime will vary by environment.
 
 # 9. Schemas & Validation
-The ETL is schema-driven. Every transformation step is designed to produce JSON that conforms to an explicit JSON Schema.
+The ETL is schema-driven. Every transformation step is designed to produce JSON that conforms to an explicit JSON Schema. If the data do not conform, the ETL will produce the first 5 errors during validation. As of the date this document was last edited, there were no errors during validation for any files.
 
 ## 9.1. Schema layout
 - Raw input schemas describe the structure of the section as it comes from the questionnaire (`schemas/raw/<SectionName>_JSON.json`).
