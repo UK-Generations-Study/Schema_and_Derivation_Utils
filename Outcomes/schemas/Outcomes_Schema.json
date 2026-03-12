@@ -6,7 +6,6 @@
   "type": "object",
   "x-version": "1.0.0",
   "x-provenance": {
-      "x-dataRound": "R0",
       "x-lastModified": "2026-03-05",
       "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
       "x-maintainer": "UK Generations Study"
@@ -77,7 +76,7 @@
         "integer",
         "null"
       ],
-      "x-description": "",
+      "x-description": "Ever known to be deceased based on date of death available at processing date. The source of date of death was either the receipt of a notification (based on death certificate) from NHS flagging records (a national death index) that participant is deceased; or unconfirmed report from next of kin. Lack of a report does not confirm participant is alive. To obtain vital status based on confirmed NHS data, filter by Confirmed_death variable.",
       "enum": [
         0,
         1,
