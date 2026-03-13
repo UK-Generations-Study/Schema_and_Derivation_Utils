@@ -140,18 +140,19 @@ Run the `run_all_sections.py` script, and that will run the full ETL. For exampl
 On current infrastructure, a full run for all sections takes on the order of a few hours. Runtime will vary by environment.
 
 # 9. Schemas & Validation
-The ETL is schema-driven. Every transformation step is designed to produce JSON that conforms to an explicit JSON Schema. If the data do not conform, the ETL will produce the first 5 errors during validation. As of the date this document was last edited, there were no errors during validation for any files.
+The ETL is schema-driven. Every transformation step is designed to produce JSON that conforms to an explicit JSON Schema. If the data do not conform, the ETL validation step reports the first validation errors encountered for review. As of the date this document was last edited, there were no errors during validation for any files.
 
 ## 9.1. Schema layout
-- Raw input schemas describe the structure of the section as it comes from the questionnaire (`schemas/raw/<SectionName>_JSON.json`).
+- Raw input schemas describe the structure of each questionnaire section (schemas/raw/<SectionName>_Schema.json) and define the expected fields, types, constraints, and metadata used during ETL processing.
     
-- Pseudo-anonymised output schemas describe the final JSON written out (`schemas/pseudo_anon/<SectionName>_PseudoAnon.json`), after:
+- Pseudo-anonymised output schemas describe the final JSON written out (schemas/pseudo_anon/<SectionName>_Schema_PseudoAnon.json), after:
 
     - Replacing `StudyID` with `TCode`.
     - Aggregating and deriving combined date fields.
-    - Removing pii and date components.
+    - Shifting date fields by a random number stored in SQL per participant.
+    - Removing PII variables and date components.
 
-- Each pseudo-anon schema keeps a reference back to the raw schema (via $defs), so you can trace where fields came from.
+- Each pseudo-anon schema is generated from the raw schema and updated to reflect derived fields, removed PII fields, and pseudo-anonymised identifiers.
 
 ## 9.2. How schemas are used in the ETL
 
@@ -159,7 +160,7 @@ This section will be most helpful for data managers and developers.
 
 **9.2.a. Load schema**
 
-For each section, the script loads the raw schema, and `load_schema` also resolves any `$ref` references so the rest of the pipeline sees a fully expanded schema.
+For each section, the script loads the raw schema using load_schema. If the schema contains $ref references, these are resolved so that downstream processing operates on a fully expanded schema structure.
   
 **9.2.b. Schema driven cleaning and types**
 
@@ -167,78 +168,105 @@ The ETL uses the schema to drive the processing of data in the following ways:
 
 _**9.2.b.1 Built-in keywords**_
 
-The schema provides the following JSON built-in schema keywords that are extracted and used in cleaning processing (`process_nested_data`):
+The schema provides the following JSON built-in schema keywords that are extracted and used in cleaning processing (`process_nested_data` and related cleaning utilities):
 
-- expected JSON types to cast values to the correct type (`string`, `integer`, `number`, etc.)
-- numeric bounds where values outside are set to null (`minimum`, `maximum`)
+- expected JSON types to cast values to the correct type (string, integer, number, etc.), extracted from the schema and used to guide type conversion during cleaning.
+- numeric bounds where values outside the valid range are set to null (minimum, maximum)
 
     Only use maximum if it is a finite numeric scale or categorical numeric value, i.e. not continuous (day of the month, numerical value of month in the year, etc.)
 
     Only use minimum where values cannot be negative (height, weight, age, etc.) 
 
-- allowed values that guide recodes of special values and unknown codes (`enum`)
+- allowed values that guide validation and cleaning of categorical values (enum)
 
 _**9.2.b.2 Custom annotations**_
 
-The schema provides the following custom annotations that are not built in to JSON validation, but help the user with processing or context:
+The schema provides the following custom annotations that are not built in to JSON validation, but help the user with processing or context. All custom annotations are represented by starting with "x-":
 
-- question ID that corresponds to the SQL metadata where questions that ask the same contextual question have the same ID (`questionID`)
-- variable name as it corresponds to the SQL database, differs depending on level of variable (`name`):
+`x-questionID`
+- The numeric ID of the questionnaire question in the SQL metadata.
+- Questions that refer to the same conceptual question share the same ID even if they appear in different contexts (for example inside repeated structures).
+- This allows the ETL and downstream metadata lookups to align schema variables with questionnaire metadata stored in SQL.#
 
-  **_Flat (non-array) fields_**
+`x-name`
+- The variable name corresponding to the SQL database `VarName` column.
+- This is used by the ETL variable resolver to map raw SQL variable names to schema fields.
+- The meaning of `x-name` differs depending on whether the variable is flat or part of a repeated array structure.
 
-  - use the original raw variable names from SQL    
-  - are 1:1 with the human-readable variable names that were created when the data were first collected.
+**_Flat (non-array) fields_**
+
+These use the original SQL variable name.
+
+"x-name": "Q7_1_1_1"
+
+There is only one value per participant and the variable always refers to the same question, so the schema can directly use the SQL variable name.
+
+ **_Array fields (repeated structures)_**
  
-    Because there is only one value per participant and it always refers to the same question, the schema can safely use the SQL name (or a stable equivalent).
- 
-    Example - flat variable, 1:1 association:
+These represent repeated questionnaire structures such as:
 
-        - Question: "Have you ever been pregnant?"
+- pregnancies
+- drug treatments
+- jobs
+- mammogram events
 
-        - SQL column: Q5_3_1
+The SQL database often stores these using inconsistent naming patterns. For example:
 
-    No pattern recognition needed.
+                `Q6_1_1_1`
+                `Q6_1_2_1`
+                `Q6_1_3_1`
+                `ocname4o`
 
-  **_Array fields (repeated structures)_**
+These all represent the same logical variable across different instances.
 
-  - use new, human-readable schema field names
-  - arrays are repeated structures (e.g. multiple drug regimens, pregnancies, jobs)
-  - the raw SQL variable names follow inconsistent patterns
-  - a single raw name cannot reliably represent all repeats
+Instead of encoding the instance number in the schema variable name, the schema uses a stable variable name:
 
-    Using stable schema field names keeps the schemas compact and easier to understand.
+                `ContracepPill_Name`
 
-    Example - array variable (unreliable pattern in SQL naming):
+The ETL then uses the resolver logic to detect the instance number from the raw variable name and place the value in the correct array index.
 
-    Contraceptive pill name is a repeated question: each instance refers to a different pill.
-    
-    Raw SQL columns:
-    
-        First pill name: Q6_1_1_1
-        
-        Second pill name: Q6_1_2_1
-        
-        Third pill name: Q6_1_3_1
-        
-        Fourth pill name: ocname4o
-    
-    The first three appear to follow a pattern (`Q6_1_{instance}_1`), but the fourth switches to a different naming convention (`ocname4o`). There is no single, reliable pattern that covers all repeats.
+This keeps schemas:
 
-    Using the human-readable variable name, all of these are represented by the same pattern:
-    
-        ContracepPill{instance}_Name
+- more compact
+- easier to read
+- stable even when raw SQL naming changes.
 
-    The array index (0, 1, 2, 3, etc.) captures which pill instance it is.
-    
-    The `name` annotation removes the instance within the human-readable name and the processing picks up on the patterning and is able to find the correct raw variable name using just this:
-    
-        ContracepPill_Name
+`x-question`
 
-- question as it was written in the questionnaire (`question`)
-- description of the variable and question to help the user decipher the context and use of the variable (`description`)
-- allowed value descriptions defining what numeric values mean (`enumDescriptions`)
-- answer IDs where repeated answers have the same ID that correlate to the metadata (`answerID`)
+- The exact wording of the question as it appeared in the questionnaire.
+- This helps users interpret variables without needing to consult the questionnaire documentation.
+
+`x-enumDescriptions`
+
+- Human-readable explanations for enumerated numeric values.
+- These descriptions provide context for categorical variables whose values are stored as numeric codes.
+
+`x-answerIDs`
+
+- Answer identifiers that correspond to the questionnaire metadata tables.
+- These IDs match the AnswerID values stored in the questionnaire metadata and allow direct linkage between schema variables and the database representation of questionnaire responses.
+
+`x-derivedFrom`
+
+- Used in pseudo-anonymised schemas to document which raw variables were used to derive a field.
+- This annotation provides traceability between derived variables and their original questionnaire fields.
+- It is primarily used for:
+
+          pseudo-anonymised date fields
+          derived variables created during the ETL.
+
+**_Schema-level annotations_**
+
+In addition to field-level annotations, schemas contain metadata describing the dataset itself.
+
+`x-version`
+
+- Where the version of the data that the schema is related to is populated. For example, `1.0.0`.
+
+`x-provenance`
+
+- This block records data round, repository location, schema maintainer, and last modified date.
+- This metadata provides versioning and traceability for schema definitions.
 
 **9.2.c. Drive restructuring**
 
@@ -246,28 +274,22 @@ The schema also defines where fields live in the nested structure (arrays, objec
   
 **9.2.d. Pseudo-anonymised schema generation**
 
-After restructuring, pseudo_anon_utils takes the raw schema and:
+After restructuring, `pseudo_anon_utils` derives dates, replaces identifiers, and updates the schema to describe the pseudo-anonymised output.
 
 - inserts new derived date fields
 - removes raw date components and PII fields
-- replaces `StudyID` with `R0_TCode`
+- replaces `StudyID` with `RTCode`
   
 The result is the pseudo-anonymised schema, which is what we validate the final output against.
 
-**9.2.e. Raw derivation inside the TRE**
-
-A small set of entry variables is derived separate to the main ETL run, also within the TRE:
-
-These variables are written to RawDerivedVariables.json and then treated as part of the "processed-raw" inputs to the questionnaire ETL. The underlying identifying dates (`ADOB`, `EventDate`) and the `Random` offset never leave the TRE. More details on how the variables are derived are in the schema, `RawDerivedVariables_Schema.json`.
-
 ## 9.3. Validation process
 
-Validation is performed using the JSON schema through a helper in `common_utils`.
+Validation is performed using the JSON Schema validator through helper utilities in `common_utils`.
 
 Any validation errors are:
 
 - logged with the record index and field path
-- summarised for review in the ETL logs or in the CLI
+- summarised for review in ETL logs and validation outputs
 
 If no errors, the section's JSON is considered structurally valid.
 
@@ -276,7 +298,7 @@ If no errors, the section's JSON is considered structurally valid.
 When extending or updating the ETL:
 
 1. Add/update the raw schema under `schemas/raw/`.
-2. Regenerate the pseudo-anon schema via `pseudo-anon utilities`.
+2. Regenerate the pseudo-anon schema via the pseudo-anonymisation utilities (`update_schema`).
 3. Run the ETL + validation for that section and review any schema errors.
 
 # 10. Logging & QC
@@ -366,7 +388,7 @@ The pipeline never writes out raw identifiers directly from the source database 
 - `StudyID` replaced pseudo-identifier stored in private server, `TCode`.
 - Date components aggregated to derived dates.
 
-    - Inside the TRE, `RawDerivation.ipynb` uses actual dates of birth and entry (`ADOB`, `EventDate`) together with the participant-specific `Random` offset to create:
+    - Inside the TRE, `AdminEvents.ipynb` uses actual dates of birth and entry (`ADOB`, `EventDate`) together with the participant-specific `Random` offset to create:
     
       - Shifted dates (`DOB`, `EntryDate`) that mask the true calendar dates but preserve within-person intervals.
       - Unshifted year-only and age variables (`YOB`, `EntryYear`, `AgeEntry`) that are safe to export.
