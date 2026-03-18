@@ -6,7 +6,6 @@
   "type": "object",
   "x-version": "1.0.0",
   "x-provenance": {
-      "x-dataRound": "R0",
       "x-lastModified": "2026-03-05",
       "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
       "x-maintainer": "UK Generations Study"

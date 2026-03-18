@@ -1,0 +1,7 @@
+jsonschema==4.26.0
+matplotlib==3.10.8
+numpy==2.4.3
+pandas==3.0.1
+pyodbc==5.3.0
+scipy==1.17.1
+SQLAlchemy==2.0.48
