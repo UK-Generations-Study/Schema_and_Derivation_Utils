@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/derivation/DerivedVariables_Schema.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/derived/DerivedVariables_Schema.json",
   "title": "Core Derived Variables from Questionnaire R0",
   "description": "These are a set of core variables for analysts that have been derived using only the information collected in the baseline questionnaire.",
   "type": "object",
@@ -41,7 +41,7 @@
                     "9: Not known.",
                     "null: Left blank."
                 ],
-      "x-answerID": [
+      "x-answerIDs": [
         47,
         3000,
         3001,
@@ -80,7 +80,7 @@
                     "1: Yes.",
                     "null: Unknown."
                 ],
-      "x-answerID": [
+      "x-answerIDs": [
         2,
         1
       ],
@@ -108,7 +108,7 @@
         "9999: Not Applicable",
         "null: Unknown."
       ],
-      "x-answerID": [
+      "x-answerIDs": [
         2,
         1,
         6
@@ -219,7 +219,7 @@
                     "1: Yes.",
                     "null: Unknown."
                 ],
-      "x-answerID": [
+      "x-answerIDs": [
         2,
         1
       ],
@@ -428,7 +428,7 @@
         "2: Current.", 
         "null: Not known."
       ],
-      "x-answerID": [
+      "x-answerIDs": [
         2384,
         3002,
         3003
@@ -532,7 +532,7 @@
         "9: Ever pregnant but parity unknown (e.g. only pregnancies with unknown outcome or incomplete episode data).",
         "null: Missing or inconsistent information."
       ],
-      "x-answerID": [
+      "x-answerIDs": [
         3004
       ],
       "x-description": "Using questionnaire responses (R0_EverPregnant and R0_TotalPregnancies) and the pregnancy episodes table: (1) Parous (1) if any pregnancy has a live-birth outcome (e.g. singleton live, multiple with ≥1 liveborn; outcome codes 1, 2, 3, 5, 10). (2) Nulliparous (0) if there is evidence of pregnancies but no live-birth outcomes and no pregnancies with unknown outcome (14). (3) Never pregnant (-1) if questionnaire data indicate no pregnancies and there are no pregnancy episodes. (4) Ever pregnant, parity unknown (9) if there is evidence of pregnancies but no live-birth outcomes and at least one pregnancy with unknown outcome or if the pregnancy table is empty but the questionnaire suggests pregnancies. Null if pregnancy information is entirely missing or internally inconsistent.",

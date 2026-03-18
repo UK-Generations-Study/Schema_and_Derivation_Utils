@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/OtherLifestyleFactors_Schema.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/raw/OtherLifestyleFactors_Schema.json",
   "title": "Other Lifestyle Factors from Questionnaire R0",
   "description": "Variables from the other lifestyle factors section of the first round of questionnaire for The Generations Study about the participant's history of other activities including exercise and travel.",
   "type": "object",
@@ -173,10 +173,7 @@
           "R0_NightWakeup_Num": {
             "x-name": "R0_NightWakeup_Num",
             "description": "Instance of either recent in reference to study entry or when the particpant was 20 years old.",
-            "type": [
-                "string",
-                "null"
-            ],
+            "type": "string",
             "enum": [
                 "Rec",
                 "20"
@@ -185,7 +182,7 @@
           "R0_NightWakeups": {
             "x-questionID": 2410,
             "x-name": "R0_NightWakeups",
-            "x-question": "How many times per night did you wake up and put the lighs on or go into a bright room?",
+            "x-question": "How many times per night did you wake up and put the lights on or go into a bright room?",
             "description": "Average number of times per night in recent months, or at age 20, the participant woke up and went into bright light.",
             "type": ["integer", "null"],
             "minimum": 0
@@ -451,7 +448,7 @@
     "R0_DeodorantOnlyUse": {
       "x-questionID": 2433,
       "x-name": "Q13_15_3",
-      "x-question": "Have you ever regularly used antiperspirants or deodorants? - Deoderant only",
+      "x-question": "Have you ever regularly used antiperspirants or deodorants? - Deodorant only",
       "description": "Whether the participant has ever regularly used deodorant-only products under the arms.",
       "type": ["integer", "null"],
       "enum": [3, null],

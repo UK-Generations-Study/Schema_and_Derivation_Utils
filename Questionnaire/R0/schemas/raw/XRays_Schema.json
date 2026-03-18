@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/XRays_Schema.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/raw/XRays_Schema.json",
   "title": "X-Rays from Questionnaire R0",
   "description": "Variables from the x-rays section of the first round of questionnaire for The Generations Study about the participant's history of x-rays.",
   "type": "object",
@@ -59,10 +59,7 @@
           "R0_ChestXray_Num": {
             "x-name": "R0_ChestXray_Num",
             "description": "Number of X-ray examination or treatment that has been filled out in the questionnaire",
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "enum": [
               "U20",
               "20-39",
@@ -461,10 +458,7 @@
           "R0_Xray_Num": {
             "x-name": "R0_Xray_Num",
             "description": "Number of X-ray examination or treatment that has been filled out in the questionnaire",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "enum": [
               1,
               2,
@@ -560,7 +554,7 @@
                     "integer",
                     "null"
                   ],
-                  "minimum": 0,
+                  "minimum": 1,
                   "maximum": 12
                 },
                 "R0_XrayFromAge": {
@@ -588,13 +582,13 @@
                 "R0_XrayFromMth": {
                   "x-questionID": 1843,
                   "x-name": "R0_XrayFromMth",
-                  "x-question": "X-ray ocured from the month of",
+                  "x-question": "X-ray ocurred from the month of",
                   "description": "X-ray occurred from the month of for any extra X-ray",
                   "type": [
                     "integer",
                     "null"
                   ],
-                  "minimum": 0,
+                  "minimum": 1,
                   "maximum": 12
                 },
                 "R0_XrayFromYr": {
@@ -617,7 +611,8 @@
                     "integer",
                     "null"
                   ],
-                  "minimum": 0
+                  "minimum": 1,
+                  "maximum": 12
                 },
                 "R0_XrayToYr": {
                   "x-questionID": 1846,

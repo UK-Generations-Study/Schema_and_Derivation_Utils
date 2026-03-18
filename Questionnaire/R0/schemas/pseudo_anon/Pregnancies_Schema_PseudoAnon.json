@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/pseudo_anon/Pregnancies_Schema_PseudoAnon.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/pseudo_anon/Pregnancies_Schema_PseudoAnon.json",
   "title": "Pseudo Anonymised Pregnancies from Questionnaire R0",
   "description": "Variables from the pregnancies section of the first round of questionnaire for The Generations Study about the participant's history of being or trying to become pregnant, and their births. This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
   "type": "object",
   "x-version": "1.0.0",
   "x-provenance": {
     "x-dataRound": "R0",
-    "x-lastModified": "2026-03-09",
+    "x-lastModified": "2026-03-17",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
@@ -47,8 +47,7 @@
         1,
         2,
         6
-      ],
-      "minimum": 0
+      ]
     },
     "R0_InfertilityAge": {
       "x-questionID": 551,
@@ -86,8 +85,7 @@
         10,
         1,
         2
-      ],
-      "minimum": 0
+      ]
     },
     "R0_InfertilityReason": {
       "x-questionID": 553,
@@ -129,8 +127,7 @@
         705,
         3,
         13
-      ],
-      "minimum": 0
+      ]
     },
     "R0_FertilityDrugs": {
       "x-questionID": 555,
@@ -160,8 +157,7 @@
         1,
         2,
         3
-      ],
-      "minimum": 0
+      ]
     },
     "R0_FertilityTreatmentAgeFirst": {
       "x-questionID": 556,
@@ -213,8 +209,7 @@
         1,
         2,
         3
-      ],
-      "minimum": 0
+      ]
     },
     "R0_TotalPregnancies": {
       "x-questionID": 559,
@@ -276,8 +271,7 @@
       ],
       "x-answerIDs": [
         712
-      ],
-      "minimum": 0
+      ]
     },
     "Pregnancies": {
       "x-name": "Pregnancies",
@@ -291,10 +285,7 @@
           "R0_Preg_Num": {
             "x-name": "R0_Preg_Num",
             "description": "PregnancyID of the participant's pregnancy. Used to differentiate pregnancy data into correct variable naming conventions in post processing of this array.",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "enum": [
               1,
               2,
@@ -387,8 +378,7 @@
               727,
               728,
               729
-            ],
-            "minimum": 0
+            ]
           },
           "R0_Preg_DurationWks": {
             "x-questionID": 566,
@@ -429,13 +419,12 @@
               1,
               2,
               3
-            ],
-            "minimum": 0
+            ]
           },
           "R0_Preg_Eclampsia": {
             "x-questionID": 568,
             "x-name": "R0_Preg_Eclampsia",
-            "x-question": "Did you suffer from ecplampsia or pre-eclampsia during pregnancy?",
+            "x-question": "Did you suffer from eclampsia or pre-eclampsia during pregnancy?",
             "description": "Whether or not the participant suffered from eclampsia or pre-eclampsia during their pregnancy.",
             "type": [
               "integer",
@@ -460,8 +449,7 @@
               1,
               2,
               3
-            ],
-            "minimum": 0
+            ]
           },
           "R0_Preg_ChildSex": {
             "x-questionID": 569,
@@ -497,8 +485,7 @@
               733,
               734,
               735
-            ],
-            "minimum": 0
+            ]
           },
           "R0_Preg_BirthWghtG": {
             "x-questionID": 570,
@@ -569,8 +556,7 @@
               10,
               1,
               2
-            ],
-            "minimum": 0
+            ]
           }
         },
         "additionalProperties": false
@@ -613,8 +599,7 @@
         743,
         744,
         745
-      ],
-      "minimum": 0
+      ]
     },
     "R0_FirstPregWghtStone": {
       "x-questionID": 732,
@@ -707,8 +692,7 @@
         10,
         1,
         2
-      ],
-      "minimum": 0
+      ]
     },
     "R0_PregHrmnsAge": {
       "x-questionID": 739,

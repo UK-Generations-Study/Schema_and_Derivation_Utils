@@ -170,14 +170,13 @@ def run_section(q_sect: str):
     # -------------------- PII schema (once per section) --------------------
     schema_pii_json = os.path.join(r0_json_path_pii, f"{q_sect}_Schema_PseudoAnon.json")
 
-    if not os.path.exists(schema_pii_json):
-        update_schema(
-            os.path.join(r0_json_path, f"{q_sect}_Schema.json"),
-            schema_pii_json,
-            dateDict,
-            removed_pii_vars,
-            q_sect,
-        )
+    update_schema(
+        os.path.join(r0_json_path, f"{q_sect}_Schema.json"),
+        schema_pii_json,
+        dateDict,
+        removed_pii_vars,
+        q_sect
+    )
 
     schema_pii = load_schema(r0_json_path_pii, f"{q_sect}_Schema_PseudoAnon")
     validate_data(pii_data, schema_pii, schema_pii_json)

@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/AlcoholSmokingDiet_Schema.json",
+    "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/raw/AlcoholSmokingDiet_Schema.json",
     "title": "Alcohol, Smoking, and Diet from Questionnaire R0",
     "description": "Variables from the alcohol, smoking, and diet section of the first round of questionnaire for The Generations Study about the participants alcohol use, smoking habits, and diet.",
     "type": "object",
@@ -77,7 +77,7 @@
                     "R0_AlcoholConsumption_Num": {
                         "x-name": "R0_AlcoholConsumption_Num",
                         "description": "Alcohol consumption entry index.",
-                        "type": ["string", "null"],
+                        "type": "string",
                         "enum": ["18-24", "25-49", "50+"]
                     },
                     "R0_AlcoholBeer": {
@@ -236,7 +236,7 @@
                     "R0_CigaretteConsumption_Num": {
                         "x-name": "R0_CigaretteConsumption_Num",
                         "description": "Cigarette consumption entry index.",
-                        "type": ["string", "null"],
+                        "type": "string",
                         "enum": ["16-24", "25-49", "50+"]
                     },
                     "R0_Cigarettes": {

@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/pseudo_anon/Jobs_Schema_PseudoAnon.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/pseudo_anon/Jobs_Schema_PseudoAnon.json",
   "title": "Pseudo Anonymised Jobs from Questionnaire R0",
   "description": "Variables from the jobs section of the first round of questionnaire for The Generations Study about the participant's history of working in industries that require night work, travelling, and other unique experiences. This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
   "type": "object",
   "x-version": "1.0.0",
   "x-provenance": {
     "x-dataRound": "R0",
-    "x-lastModified": "2026-03-09",
+    "x-lastModified": "2026-03-17",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
@@ -179,10 +179,7 @@
           "R0_NightWork_Num": {
             "x-name": "R0_NightWork_Num",
             "description": "Sequential number of night work.",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "enum": [
               1,
               2,
@@ -246,7 +243,7 @@
     "R0_NightWorkMore": {
       "x-questionID": 2070,
       "x-name": "Q10_2more",
-      "x-question": "Cross here is you had more jobs involving night work",
+      "x-question": "Cross here if you had more jobs involving night work",
       "description": "Flag for additional night work episodes",
       "type": [
         "integer",

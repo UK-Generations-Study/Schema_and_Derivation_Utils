@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/pseudo_anon/PhysicalDevelopment_Schema_PseudoAnon.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/json_schemas/pseudo_anon/PhysicalDevelopment_Schema_PseudoAnon.json",
   "title": "Pseudo Anonymised Physical Development from Questionnaire R0",
-  "description": "Variables from the physical development section of the first round of questionnaire for The Generations Study about the participant's history height, weight, and growth. This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
+  "description": "Variables from the physical development section of the first round of questionnaire for The Generations Study about the participant's history of height, weight, and growth. This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
   "type": "object",
   "x-version": "1.0.0",
   "x-provenance": {
     "x-dataRound": "R0",
-    "x-lastModified": "2026-03-09",
+    "x-lastModified": "2026-03-17",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
@@ -21,7 +21,7 @@
     },
     "WeightComparison": {
       "x-name": "WeightComparison",
-      "description": "An array of height comparison entries (up to 2).",
+      "description": "An array of weight comparison entries (up to 2).",
       "type": "array",
       "minItems": 0,
       "maxItems": 2,
@@ -31,10 +31,7 @@
           "R0_WghtComp_Num": {
             "x-name": "R0_WghtComp_Num",
             "description": "Recorded height array number. Used to differentiate height instances into correct variable naming conventions in post processing of this array.",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "enum": [
               7,
               11
@@ -85,7 +82,7 @@
     },
     "RecordedWeights": {
       "x-name": "RecordedWeights",
-      "description": "An array of recorded height entries (up to 4).",
+      "description": "An array of recorded weight entries (up to 4).",
       "type": "array",
       "minItems": 0,
       "maxItems": 4,
@@ -95,10 +92,7 @@
           "R0_RecWght_Num": {
             "x-name": "R0_RecWght_Num",
             "description": "Recorded weight array number.",
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "enum": [
               "Cur",
               "20",
@@ -119,7 +113,7 @@
           },
           "R0_WghtAge_Lbs": {
             "x-questionID": 104,
-            "x-name": "R0_WghtAge_St",
+            "x-name": "R0_WghtAge_Lbs",
             "x-question": "What was your non-pregnant weight? - Lbs",
             "description": "Participant's non-pregnant weight in pounds currently, or at age 20, 40, or 60.",
             "type": [
@@ -130,7 +124,7 @@
           },
           "R0_WghtAge_Kg": {
             "x-questionID": 105,
-            "x-name": "R0_WghtAge_St",
+            "x-name": "R0_WghtAge_Kg",
             "x-question": "What was your non-pregnant weight? - Kilograms",
             "description": "Participant's non-pregnant weight in kilograms currently, or at age 20, 40, or 60.",
             "type": [
@@ -273,10 +267,7 @@
           "R0_HghtComp_Num": {
             "x-name": "R0_HghtComp_Num",
             "description": "Recorded height array number. Used to differentiate height instances into correct variable naming conventions in post processing of this array.",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "enum": [
               7,
               11
@@ -360,7 +351,7 @@
     },
     "RecordedHeights": {
       "x-name": "RecordedHeights",
-      "description": "An array of height comparison entries (up to 2).",
+      "description": "An array of recorded height comparison entries (up to 2).",
       "type": "array",
       "minItems": 0,
       "maxItems": 2,
@@ -370,10 +361,7 @@
           "R0_RecHght_Num": {
             "x-name": "R0_RecHght_Num",
             "description": "Recorded height array number. Used to differentiate height instances into correct variable naming conventions in post processing of this array.",
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "enum": [
               "Cur",
               "20"
@@ -455,10 +443,7 @@
           "R0_RecHeight_Num": {
             "x-name": "R0_RecHeight_Num",
             "description": "Under 16 recorded height array number. Used to differentiate height instances into correct variable naming conventions in post processing of this array.",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "enum": [
               1,
               2,
@@ -577,10 +562,7 @@
           "R0_Inst_Num": {
             "x-name": "R0_Inst_Num",
             "description": "Recorded institution number. Used to differentiate institution instances into correct variable naming conventions in post processing of this array.",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "enum": [
               1,
               2
@@ -667,10 +649,7 @@
           "R0_BraSize_Num": {
             "x-name": "R0_BraSize_Num",
             "description": "Recorded bra size number. Used to differentiate bra size instances into correct variable naming conventions in post processing of this array.",
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "enum": [
               "Cur",
               "20"

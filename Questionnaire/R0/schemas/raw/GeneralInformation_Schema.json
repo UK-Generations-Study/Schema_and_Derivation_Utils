@@ -1,6 +1,6 @@
 {   
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/GeneralInformation_Schema.json",
+    "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/raw/GeneralInformation_Schema.json",
     "title": "General Information from Questionnaire R0",
     "description": "Variables from the general information section of the first round of questionnaire for The Generations Study about the participant's basic identifying information.",
     "type": "object",
@@ -230,7 +230,7 @@
                 "6: Other job.",
                 "null: Missing or invalid."
             ],
-            "x-answerIDs": [10, 31, 32, 33, 34, 35]
+            "x-answerIDs": [10, 31, 32, 33, 34, 35, 13]
         },
         "R0_CurOcup": {
             "x-questionID": 23,
@@ -420,7 +420,7 @@
             "x-enumDescriptions": [
                 "9: None of these.",
                 "13: None of these - white and non-white.",
-                "15: None of these - non-white (other).",
+                "14: None of these - non-white (other).",
                 "null: Missing or invalid."
             ],
             "x-answerIDs": [4, 60, 61]

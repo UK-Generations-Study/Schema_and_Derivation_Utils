@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/pseudo_anon/MH_DrugsSupplements_Schema_PseudoAnon.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/pseudo_anon/MH_DrugsSupplements_Schema_PseudoAnon.json",
   "title": "Pseudo Anonymised Medical History of Drugs and Supplements from Questionnaire R0",
   "description": "Variables from the medical history section of the first round of questionnaire for The Generations Study about the participant's history of medical drugs and other supplements. This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
   "type": "object",
   "x-version": "1.0.0",
   "x-provenance": {
     "x-dataRound": "R0",
-    "x-lastModified": "2026-03-09",
+    "x-lastModified": "2026-03-17",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
@@ -261,8 +261,6 @@
         "integer",
         "null"
       ],
-      "minimum": 0,
-      "maximum": 7,
       "enum": [
         null,
         0,
@@ -291,14 +289,7 @@
         "null"
       ],
       "minimum": 0,
-      "maximum": 7,
-      "enum": [
-        null,
-        1
-      ],
-      "x-answerIDs": [
-        1310
-      ]
+      "maximum": 7
     },
     "AspirinRegularUse": {
       "x-name": "AspirinRegularUse",
@@ -531,8 +522,7 @@
         10,
         1,
         2
-      ],
-      "maximum": 7
+      ]
     },
     "R0_IbuprofenDays": {
       "x-questionID": 1651,
@@ -922,7 +912,7 @@
       ],
       "x-enumDescriptions": [
         "1: Yes",
-        "2: No",
+        "0: No",
         "null: Missing or invalid."
       ],
       "x-answerIDs": [
@@ -1024,7 +1014,7 @@
       "x-enumDescriptions": [
         "0: More than 1 option",
         "1: Yes",
-        "2: Yes",
+        "2: No",
         "null: Missing or invalid."
       ],
       "x-answerIDs": [

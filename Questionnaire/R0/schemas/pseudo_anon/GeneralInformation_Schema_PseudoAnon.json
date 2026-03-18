@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/pseudo_anon/GeneralInformation_Schema_PseudoAnon.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/pseudo_anon/GeneralInformation_Schema_PseudoAnon.json",
   "title": "Pseudo Anonymised General Information from Questionnaire R0",
   "description": "Variables from the general information section of the first round of questionnaire for The Generations Study about the participant's basic identifying information. This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
   "type": "object",
   "x-version": "1.0.0",
   "x-provenance": {
     "x-dataRound": "R0",
-    "x-lastModified": "2026-03-09",
+    "x-lastModified": "2026-03-17",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
@@ -210,7 +210,8 @@
         32,
         33,
         34,
-        35
+        35,
+        13
       ]
     },
     "R0_LeftEducAge": {
@@ -508,7 +509,7 @@
       "x-enumDescriptions": [
         "9: None of these.",
         "13: None of these - white and non-white.",
-        "15: None of these - non-white (other).",
+        "14: None of these - non-white (other).",
         "null: Missing or invalid."
       ],
       "x-answerIDs": [

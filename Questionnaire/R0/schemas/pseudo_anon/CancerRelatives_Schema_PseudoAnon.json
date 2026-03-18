@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/pseudo_anon/CancerRelatives_Schema_PseudoAnon.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/pseudo_anon/CancerRelatives_Schema_PseudoAnon.json",
   "title": "Pseudo Anonymised Cancer Relatives from Questionnaire R0",
   "description": "Variables from the cancer relatives section of the first round of questionnaire for The Generations Study about the participant's family history of cancer and breast cancer. This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
   "type": "object",
   "x-version": "1.0.0",
   "x-provenance": {
     "x-dataRound": "R0",
-    "x-lastModified": "2026-03-09",
+    "x-lastModified": "2026-03-17",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
@@ -82,7 +82,6 @@
         "1: Don't know",
         "null: Missing or invalid."
       ],
-      "minimum": 0,
       "x-answerIDs": [
         10,
         1
@@ -182,12 +181,8 @@
         "properties": {
           "R0_FatherCancer_Num": {
             "x-name": "R0_FatherCancer_Num",
-            "x-question": "Instance of cancer that the participant's father had.",
-            "description": "",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "description": "Instance of cancer that the participant's father had.",
+            "type": "integer",
             "enum": [
               1,
               2
@@ -433,12 +428,8 @@
         "properties": {
           "R0_MotherCancer_Num": {
             "x-name": "R0_MotherCancer_Num",
-            "x-question": "Instance of cancer that the mother had.",
-            "description": "",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "description": "Instance of cancer that the mother had.",
+            "type": "integer",
             "enum": [
               1,
               2
@@ -566,7 +557,6 @@
         null
       ],
       "x-enumDescriptions": [
-        "0: Multiple responses selected",
         "1: UK",
         "null: Missing or invalid."
       ],
@@ -824,12 +814,8 @@
         "properties": {
           "R0_Sibling_Num": {
             "x-name": "R0_Sibling_Num",
-            "x-question": "Number of sibling of the participant.",
-            "description": "",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "description": "Number of sibling of the participant.",
+            "type": "integer",
             "enum": [
               1,
               2,
@@ -1053,12 +1039,8 @@
         "properties": {
           "R0_ChildCancer_Num": {
             "x-name": "R0_ChildCancer_Num",
-            "x-question": "Number of child that had cancer.",
-            "description": "",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "description": "Number of child that had cancer.",
+            "type": "integer",
             "enum": [
               1,
               2,
@@ -1196,7 +1178,8 @@
         null
       ],
       "x-enumDescriptions": [
-        "1: Yes"
+        "1: Yes",
+        "null: Missing or invalid."
       ],
       "x-answerIDs": [
         2572
@@ -1216,7 +1199,8 @@
         null
       ],
       "x-enumDescriptions": [
-        "2: Yes"
+        "2: Yes",
+        "null: Missing or invalid."
       ],
       "x-answerIDs": [
         2573
@@ -1236,7 +1220,8 @@
         null
       ],
       "x-enumDescriptions": [
-        "3: Yes"
+        "3: Yes",
+        "null: Missing or invalid."
       ],
       "x-answerIDs": [
         2574
@@ -1256,7 +1241,8 @@
         null
       ],
       "x-enumDescriptions": [
-        "4: Yes"
+        "4: Yes",
+        "null: Missing or invalid."
       ],
       "x-answerIDs": [
         2575
@@ -1276,7 +1262,8 @@
         null
       ],
       "x-enumDescriptions": [
-        "5: Yes"
+        "5: Yes",
+        "null: Missing or invalid."
       ],
       "x-answerIDs": [
         2576
@@ -1296,7 +1283,8 @@
         null
       ],
       "x-enumDescriptions": [
-        "6: Yes"
+        "6: Yes",
+        "null: Missing or invalid."
       ],
       "x-answerIDs": [
         2577
@@ -1316,7 +1304,8 @@
         null
       ],
       "x-enumDescriptions": [
-        "7: Yes"
+        "7: Yes",
+        "null: Missing or invalid."
       ],
       "x-answerIDs": [
         2578
@@ -1336,7 +1325,8 @@
         null
       ],
       "x-enumDescriptions": [
-        "8: Yes"
+        "8: Yes",
+        "null: Missing or invalid."
       ],
       "x-answerIDs": [
         2579
@@ -1356,7 +1346,8 @@
         null
       ],
       "x-enumDescriptions": [
-        "9: Yes"
+        "9: Yes",
+        "null: Missing or invalid."
       ],
       "x-answerIDs": [
         2580
@@ -1376,7 +1367,8 @@
         null
       ],
       "x-enumDescriptions": [
-        "10: Yes"
+        "10: Yes",
+        "null: Missing or invalid."
       ],
       "x-answerIDs": [
         2581
@@ -1393,12 +1385,8 @@
         "properties": {
           "R0_OtherRelative_Num": {
             "x-name": "R0_OtherRelative_Num",
-            "x-question": "Number of other relative question.",
-            "description": "",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "description": "Number of other relative question.",
+            "type": "integer",
             "enum": [
               1,
               2,

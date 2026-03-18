@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/ContraceptiveHRT_Schema.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/raw/ContraceptiveHRT_Schema.json",
   "title": "Contraceptive and HRT from Questionnaire R0",
   "description": "Variables from the contraceptive and HRT section of the first round of questionnaire for The Generations Study about the participant's history of use of contraceptives and HRT.",
   "type": "object",
@@ -58,10 +58,7 @@
           "R0_ContracepPill_Num": {
             "x-name": "R0_ContracepPill_Num",
             "description": "Instance of taking contraceptive pill.",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "enum": [
               1,
               2,
@@ -129,7 +126,7 @@
           },
           "R0_ContracepPill_CurrentUse": {
             "x-questionID": 806,
-            "x-name": "ContracepPill_CurrentUse",
+            "x-name": "R0_ContracepPill_CurrentUse",
             "x-question": "Are you still using the contraceptive pill?",
             "description": "Participant's current usage status of this pill",
             "type": [
@@ -169,7 +166,8 @@
                     "integer",
                     "null"
                   ],
-                  "minimum": 0
+                  "minimum": 1,
+                  "maximum": 12
                 },
                 "R0_ContracepPill_StartYr": {
                   "x-questionID": 859,
@@ -191,7 +189,8 @@
                     "integer",
                     "null"
                   ],
-                  "minimum": 0
+                  "minimum": 1,
+                  "maximum": 12
                 },
                 "R0_ContracepPill_StopYr": {
                   "x-questionID": 861,
@@ -293,10 +292,7 @@
           "R0_OtherContracep_Num": {
             "x-name": "R0_OtherContracep_Num",
             "description": "Instance of other contraceptive method.",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "enum": [
               1,
               2,
@@ -379,7 +375,8 @@
                     "integer",
                     "null"
                   ],
-                  "minimum": 0
+                  "minimum": 1,
+                  "maximum": 12
                 },
                 "R0_OtherContracep_StartYr": {
                   "x-questionID": 913,
@@ -401,7 +398,8 @@
                     "integer",
                     "null"
                   ],
-                  "minimum": 0
+                  "minimum": 1,
+                  "maximum": 12
                 },
                 "R0_OtherContracep_StopYr": {
                   "x-questionID": 915,
@@ -482,10 +480,7 @@
           "R0_HRT_Num": {
             "x-name": "R0_HRT_Num",
             "description": "Instance of HRT.",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "enum": [
               1,
               2,
@@ -571,7 +566,8 @@
                     "integer",
                     "null"
                   ],
-                  "minimum": 0
+                  "minimum": 1,
+                  "maximum": 12
                 },
                 "R0_HRT_StartYr": {
                   "x-questionID": 938,
@@ -593,7 +589,8 @@
                     "integer",
                     "null"
                   ],
-                  "minimum": 0
+                  "minimum": 1,
+                  "maximum": 12
                 },
                 "R0_HRT_StopYr": {
                   "x-questionID": 940,
@@ -653,7 +650,6 @@
         "null: Missing or invalid."
       ],
       "x-answerIDs": [
-        2,
         1
       ]
     },
@@ -726,10 +722,7 @@
           "R0_OtherSexHrmn_Num": {
             "x-name": "R0_OtherSexHrmn_Num",
             "description": "Instance of other hormone treatments.",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "enum": [
               1,
               2,
@@ -814,7 +807,8 @@
                     "integer",
                     "null"
                   ],
-                  "minimum": 0
+                  "minimum": 1,
+                  "maximum": 12
                 },
                 "R0_OtherSexHrmn_StartYr": {
                   "x-questionID": 979,
@@ -836,7 +830,8 @@
                     "integer",
                     "null"
                   ],
-                  "minimum": 0
+                  "minimum": 1,
+                  "maximum": 12
                 },
                 "R0_OtherSexHrmn_StopYr": {
                   "x-questionID": 981,
@@ -896,7 +891,6 @@
         "null: Missing or invalid."
       ],
       "x-answerIDs": [
-        2,
         1
       ]
     }

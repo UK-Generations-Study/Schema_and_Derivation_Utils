@@ -25,7 +25,8 @@ newValMap = {
     "R0_Preg_DurationWks": {"FT": 40},
     "R0_ThyroidDiseaseType": {"A": 5},
     "R0_EatingDisorder": {"A": 5},
-    "R0_ED_GainLoss": {"A": 4}
+    "R0_ED_GainLoss": {"A": 4},
+    "R0_ChildhoodSportParticipation": {"A": 9}
 }
 
 # Updated rules function

@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/pseudo_anon/OtherBreastSurgery_Schema_PseudoAnon.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/pseudo_anon/OtherBreastSurgery_Schema_PseudoAnon.json",
   "title": "Pseudo Anonymised Other Breast Surgery from Questionnaire R0",
   "description": "Variables from the other breast surgeries section of the first round of questionnaire for The Generations Study about the participant's history of other breast surgeries, including elective and augmentations. This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
   "type": "object",
   "x-version": "1.0.0",
   "x-provenance": {
     "x-dataRound": "R0",
-    "x-lastModified": "2026-03-09",
+    "x-lastModified": "2026-03-17",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
@@ -31,10 +31,7 @@
           "R0_OtherBreastSurgery_Num": {
             "x-name": "R0_OtherBreastSurgery_Num",
             "description": "Breast surgery sequence number (1st, 2nd, 3rd, or 4th cosmetic/other surgery).",
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "enum": [
               1,
               2,
@@ -420,19 +417,8 @@
       "x-question": "If you have had any further breast operations for cosmetic or other reasons, please give details below for up to 4 operations.",
       "description": "Free-text field capturing any additional information the participant provided about further cosmetic or other breast surgeries other than the first.",
       "type": [
-        "integer",
+        "string",
         "null"
-      ],
-      "enum": [
-        1,
-        null
-      ],
-      "x-enumDescriptions": [
-        "1: Yes.",
-        "null: Missing or invalid."
-      ],
-      "x-answerIDs": [
-        1014
       ]
     }
   },

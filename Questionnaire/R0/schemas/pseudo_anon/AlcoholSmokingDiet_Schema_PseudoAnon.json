@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/pseudo_anon/AlcoholSmokingDiet_Schema_PseudoAnon.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/pseudo_anon/AlcoholSmokingDiet_Schema_PseudoAnon.json",
   "title": "Pseudo Anonymised Alcohol, Smoking, and Diet from Questionnaire R0",
   "description": "Variables from the alcohol, smoking, and diet section of the first round of questionnaire for The Generations Study about the participants alcohol use, smoking habits, and diet. This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
   "type": "object",
   "x-version": "1.0.0",
   "x-provenance": {
     "x-dataRound": "R0",
-    "x-lastModified": "2026-03-09",
+    "x-lastModified": "2026-03-17",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
@@ -107,10 +107,7 @@
           "R0_AlcoholConsumption_Num": {
             "x-name": "R0_AlcoholConsumption_Num",
             "description": "Alcohol consumption entry index.",
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "enum": [
               "18-24",
               "25-49",
@@ -343,10 +340,7 @@
           "R0_CigaretteConsumption_Num": {
             "x-name": "R0_CigaretteConsumption_Num",
             "description": "Cigarette consumption entry index.",
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "enum": [
               "16-24",
               "25-49",

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Outcomes/schemas/Outcomes_Schema.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Outcomes/schemas/Outcomes_Schema.json",
   "title": "Outcomes and Treatments",
   "description": "This data set includes variables related to follow-up time, survival, breast cancer recurrence, and breast cancer treatment.",
   "type": "object",
@@ -13,10 +13,8 @@
   "properties": {
     "TCode": {
       "x-name": "TCode",
-      "description": "Pseudo-anonymized 8-character study identifier.",
-      "type": [
-        "string"
-      ],
+      "description": "Pseudo-anonymised 8-character study identifier.",
+      "type": "string",
       "minLength": 8,
       "maxLength": 8
     },
@@ -194,7 +192,7 @@
     },
     "recurrence_flag": {
       "x-name": "recurrence_flag",
-      "description": "Breast Cancer Recurrence (local or distant) flag for particpants with first primary breast cancer (invasive and insitu).",
+      "description": "Breast Cancer Recurrence (local or distant) flag for participants with first primary breast cancer (invasive and insitu).",
       "type": [
         "integer",
         "null"
@@ -255,7 +253,7 @@
     },
     "firstrec_local_flg": {
       "x-name": "firstrec_local_flg",
-      "description": "First breast cancer recurrence was local local recurrence.",
+      "description": "First breast cancer recurrence was local recurrence.",
       "type": [
         "integer",
         "null"
@@ -281,7 +279,7 @@
     },
     "firstrec_dist_flg": {
       "x-name": "firstrec_dist_flg",
-      "description": "First breast cancer recurrence was distant recurrence flag].",
+      "description": "First breast cancer recurrence was distant recurrence flag.",
       "type": [
         "integer",
         "null"
@@ -336,7 +334,7 @@
       ],
       "x-enumDescriptions": [
         "0: First recurrence was at least 5 years after diagnosis",
-        "1: First recurrence withing the first 5 years after diagnosis",
+        "1: First recurrence within the first 5 years after diagnosis",
         "null: Missing or invalid."
       ]
     },
@@ -354,7 +352,7 @@
         null
       ],
       "x-enumDescriptions": [
-        "1: breast conserving surgery",
+        "1: Breast conserving surgery",
         "2: Mastectomy",
         "3: No/Not recorded cancer registry",
         "null: Missing or invalid."
@@ -484,5 +482,8 @@
       ]
     }
   },
+  "required": [
+    "TCode"
+  ],
   "additionalProperties": false
 }

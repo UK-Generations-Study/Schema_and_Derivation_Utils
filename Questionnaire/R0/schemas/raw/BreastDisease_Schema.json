@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/BreastDisease_Schema.json",
+    "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/raw/BreastDisease_Schema.json",
     "title": "Breast Disease from Questionnaire R0",
     "description": "Variables from the breast disease section of the first round of questionnaire for The Generations Study about the participant's history of benign breast disease and surgeries.",
     "type": "object",
@@ -58,10 +58,7 @@
                     "R0_BBD_Num": {
                         "x-name": "R0_BBD_Num",
                         "description": "Sequential number of further episode.",
-                        "type": [
-                            "integer",
-                            "null"
-                        ],
+                        "type": "integer",
                         "enum": [
                             1,
                             2,

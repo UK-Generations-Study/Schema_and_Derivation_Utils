@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/Jobs_Schema.json",
+    "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/raw/Jobs_Schema.json",
     "title": "Jobs from Questionnaire R0",
     "description": "Variables from the jobs section of the first round of questionnaire for The Generations Study about the participant's history of working in industries that require night work, travelling, and other unique experiences.",
     "type": "object",
@@ -135,10 +135,7 @@
                     "R0_NightWork_Num": {
                         "x-name": "R0_NightWork_Num",
                         "description": "Sequential number of night work.",
-                        "type": [
-                            "integer",
-                            "null"
-                        ],
+                        "type": "integer",
                         "enum": [
                             1,
                             2,
@@ -195,7 +192,7 @@
         "R0_NightWorkMore": {
             "x-questionID": 2070,
             "x-name": "Q10_2more",
-            "x-question": "Cross here is you had more jobs involving night work",
+            "x-question": "Cross here if you had more jobs involving night work",
             "description": "Flag for additional night work episodes",
             "type": ["integer", "null"],
             "enum": [1, null],

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/AdminEvents/schemas/BreastTumourLink_Schema.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Pathology/schemas/BreastTumourLink_Schema.json",
   "title": "Pathology and Linking",
-  "description": "This data set contains information on pathology specific to tumour samples and thier lab results and can be linked to individuals.",
+  "description": "This data set contains information on pathology specific to tumour samples and their lab results and can be linked to individuals.",
   "type": "object",
   "x-version": "1.0.0",
   "x-provenance": {
@@ -14,9 +14,7 @@
     "StudyID": {
       "x-name": "StudyID",
       "description": "Unique 6-digit identifier for each participant in the study.",
-      "type": [
-        "number"
-      ],
+      "type": "string",
       "minLength": 6,
       "maxLength": 6
     },

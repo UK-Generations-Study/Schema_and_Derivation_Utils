@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/MH_Illnesses_Schema.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/raw/MH_Illnesses_Schema.json",
   "title": "Medical History of Illnesses from Questionnaire R0",
   "description": "Variables from the medical history section of the first round of questionnaire for The Generations Study about the participant's history of other chronic illnesses.",
   "type": "object",
@@ -169,10 +169,7 @@
                 "R0_ThyroidTreatment_Num": {
                     "x-name": "R0_ThyroidTreatment_Num",
                     "description": "Instance of thyroid treatment.",
-                    "type": [
-                        "integer",
-                        "null"
-                    ],
+                    "type": "integer",
                     "enum": [
                       1,
                       2
@@ -468,10 +465,7 @@
                 "R0_EatingDisorder_Num": {
                     "x-name": "R0_EatingDisorder_Num",
                     "description": "Instance of eating disorder.",
-                    "type": [
-                        "integer",
-                        "null"
-                    ],
+                    "type": "integer",
                     "enum": [
                       1,
                       2,
@@ -596,7 +590,7 @@
                         "null"
                     ],
                     "minimum": 0,
-                    "maximum": 13
+                    "maximum": 15
                 },
                 "R0_ED_PreWeight_kg": {
                     "x-questionID": 1461,
@@ -612,7 +606,7 @@
                 "R0_ED_GainLoss": {
                     "x-questionID": 1462,
                     "x-name": "R0_ED_GainLoss",
-                    "x-question": "Did you gain or lose weight during your 1st eating disorder, or did your weight stay the same on average? (Gained, Lost, Stayed same)",
+                    "x-question": "Did you gain or lose weight during your eating disorder, or did your weight stay the same on average? (Gained, Lost, Stayed same)",
                     "description": "Self-reported weight change pattern during the first eating disorder episode.",
                     "type": [
                         "integer",
@@ -663,7 +657,7 @@
                         "null"
                     ],
                     "minimum": 0,
-                    "maximum": 13
+                    "maximum": 15
                 },
                 "R0_ED_LowWeight_kg": {
                     "x-questionID": 1465,
@@ -1137,8 +1131,8 @@
       ]
     }
   },
-    "additionalProperties": false,
-    "required": [
-        "StudyID"
-    ]
+  "additionalProperties": false,
+  "required": [
+      "StudyID"
+  ]
 }

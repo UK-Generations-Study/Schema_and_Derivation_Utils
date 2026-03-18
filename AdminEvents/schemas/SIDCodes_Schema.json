@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/AdminEvents/schemas/SIDCodes_Schema.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/AdminEvents/schemas/SIDCodes_Schema.json",
   "title": "Study ID Codes",
-  "description": "This data set can be used as a related table to apply pseudo-anonymised study IDs to resultant datasets for analyis.",
+  "description": "This data set can be used as a related table to apply pseudo-anonymised study IDs to resultant datasets for analysis.",
   "type": "object",
   "x-version": "1.0.0",
   "x-provenance": {
@@ -12,113 +12,92 @@
   },
   "properties": {
     "KCode": {
-      "name": "KCode",
+      "x-name": "KCode",
       "description": "Pseudo-anonymised ID for Mammographic images received via IEP CC study",
-      "type": [
-        "string"
-      ],
+      "type": "string",
       "minLength": 8,
       "maxLength": 8
     },
     "JCode": {
-      "name": "JCode",
+      "x-name": "JCode",
       "description": "Pseudo-anonymised ID for BCAC",
-      "type": [
-        "string"
-      ],
+      "type": "string",
       "minLength": 8,
       "maxLength": 8
     },
     "MCode": {
-      "name": "MCode",
+      "x-name": "MCode",
       "description": "Pseudo-anonymised ID for Mammographic images for BIRAS",
-      "type": [
-        "string"
-      ],
+      "type": "string",
       "minLength": 8,
       "maxLength": 8
     },
     "LCode": {
-      "name": "LCode",
+      "x-name": "LCode",
       "description": "Pseudo-anonymised ID for GD datasets sent to UMass for B2Risk",
-      "type": [
-        "string"
-      ],
+      "type": "string",
       "minLength": 8,
       "maxLength": 8
     },
     "NCode": {
-      "name": "NCode",
+      "x-name": "NCode",
       "description": "Pseudo-anonymised ID for Nightingale cohort collaboration",
-      "type": [
-        "string"
-      ],
+      "type": "string",
       "minLength": 8,
       "maxLength": 8
     },
     "TCode": {
-      "name": "TCode",
+      "x-name": "TCode",
       "description": "Pseudo-anonymised ID for RDS work",
-      "type": [
-        "string"
-      ],
+      "type": "string",
       "minLength": 8,
       "maxLength": 8
     },
     "PCode": {
-      "name": "PCode",
+      "x-name": "PCode",
       "description": "Pseudo-anonymised ID for Cambridge TMA project",
-      "type": [
-        "string"
-      ],
+      "type": "string",
       "minLength": 8,
       "maxLength": 8
     },
     "QCode": {
-      "name": "QCode",
+      "x-name": "QCode",
       "description": "Pseudo-anonymised ID for Master Students RDS work",
-      "type": [
-        "string"
-      ],
+      "type": "string",
       "minLength": 8,
       "maxLength": 8
     },
     "RCode": {
-      "name": "RCode",
+      "x-name": "RCode",
       "description": "Pseudo-anonymised ID for Endogenous Hormones and Breast Cancer Collaborative Group (EHBCCG) Oxford assay data",
-      "type": [
-        "string"
-      ],
+      "type": "string",
       "minLength": 8,
       "maxLength": 8
     },
     "SCode": {
-      "name": "SCode",
+      "x-name": "SCode",
       "description": "Pseudo-anonymised ID for Regeneron Project",
-      "type": [
-        "string"
-      ],
+      "type": "string",
       "minLength": 8,
       "maxLength": 8
     },
     "ICode": {
-      "name": "ICode",
+      "x-name": "ICode",
       "description": "Pseudo-anonymised ID for mammographic images",
-      "type": [
-        "string"
-      ],
+      "type": "string",
       "minLength": 8,
       "maxLength": 8
     },
     "Ccode": {
-      "name": "Ccode",
+      "x-name": "Ccode",
       "description": "Pseudo-anonymised ID for ctDNA Study",
-      "type": [
-        "string"
-      ],
+      "type": "string",
       "minLength": 8,
       "maxLength": 8
     }
   },
+  "required": [
+    "TCode"
+  ],
   "additionalProperties": false
 }

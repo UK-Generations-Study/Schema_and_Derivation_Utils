@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/MenstrualMenopause_Schema.json",
+    "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/raw/MenstrualMenopause_Schema.json",
     "title": "Menstrual and Menopause from Questionnaire R0",
     "description": "Variables from the menstrual and menopause section of the first round of questionnaire for The Generations Study about the participant's history of menstruation, when it began, ended, and frequency of issues.",
     "type": "object",
@@ -95,10 +95,7 @@
                     "R0_CycleDays_Num": {
                         "x-name": "R0_CycleDays_Num",
                         "description": "Time period that the questions on cycle days are referring to.",
-                        "type": [
-                        "string",
-                        "null"
-                        ],
+                        "type": "string",
                         "enum": [
                             "Cur",
                             "20",
@@ -120,6 +117,10 @@
                         "description": "Menstrual cycle length of time period in days unknown flag.",
                         "type": ["integer", "null"],
                         "enum": [1, null],
+                        "x-enumDescriptions": [
+                            "1: Do not know.",
+                            "null: Missing or invalid."
+                        ],
                         "x-answerIDs": [3]
                     }
                 },
@@ -138,10 +139,7 @@
                     "R0_BreastDiscomfort_Num": {
                         "x-name": "R0_BreastDiscomfort_Num",
                         "description": "Time period that the questions on breast discomfort are referring to.",
-                        "type": [
-                        "string",
-                        "null"
-                        ],
+                        "type": "string",
                         "enum": [
                             "Cur",
                             "20",
@@ -181,10 +179,7 @@
                     "R0_IrregularCycles_Num": {
                         "x-name": "R0_IrregularCycles_Num",
                         "description": "Time period that the questions on irregular cycles are referring to.",
-                        "type": [
-                        "string",
-                        "null"
-                        ],
+                        "type": "string",
                         "enum": [
                             "Cur",
                             "20",
@@ -224,10 +219,7 @@
                     "R0_FlowDays_Num": {
                         "x-name": "R0_FlowDays_Num",
                         "description": "Time period that the questions on flow days are referring to.",
-                        "type": [
-                        "string",
-                        "null"
-                        ],
+                        "type": "string",
                         "enum": [
                             "Cur",
                             "20",
@@ -258,7 +250,7 @@
                     "R0_PeriodsStopped_Num":{
                         "x-name": "R0_PeriodsStopped_Num",
                         "description": "Periods stopped array number.",
-                        "type": ["integer", "null"],
+                        "type": "integer",
                         "enum": [
                             1,
                             2,
@@ -502,7 +494,7 @@
         "R0_MoreOvaryUterusOp": {
             "x-questionID": 463,
             "x-name": "Q4_12_1",
-            "x-question": "Did you any further surgeries on your ovaries or uterus (womb? (more than two)",
+            "x-question": "Did you any further surgeries on your ovaries or uterus (womb)? (more than two)",
             "description": "Flag field indicating the participant had more than two operations on their ovaries or uterus.",
             "type": ["integer", "null"],
             "enum": [0, 1, 2, null],
@@ -517,7 +509,7 @@
         "R0_MoreThanFour_OUOp": {
             "x-questionID": 544,
             "x-name": "morethan",
-            "x-question": "Did you any further surgeries on your ovaries or uterus (womb? (more than four)",
+            "x-question": "Did you any further surgeries on your ovaries or uterus (womb)? (more than four)",
             "description": "Flag field indicating the participant had more than four operations on their ovaries or uterus.",
             "type": ["integer", "null"],
             "enum": [0, 1, null],
@@ -540,7 +532,7 @@
                     "R0_OvaryUterusOp_Num":{
                         "x-name": "R0_OvaryUterusOp_Num",
                         "description": "Ovary and uterus operations array number.",
-                        "type": ["integer", "null"],
+                        "type": "integer",
                         "enum": [
                             1,
                             2,
@@ -554,6 +546,7 @@
                         "x-question": "Have you ever had an operation on your ovaries or uterus (womb)?",
                         "description": "Flag field whether or not the participant has ever had an operation on their ovaries or uterus.",
                         "type": ["integer", "null"],
+                        "enum": [0, 1, 2, null],
                         "x-enumDescriptions": [
                             "0: More than one option chosen",
                             "1: Yes.",
@@ -740,15 +733,16 @@
                                     "x-questionID": 514,
                                     "x-name": "R0_OvaryOp_Mnth",
                                     "x-question": "Which month did the ovary operation occur in?",
-                                    "description": "Month of the year the ovary option occurred during.",
+                                    "description": "Month of the year the ovary operation occurred during.",
                                     "type": ["integer", "null"],
-                                    "minimum": 0
+                                    "minimum": 1,
+                                    "maximum": 12
                                 },
                                 "R0_OvaryOp_Yr": {
                                     "x-questionID": 515,
                                     "x-name": "R0_OvaryOp_Yr",
                                     "x-question": "Which year did the ovary operation occur in?",
-                                    "description": "Year the ovary option occurred during.",
+                                    "description": "Year the ovary operation occurred during.",
                                     "type": ["integer", "null"],
                                     "minimum": 0
                                 },
@@ -758,7 +752,8 @@
                                     "x-question": "Which month did the ovary operation start? (range)",
                                     "description": "Month of the year that the ovary operation began.",
                                     "type": ["integer", "null"],
-                                    "minimum": 0
+                                    "minimum": 1,
+                                    "maximum": 12
                                 },
                                 "R0_OvaryOp_StartYr": {
                                     "x-questionID": 517,
@@ -774,7 +769,8 @@
                                     "x-question": "Which month was the ovary operation completed? (range)",
                                     "description": "Month of the year that the ovary operation ended.",
                                     "type": ["integer", "null"],
-                                    "minimum": 0
+                                    "minimum": 1,
+                                    "maximum": 12
                                 },
                                 "R0_OvaryOp_EndYr": {
                                     "x-questionID": 519,

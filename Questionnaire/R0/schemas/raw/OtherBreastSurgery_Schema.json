@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/OtherBreastSurgery_Schema.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/raw/OtherBreastSurgery_Schema.json",
   "title": "Other Breast Surgery from Questionnaire R0",
   "description": "Variables from the other breast surgeries section of the first round of questionnaire for The Generations Study about the participant's history of other breast surgeries, including elective and augmentations.",
   "type": "object",
@@ -31,10 +31,7 @@
                 "R0_OtherBreastSurgery_Num": {
                     "x-name": "R0_OtherBreastSurgery_Num",
                     "description": "Breast surgery sequence number (1st, 2nd, 3rd, or 4th cosmetic/other surgery).",
-                    "type": [
-                        "integer",
-                        "null"
-                    ],
+                    "type": "integer",
                     "enum": [
                         1,
                         2,
@@ -406,7 +403,7 @@
                                 "x-questionID": 1323,
                                 "x-name": "R0_CosmeticOther_OtherOther",
                                 "x-question": "Specify is the breast operation is other than mentioned.",
-                                "description": "Description of the other choice of type of surgery..",
+                                "description": "Description of the other choice of type of surgery.",
                                 "type": [
                                     "string",
                                     "null"
@@ -450,22 +447,11 @@
       "x-question": "If you have had any further breast operations for cosmetic or other reasons, please give details below for up to 4 operations.",
       "description": "Free-text field capturing any additional information the participant provided about further cosmetic or other breast surgeries other than the first.",
       "type": [
-        "integer",
+        "string",
         "null"
-      ],
-      "enum": [
-        1,
-        null
-      ],
-      "x-enumDescriptions": [
-        "1: Yes.",
-        "null: Missing or invalid."
-      ],
-      "x-answerIDs": [
-        1014
       ]
     }
-  },
+    },
     "additionalProperties": false,
     "required": [
         "StudyID"

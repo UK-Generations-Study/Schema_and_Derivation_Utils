@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/AdminEvents/schemas/AdminEvents_Schema.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/AdminEvents/schemas/AdminEvents_Schema.json",
   "title": "Administrative Events per Participant",
   "description": "This data set outlines participant-level administrative events that can be used to derive variables, like date of birth, study entry, questionnaire completion data, etc.",
   "type": "object",
@@ -12,7 +12,7 @@
   },
   "properties": {
     "TCode": {
-      "description": "Pseudo-anonymised 8-character study identifier.",
+      "description": "Pseudo-anonymized 8-character study identifier.",
       "type": "string",
       "minLength": 8,
       "maxLength": 8
@@ -51,7 +51,7 @@
         "integer",
         "null"
       ],
-      "x-description": "The year of the DOB before it is shifted for pseudo-anonymisation. This variable is derived directly from raw data and the references to variables it is derived from is not another schema, they are references to the SQL database->table->column.",
+      "x-description": "The year of the DOB before it is shifted for pseudo-anonymization. This variable is derived directly from raw data and the references to variables it is derived from is not another schema, they are references to the SQL database->table->column.",
       "x-derivedFrom": [
         "Mailing.General.ADOB"
       ],
@@ -64,7 +64,7 @@
         "null"
       ],
       "format": "date",
-      "x-description": "Shifted date of study entry derived from EventDate where Event = 6, pseudo-anonymised by adding Random.",
+      "x-description": "Shifted date of study entry derived from EventDate where Event = 6, pseudo-anymised by adding Random.",
       "x-derivedFrom": [
         "Mailing.Events.EventDate",
         "Mailing.SIDCodes.Random"
@@ -81,7 +81,7 @@
       "x-derivedFrom": [
         "Mailing.Events.EventDate"
       ],
-      "x-formerName": "date_entry_shifted"
+      "x-formerName": "date_year"
     },
     "R1Completion": {
       "description": "From Mailing.dbo.TrueYear.R1Completion.",

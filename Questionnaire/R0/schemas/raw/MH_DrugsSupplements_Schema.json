@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/blob/main/Questionnaire/R0/json_schemas/raw/MH_DrugsSupplements_Schema.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Questionnaire/R0/schemas/raw/MH_DrugsSupplements_Schema.json",
   "title": "Medical History of Drugs and Supplements from Questionnaire R0",
   "description": "Variables from the medical history section of the first round of questionnaire for The Generations Study about the participant's history of medical drugs and other supplements.",
   "type": "object",
@@ -261,8 +261,6 @@
         "integer",
         "null"
       ],
-      "minimum": 0,
-      "maximum": 7,
       "enum": [
         null,
         0,
@@ -291,14 +289,7 @@
         "null"
       ],
       "minimum": 0,
-      "maximum": 7,
-      "enum": [
-        null,
-        1
-      ],
-      "x-answerIDs": [
-        1310
-      ]
+      "maximum": 7
     },
     "AspirinRegularUse": {
         "x-name": "AspirinRegularUse",
@@ -531,8 +522,7 @@
         10,
         1,
         2
-      ],
-      "maximum": 7
+      ]
     },
     "R0_IbuprofenDays": {
       "x-questionID": 1651,
@@ -896,7 +886,7 @@
                             "R0_OtherPainkillersStartMth": {
                                 "x-questionID": 1705,
                                 "x-name": "R0_OtherPainkillersStartMth",
-                                "x-question": "Month of start for taking Ibuprofen regularly",
+                                "x-question": "Month of start for taking other painkillers regularly",
                                 "description": "Which month of the year the participant started taking other painkillers regularly.",
                                 "type": [
                                     "integer",
@@ -908,7 +898,7 @@
                             "R0_OtherPainkillersStartYr": {
                                 "x-questionID": 1706,
                                 "x-name": "R0_OtherPainkillersStartYr",
-                                "x-question": "Year of start for taking Ibuprofen regularly",
+                                "x-question": "Year of start for taking other painkillers regularly",
                                 "description": "Which year the participant started taking other painkillers regularly.",
                                 "type": [
                                     "integer",
@@ -917,9 +907,9 @@
                                 "minimum": 0
                             },
                             "R0_OtherPainkillersEndMth": {
-                                "x-questionID": 1705,
+                                "x-questionID": 1707,
                                 "x-name": "R0_OtherPainkillersEndMth",
-                                "x-question": "Month when stopped for taking Ibuprofen regularly",
+                                "x-question": "Month when stopped for taking other painkillers regularly",
                                 "description": "Which month of the year the participant stopped taking other painkillers regularly.",
                                 "type": [
                                     "integer",
@@ -929,9 +919,9 @@
                                 "maximum": 12
                             },
                             "R0_OtherPainkillersEndYr": {
-                                "x-questionID": 1706,
+                                "x-questionID": 1708,
                                 "x-name": "R0_OtherPainkillersEndYr",
-                                "x-question": "Year when stopped for taking Ibuprofen regularly",
+                                "x-question": "Year when stopped for taking other painkillers regularly",
                                 "description": "Which year the participant stopped taking other painkillers regularly.",
                                 "type": [
                                     "integer",
@@ -984,7 +974,7 @@
       ],
       "x-enumDescriptions": [
         "1: Yes",
-        "2: No",
+        "0: No",
         "null: Missing or invalid."
       ],
       "x-answerIDs": [
@@ -1086,7 +1076,7 @@
       "x-enumDescriptions": [
         "0: More than 1 option",
         "1: Yes",
-        "2: Yes",
+        "2: No",
         "null: Missing or invalid."
       ],
       "x-answerIDs": [
