@@ -417,5 +417,6 @@
       "description": "Free-text notes about tumour record.",
       "x-description": "Free-text notes about data integration decisions or anomalies for this tumour record."
     }
-  }
+  },
+  "additionalProperties": false
 }

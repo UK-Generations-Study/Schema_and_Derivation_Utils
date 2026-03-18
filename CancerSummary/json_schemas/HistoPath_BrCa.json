@@ -57,10 +57,10 @@
       "type": ["string", "null"],
       "enum": ["P", "N", "NP", null],
       "x-enumDescriptions": [
-        "P: ER status is positive",
-        "N: ER status is negative",
-        "NP: if the ER status test is explicitly specified as Not Performed in the report",
-        "null: ER status is not specified in the report or if the report mentions that the ER test is not applicable (N/A) to the patient."
+        "P: PR status is positive",
+        "N: PR status is negative",
+        "NP: if the PR status test is explicitly specified as Not Performed in the report",
+        "null: PR status is not specified in the report or if the report mentions that the ER test is not applicable (N/A) to the patient."
       ]
     },
     "Pr_Type": {

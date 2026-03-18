@@ -303,11 +303,11 @@
       "type": ["number", "null"]
     },
     "NODESEXCISED": {
-      "description": "The number of local and regional nodes reported as being positive.",
+      "description": "The number of local and regional nodes examined.",
       "type": ["number", "null"]
     },
     "NODESINVOLVED": {
-      "description": "The number of local and regional nodes examined.",
+      "description": "The number of local and regional nodes reported as being positive",
       "type": ["number", "null"]
     },
     "TUMOURCOUNT": {
@@ -599,7 +599,7 @@
     "GLEASON_COMBINED": {
       "description": "Combined Gleason primary and secondary scores (+/- tertiary). The worst score is recorded, if both scores are the same but have different primary and secondary grades, the score with the highest primary grade is recorded first, i.e. 4+3:7 would be recorded over 3+4:7.",
       "type": ["number", "null"],
-      "enum": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, null]
+      "enum": [2, 3, 4, 5, 6, 7, 8, 9, null]
     },
     "SCREENDETECTED": {
       "description": "Screen detected cancer. Whether or not the tumour was detected by a screening programme.",

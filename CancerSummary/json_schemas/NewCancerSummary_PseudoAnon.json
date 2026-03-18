@@ -381,7 +381,7 @@
     },
 	"TUMOUR_COUNT": {
       "type": ["integer", "null"],
-	  "description": "Tumour identifier coded sequencially from 1 to max number of tumours per pathology report. Dataset has one row per tumour, eg a patient with 2 tumours will have 2 rows with TumourCount=1 and TumourCount=2. No missing values allowed",
+	  "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour, eg a patient with 2 tumours will have 2 rows with TumourCount=1 and TumourCount=2. No missing values allowed",
       "x-description": "This field is carried to final dataset to match the tissue blocks received as part of pathology process. ",
       "x-sourcePriority": [
         "HistoPath_BrCa.TumourCount"     
@@ -399,5 +399,6 @@
       "description": "Free-text notes about tumour record.",
       "x-description": "Free-text notes about data integration decisions or anomalies for this tumour record."
     }
-  }
+  },
+  "additionalProperties": false
 }
