@@ -30,7 +30,8 @@ Use **PascalCase** for topic names. No spaces or special characters.
 
 | Area | Pattern | Example |
 |---|---|---|
-| Questionnaire raw | `{Topic}_Schema_PseudoAnon.json` | `GeneralInformation_Schema_PseudoAnon.json` |
+| Questionnaire raw | `{Topic}_Schema.json` | `GeneralInformation_Schema.json` |
+| Questionnaire pseudo-anonymised | `{Topic}_Schema_PseudoAnon.json` | `GeneralInformation_Schema_PseudoAnon.json` |
 | Questionnaire derived | `DerivedVariables_Schema.json` | *(Single file)* |
 | Clinical / outcomes | `{Topic}_Schema.json` | `Outcomes_Schema.json` |
 | Linked clinical data | `{Topic}_Schema_PseudoAnon.json` | `BreastTumourLink_Schema_PseudoAnon.json` |
@@ -41,7 +42,7 @@ Use **PascalCase** for topic names. No spaces or special characters.
 
 ## 2. Root Structure and Mandatory Keys
 
-Every schema must contain these keys in **exact order**. Do not add non-standard root keys (like `roundID`); use `x-provenance` instead.
+Every schema must contain these keys in **exact order**, barring `x-dataRound` for non-questionnaire data as it doesnt change dependent on the round. Do not add non-standard root keys (like `roundID`); use `x-provenance` instead.
 
 ```json
 {
@@ -68,7 +69,7 @@ Every schema must contain these keys in **exact order**. Do not add non-standard
     
 -   Not shared across schemas
     
--   Used for **local reusable objects**
+-   Used for **local reusable objects and paths**
 ```json
 "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://www.breakthroughgenerations.org.uk/schemas/{Filename}.json",
@@ -250,7 +251,7 @@ Nullable:
 | `"null"` | `"null: Missing or invalid."` |
 | `"U"` | `"U: Unknown"` |
 | `"X"` | `"X: Not performed"` |
-| `"9999"` | `"9999: Not applicable"` (adjust to match code) |
+| `"9999"` | `"9999: Not applicable"` |
 
 ---
 
