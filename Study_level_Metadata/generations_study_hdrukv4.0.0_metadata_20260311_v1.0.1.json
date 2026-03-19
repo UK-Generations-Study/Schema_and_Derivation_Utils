@@ -1,0 +1,201 @@
+{
+  "identifier": null,
+  "version": "1.0.0",
+  "revisions": [
+    {
+      "version": "1.0.0",
+      "url": null
+    }
+  ],
+   "issued": "2026-03-13T00:00:00.000Z",
+   "modified": "2026-03-13T00:00:00.000Z",
+
+   "summary": {
+      "title": "Generations Study: female UK cohort (questionnaire, imaging, samples, linkage)",
+      "abstract": "The Generations Study is one of the largest studies of women’s health in the UK, focusing on the causes of breast cancer. Over 110,000 women aged 16+ across the UK have joined and have been followed for health outcomes ever since.",
+
+      "dataCustodian": {
+         "identifier": "e633bd6b-833d-473e-a9b5-3fa4d018c02d",
+         "name": "Breast Cancer Now and The Institute of Cancer Research",
+         "logo": "https://ukhealthdata.org/wp-content/uploads/2023/12/GS-logo-300x66.jpg",
+         "description": "The Breast Cancer Now and the Institute of Cancer Research are joint legal custodians for the Generations study and retain ultimate oversight of and decision making for the study.",
+         "contactPoint":"Generations.Scientific@icr.ac.uk",
+         "memberOf": "Alliance"
+      },
+
+      "populationSize": 113000,
+
+      "keywords": [ 
+         "UK", 
+         "Female", 
+         "Cohort", 
+         "Questionnaire", 
+         "Blood sample", 
+         "Cancer", 
+         "Pathology", 
+         "Mammogram", 
+         "Accelerometer", 
+         "Data Linkages"
+      ],
+
+       "doiName": "10.1038/bjc.2011.337",
+
+       "contactPoint": "Generations.Scientific@icr.ac.uk",
+
+       "datasetAliases": null
+      },
+
+      "documentation": {
+       "description": "The Generations Study is one of the largest and most comprehensive investigations of women’s health in the UK, designed to explore the full spectrum of breast cancer from its causes to clinical outcomes after diagnosis. Launched in 2003, the study has enrolled more than 110,000 women aged 16 and over from across the UK. Over time, the Generations Study has collected high-quality data through participant questionnaires, NHS electronic health record linkages, pathology reports, medical imaging, and analyses of blood, tissue, and urine samples. By examining a wide range of potential risk factors—including genetics, hormones, lifestyle, reproductive history, and environmental exposures we aim to better understand why some women develop breast cancer while others do not, and which factors influence prognosis and life after diagnosis. Our goal is to generate scientific evidence that supports improved prevention, earlier detection, and better outcomes for breast cancer and related conditions.",
+      
+       "associatedMedia":[
+        "https://thegenerationsstudy.co.uk/",
+        "https://github.com/UK-Generations-Study/Study-Documents" 
+      ],  
+
+       "inPipeline": "Available"
+      },
+
+      "coverage": {
+       "spatial": [
+         "United Kingdom",  
+         "Isle of Man",  
+         "Channel Islands"
+      ],
+
+       "typicalAgeRangeMin": 16,
+       "typicalAgeRangeMax": 102,
+
+       "datasetCompleteness": null,
+       
+       "materialType": [
+          "Plasma", 
+          "DNA", 
+          "Urine", 
+          "Tissue"
+       ],
+       
+       "followUp": "> 10 Years",
+       
+       "pathway": "Generations Study is a volunteer female cohort linked to NHS data covering the whole patient pathway"
+      },
+
+"provenance": {
+    "origin": {
+      "purpose": [
+         "Study"
+      ],
+      "datasetType": [
+        {
+          "name": "Health and disease",
+          "subTypes": [
+            "Cancer", 
+            "Breast cancer", 
+            "Imaging", 
+            "Biobank"
+          ]
+        }
+      ],
+      "source": [
+         "Electronic survey", 
+         "EPR", 
+         "LIMS", 
+         "Machine generated", 
+         "Paper-based", 
+         "Other"
+      ],
+      "collectionSource": [
+            "Home", 
+            "Community"
+      ],
+      "imageContrast": "Not stated"
+    },
+    "temporal": {
+      "publishingFrequency": "Irregular",
+      "distributionReleaseDate": null,
+      "startDate": "2003-06-01",
+      "endDate": null,
+      "timeLag": "More than 6 months"
+    }
+  },
+
+"accessibility": {
+    "usage": {
+      "dataUseLimitation":["Research use only"],
+      "dataUseRequirements": [
+         "Project-specific restrictions", 
+         "Return to database or resource", 
+         "User-specific restriction", 
+         "Time limit on use"
+      ],
+      "resourceCreator": "We thank Breast Cancer Now and The Institute of Cancer Research for support and funding of the Generations Study, and the study participants, study staff, and the doctors, nurses, and other health-care providers and health information sources who have contributed to the study. The ICR acknowledges NHS funding to the Royal Marsden/ICR NIHR Biomedical Research Centre"
+    },
+
+    "access": {
+      "accessRights": "https://thegenerationsstudy.co.uk/forresearchers#dataaccessrequests",
+      "accessServiceCategory": "Varies based on project",
+      "accessService": "Currently working on providing access to TRE",
+      "accessRequestCost": "Cost recovery varies according to project scope and requested services.",
+      "deliveryLeadTime": "2-6 months",
+      "jurisdiction": ["GB-ENG"],
+      "dataController": "The Institute of Cancer Research",
+      "dataProcessor": null
+    },
+
+    "formatAndStandards": {
+      "vocabularyEncodingScheme": [
+            "ICD10", 
+            "ICD9", 
+            "ICDO3", 
+            "LOCAL"
+      ],
+      "conformsTo": [
+            "DICOM", 
+            "LOCAL", 
+            "NHS DATA DICTIONARY", 
+            "NHS SCOTLAND DATA DICTIONARY", 
+            "NHS WALES DATA DICTIONARY"
+      ],
+      "language": [
+        "en"
+      ],
+      "format": [
+            "application/json", 
+            "text/csv", 
+            "image/dicom", 
+            "OTHER"
+      ]
+    }
+},
+
+   "enrichmentAndLinkage": {
+    "derivedFrom": [],
+    "isPartOf": [],
+    "linkableDatasets": [],
+    "similarToDatasets": [],
+    "investigations": [],
+    "tools": [],
+    "publicationAboutDataset": [
+      "10.1038/bjc.2011.337"
+     ],
+    "publicationUsingDataset": []
+  },
+
+   "observations": [
+    {
+      "observedNode": "Persons",
+      "measuredValue": 113000,
+      "disambiguatingDescription": "Participant recruited",
+      "observationDate": "2003-06-01",
+      "measuredProperty": "Count"
+    }
+  ],
+
+  "structuralMetadata": null,
+  "demographicFrequency": null,
+  
+  "omics": {
+    "assay": "Whole genome sequencing",
+    "platform": "Other"
+  }
+}
