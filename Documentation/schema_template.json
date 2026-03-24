@@ -1,0 +1,281 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/path_to_schema.json",
+  "title": "Title of the schema e.g. 'General information from R0 questionnaire'",
+  "description": "Single line in plain English. No codes, no derivation logic. e.g. Dataset with tumour characteristics, outcome data, physical development variables along with Tissue micro array coordinates",
+  "type": "object",
+  "required": [
+    "StudyID", 
+    "TCode"
+  ],
+  "additionalProperties": false,
+  "x-version": "1.0.0",
+  "x-provenance": {
+    "x-dataRound":   "Only if applicable, e.g. 'R0'. Skip if the variable is not applicable",
+    "x-lastModified": "YYYY-MM-DD",
+    "x-repository":   "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+    "x-maintainer":   "UK Generations Study"
+  },
+  "properties": {
+    "StudyID": {
+      "description": "Unique identifier for a person in Generations data",
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 6,
+      "x-description": "This variable is created internally by the Generations study team and is a PII variable"
+    },
+
+    "TCode": {
+      "description": "Unique identifier for a person in pseudonymised data.",
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 8,
+      "x-description": "Participant-specific masking of ID to preserve privacy. The variable is used for data stored in RDS only"
+    },
+
+    "Categorical_Integer_Field": {
+      "description": "English summary of what this field captures.",
+      "type": ["integer", "null"],
+      "enum": [1, 2, 3, null],
+      "x-enumDescriptions": [
+        "1: Yes.",
+        "2: No.",
+        "3: Do not know.",
+        "null: Missing or invalid."
+      ],
+      "x-description": "More details on the variable if applicable. Skip if the variable is not applicable"
+    },
+
+    "Categorical_String_Field": {
+      "description": "English summary of what this field captures.",
+      "type": ["string", "null"],
+      "enum": ["A", "B", "C", null],
+      "x-enumDescriptions": [
+        "A: Morning.",
+        "B: Evening.",
+        "C: Either.",
+        "null: Missing or invalid."
+      ],
+      "x-description": "More details on the variable if applicable. Skip if the variable is not applicable"
+    },
+
+    "Tumour_size": {
+      "type": ["number", "null"],
+      "description": "Largest tumour dimension in millimetres.",
+      "x-description": "Largest tumour dimension in millimetres which will be harmonised to Cancer Registry coding system",
+      "minimum": 0,
+      "x-unit": "millimetres"
+    },
+
+    "Date_of_birth": {
+      "description": "Date of birth of a person.",
+      "type": ["string", "null"],
+      "format": "date",
+      "x-description": "More details on date variable if applicable. Skip if the variable is not applicable"
+    },
+
+    "Last_modified_time": {
+      "description": "Last modified timestamp for a record in the dataset",
+      "type": ["string", "null"],
+      "format": "date-time",
+      "x-description": "The valid timestamp is either 2018-11-13T20:20:39+00:00 or 2018-11-13T20:20:39Z"
+    },
+
+    "Year_of_diagnosis": {
+      "description": "Best estimate of tumour diagnosis year (per tumour).",
+      "type": ["integer", "null"],
+      "minimum": 1900,
+      "x-description": "Best estimate of tumour diagnosis year calculated separately for each tumour using DIAGNOSIS_DATE"
+    },
+
+    "Free_Text_Field": {
+      "description": "Description for the variable",
+      "type": ["string", "null"],
+      "x-description": "More details on the variable if applicable. Skip if the variable is not applicable"
+    },
+
+    "RegEx_Pattern_Field": {
+      "description": "String that starts with an alphabet and ends with a number",
+      "type": ["string", "null"],
+      "pattern": "^[a-zA-Z].*[0-9]$",
+      "x-description": "Helps to check whether the data follows specified pattern or not"
+    },
+
+    "AgeEntry": {
+      "description": "Age at entry to study.",
+      "type": ["integer", "null"],
+      "x-description": "Using ADOB in the General table in Mailing database, and when the questionnaire was received, values of 6 in the Events table, to create Age at Entry. This variable is derived directly from raw data and the references to variables it is derived from is not another schema, they are references to the SQL database->table->column.",
+      "x-derivedFrom": [
+        "Mailing.General.ADOB",
+        "Mailing.Events.Event",
+        "Mailing.Events.Cancelled"
+      ],
+      "x-formerName": "age_entry",
+      "minimum": 0,
+      "x-unit": "years"
+    },
+
+    "ICD_CODE": {
+      "type": ["string", "null"],
+      "description": "ICD-10-O2 site code (4-character) for tumour site.",
+      "x-description": "Primary ICD-10-O2 site code (4-character) describing the site of origin of the neoplasm. Source priority: 1) CancerRegistry.SITE_ICD10_O2 (Describes site of origin of the neoplasm); 2) FlaggingCancers.CancerICD (Cancer ICD code). Use the code as provided by the source without recoding. This field is per tumour (TUMOUR_ID). The ICD 9 codes are converted to ICD 10 by referencing https://seer.cancer.gov/tools/conversion/2022/ICD9CM%20to%20ICD10CM.FY2023.11.18.22.pdf (Last access date: 23/10/2025). These are derived in Path report data to link tumours across sources",
+      "x-sourcePriority": [
+        "CancerRegistry.SITE_ICD10_O2",
+        "FlaggingCancers.CancerICD",
+		    "HistoPath_BrCa.ICD_CODE",
+        "HistoPath_OvCa.ICD_CODE"
+      ],
+      "maxLength": 4
+    },
+  
+    "Questionnaire_Field": {
+      "x-name": "AddrChanged_1",
+      "x-questionID": 4,
+      "x-question": "Has your home address changed from the one at which we mailed you?",
+      "description": "Whether the participant moved addresses since filling out the last questionnaire or not",
+      "type": ["integer", "null"],
+      "enum": [0, 1, 2, null],
+      "x-enumDescriptions": [
+        "0: More than one option chose.",
+        "1: Yes, address changed.",
+        "2: No, address not changed.",
+        "null: Missing or invalid."
+      ],
+      "x-answerID": [10, 1, 2],
+      "x-description": "More details on the variable if applicable. Skip if the variable is not applicable"
+    },
+
+    "DOB_Shifted": {
+      "description": "Shifted date of birth for a participant",
+      "type": ["string", "null"],
+      "x-description": "Taken from the fields ADOB in the General SQL table in the Mailing database. This variable is derived directly from raw data and the references to variables it is derived from is not another schema, they are references to the SQL database->table->column.",
+      "x-derivedFrom": [
+        "Mailing.General.ADOB",
+        "Mailing.SIDCodes.Random"
+      ],
+      "format": "date",
+      "x-formerName": "dob_shifted"
+    },
+
+    "Array_Field": {
+      "description": "History of some repeated event (one record per event).",
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 10,
+      "x-description": "More details on the variable if applicable. Skip if the variable is not applicable",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Array_Item_Number": {
+            "description": "Incident array number (1 = first, 2 = second, etc.).",
+            "type": ["integer", "null"],
+            "minimum": 1,
+            "x-description": "More details on year variable if applicable. Skip if the variable is not applicable"
+          },
+          "Array_Item_Coded_Field": {
+            "description": "Description for this item within the repeated record.",
+            "type": ["integer", "null"],
+            "enum": [1, 2, null],
+            "x-enumDescriptions": [
+              "1: Yes.",
+              "2: No.",
+              "null: Missing or invalid."
+            ],
+            "x-description": "More details on year variable if applicable. Skip if the variable is not applicable"
+          },
+          "Array_Item_Date": {
+            "description": "Date of this specific event.",
+            "type": ["string", "null"],
+            "format": "date",
+            "x-description": "More details on year variable if applicable. Skip if the variable is not applicable"
+          }
+        }
+      }
+    },
+
+    "Sentinel_Value_Field": {
+      "description": "Length of pregnancy",
+      "oneOf": [
+        {
+          "type": "null",
+          "description": "Missing or invalid."
+        },
+        {
+          "const": 9999,
+          "description": "Not applicable."
+        },
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 60
+        }
+      ],
+      "x-unit": "weeks",
+      "x-description": "Allow one of these values: valid numeric value between 0–60, OR 9999 = not applicable, OR null = missing/invalid."
+    },
+
+    "R0_BMI20": {
+      "description": "BMI at 20 years old. ",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "const": 9999,
+          "description": "Not applicable"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 165
+        }
+      ],
+      "x-description": "Body Mass Index (kg/m²). Age calculation done by reading in age at baseline. Set to 9999 (NA) if participant was not yet 20 at baseline or if participant was pregnant at 20 years old.",
+      "x-unit": "kg/m²",
+      "x-derivedFrom": [
+        "#/properties/R0_Height20",
+        "#/properties/R0_Weight20",
+        "#/$defs/AdminEvents/properties/Age_Entry",
+        "#/$defs/AdminEvents/properties/DOB",
+        "#/$defs/PregnanciesPII/properties/Pregnancies/R0_PregnancyEndDate",
+        "#/$defs/PregnanciesPII/properties/Pregnancies/R0_Preg_DurationWks"
+      ],
+      "x-formerName": "bmi_20",
+      "x-calculation": "R0_Weight20 / ((R0_Height20 / 100) ^ 2)"
+    }
+  },
+  "$defs": {
+    "address": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["street", "city", "country"],
+      "properties": {
+        "street": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "state": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100
+        },
+        "postalCode": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9\\- ]{3,12}$"
+        },
+        "country": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$",
+          "description": "ISO 3166-1 alpha-2 country code"
+        }
+      }
+    }
+  }
+}

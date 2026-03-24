@@ -74,7 +74,7 @@
         "integer",
         "null"
       ],
-      "x-description": "Ever known to be deceased based on date of death available at processing date. The source of date of death was either the receipt of a notification (based on death certificate) from NHS flagging records (a national death index) that participant is deceased; or unconfirmed report from next of kin. Lack of a report does not confirm participant is alive. To obtain vital status based on confirmed NHS data, filter by Confirmed_death variable.",
+      "x-description": "Ever known to be deceased based on date of death available at processing date, 19/02/2026 . The source of date of death was either the receipt of a notification (based on death certificate) from NHS flagging records (a national death index) that participant is deceased; or unconfirmed report from next of kin. Lack of a report does not confirm participant is alive. To obtain vital status based on confirmed NHS data, filter by Confirmed_death variable.",
       "enum": [
         0,
         1,

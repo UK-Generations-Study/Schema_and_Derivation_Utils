@@ -403,7 +403,7 @@
                                 "x-questionID": 1323,
                                 "x-name": "R0_CosmeticOther_OtherOther",
                                 "x-question": "Specify is the breast operation is other than mentioned.",
-                                "description": "Description of the other choice of type of surgery.",
+                                "description": "Description of the other choice of type of surgery..",
                                 "type": [
                                     "string",
                                     "null"
@@ -447,11 +447,22 @@
       "x-question": "If you have had any further breast operations for cosmetic or other reasons, please give details below for up to 4 operations.",
       "description": "Free-text field capturing any additional information the participant provided about further cosmetic or other breast surgeries other than the first.",
       "type": [
-        "string",
+        "integer",
         "null"
+      ],
+      "enum": [
+        1,
+        null
+      ],
+      "x-enumDescriptions": [
+        "1: Yes.",
+        "null: Missing or invalid."
+      ],
+      "x-answerIDs": [
+        1014
       ]
     }
-    },
+  },
     "additionalProperties": false,
     "required": [
         "StudyID"

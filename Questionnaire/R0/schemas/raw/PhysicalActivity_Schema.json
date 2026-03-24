@@ -285,7 +285,7 @@
     "R0_ExerciseWinterComparison": {
       "x-questionID": 2331,
       "x-name": "Q12_5_1",
-      "x-question": "Do you exercise more, less, or the same in winter?",
+      "x-question": "Do you exercise more, less, or the same in winter as compared to April to September?",
       "description": "Participant's seasonal exercise comparison",
       "type": [
         "integer",
