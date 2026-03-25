@@ -11,7 +11,7 @@
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
-  "x-primaryKey": ["TUMOURID"],
+  "x-primaryKey": "TUMOURID",
   "properties": {
     "STUDY_ID": {
       "description": "Project specific ID for each person. In some cases the same person may have multiple patient IDs. Patient IDs will be retained even after two patient records are found to be the same person.",

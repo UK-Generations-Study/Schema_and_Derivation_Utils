@@ -592,7 +592,7 @@
       "minimum": 1
     },
 	"TumourCount": {
-      "description": "Tumour identifier coded sequencially from 1 to max number of tumours per pathology report. Dataset has one row per tumour, eg a patient with 2 tumours will have 2 rows with TumourCount=1 and TumourCount=2. No missing values allowed",
+      "description": "Tumour foci identifier coded sequentially from 1 to max number of tumour foci per pathology report (A tumour diagnosis episode may have more than one tumour foci). Dataset has one row per tumour, eg a patient with 2 tumours will have 2 rows with TumourCount=1 and TumourCount=2. No missing values allowed",
       "type": "integer",
       "minimum": 1
     }

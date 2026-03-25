@@ -12,7 +12,7 @@
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
-  "x-primaryKey": ["TUMOUR_KEY"],
+  "x-primaryKey": "TUMOUR_KEY",
   "properties": {
     "TCode": {
       "type": "string",
