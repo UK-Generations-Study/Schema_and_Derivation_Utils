@@ -5,6 +5,8 @@
     "description": "Variables from the alcohol, smoking, and diet section of the first round of questionnaire for The Generations Study about the participants alcohol use, smoking habits, and diet.",
     "type": "object",
     "x-version": "1.0.0",
+    "x-dataVersion": "v20260123",
+    "x-primaryKey": "StudyID",
     "x-provenance": {
         "x-dataRound": "R0",
         "x-lastModified": "2026-03-05",
@@ -71,6 +73,7 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 3,
+            "x-primaryKey": "R0_AlcoholConsumption_Num",
             "items": {
                 "type": "object",
                 "properties": {
@@ -230,6 +233,7 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 3,
+            "x-primaryKey": "R0_CigaretteConsumption_Num",
             "items": {
                 "type": "object",
                 "properties": {

@@ -5,6 +5,8 @@
   "description": "This data set contains information on pathology specific to tumour samples and their lab results and can be linked to individuals.",
   "type": "object",
   "x-version": "1.0.0",
+  "x-dataVersion": "v20260123",
+  "x-primaryKey": "StudyID",
   "x-provenance": {
       "x-lastModified": "2026-03-05",
       "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
@@ -14,7 +16,7 @@
     "StudyID": {
       "x-name": "StudyID",
       "description": "Unique 6-digit identifier for each participant in the study.",
-      "type": "string",
+      "type": "integer",
       "minLength": 6,
       "maxLength": 6
     },
@@ -24,6 +26,7 @@
       "type": "array",
       "x-description": "Source: TumourTracking table in Pathology DB.",
       "minItems": 0,
+      "x-primaryKey": ["BlockSide", "TumourCount", "ReportCount"],
       "items": {
         "type": "object",
         "properties": {
@@ -158,6 +161,7 @@
             "type": "array",
             "x-description": "Source: LabTracking table; linked by LabNo.",
             "minItems": 0,
+            "x-primaryKey": "LabSampleID",
             "items": {
               "type": "object",
               "properties": {
@@ -292,6 +296,7 @@
             "type": "array",
             "x-description": "Source: TMAMapping table; linked by LabNo.",
             "minItems": 0,
+            "x-primaryKey": ["ArrayID", "XAxis", "YAxis", "TMACoreID"],
             "items": {
               "type": "object",
               "properties": {

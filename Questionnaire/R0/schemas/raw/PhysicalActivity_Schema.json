@@ -5,6 +5,8 @@
   "description": "Variables from the physical activity section of the first round of questionnaire for The Generations Study about the participant's history of exercise throughout different stages of life.",
   "type": "object",
   "x-version": "1.0.0",
+  "x-dataVersion": "v20260123",
+  "x-primaryKey": "StudyID",
   "x-provenance": {
       "x-dataRound": "R0",
       "x-lastModified": "2026-03-05",
@@ -90,6 +92,7 @@
       "type": "array",
       "minItems": 0,
       "maxItems": 3,
+      "x-primaryKey": "R0_StrenuousExercise_Num",
       "items": {
         "type": "object",
         "properties": {
