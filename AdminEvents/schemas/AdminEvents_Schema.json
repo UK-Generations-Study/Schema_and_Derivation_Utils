@@ -5,6 +5,8 @@
   "description": "This data set outlines participant-level administrative events that can be used to derive variables, like date of birth, study entry, questionnaire completion data, etc.",
   "type": "object",
   "x-version": "1.0.0",
+  "x-dataVersion": "v20260123",
+  "x-primaryKey": "TCode",
   "x-provenance": {
       "x-lastModified": "2026-03-05",
       "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",

@@ -5,6 +5,8 @@
     "description": "Variables from the menstrual and menopause section of the first round of questionnaire for The Generations Study about the participant's history of menstruation, when it began, ended, and frequency of issues.",
     "type": "object",
     "x-version": "1.0.0",
+    "x-dataVersion": "v20260123",
+    "x-primaryKey": "StudyID",
     "x-provenance": {
         "x-dataRound": "R0",
         "x-lastModified": "2026-03-05",
@@ -89,6 +91,7 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 3,
+            "x-primaryKey": "R0_CycleDays_Num",
             "items": {
                 "type": "object",
                 "properties": {
@@ -133,6 +136,7 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 3,
+            "x-primaryKey": "R0_BreastDiscomfort_Num",
             "items": {
                 "type": "object",
                 "properties": {
@@ -173,6 +177,7 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 3,
+            "x-primaryKey": "R0_IrregularCycles_Num",
             "items": {
                 "type": "object",
                 "properties": {
@@ -213,6 +218,7 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 3,
+            "x-primaryKey": "R0_FlowDays_Num",
             "items": {
                 "type": "object",
                 "properties": {
@@ -244,6 +250,7 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 4,
+            "x-primaryKey": "R0_PeriodsStopped_Num",
             "items": {
                 "type": "object",
                 "properties": {
@@ -526,6 +533,7 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 4,
+            "x-primaryKey": "R0_OvaryUterusOp_Num",
             "items": {
                 "type": "object",
                 "properties": {

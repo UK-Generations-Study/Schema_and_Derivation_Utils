@@ -5,6 +5,8 @@
   "description": "Variables from the physical development section of the first round of questionnaire for The Generations Study about the participant's history of height, weight, and growth.",
   "type": "object",
   "x-version": "1.0.0",
+  "x-dataVersion": "v20260123",
+  "x-primaryKey": "StudyID",
   "x-provenance": {
       "x-dataRound": "R0",
       "x-lastModified": "2026-03-05",
@@ -25,6 +27,7 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 2,
+            "x-primaryKey": "R0_WghtComp_Num",
             "items": {
                 "type": "object",
                 "properties": {
@@ -63,6 +66,7 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 4,
+            "x-primaryKey": "R0_RecWght_Num",
             "items": {
                 "type": "object",
                 "properties": {
@@ -186,6 +190,7 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 2,
+            "x-primaryKey": "R0_HghtComp_Num",
             "items": {
                 "type": "object",
                 "properties": {
@@ -245,6 +250,7 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 2,
+            "x-primaryKey": "R0_RecHght_Num",
             "items": {
                 "type": "object",
                 "properties": {
@@ -303,11 +309,12 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 3,
+            "x-primaryKey": "R0_RecHeightU16_Num",
             "items": {
                 "type": "object",
                 "properties": {
-                    "R0_RecHeight_Num":{
-                        "x-name": "R0_RecHeight_Num",
+                    "R0_RecHeightU16_Num":{
+                        "x-name": "R0_RecHeightU16_Num",
                         "description": "Under 16 recorded height array number. Used to differentiate height instances into correct variable naming conventions in post processing of this array.",
                         "type": "integer",
                         "enum": [1, 2, 3]
@@ -401,6 +408,7 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 2,
+            "x-primaryKey": "R0_Inst_Num",
             "items": {
                 "type": "object",
                 "properties": {
@@ -479,6 +487,7 @@
             "type": "array",
             "minItems": 0,
             "maxItems": 2,
+            "x-primaryKey": "R0_BraSize_Num",
             "items": {
                 "type": "object",
                 "properties": {
