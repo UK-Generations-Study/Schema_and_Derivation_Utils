@@ -392,8 +392,7 @@
     },
     "TUMOUR_KEY": {
       "type": "string",
-	    "description": "Identifier of primary tumour per side (if applicable) per diagnosis episode.",
-      "x-description": "Refer to the raw schema (NewCancerSummary.json) to understand how the field is derived"
+	    "description": "Identifier of primary tumour per side (if applicable) per diagnosis episode."
     },
     "LAST_MODIFIED_TIME": {
       "type": "string",
