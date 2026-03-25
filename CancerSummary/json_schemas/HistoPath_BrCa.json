@@ -7,10 +7,11 @@
   "required": ["StudyID"],
   "x-version": "1.0.0",
   "x-provenance": {
-    "x-lastModified": "2026-03-09",
+    "x-lastModified": "2026-03-25",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
+  "x-primaryKey": ["StudyID", "Side", "TumourCount", "ReportCount"],
   "properties": {
     "ExcisionMargin": {
       "description": "Surgical margin in (mm)",
@@ -571,19 +572,19 @@
       "type": ["integer", "null"]
     },
     "Tstage": {
-      "description": "Tumour staging for extent (size) of the primary tumour - taken as reported, could follow different editions of American Joint Committee on Cancer (AJCC) guidance | AJCC TMA staging system. Prefix c= clinical stage, p = pathological or surgical stage, yp = post therapy pathological stage, yc post therapy clinical stage. Suffix mic = microinvasive",
-      "type": ["string", "null"],
-      "pattern": "(?i)^(NA|[ycp]{1,2}|[ycp]{0,2}T?[0-4]?[a-dA-DcCmi]{0,3}|[ycp]{0,2}T?is|G\\d{1,2}\\s*T[0-4]?[a-dA-D]{0,2}|\\d{1,2}[a-dA-D]?|[ycp]{0,2}T[0-9a-zA-Z`']{0,4}|[ycp]{0,2}T[0-9a-zA-Z]{0,4}[\\s-]*\\([^)]+\\)|[ycp]{0,2}T[0-9a-zA-Z]{0,4}/[ycp]{0,2}T[0-9a-zA-Z]{0,4}|[ycp]{0,2}T[0-9a-zA-Z]{0,4}[\\s`'()\\-]*[a-zA-Z0-9]*)$"
+      "description": "Tumour staging for extent (size) of the primary tumour - taken as reported.",
+      "x-description": "Could follow different editions of American Joint Committee on Cancer (AJCC) guidance | AJCC TMA staging system. Prefix c= clinical stage, p = pathological or surgical stage, yp = post therapy pathological stage, yc post therapy clinical stage. Suffix mic = microinvasive",
+      "type": ["string", "null"]
     },
     "NStage": {
-      "description": "Lymph Node staging | AJCC TMA staging system. Prefix c = clinical stage, p = pathological or surgical stage. Suffix sn = Sentinel lymph node metastasis, ONSA = One step nucleic acid amplification",
-      "type": ["string", "null"],
-      "pattern": "(?ix)^(y)?(c|p|L1|pT)?(NX|N[0O]|T[0O]|TN[0O]|N1(?:mi|a|b|c|biv|mic|mc|osna)?(?:/\\d+)?|N2[ab]?|N3[abc]?|NIbiv|N)?\\s*(i\\+)?((?:\\([^)]+(\\)|$))*)((?:\\([^)]+\\))*)[\\w/+±\\-]*$"
+      "description": "Lymph Node staging." ,
+      "x-description": "AJCC TMA staging system. Prefix c = clinical stage, p = pathological or surgical stage. Suffix sn = Sentinel lymph node metastasis, ONSA = One step nucleic acid amplification",
+      "type": ["string", "null"]
     },
-    "Mstage": {
-      "description": "Metastasis staging describes whether cancer has spread to a different part of the body | Prefix c = Clinical assessment data (examination, imaging , endoscopy), p = pathological data (histopathologic examination of tissue sample)",
-      "type": ["string", "null"],
-      "pattern": "^(c|p)?(MX|M0|M0\\(i\\+\\)|M1)$"
+    "MStage": {
+      "description": "Metastasis staging describes whether cancer has spread to a different part of the body.",
+      "x-description":"Prefix c = Clinical assessment data (examination, imaging , endoscopy), p = pathological data (histopathologic examination of tissue sample)",
+      "type": ["string", "null"]
     },
 	"ReportCount": {
       "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual",

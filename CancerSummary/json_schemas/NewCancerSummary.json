@@ -6,11 +6,13 @@
   "type": "object",
   "required": ["STUDY_ID", "TUMOUR_ID", "DIAGNOSIS_DATE"],
   "x-version": "1.0.0",
+  "x-dataVersion": "v20260123",
   "x-provenance": {
     "x-lastModified": "2026-03-11",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
+  "x-primaryKey": ["TUMOUR_KEY"],
   "properties": {
     "STUDY_ID": {
       "type": "integer",
@@ -31,7 +33,7 @@
     },
     "TUMOUR_ID": {
       "type": ["number", "null"],
-      "description": "Unique identifier for each tumour (one participant may have several).",
+      "description": "Unique identifier for each tumour diagnostic episode (one participant may have several).",
       "x-description": "Tumour-specific identifier. A participant may have multiple tumours, each with its own TUMOUR_ID. Provided directly in CancerRegistry.TUMOURID or FlaggingCancers.TumourID. Pathology datasets (HistoPath_BrCa, HistoPath_OvCa) do not include a universal tumour ID, only tumour-level details (e.g., count, site, laterality, size, grade, stage). When integrating, use CancerRegistry.TUMOURID (or FlaggingCancers.TumourID if registry ID is unavailable) as the primary source. The missing values in this field is either not carried from legacy dataset or tumour is from Path report",
       "x-sourcePriority": [
         "CancerRegistry.TUMOURID",
@@ -353,7 +355,7 @@
     },
     "T_STAGE": {
       "type": ["string", "null"],
-      "description": "TNM T component (tumor size).",
+      "description": "TNM T component. Tumour staging for extent (size) of the primary tumour.",
       "x-description": "Tumour TNM T stage (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.T_BEST. 2) HistoPath_BrCa.Tstage; Cancer Registry values take precedence when available; harmonise to Cancer Registry coding.",
       "x-sourcePriority": [
         "CancerRegistry.T_BEST",
@@ -366,7 +368,7 @@
     },
     "N_STAGE": {
       "type": ["string", "null"],
-      "description": "TNM N component (lymph node involvement).",
+      "description": "TNM N component (Lymph Node staging).",
       "x-description": "Tumour TNM N stage (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.N_BEST. 2)HistoPath_BrCa.NStage; Cancer Registry values take precedence when available; harmonise to Cancer Registry coding. For ovarian cancers, use STAGE rather than TNM.",
       "x-sourcePriority": [
         "CancerRegistry.N_BEST",
@@ -379,7 +381,7 @@
     },
     "M_STAGE": {
       "type": ["string", "null"],
-      "description": "TNM M component (distal metastasis)",
+      "description": "TNM M component (distal metastasis). Metastasis staging describes whether cancer has spread to a different part of the body.",
       "x-description": "Tumour TNM M stage (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.M_BEST. 2) HistoPath_BrCa.Mstage; Cancer Registry values take precedence when available; harmonise to Cancer Registry coding. For ovarian cancers, use STAGE rather than TNM.",
       "x-sourcePriority": [
         "CancerRegistry.M_BEST",
@@ -390,20 +392,35 @@
       "type": ["string", "null"],
       "description": "Source from which M Stage of the tumour is selected in the target dataset. It will be one of the sources from x-sourcePriority for M_STAGE."
     },
-	"REPORT_COUNT": {
+    "REPORT_COUNT": {
       "type": ["integer", "null"],
-	  "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual",
-      "x-description": "This field is carried to final dataset to match the tissue blocks received as part of pathology process. ",
+      "description": "Pathology Report identifier coded sequentially from 1 to max number of pathology reports per individual.",
+      "x-description": "Dataset has one row per tumour diagnostic episode, hence a single report is considered. This field is carried to final dataset to match the tissue blocks received as part of pathology process.",
       "x-sourcePriority": [
         "HistoPath_BrCa.ReportCount"        
-      ]
-    },
-	"TUMOUR_COUNT": {
+        ],
+      "minimum": 1
+      },
+    "TUMOUR_COUNT": {
       "type": ["integer", "null"],
-	  "description": "Tumour identifier coded sequentially from 1 to max number of tumours per pathology report. Dataset has one row per tumour, eg a patient with 2 tumours will have 2 rows with TumourCount=1 and TumourCount=2. No missing values allowed",
-      "x-description": "This field is carried to final dataset to match the tissue blocks received as part of pathology process. ",
+      "description": "Tumour foci identifier coded sequentially from 1 to max number of tumour foci per pathology report (A tumour diagnosis episode may have more than one tumour foci).",
+      "x-description": "Dataset has one row per tumour diagnostic episode, hence only one tumour foci is considered. This field is carried to final dataset to match the tissue blocks received as part of pathology process.",
       "x-sourcePriority": [
         "HistoPath_BrCa.TumourCount"        
+        ],
+      "minimum": 1
+    },
+    "TUMOUR_KEY": {
+      "type": "string",
+	    "description": "Identifier of primary tumour per side (if applicable) per diagnosis episode.",
+      "x-description": "This field is contains a unidirectional hash value built by combining of STUDY_ID, DIAGNOSIS_DATE, TUMOUR_ID, ICD_CODE, MORPH_CODE, LATERALITY.",
+      "x-derivedFrom": [
+        "/properties/STUDY_ID",
+        "/properties/DIAGNOSIS_DATE",
+        "/properties/TUMOUR_ID",
+        "/properties/ICD_CODE",
+        "/properties/MORPH_CODE",
+        "/properties/LATERALITY"
       ]
     },
     "LAST_MODIFIED_TIME": {

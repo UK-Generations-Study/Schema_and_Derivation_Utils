@@ -7,10 +7,11 @@
   "required": ["StudyID"],
   "x-version": "1.0.0",
   "x-provenance": {
-    "x-lastModified": "2026-03-09",
+    "x-lastModified": "2026-03-25",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
+  "x-primaryKey": ["StudyID", "DiagDat"],
   "properties": {
     "StudyID": {
       "description": "Genrations Study ID which is unique for every participant",
