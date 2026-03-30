@@ -88,6 +88,35 @@
         "null: Missing or invalid."
       ]
     },
+    "ndrs_vital_status": {
+      "x-name": "ndrs_vital_status",
+      "description": "Vital status at end of cancer mortality follow-up for the subset of patients with valid follow-up for cancer mortality survival.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "x-description": "This cancer mortality follow-up end date and vital status is only valid for mortality analysis for cancer patients with non-missing date and vital status.  End of follow-up and vital status was derived from linkage to NHS-England records to identify cancer patients in England and their vital status and date and cause of death.  Valid end of follow-up date and vital status was only returned for those patients that were successfully linked to NHS vital status records.  The patients include prevalent and incident cancer.",
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0:Presumed alive",
+        "1: Reported deceased",
+        "null: Missing or invalid."
+      ]
+    },
+    "ca_mor_fup_end_shifted": {
+      "x-name": "ca_mor_fup_end_shifted",
+      "description": "End of cancer mortality follow-up date (shifted) for the subset of patients with valid follow-up for cancer mortality survival.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-description": "This cancer mortality follow-up end date and vital status is only valid for mortality analysis for cancer patients with non-missing date and vital status.  End of follow-up and vital status was derived from linkage to NHS-England records to identify cancer patients in England and their vital status and date and cause of death.  Valid end of follow-up date and vital status was only returned for those patients that were successfully linked to NHS vital status records.  The patients include prevalent and incident cancer.",
+      "format": "date"
+    },
     "Confirmed_death": {
       "x-name": "Confirmed_death",
       "description": "Confirmed death via flagging.",
@@ -106,8 +135,8 @@
         "null: Missing or invalid."
       ]
     },
-    "DOD_shifted": {
-      "x-name": "DOD_shifted",
+    "DOD_Shifted": {
+      "x-name": "DOD_Shifted",
       "description": "Shifted date of death.",
       "type": [
         "string",

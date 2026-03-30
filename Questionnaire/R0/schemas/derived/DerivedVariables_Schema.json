@@ -5,6 +5,8 @@
   "description": "These are a set of core variables for analysts that have been derived using only the information collected in the baseline questionnaire.",
   "type": "object",
   "x-version": "1.0.0",
+  "x-dataVersion": "v20260123",
+  "x-primaryKey": "TCode",
   "x-provenance": {
       "x-dataRound": "R0",
       "x-lastModified": "2026-03-05",
