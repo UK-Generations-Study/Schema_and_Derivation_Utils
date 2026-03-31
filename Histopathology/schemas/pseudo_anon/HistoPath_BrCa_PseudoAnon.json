@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Histpathology/schemas/pseudo_anon/Histopath_BrCa_PseudoAnon.json",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Histopathology/schemas/pseudo_anon/HistoPath_BrCa_PseudoAnon.json",
   "title": "Pseudo Anonymised Histopathology breast cancer schema",
   "description": "Schema for variables from Histopathology data (Uploads.Histopath_BrCa_GS_v1) for breast cancer to produce new Cancer Summary This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
   "type": "object",
