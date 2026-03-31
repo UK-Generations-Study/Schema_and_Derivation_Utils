@@ -5,15 +5,18 @@
   "description": "Variables from the cancer relatives section of the first round of questionnaire for The Generations Study about the participant's family history of cancer and breast cancer. This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
   "type": "object",
   "x-version": "1.0.0",
+  "x-dataVersion": "v20260123",
+  "x-primaryKey": "TCode",
   "x-provenance": {
     "x-dataRound": "R0",
-    "x-lastModified": "2026-03-17",
+    "x-lastModified": "2026-03-31",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
   "properties": {
     "TCode": {
       "name": "TCode",
+      "x-name": "TCode",
       "description": "Pseudo-anonymized 8-character study identifier.",
       "type": "string",
       "minLength": 8,
@@ -176,6 +179,7 @@
       "type": "array",
       "minItems": 0,
       "maxItems": 2,
+      "x-primaryKey": "R0_FatherCancer_Num",
       "items": {
         "type": "object",
         "properties": {
@@ -423,6 +427,7 @@
       "type": "array",
       "minItems": 0,
       "maxItems": 2,
+      "x-primaryKey": "R0_MotherCancer_Num",
       "items": {
         "type": "object",
         "properties": {
@@ -809,6 +814,7 @@
       "type": "array",
       "minItems": 0,
       "maxItems": 13,
+      "x-primaryKey": "R0_Sibling_Num",
       "items": {
         "type": "object",
         "properties": {
@@ -1034,6 +1040,7 @@
       "type": "array",
       "minItems": 0,
       "maxItems": 3,
+      "x-primaryKey": "R0_ChildCancer_Num",
       "items": {
         "type": "object",
         "properties": {
@@ -1380,6 +1387,7 @@
       "type": "array",
       "minItems": 0,
       "maxItems": 3,
+      "x-primaryKey": "R0_OtherRelative_Num",
       "items": {
         "type": "object",
         "properties": {

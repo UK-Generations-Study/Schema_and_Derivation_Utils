@@ -5,15 +5,18 @@
   "description": "Variables from the jobs section of the first round of questionnaire for The Generations Study about the participant's history of working in industries that require night work, travelling, and other unique experiences. This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
   "type": "object",
   "x-version": "1.0.0",
+  "x-dataVersion": "v20260123",
+  "x-primaryKey": "TCode",
   "x-provenance": {
     "x-dataRound": "R0",
-    "x-lastModified": "2026-03-17",
+    "x-lastModified": "2026-03-31",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
   "properties": {
     "TCode": {
       "name": "TCode",
+      "x-name": "TCode",
       "description": "Pseudo-anonymized 8-character study identifier.",
       "type": "string",
       "minLength": 8,
@@ -173,6 +176,7 @@
       "type": "array",
       "minItems": 0,
       "maxItems": 7,
+      "x-primaryKey": "R0-R0_NightWork_Num",
       "items": {
         "type": "object",
         "properties": {

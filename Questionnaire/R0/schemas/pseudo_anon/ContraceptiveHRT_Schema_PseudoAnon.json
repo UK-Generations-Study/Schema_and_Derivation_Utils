@@ -5,15 +5,18 @@
   "description": "Variables from the contraceptive and HRT section of the first round of questionnaire for The Generations Study about the participant's history of use of contraceptives and HRT. This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
   "type": "object",
   "x-version": "1.0.0",
+  "x-dataVersion": "v20260123",
+  "x-primaryKey": "TCode",
   "x-provenance": {
     "x-dataRound": "R0",
-    "x-lastModified": "2026-03-17",
+    "x-lastModified": "2026-03-31",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
   "properties": {
     "TCode": {
       "name": "TCode",
+      "x-name": "TCode",
       "description": "Pseudo-anonymized 8-character study identifier.",
       "type": "string",
       "minLength": 8,
@@ -52,6 +55,7 @@
       "type": "array",
       "minItems": 0,
       "maxItems": 9,
+      "x-primaryKey": "R0_ContracepPill_Num",
       "items": {
         "type": "object",
         "properties": {
@@ -256,6 +260,7 @@
       "type": "array",
       "minItems": 0,
       "maxItems": 5,
+      "x-primaryKey": "R0_OtherContracep_Num",
       "items": {
         "type": "object",
         "properties": {
@@ -414,6 +419,7 @@
       "type": "array",
       "minItems": 0,
       "maxItems": 8,
+      "x-primaryKey": "R0_HRT_Num",
       "items": {
         "type": "object",
         "properties": {
@@ -636,6 +642,7 @@
       "type": "array",
       "minItems": 0,
       "maxItems": 7,
+      "x-primaryKey": "R0_OtherSexHrmn_Num",
       "items": {
         "type": "object",
         "properties": {
