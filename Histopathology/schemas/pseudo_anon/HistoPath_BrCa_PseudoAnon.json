@@ -1,13 +1,13 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Histopathology/schemas/pseudo_anon/HistoPath_BrCa_PseudoAnon.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Pseudo Anonymised Histopathology breast cancer schema",
   "description": "Schema for variables from Histopathology data (Uploads.Histopath_BrCa_GS_v1) for breast cancer to produce new Cancer Summary This data has been pseudo-anonymised by removing any personal identifiable information (PII) and shifting dates from their original data.",
   "type": "object",
   "x-version": "1.0.0",
   "x-dataVersion": "v20260123",
   "x-provenance": {
-    "x-lastModified": "2026-03-31",
+    "x-lastModified": "2026-04-13",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
@@ -57,11 +57,7 @@
         "null"
       ],
       "description": "Oestrogen receptor status (breast tumours only).",
-      "x-description": "Oestrogen receptor (ER) status (harmonised to Cancer Registry coding). Source priority: 1) CancerRegistry.ER_STATUS (retain registry codes: P/N/B/X/U). Cancer Registry values take precedence when available; all values must be expressed in the Cancer Registry coding system. 2) HistoPath_BrCa.ER_Status (map NP → X; retain P/N; map borderline if present to B);",
-      "x-sourcePriority": [
-        "CancerRegistry.ER_STATUS",
-        "HistoPath_BrCa.ER_Status"
-      ],
+      "x-description": "All enum values are harmonised to Cancer Registry coding",
       "enum": [
         "N",
         "P",
@@ -116,11 +112,7 @@
         "null"
       ],
       "description": "Progesterone receptor status (breast tumours only).",
-      "x-description": "Progesterone receptor (PR) status (harmonised to Cancer Registry coding). Source priority: 1) CancerRegistry.PR_STATUS (retain registry codes: P/N/B/X/U). Cancer Registry values take precedence when available; all values must be expressed in the Cancer Registry coding system. 2) HistoPath_BrCa.PR_Status (map NP → X; retain P/N; map borderline if present to B);",
-      "x-sourcePriority": [
-        "CancerRegistry.PR_STATUS",
-        "HistoPath_BrCa.PR_Status"
-      ],
+      "x-description": "All enum values are harmonised to Cancer Registry coding",
       "enum": [
         "N",
         "P",
@@ -175,11 +167,7 @@
         "null"
       ],
       "description": "HER2 receptor status (breast tumours only).",
-      "x-description": "HER2 receptor status (harmonised to Cancer Registry coding). Source priority: 1) CancerRegistry.HER2_STATUS (retain registry codes: P/N/B/X/U). If both IHC and FISH are available in pathology, use the definitive integrated result; Cancer Registry values take precedence when available; all values must be expressed in the Cancer Registry coding system. 2) HistoPath_BrCa.HER2_Status (map NP → X; retain P/N/B);",
-      "x-sourcePriority": [
-        "CancerRegistry.HER2_STATUS",
-        "HistoPath_BrCa.HER2_Status"
-      ],
+      "x-description": "All enum values are harmonised to Cancer Registry coding",
       "enum": [
         "N",
         "P",
@@ -260,6 +248,14 @@
       "maximum": 100,
       "x-unit": "%"
     },
+    "ICDMorphologyCode": {
+      "description": "Intl Classification of Diseases Morphology Code (ICD_O) when indicated in report. Missing information or not applicable is coded as Null",
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 6
+    },
     "Malignant": {
       "description": "status to represent Malignant Cancer",
       "type": [
@@ -338,11 +334,7 @@
         "null"
       ],
       "description": "Side of body affected (left, right, bilateral, unknown).",
-      "x-description": "Laterality of the tumour (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.LATERALITY (retain registry codes: L, R, M, B, 8, 9). Cancer Registry values take precedence when available; harmonise all values to registry coding. 2) HistoPath_BrCa.Side (map L/R as-is, U → '9'). These are renamed to LATERALITY to link across sources",
-      "x-sourcePriority": [
-        "CancerRegistry.LATERALITY",
-        "HistoPath_BrCa.LATERALITY"
-      ],
+      "x-description": "All enum values are harmonised to Cancer Registry coding",
       "enum": [
         "L",
         "R",
@@ -387,11 +379,7 @@
         "null"
       ],
       "description": "Whether tumour was screen-detected (Y/N/8/9).",
-      "x-description": "Whether the tumour was detected via a screening programme. Source priority: 1) CancerRegistry.SCREENDETECTED. 2) HistoPath_BrCa.ScreenDetected (Y/N/NK → map NK to '9'). Allowed values: 'Y' (Yes), 'N' (No), '8' (Not applicable), '9' (Not known).",
-      "x-sourcePriority": [
-        "CancerRegistry.SCREENDETECTED",
-        "HistoPath_BrCa.ScreenDetected"
-      ],
+      "x-description": "All enum values are harmonised to Cancer Registry coding",
       "enum": [
         "N",
         "Y",
@@ -540,13 +528,7 @@
         "null"
       ],
       "description": "Tumour histological grade (harmonised, per registry coding).",
-      "x-description": "Tumour histological grade (harmonised to Cancer Registry coding). Source priority: 1) CancerRegistry.GRADE (retain registry codes exactly: GX, G0–G7, GL/GH/GI/G) 2) For breast: HistoPath_BrCa.InvasiveGrade, mapped to Cancer Registry format (InvasiveGrade 1→G1, 2→G2, 3→G3). If InvasiveGrade is null then take DCISGrade (in situ Low, Intermediate and High to be mapped to GL, GI and GH); 3) For ovarian: HistoPath_OvCa.Grade_I_II_III, mapped to Cancer Registry format (I→G1, II→G2, III→G3); All pathology- and registry-derived values must be harmonised into the Cancer Registry coding system; Cancer Registry values take precedence when present.",
-      "x-sourcePriority": [
-        "CancerRegistry.GRADE",
-        "HistoPath_BrCa.InvasiveGrade",
-        "HistoPath_BrCa.DCISGrade",
-        "HistoPath_OvCa.Grade_I_II_III"
-      ],
+      "x-description": "All enum values are harmonised to Cancer Registry coding",
       "enum": [
         "GX",
         "G0",
@@ -1047,12 +1029,6 @@
         "null"
       ],
       "description": "Best overall tumour stage.",
-      "x-description": "Best tumour stage at diagnosis (harmonised to Cancer Registry coding). Source priority: 1) CancerRegistry.STAGE_BEST. Cancer Registry stage takes precedence when available; all values must be expressed in the Cancer Registry coding system.; 2) Pathology staging (Breast: HistoPath_BrCa.Stage, Derived using Tstage, Nstage, Mstage; Ovarian: HistoPath_OvCa.Stage_FIGO), mapped to Cancer Registry stage format;",
-      "x-sourcePriority": [
-        "CancerRegistry.STAGE_BEST",
-        "HistoPath_BrCa.Stage",
-        "HistoPath_OvCa.Stage_FIGO"
-      ],
       "enum": [
         "0",
         "0A",
@@ -1186,33 +1162,11 @@
         "X: not staged",
         "null: Missing or not applicable"
       ],
+      "x-description": "All enum values are harmonised to Cancer Registry coding",
       "x-derivedFrom": [
         "Tstage",
         "NStage",
         "MStage"
-      ]
-    },
-    "MORPH_CODE": {
-      "type": [
-        "integer",
-        "null"
-      ],
-      "description": "ICD-O morphology code (tumour histology/behaviour).",
-      "x-description": "ICD-O morphology code describing the histological type/behaviour of the tumour (as provided by the source). Per tumour (TUMOUR_ID). Source priority: 1) CancerRegistry.HISTOLOGY_CODED 2) FlaggingCancers.Histology 3) HistoPath_BrCa.ICDMorphologyCode. Store the code exactly as provided (no recoding). These are renamed to MORPH_CODE to link across sources",
-      "x-sourcePriority": [
-        "CancerRegistry.MORPH_CODE",
-        "FlaggingCancers.MORPH_CODE",
-        "HistoPath_BrCa.MORPH_CODE"
-      ],
-      "x-derivedFrom": [
-        "ICDMorphologyCode",
-        "Malignant",
-        "InvasiveCarcinoma",
-        "InsituCarcinoma",
-        "Type",
-        "TypeComponent",
-        "PagetsDisease",
-        "Microinvasion"
       ]
     },
     "TUMOUR_SIZE": {
@@ -1221,12 +1175,6 @@
         "null"
       ],
       "description": "Largest tumour dimension in millimetres.",
-      "x-description": "Largest tumour dimension in millimetres (harmonised to Cancer Registry coding). Source priority: 1)CancerRegistry.TUMOURSIZE. Cancer Registry values take precedence when available; record numeric size only, null if text/ambiguous; 2) Pathology: Breast (HistoPath_BrCa.SizeInvasiveTumour; if invasive size missing and DCIS only, use HistoPath_BrCa.SizeDCISOnly).",
-      "x-sourcePriority": [
-        "CancerRegistry.TUMOURSIZE",
-        "HistoPath_BrCa.SizeInvasiveTumour",
-        "HistoPath_BrCa.SizeDCISOnly"
-      ],
       "x-unit": "millimetres",
       "x-derivedFrom": [
         "SizeInvasiveTumour",
@@ -1239,11 +1187,6 @@
         "null"
       ],
       "description": "Number of lymph nodes examined.",
-      "x-description": "Total number of local/regional lymph nodes examined (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.NODESEXCISED — described in the registry schema as the \"number of local and regional nodes examined.\" Ovarian pathology does not provide node counts. Store as an integer; null if unavailable. 2) Breast pathology: NodesTotal = HistoPath_BrCa.AxillaryNodesTotal + HistoPath_BrCa.OtherNodesTotal (sum; treat nulls as 0 only if at least one component is non-null);",
-      "x-sourcePriority": [
-        "CancerRegistry.NODESEXCISED",
-        "HistoPath_BrCa.NodesTotal"
-      ],
       "x-derivedFrom": [
         "AxillaryNodesTotal",
         "OtherNodesTotal"
@@ -1255,11 +1198,6 @@
         "null"
       ],
       "description": "Number of lymph nodes positive for metastasis.",
-      "x-description": "Number of local/regional lymph nodes positive for metastasis (per tumour, TUMOUR_ID). Source priority: 1) CancerRegistry.NODESINVOLVED — described in the registry schema as the \"number of local and regional nodes reported as being positive.\" Ovarian pathology does not provide node counts. Store as an integer; null if unavailable. 2) Breast pathology: NodesPositive = HistoPath_BrCa.AxillaryNodesPositive + HistoPath_BrCa.OtherNodesPositive (sum; treat nulls as 0 only if at least one component is non-null);",
-      "x-sourcePriority": [
-        "CancerRegistry.NODESINVOLVED",
-        "HistoPath_BrCa.NodesPositive"
-      ],
       "x-derivedFrom": [
         "AxillaryNodesPositive",
         "OtherNodesPositive"
@@ -1268,7 +1206,6 @@
     "AGE_AT_DIAGNOSIS": {
       "type": "integer",
       "description": "Age of the patient when they were diagnosed with the tumour in years. (per tumour).",
-      "x-description": "Age in whole years at diagnosis, calculated separately for each tumour using DOB from People table and the DIAGNOSIS_DATE for that tumour. Derived as floor((DIAGNOSIS_DATE – cast(DATEFROMPARTS(DOBYear, DOBMonth, DOBDay) as date)as DOB) / 365.25).",
       "minimum": 0,
       "x-unit": "years",
       "x-derivedFrom": [

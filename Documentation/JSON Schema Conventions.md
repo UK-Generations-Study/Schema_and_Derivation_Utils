@@ -452,7 +452,7 @@ Two reference formats are permitted.
 
 4. If a field is renamed, add `x-formerName`
 5. If a field is removed, note it in PR, do **not** leave a stub
-6. Git Commit message must contain the x-version, x-lastModified, and x-dataVersion to track history and find data from a specific version
+6. Git branches are named after every rolled out version of the data. Analysts need to refer the branch for latest updates
 ---
 
 ## 13. Canonical $id URLs
