@@ -4,11 +4,11 @@
   "title": "New cancer summary schema for Pseudonymised data",
   "description": "Schema for variables from new cancer summary pseudonymised dataset produced using other sources",
   "type": "object",
-  "required": ["TCode", "TUMOUR_ID", "DIAGNOSIS_DATE_SHIFTED"],
+  "required": ["TCode", "TUMOUR_KEY", "DIAGNOSIS_DATE_SHIFTED"],
   "x-version": "1.0.0",
   "x-dataVersion": "v20260123",
   "x-provenance": {
-    "x-lastModified": "2026-03-11",
+    "x-lastModified": "2026-04-15",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
@@ -24,19 +24,6 @@
     "S_TCode": {
       "type": "string",
       "description": "Source from which TCode is selected in the target dataset."
-    },
-    "TUMOUR_ID": {
-      "type": ["number", "null"],
-      "description": "Unique identifier for each tumour diagnostic episode (one participant may have several).",
-      "x-description": "Tumour-specific identifier. A participant may have multiple tumours, each with its own TUMOUR_ID. Provided directly in CancerRegistry.TUMOURID or FlaggingCancers.TumourID. Pathology datasets (HistoPath_BrCa, HistoPath_OvCa) do not include a universal tumour ID, only tumour-level details (e.g., count, site, laterality, size, grade, stage). When integrating, use CancerRegistry.TUMOURID (or FlaggingCancers.TumourID if registry ID is unavailable) as the primary source. The missing values in this field is either not carried from legacy dataset or tumour is from Path report",
-      "x-sourcePriority": [
-        "CancerRegistry.TUMOURID",
-        "FlaggingCancers.TumourID"
-      ]
-    },
-    "S_TUMOUR_ID": {
-      "type": ["string", "null"],
-      "description": "Source from which the Tumour ID is selected in the target dataset. It will be one of the sources from x-sourcePriority for TUMOUR_ID."
     },
     "DIAGNOSIS_DATE_SHIFTED": {
       "type": "string",
@@ -392,7 +379,7 @@
     },
     "TUMOUR_KEY": {
       "type": "string",
-	    "description": "Identifier of primary tumour per side (if applicable) per diagnosis episode."
+	    "description": "Unique identifier of primary tumour per side (if applicable) per diagnosis episode."
     },
     "LAST_MODIFIED_TIME": {
       "type": "string",

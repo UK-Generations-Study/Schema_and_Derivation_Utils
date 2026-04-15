@@ -34,7 +34,7 @@
         "properties": {
           "R0_WghtComp_Num": {
             "x-name": "R0_WghtComp_Num",
-            "description": "Recorded height array number. Used to differentiate height instances into correct variable naming conventions in post processing of this array.",
+            "description": "Recorded weight array number. Used to differentiate weight instances into correct variable naming conventions in post processing of this array.",
             "type": "integer",
             "enum": [
               7,
