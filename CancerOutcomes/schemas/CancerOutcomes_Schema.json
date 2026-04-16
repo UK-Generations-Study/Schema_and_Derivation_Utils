@@ -1,0 +1,395 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils/tree/main/Outcomes/schemas/Outcomes_Schema.json",
+  "title": "Outcomes and Treatments",
+  "description": "Dataset includes variables related to follow-up time, survival, breast cancer recurrence, and breast cancer treatment for cancer patients linked to NDRS cancer registry. Treatment and recurrence are for breast cancer cases only. Data snapshot referes to NDRS data snapshot",
+  "type": "object",
+  "x-version": "1.0.0",
+  "x-dataVersion": "v20260123",
+  "x-primaryKey": "TCode",
+  "x-provenance": {
+      "x-lastModified": "2026-04-16",
+      "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
+      "x-maintainer": "UK Generations Study"
+  },
+  "properties": {
+    "TCode": {
+      "x-name": "TCode",
+      "description": "Pseudo-anonymised 8-character study identifier.",
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "ca_surv_fup_vital_status": {
+      "x-name": "ca_surv_fup_vital_status",
+      "description": "Known to be deceased [1] or alive [0] at administrative censoring date (date_ca_surv_fup_end)",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: Alive",
+        "1: Deceased",
+        "null: Missing or invalid."
+      ],
+      "x-description": "Based on NDRS Cancer Registry vital status which records whether the patient is currently alive or deceased at the time of the data snapshot."
+    },
+    "date_ca_surv_fup_end_shifted": {
+      "x-name": "date_ca_surv_fup_end_shifted",
+      "description": "Administrative censoring date for cancer survival analysis based on the last known date of vital status from NDRS Cancer Registry data.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-description": "For those who are alive, this is the date of the data snapshot as processed by NDRS. For those that are deceased, this date is assumed to be the date of death. Reason for end of follow-up (Alive/Deceased) is in ca_surv_fup_vital_status."
+    },
+    "deathcause_underlying": {
+      "x-name": "deathcause_underlying",
+      "description": "A code listed as [Death cause code underlying (1C)] on the ONS death certificate.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-description": "Pipe (|) delimiter separated when multiple codes are recorded. Source NDRS Cancer Registry. ICD-10 Code."
+    },
+    "deathcause_1a": {
+      "x-name": "deathcause_1a",
+      "description": "A code listed on the first line for the primary cause of death on the ONS death certificate",
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-description": "Pipe (|) delimiter separated when multiple codes are recorded. Source NDRS Cancer Registry. ICD-10 Code."
+    },
+    "deathcause_1b": {
+      "x-name": "deathcause_1b",
+      "description": "A code listed on the second line for the primary cause of death on the ONS death certificate",
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-description": "Pipe (|) delimiter separated when multiple codes are recorded. Source NDRS Cancer Registry. ICD-10 Code."
+    },
+    "deathcause_1c": {
+      "x-name": "deathcause_1c",
+      "description": "A code listed on the third line for the primary cause of death on the ONS death certificate",
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-description": "Pipe (|) delimiter separated when multiple codes are recorded. Source NDRS Cancer Registry. ICD-10 Code."
+    },
+    "deathcause_2": {
+      "x-name": "deathcause_2",
+      "description": "A code for secondary cause of death on the ONS death certificate",
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-description": "Pipe (|) delimiter separated when multiple codes are recorded. Source NDRS Cancer Registry. ICD-10 Code."
+    },
+    "recurrence_flg": {
+      "x-name": "recurrence_flg",
+      "description": "Whether participant had distant or local recurrence of first primary breast cancer",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        0,
+        null
+      ],
+      "x-enumDescriptions": [
+        "1: yes",
+        "0: no",
+        "null: Missing or invalid."
+      ],
+      "x-description": "Recurrence derived for particpants with first primary breast cancer (invasive and insitu) from NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets), using procedure from Kilburn et al 2025 doi: 10.1186/s13063-025-09085-1."
+    },
+    "date_firstrec_shifted": {
+      "x-name": "date_firstrec_shifted",
+      "description": "Shifted date of first breast cancer recurrence (local or distant).",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-description":"Recurrence derived for particpants with first primary breast cancer (invasive and insitu) from NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets), using procedure from Kilburn et al 2025 doi: 10.1186/s13063-025-09085-1."
+    },
+    "rec_both_flg": {
+      "x-name": "rec_both_flg",
+      "description": "Whether participant had both distant and local breast cancer recurrence.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        0,
+        null
+      ],
+      "x-enumDescriptions": [
+        "1: yes",
+        "0: no",
+        "null: Missing or invalid."
+      ],
+      "x-description": "Recurrence derived for particpants with first primary breast cancer (invasive and insitu) from NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets), using procedure from Kilburn et al 2025 doi: 10.1186/s13063-025-09085-1."
+    },
+    "firstrec_type": {
+      "x-name": "firstrec_type",
+      "description": "Type of first breast cancer recurrence (local/distant).",
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "Distant",
+        "Local",
+        null
+      ],
+      "x-enumDescriptions": [
+        "Distant: First recurrence was distant recurrence",
+        "Local: First recurrence was local recurrence",
+        "null: Missing or invalid."
+      ],
+      "x-description": "Distant recurrence was identified predominately by direct indicators of metastases (e.g. ICD10 codes C77X-79X). Local recurrence was identified via relevant surgeries' OPCS4 codes. See Kilburn et al 2025 for details."
+    },
+    "firstrec_local_flg": {
+      "x-name": "firstrec_local_flg",
+      "description": "First breast cancer recurrence was local recurrence.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        0,
+        null
+      ],
+      "x-enumDescriptions": [
+        "1: yes",
+        "0: no",
+        "null: Missing or invalid."
+      ],
+      "x-description": "Note local recurrence is reported to have lower sensitivity. See Kilburn et al 2025 for details."
+    },
+    "date_locrec_shifted": {
+      "x-name": "date_locrec_shifted",
+      "description": "Shifted date of local breast cancer recurrence.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-description":"Recurrence derived for particpants with first primary breast cancer (invasive and insitu) from NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets), using procedure from Kilburn et al 2025 doi: 10.1186/s13063-025-09085-1."
+    },
+    "firstrec_dist_flg": {
+      "x-name": "firstrec_dist_flg",
+      "description": "First breast cancer recurrence was distant recurrence flag.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        0,
+        null
+      ],
+      "x-enumDescriptions": [
+        "1: yes",
+        "0: no",
+        "null: Missing or invalid."
+      ],
+      "x-description": "See Kilburn et al 2025 for details."
+    },
+    "date_distrec_shifted": {
+      "x-name": "date_distrec_shifted",
+      "description": "Shifted date of distant breast cancer recurrence.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-description":"See Kilburn et al 2025 for details."
+    },
+    "distrec_source": {
+      "x-name": "distrec_source",
+      "description": "Source of distant breast cancer recurrence.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-description": "See Kilburn et al 2025 for details."
+    },
+    "brca_surgery_type": {
+      "x-name": "brca_surgery_type",
+      "description": "Type of breast cancer surgery.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        null
+      ],
+      "x-enumDescriptions": [
+        "0: No/Not recorded in cancer registry",
+        "1: Breast conserving surgery",
+        "2: Mastectomy",
+        "null: Missing or invalid."
+      ],
+      "x-description": "Treatment data for particpants with first primary breast cancer (invasive and insitu) derived from clinical activity in NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets)."
+    },
+    "brca_surgery_date_shifted": {
+      "x-name": "brca_surgery_date_shifted",
+      "description": "Shifted date of first surgery for breast cancer.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-description": "Treatment data for particpants with first primary breast cancer (invasive and insitu) derived from clinical activity in NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets)."
+    },
+    "brca_surgery_year": {
+      "x-name": "brca_surgery_year",
+      "description": "Year of first breast cancer surgery (real year).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "x-description": "Treatment data for particpants with first primary breast cancer (invasive and insitu) derived from clinical activity in NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets)."
+    },
+    "brca_radiotherapy": {
+      "x-name": "brca_radiotherapy",
+      "description": "Ever had radiotherapy for breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        0,
+        null
+      ],
+      "x-enumDescriptions": [
+        "1: yes",
+        "0: no",
+        "null: Missing or invalid."
+      ],
+      "x-description": "Treatment data for particpants with first primary breast cancer (invasive and insitu) derived from clinical activity in NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets)."
+    },
+    "brca_RT_start_shifted": {
+      "x-name": "brca_RT_start_shifted",
+      "description": "Shifted date of first radiotherapy treatment for breast cancer.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-description": "Treatment data for particpants with first primary breast cancer (invasive and insitu) derived from clinical activity in NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets)."      
+    },
+    "brca_RT_year": {
+      "x-name": "brca_RT_year",
+      "description": "Year of radiotherapy for breast cancer (real year).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "x-description": "Treatment data for particpants with first primary breast cancer (invasive and insitu) derived from clinical activity in NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets)."      
+    },
+    "brca_chemo": {
+      "x-name": "brca_chemo",
+      "description": "Ever had chemotherapy for breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        0,
+        null
+      ],
+      "x-enumDescriptions": [
+        "1: yes",
+        "0: no",
+        "null: Missing or invalid."
+      ],
+      "x-description": "Treatment data for particpants with first primary breast cancer (invasive and insitu) derived from clinical activity in NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets)."      
+    },
+    "brca_chemo_start_shifted": {
+      "x-name": "brca_chemo_start_shifted",
+      "description": "Shifted date of first chemotherapy treatment for breast cancer.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "x-description": "Treatment data for particpants with first primary breast cancer (invasive and insitu) derived from clinical activity in NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets)."      
+    },
+    "brca_chemo_start_year": {
+      "x-name": "brca_chemo_start_year",
+      "description": "Year of chemotherapy for breast cancer (real year).",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "x-description": "Treatment data for particpants with first primary breast cancer (invasive and insitu) derived from clinical activity in NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets)."      
+    },
+    "brca_hormonetherapy": {
+      "x-name": "brca_hormonetherapy",
+      "description": "Ever had hormone therapy for breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        0,
+        null
+      ],
+      "x-enumDescriptions": [
+        "1: yes",
+        "0: no",
+        "null: Missing or invalid."
+      ],
+      "x-description": "Treatment data for particpants with first primary breast cancer (invasive and insitu) derived from clinical activity in NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets)."      
+    },
+    "brca_neoadju_chemo": {
+      "x-name": "brca_neoadju_chemo",
+      "description": "Ever had neoadjuvant chemotherapy for breast cancer.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "enum": [
+        1,
+        0,
+        null
+      ],
+      "x-enumDescriptions": [
+        "1: yes",
+        "0: no",
+        "null: Missing or invalid."
+      ],
+      "x-description": "Treatment data for particpants with first primary breast cancer (invasive and insitu) derived from clinical activity in NDRS Cancer Registry data (including NDRS linked HES APC, HES OP, SACT and RTDS datesets)."      
+    },
+    "TUMOUR_KEY": {
+      "type": ["string", "null"],
+	    "description": "Tumour-specific identifier - source NewCancerSummary.json. A participant may have multiple tumours, each with its own TUMOUR_KEY.",
+      "x-description": "Recurrence and treatment variables are related to the tumour with this specific TUMOUR_KEY. TUMOUR_KEY can be used to link with cancer summary dataset to obtain tumour characteristics for tumours related to recurrence and treatment of first primary breast cancer"
+    }
+  },
+  "required": [
+    "TCode"
+  ],
+  "additionalProperties": false
+}
