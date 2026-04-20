@@ -10,15 +10,10 @@ import pandas as pd
 sys.path.append(os.path.abspath(r"N:\CancerEpidem\BrBreakthrough\DeliveryProcess\Schema_and_Derivation_utils\Histopathology\scripts"))
 from histopath_loader_utils import schema_fields_for_table
 from histopath_map_and_derive import harmonize_source, get_stage
-from histopath_morph_code import derive_breast_morphology_code
 
 sys.path.append(os.path.abspath("N:\\CancerEpidem\\BrBreakthrough\\DeliveryProcess\\Schema_and_Derivation_utils"))
-from config import brca_variables_to_map, brca_special_rules, stage_rules, Delivery_log_path, live_server
+from config import brca_variables_to_map, brca_special_rules, stage_rules, live_server
 from utilities import createLogger, read_data, connect_DB
-
-
-# create the logging object and format checker
-logger = createLogger('Generate_Histopathology', Delivery_log_path)
 
 # ------------------------------------------------------------
 # JSON-safe converters
@@ -146,7 +141,7 @@ def getHighestMarker(value):
 # Build schema-aligned flat records
 # ------------------------------------------------------------
 
-def build_histopath_records(schema: dict, df: pd.DataFrame) -> list[dict]:
+def build_histopath_records(schema: dict, df: pd.DataFrame, logger) -> list[dict]:
     """
     Build a flat schema-aligned list[dict] for Histopath_BrCa.
     Mirrors the pathology pipeline structure, but histopathology is a single
@@ -162,7 +157,7 @@ def build_histopath_records(schema: dict, df: pd.DataFrame) -> list[dict]:
         )
 
     hist_Brca_schema_path = r"N:\CancerEpidem\BrBreakthrough\DeliveryProcess\Schema_and_Derivation_utils\Histopathology\schemas\raw"
-    target_schema_path = r"N:\CancerEpidem\BrBreakthrough\DeliveryProcess\Schema_and_Derivation_utils\CancerSummary\json_schemas"
+    target_schema_path = r"N:\CancerEpidem\BrBreakthrough\DeliveryProcess\Schema_and_Derivation_utils\CancerSummary\schemas"
 
     with open(os.path.join(hist_Brca_schema_path, "HistoPath_BrCa.json"), 'r') as schema:
         hist_Brca_schema = json.load(schema)
@@ -226,21 +221,14 @@ def build_histopath_records(schema: dict, df: pd.DataFrame) -> list[dict]:
 
     logger.info("Deriving the Stage variable for HistoPath Breast data")
     brca_mapped["Stage"] = brca_mapped.apply(get_stage, axis=1, args=(patterns, lookup_dict))
+   
+    logger.info("Deriving GRADE, TUMOUR_SIZE, and NODES_TOTAL for breast histopathology data")
 
-    # Deriving ICD morphology code for Breast data
-    logger.info("Deriving ICD morphology code for breast cancer data")
-
-    brca_mapped['MORPH_CODE'] = brca_mapped.apply(derive_breast_morphology_code, axis=1)
-    brca_mapped['MORPH_CODE'] = brca_mapped['MORPH_CODE'].str.replace("M", "",)
-    brca_mapped['MORPH_CODE'] = pd.to_numeric(brca_mapped['MORPH_CODE'], downcast="integer", errors="coerce")
-
-    # derive ICD_CODE for breast pat report data
-    brca_mapped['ICD_CODE'] = np.where((brca_mapped['InvasiveCarcinoma']=='P') | (brca_mapped['PagetsDisease']=='Y'), 'C50', \
-                                    np.where((brca_mapped['InvasiveCarcinoma']=='N') & (brca_mapped['InsituCarcinoma']=='P'),\
-                                                'D05', None))
-
-    
-    logger.info("Deriving TUMOUR_SIZE and NODES_TOTAL for breast histopathology data")
+    # GRADE: prefer invasive grade, otherwise use DCIS grade
+    brca_mapped['GRADE'] = _first_non_null([
+        brca_mapped['InvasiveGrade'],
+        brca_mapped['DCISGrade']
+    ])
 
     # TUMOUR_SIZE: prefer invasive tumour size, otherwise use DCIS-only size
     brca_mapped['TUMOUR_SIZE'] = _first_non_null([
@@ -258,6 +246,8 @@ def build_histopath_records(schema: dict, df: pd.DataFrame) -> list[dict]:
         brca_mapped, ['AxillaryNodesPositive', 'OtherNodesPositive']
     )
 
+    brca_mapped['ICDMorphologyCode'] = brca_mapped['ICDMorphologyCode'].str.replace("M", "",)
+    
     mailing_conn = connect_DB('Mailing', live_server, logger)
 
     logger.info('Reading People table to map PersonID to StudyID and to get the Date of Birth')
