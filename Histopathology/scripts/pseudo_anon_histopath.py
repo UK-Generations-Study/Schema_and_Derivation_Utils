@@ -13,7 +13,7 @@ from histopath_map_and_derive import build_enum_mapping
 from histopath_building_utils import make_json_safe
 
 sys.path.append(os.path.abspath(
-    r"N:\CancerEpidem\BrBreakthrough\DeliveryProcess\Schema_and_Derivation_utils\Questionnaire\R0\scripts"
+    r"N:\CancerEpidem\BrBreakthrough\DeliveryProcess\Schema_and_Derivation_utils\Questionnaire\common_scripts"
 ))
 from pseudo_anon_utils import load_sid_codes, pseudo_anonymize_studyid  # keep shared utils
 
@@ -41,14 +41,13 @@ PROCESSING_ONLY_DROP_FIELDS = {
     "NStageDer",
     "MStageMapped",
     "MStageDer",
-    "ICD_CODE",
-    "ICDMorphologyCode",
     "DOB",
     "PersonID",
     "AxillaryNodesTotal",
     "AxillaryNodesPositive",
     "OtherNodesTotal",
-    "OtherNodesPositive"
+    "OtherNodesPositive",
+    "SizeInvasiveTumour",
 }
 
 RENAME_MAP = {
@@ -270,10 +269,10 @@ def _coerce_morph_code(value):
         import re
         match = re.search(r"\d+", value)
         if match:
-            return int(match.group())
+            return match.group()
 
     try:
-        return int(value)
+        return value
     except (ValueError, TypeError):
         return None
 
@@ -294,6 +293,10 @@ def apply_histopath_privacy_transforms(
         )
 
     df = _shift_diagdat_from_sid_codes(df, sid_df, logger=logger)
+
+    df['NODES_POSITIVE'] = pd.to_numeric(df['NODES_POSITIVE'], errors='coerce').astype('Int64')
+    df['NODES_TOTAL'] = pd.to_numeric(df['NODES_TOTAL'], errors='coerce').astype('Int64')
+    
     records = _df_to_records(df)
 
     records = pseudo_anonymize_studyid(records, sid_df)
@@ -312,9 +315,9 @@ def apply_histopath_privacy_transforms(
         if not isinstance(rec, dict):
             continue
 
-        # MORPH_CODE → int
-        if "MORPH_CODE" in rec:
-            rec["MORPH_CODE"] = _coerce_morph_code(rec.get("MORPH_CODE"))
+        # MORPH_CODE → to handle 8500/3
+        if "ICDMorphologyCode" in rec:
+            rec["ICDMorphologyCode"] = _coerce_morph_code(rec.get("ICDMorphologyCode"))
 
         # DIAGNOSIS_DATE_SHIFTED → full ISO string
         if "DIAGNOSIS_DATE_SHIFTED" in rec:
@@ -346,6 +349,9 @@ def _build_mapped_property(
 ) -> dict:
     src_prop = _safe_get_property(source_schema, source_name)
     tgt_prop = _safe_get_property(target_schema, target_name)
+
+    tgt_prop.pop('x-sourcePriority', None)
+    tgt_prop["x-description"] = "All enum values are harmonised to Cancer Registry coding"
 
     out = copy.deepcopy(tgt_prop) if tgt_prop else copy.deepcopy(src_prop)
 
@@ -400,12 +406,6 @@ def update_histopath_schema_for_pipeline(
     if include_derived_fields:
         derived_targets = {
             "STAGE": ["Tstage", "NStage", "MStage"],
-            "MORPH_CODE": [
-                "ICDMorphologyCode", "Malignant", "InvasiveCarcinoma",
-                "InsituCarcinoma", "Type", "TypeComponent",
-                "PagetsDisease", "Microinvasion",
-            ],
-            "ICD_CODE": ["InvasiveCarcinoma", "InsituCarcinoma", "PagetsDisease"],
             "TUMOUR_SIZE": ["SizeInvasiveTumour", "SizeDCISOnly"],
             "NODES_TOTAL": ["AxillaryNodesTotal", "OtherNodesTotal"],
             "NODES_POSITIVE": ["AxillaryNodesPositive", "OtherNodesPositive"],
@@ -419,6 +419,10 @@ def update_histopath_schema_for_pipeline(
 
         for field_name, derived_from in derived_targets.items():
             tgt_prop = target_schema.get("properties", {}).get(field_name)
+            tgt_prop.pop('x-sourcePriority', None)
+            tgt_prop.pop('x-description', None)
+            if field_name == "STAGE":
+                tgt_prop['x-description']= "All enum values are harmonised to Cancer Registry coding"
             if field_name not in out_props and tgt_prop:
                 out_props[field_name] = copy.deepcopy(tgt_prop)
                 out_props[field_name]["x-derivedFrom"] = copy.deepcopy(derived_from)

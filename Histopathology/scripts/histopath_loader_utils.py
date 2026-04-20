@@ -4,7 +4,7 @@ import json
 import pandas as pd
 
 sys.path.append(os.path.abspath(r"N:\CancerEpidem\BrBreakthrough\DeliveryProcess\Schema_and_Derivation_utils"))
-from utilities import connect_DB, read_data, createLogger
+from utilities import connect_DB, read_data
 
 
 # ------------------------------------------------------------

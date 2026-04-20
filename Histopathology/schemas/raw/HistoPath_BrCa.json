@@ -6,7 +6,7 @@
   "type": "object",
   "x-version": "1.0.0",
   "x-provenance": {
-    "x-lastModified": "2026-03-24",
+    "x-lastModified": "2026-04-20",
     "x-repository": "N:\\CancerEpidem\\BrBreakthrough\\SHegde\\GitHub_Repos\\Schema_and_Derivation_utils.git",
     "x-maintainer": "UK Generations Study"
   },
@@ -310,13 +310,13 @@
         "null: No Solid DCIS Growth Pattern mentioned"
       ]
     },
-    "Cribiform_DCISGP": {
-      "description": "Cribiform DCIS Growth pattern is mentioned or not in the report",
+    "Cribriform_DCISGP": {
+      "description": "Cribriform DCIS Growth pattern is mentioned or not in the report",
       "type": ["string", "null"],
       "enum": ["Y", null],
       "x-enumDescriptions": [
-        "Y: Cribiform DCIS Growth Pattern mentioned in the report",
-        "null: No Cribiform DCIS Growth Pattern mentioned"
+        "Y: Cribriform DCIS Growth Pattern mentioned in the report",
+        "null: No Cribriform DCIS Growth Pattern mentioned"
       ]
     },
     "Micropapillary_DCISGP": {

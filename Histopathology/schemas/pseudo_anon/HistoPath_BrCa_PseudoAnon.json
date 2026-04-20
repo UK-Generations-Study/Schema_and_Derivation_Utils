@@ -7,7 +7,7 @@
   "x-version": "1.0.0",
   "x-dataVersion": "v20260123",
   "x-provenance": {
-    "x-lastModified": "2026-04-13",
+    "x-lastModified": "2026-04-20",
     "x-repository": "https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",
     "x-maintainer": "UK Generations Study"
   },
@@ -586,8 +586,8 @@
         "null: No Solid DCIS Growth Pattern mentioned"
       ]
     },
-    "Cribiform_DCISGP": {
-      "description": "Cribiform DCIS Growth pattern is mentioned or not in the report",
+    "Cribriform_DCISGP": {
+      "description": "Cribriform DCIS Growth pattern is mentioned or not in the report",
       "type": [
         "string",
         "null"
@@ -597,8 +597,8 @@
         null
       ],
       "x-enumDescriptions": [
-        "Y: Cribiform DCIS Growth Pattern mentioned in the report",
-        "null: No Cribiform DCIS Growth Pattern mentioned"
+        "Y: Cribriform DCIS Growth Pattern mentioned in the report",
+        "null: No Cribriform DCIS Growth Pattern mentioned"
       ]
     },
     "Micropapillary_DCISGP": {
@@ -806,14 +806,6 @@
         "N: Invasive Carcinoma is not present",
         "null: if the report does not contain this information."
       ]
-    },
-    "SizeInvasiveTumour": {
-      "description": "Largest dimension of dominant invasive tumour (mm). Missing information or not applicable is coded null.",
-      "type": [
-        "number",
-        "null"
-      ],
-      "x-unit": "millimetres"
     },
     "SizeWholeTumour": {
       "description": "Invasive plus surrounding DCIS if DCIS extends >1mm (mm). Missing information or not applicable is coded null.",
