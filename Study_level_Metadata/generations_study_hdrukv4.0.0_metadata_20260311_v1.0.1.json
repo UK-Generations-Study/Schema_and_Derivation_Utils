@@ -1,98 +1,90 @@
 {
   "identifier": null,
-  "version": "1.0.0",
+  "version": "1.0.2",
   "revisions": [
     {
       "version": "1.0.0",
       "url": null
+    },
+    {
+      "version": "1.0.1",
+      "url": null
     }
   ],
    "issued": "2026-03-13T00:00:00.000Z",
-   "modified": "2026-03-13T00:00:00.000Z",
+   "modified": "2026-06-22T00:00:00.000Z",
 
    "summary": {
       "title": "Generations Study: female UK cohort (questionnaire, imaging, samples, linkage)",
-      "abstract": "The Generations Study is one of the largest studies of women’s health in the UK, focusing on the causes of breast cancer. Over 110,000 women aged 16+ across the UK have joined and have been followed for health outcomes ever since.",
-
+      "abstract": "The Generations Study is a UK prospective cohort of ~113,000 women aged 16+, recruited 2004–2011 and followed for over 20 years. Focused on breast cancer causes, prognosis, and outcomes, the study has collected five rounds of questionnaires, NHS and cancer registry linkages, a biobank (plasma, DNA, urine; ~92% with blood samples), tumour tissue, mammograms, accelerometry, and pathology data. Over 190 peer-reviewed publications to date.",
       "dataCustodian": {
          "identifier": "e633bd6b-833d-473e-a9b5-3fa4d018c02d",
          "name": "Breast Cancer Now and The Institute of Cancer Research",
          "logo": "https://ukhealthdata.org/wp-content/uploads/2023/12/GS-logo-300x66.jpg",
          "description": "The Breast Cancer Now and the Institute of Cancer Research are joint legal custodians for the Generations study and retain ultimate oversight of and decision making for the study.",
-         "contactPoint":"Generations.Scientific@icr.ac.uk",
+         "contactPoint": "Generations.Scientific@icr.ac.uk",
          "memberOf": "Alliance"
       },
-
       "populationSize": 113000,
-
       "keywords": [ 
-         "UK", 
-         "Female", 
-         "Cohort", 
-         "Questionnaire", 
-         "Blood sample", 
-         "Cancer", 
-         "Pathology", 
-         "Mammogram", 
-         "Accelerometer", 
-         "Data Linkages"
+      "UK",
+      "Female",
+      "Prospective cohort",
+      "Women's health",
+      "Breast cancer",
+      "Breast cancer risk",
+      "Epidemiology",
+      "Questionnaire",
+      "Blood sample",
+      "Biobank",
+      "Cancer",
+      "Pathology",
+      "Mammogram",
+      "Imaging",
+      "Accelerometer",
+      "Physical activity",
+      "Genotyping",
+      "Polygenic risk score",
+      "Hormone",
+      "Reproductive health",
+      "Data linkage"
       ],
-
-       "doiName": "10.1038/bjc.2011.337",
-
-       "contactPoint": "Generations.Scientific@icr.ac.uk",
-
-       "datasetAliases": null
+      "doiName": null,
+      "contactPoint": "Generations.Scientific@icr.ac.uk",
+      "datasetAliases": "UK Generations Study, GS, Breakthrough Generations Study"
       },
 
       "documentation": {
-       "description": "The Generations Study is one of the largest and most comprehensive investigations of women’s health in the UK, designed to explore the full spectrum of breast cancer from its causes to clinical outcomes after diagnosis. Launched in 2003, the study has enrolled more than 110,000 women aged 16 and over from across the UK. Over time, the Generations Study has collected high-quality data through participant questionnaires, NHS electronic health record linkages, pathology reports, medical imaging, and analyses of blood, tissue, and urine samples. By examining a wide range of potential risk factors—including genetics, hormones, lifestyle, reproductive history, and environmental exposures we aim to better understand why some women develop breast cancer while others do not, and which factors influence prognosis and life after diagnosis. Our goal is to generate scientific evidence that supports improved prevention, earlier detection, and better outcomes for breast cancer and related conditions.",
-      
-       "associatedMedia":[
-        "https://thegenerationsstudy.co.uk/",
-        "https://github.com/UK-Generations-Study/Study-Documents" 
-      ],  
-
+       "description": "The Breast Cancer Now Generations Study (BGS) is a large prospective cohort study of women's health in the UK. Between 2004 and 2011, approximately 113,000 women aged 16 and over were recruited from across the UK, with the aim of following participants for 40 years. The primary scientific focus is understanding the causes and outcomes of breast cancer, with a broader remit covering other cancers and conditions affecting women's health. Participants were recruited through supporters of Breakthrough Breast Cancer (now Breast Cancer Now), responses to publicity, and invitations of friends and family members from existing participants. Approximately 30% of participants are first-degree relatives of other cohort members; the cohort includes over 15,000 family units. Geographically, participants are predominantly from England (89%), with Scotland (7%), Wales (4%), and Northern Ireland (1%) also represented. The cohort is overrepresented by women of higher socioeconomic status and White ethnicity relative to the UK population. All participants completed a 44-page baseline questionnaire at recruitment covering demographics, reproductive and menstrual history, hormone use, lifestyle, medical history, anthropometrics, and family cancer history. Follow-up questionnaires were administered approximately 2, 6, 9, 13, and 17 years post recruitment. Participants were recruited between 2004 and 2009. The first follow-up took place between 2007 and 2012, the second between 2010 and 2015, the third between 2014 and 2019, the fourth between 2017 and 2023, and the fifth in 2025. Response rates were very high in the first and second follow-up which was on-paper (99%, 97%), and the third and fourth follow-up which were a combination of on-paper and online (96%, 83%) and the fifth follow-up which was online only (59.4%). More than 500,000 questionnaires have been completed in total. Blood samples were provided by approximately 92% of participants at baseline (27ml) and a subset of 8938 participants approximately 6 years after enrolment (18 ml). Each blood sample was processed into plasma and buffy coat aliquots; over 3.2 million 0.5 ml barcoded straws are held in a biorepository in LN2 tanks (-180°C). Urine samples were collected from a subset of 847 pre- and post-menopausal women not using hormonal contraception. Whole section H&E slides from diagnostic paraffin-embedded blocks, tumour tissue microarrays (TMAs) and loose tissue cores are available for participants who subsequently developed breast or ovarian cancer. Diagnostic biopsy H&E's from participants with benign breast disease are also being collected. Screening mammograms have been collected for a nested case-control sub-study, with ongoing expansion to serial mammograms from approximately 50,000 women of screening age in the cohort. More than 12,000 participants wore wrist-worn triaxial accelerometers continuously for 8 days at 100 Hz. Genotyping array data are available for nested case-control studies of breast and ovarian cancer, with polygenic risk scores derived for cases and controls. Whole exome sequencing of DNA samples from all eligible participants is underway. Hormone and biomarker assay data - including oestradiol, testosterone, progesterone, prolactin, SHBG, IGF-1, leptin, and AMH - are available for subsets of participants. Health outcomes are self-reported by participants, and cancers are confirmed through data linkages to national cancer registries and deaths via national death registries in England and Scotland.  Other health outcomes are available from NHS electronic medical records in England (hospital in-patient and out-patient). NHS flagging through the National Health Service Central Registers has tracked vital status from 2003, fully for England and partly for Scotland. Individually identifiable health record data have been supplied to the ICR by NHS England and National Records of Scotland under ethics committee and Health Research Authority approvals. Key scientific contributions include identification of over 300 common genetic variants associated with breast cancer risk, characterisation of hormonal and reproductive risk factors, and evidence linking physical inactivity and adolescent smoking to increased risk. More than 190 peer-reviewed publications have used Generations Study data, catalogued in a PubMed collection https://pubmed.ncbi.nlm.nih.gov/collections/64898594/. The study is jointly governed by Breast Cancer Now and The Institute of Cancer Research as legal custodians, with the ICR acting as data controller. Research applications are reviewed by the study Principal Investigators and an Access Committee on scientific merit, feasibility, consistency with participant consent, and governance requirements. Survey data, health outcomes, genomic and biomarker data, imaging-derived data, registry-linked data, and biological samples are available to researchers for not-for-profit purposes following a Data Access Agreement.",
+       "associatedMedia": "https://thegenerationsstudy.co.uk/, https://github.com/UK-Generations-Study/Study-Documents, https://github.com/UK-Generations-Study/Schema_and_Derivation_Utils",  
        "inPipeline": "Available"
       },
 
       "coverage": {
-       "spatial": [
-         "United Kingdom",  
-         "Isle of Man",  
-         "Channel Islands"
-      ],
-
+       "spatial": "United Kingdom, Isle of Man, Channel Islands",
        "typicalAgeRangeMin": 16,
        "typicalAgeRangeMax": 102,
-
        "datasetCompleteness": null,
-       
        "materialType": [
           "Plasma", 
           "DNA", 
           "Urine", 
           "Tissue"
        ],
-       
        "followUp": "> 10 Years",
-       
-       "pathway": "Generations Study is a volunteer female cohort linked to NHS data covering the whole patient pathway"
+       "pathway": "Prospective volunteer cohort of women recruited 2004–2011 across all four UK nations. Linked to national cancer registries (currently England, Scotland; planned for Wales, Northern Ireland), NHS electronic medical records, and national death registries. Covers the full patient pathway from primary prevention and cancer risk assessment through screening, diagnosis, treatment, and long-term outcomes."
       },
 
 "provenance": {
     "origin": {
       "purpose": [
-         "Study"
+         "Research cohort"
       ],
       "datasetType": [
         {
           "name": "Health and disease",
           "subTypes": [
-            "Cancer", 
-            "Breast cancer", 
-            "Imaging", 
-            "Biobank"
+            "Cancer"
           ]
         }
       ],
@@ -105,8 +97,11 @@
          "Other"
       ],
       "collectionSource": [
-            "Home", 
-            "Community"
+        "Cohort, study, trial",
+        "Home",
+        "Community",
+        "Patient report outcome",
+        "Wearables"
       ],
       "imageContrast": "Not stated"
     },
@@ -128,13 +123,13 @@
          "User-specific restriction", 
          "Time limit on use"
       ],
-      "resourceCreator": "We thank Breast Cancer Now and The Institute of Cancer Research for support and funding of the Generations Study, and the study participants, study staff, and the doctors, nurses, and other health-care providers and health information sources who have contributed to the study. The ICR acknowledges NHS funding to the Royal Marsden/ICR NIHR Biomedical Research Centre"
+      "resourceCreator": "We thank Breast Cancer Now and The Institute of Cancer Research for support and funding of the Generations Study, and the study participants, study staff, and the doctors, nurses, and other health-care providers and health information sources who have contributed to the study. The ICR acknowledges NHS funding to the Royal Marsden/ICR NIHR Biomedical Research Centre."
     },
 
     "access": {
-      "accessRights": "https://thegenerationsstudy.co.uk/forresearchers#dataaccessrequests",
+      "accessRights": "https://thegenerationsstudy.co.uk/forresearchers",
       "accessServiceCategory": "Varies based on project",
-      "accessService": "Currently working on providing access to TRE",
+      "accessService": "Data are currently available to approved researchers via secure data transfer following execution of a Data Sharing Agreement. Approved extracts are delivered as CSV and JSON formats. To initiate a request, contact Generations.Scientific@icr.ac.uk with a description of the proposed research and the data or samples required. Requests are reviewed by the study Principal Investigators and Access Committee on scientific merit, feasibility, consistency with participant consent, and data governance requirements.",
       "accessRequestCost": "Cost recovery varies according to project scope and requested services.",
       "deliveryLeadTime": "2-6 months",
       "jurisdiction": ["GB-ENG"],
@@ -171,7 +166,63 @@
    "enrichmentAndLinkage": {
     "derivedFrom": [],
     "isPartOf": [],
-    "linkableDatasets": [],
+    "linkableDatasets": [
+    {
+    "pid": null,
+    "title": "National Disease Registration Service (NDRS) — England cancer registry / SACT / RTDS",
+    "url": "https://digital.nhs.uk/ndrs/data/data-sets"
+  },
+  {
+    "pid": null,
+    "title": "NHS England Electronic Health Records",
+    "url": "https://digital.nhs.uk/data"
+  },
+  {
+    "pid": null,
+    "title": "NHS England Hospital Episode Statistics",
+    "url": "https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/hospital-episode-statistics"
+  },
+  {
+    "pid": null,
+    "title": "Welsh Cancer Intelligence and Surveillance Unit (WCISU)",
+    "url": "https://publichealthwales.nhs.wales/services-and-teams/welsh-cancer-intelligence-and-surveillance-unit-wcisu/"
+  },
+  {
+    "pid": null,
+    "title": "Scottish Cancer Registry (SMR06)",
+    "url": "https://publichealthscotland.scot/resources-and-tools/health-intelligence-and-data-management/national-data-catalogue/national-datasets/search-the-datasets/scottish-cancer-registry-smr06/"
+  },
+  {
+    "pid": null,
+    "title": "Scottish Morbidity Registry (SMR00)",
+    "url": "https://publichealthscotland.scot/resources-and-tools/health-intelligence-and-data-management/national-data-catalogue/national-datasets/search-the-datasets/outpatient-appointments-and-attendances-scottish-morbidity-record-smr00/"
+  },
+  {
+    "pid": null,
+    "title": "Scottish Breast Cancer Screening System (SBSS)",
+    "url": "https://publichealthscotland.scot/resources-and-tools/health-intelligence-and-data-management/national-data-catalogue/national-datasets/search-the-datasets/scottish-breast-screening-system-sbss/"
+  }, 
+  {
+    "pid": null,
+    "title": "Scotland Prescribing Information System (PIS)",
+    "url": "https://publichealthscotland.scot/resources-and-tools/health-intelligence-and-data-management/national-data-catalogue/national-datasets/search-the-datasets/prescribing-information-system-pis/"
+  }, 
+  {
+    "pid": null,
+    "title": "National Records of Scotland (NRS): Deaths Data",
+    "url": "https://publichealthscotland.scot/resources-and-tools/health-intelligence-and-data-management/national-data-catalogue/national-datasets/search-the-datasets/national-records-of-scotland-nrs-deaths-data/"
+  },
+  {
+    "pid": null,
+    "title": "Northern Ireland Cancer Registry (NICR)",
+    "url": "https://www.qub.ac.uk/research-centres/nicr/"
+  },
+  {
+    "pid": null,
+    "title": "ONS Mortality Data (national death registry)",
+    "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/deaths/"
+  }
+  ],
     "similarToDatasets": [],
     "investigations": [],
     "tools": [],
@@ -181,12 +232,124 @@
     "publicationUsingDataset": []
   },
 
-   "observations": [
+ "observations": [
     {
       "observedNode": "Persons",
       "measuredValue": 113000,
-      "disambiguatingDescription": "Participant recruited",
-      "observationDate": "2003-06-01",
+      "disambiguatingDescription": "Total participants recruited",
+      "observationDate": "2011-12-31",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Persons",
+      "measuredValue": 103000,
+      "disambiguatingDescription": "Participants with blood samples in biobank (~92% of total)",
+      "observationDate": "2011-12-31",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Events",
+      "measuredValue": 22839,
+      "disambiguatingDescription": " Total incident cancer cases recorded since recruitment",
+      "observationDate": "2026-02-01",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Events",
+      "measuredValue": 6568,
+      "disambiguatingDescription": "Incident Breast cancer cases recorded since recruitment",
+      "observationDate": "2026-02-01",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Events",
+      "measuredValue": 1574,
+      "disambiguatingDescription": "Incident Uterus cancer cases recorded since recruitment",
+      "observationDate": "2026-02-01",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Events",
+      "measuredValue": 957,
+      "disambiguatingDescription": "Incident Colon cancer cases recorded since recruitment",
+      "observationDate": "2026-02-01",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Events",
+      "measuredValue": 640,
+      "disambiguatingDescription": "Incident Bronchus and Lung cancer cases recorded since recruitment",
+      "observationDate": "2026-02-01",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Events",
+      "measuredValue": 604,
+      "disambiguatingDescription": "Incident Ovary cancer cases recorded since recruitment",
+      "observationDate": "2026-02-01",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Events",
+      "measuredValue": 497,
+      "disambiguatingDescription": "Incident Melanoma cancer cases recorded since recruitment",
+      "observationDate": "2026-02-01",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Events",
+      "measuredValue": 336,
+      "disambiguatingDescription": "Incident Lymphoma cancer cases recorded since recruitment",
+      "observationDate": "2026-02-01",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Events",
+      "measuredValue": 291,
+      "disambiguatingDescription": "Incident Rectum cancer cases recorded since recruitment",
+      "observationDate": "2026-02-01",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Events",
+      "measuredValue": 269,
+      "disambiguatingDescription": "Incident Pancreas cancer cases recorded since recruitment",
+      "observationDate": "2026-02-01",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Events",
+      "measuredValue": 216,
+      "disambiguatingDescription": "Incident Kidney cancer cases recorded since recruitment",
+      "observationDate": "2026-02-01",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Events",
+      "measuredValue": 198,
+      "disambiguatingDescription": "Incident Thyroid cancer cases recorded since recruitment",
+      "observationDate": "2026-02-01",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Events",
+      "measuredValue": 171,
+      "disambiguatingDescription": "Incident Brain cancer cases recorded since recruitment",
+      "observationDate": "2026-02-01",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Events",
+      "measuredValue": 124,
+      "disambiguatingDescription": "Incident Oesophagus cancer cases recorded since recruitment",
+      "observationDate": "2026-02-01",
+      "measuredProperty": "Count"
+    },
+    {
+      "observedNode": "Findings",
+      "measuredValue": 190,
+      "disambiguatingDescription": "Peer-reviewed publications using Generations Study data",
+      "observationDate": "2026-03-01",
       "measuredProperty": "Count"
     }
   ],
@@ -195,7 +358,7 @@
   "demographicFrequency": null,
   
   "omics": {
-    "assay": "Whole genome sequencing",
+    "assay": "Genotyping by array",
     "platform": "Other"
   }
 }
