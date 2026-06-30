@@ -1,6 +1,6 @@
 {
   "identifier": null,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "revisions": [
     {
       "version": "1.0.0",
@@ -9,14 +9,18 @@
     {
       "version": "1.0.1",
       "url": null
+    },
+    {
+      "version": "1.0.2",
+      "url": null
     }
   ],
    "issued": "2026-03-13T00:00:00.000Z",
-   "modified": "2026-06-22T00:00:00.000Z",
+   "modified": "2026-06-30T00:00:00.000Z",
 
    "summary": {
-      "title": "Generations Study: female UK cohort (questionnaire, imaging, samples, linkage)",
-      "abstract": "The Generations Study is a UK prospective cohort of ~113,000 women aged 16+, recruited 2004–2011 and followed for over 20 years. Focused on breast cancer causes, prognosis, and outcomes, the study has collected five rounds of questionnaires, NHS and cancer registry linkages, a biobank (plasma, DNA, urine; ~92% with blood samples), tumour tissue, mammograms, accelerometry, and pathology data. Over 190 peer-reviewed publications to date.",
+      "title": "Breast Cancer Now Generations Study",
+      "abstract": "The Breast Cancer Now Generations Study is a UK prospective cohort of ~113,000 women aged 16+, recruited 2004–2011 and followed for over 20 years. Focused on breast cancer causes, prognosis, and outcomes, the study has collected five rounds of questionnaires, NHS and cancer registry linkages, a biobank (plasma, DNA, urine; ~92% with blood samples), tumour tissue, mammograms, accelerometry, and pathology data. Over 190 peer-reviewed publications to date.",
       "dataCustodian": {
          "identifier": "e633bd6b-833d-473e-a9b5-3fa4d018c02d",
          "name": "Breast Cancer Now and The Institute of Cancer Research",
